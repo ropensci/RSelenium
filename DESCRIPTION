@@ -1,0 +1,12 @@
+Package: RSelenium
+Type: Package
+Title: What the package does (short line)
+Version: 1.0
+Date: 2012-09-20
+Author: Who wrote it
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+Depends: R (>= 2.14.0),methods,RCurl,RJSONIO
+LazyData: yes
+

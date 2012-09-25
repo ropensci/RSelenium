@@ -1,0 +1,7 @@
+exportClass(remoteDriver,webElement)
+export(remoteDriver,webElement)
+import(RCurl)
+import(RJSONIO)
+export(open.RD,getSessions.RD,status.RD,getAlertText.RD)
+export(.DollarNames.remoteDriver,.DollarNames.webElement)
+
