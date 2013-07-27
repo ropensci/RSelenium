@@ -1,3 +1,6 @@
+#' @export .DollarNames.remoteDriver
+#' @export .DollarNames.webElement
+#' 
 queryRD <- function(ipAddr,
                   method = "GET",
                   httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),

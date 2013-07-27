@@ -1,3 +1,4 @@
+#' @export remoteDriver
 
 remoteDriver <- setRefClass("remoteDriver",
   fields = list(

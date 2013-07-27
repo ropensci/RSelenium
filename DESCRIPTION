@@ -7,6 +7,10 @@ Author: Who wrote it
 Maintainer: Who to complain to <yourfault@somewhere.net>
 Description: More about what it does (maybe more than one line)
 License: What license is it under?
-Depends: R (>= 2.14.0),methods,RCurl,RJSONIO
+Depends:
+    R (>= 2.14.0),methods,RCurl,RJSONIO
 LazyData: yes
-
+Collate:
+    'remoteDriver.R'
+    'util.R'
+    'webElement.R'

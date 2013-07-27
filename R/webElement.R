@@ -1,3 +1,4 @@
+#' @export webElement
 webElement <- setRefClass("webElement",
   fields   = list(elementId        = "character"),
   contains = "remoteDriver",
