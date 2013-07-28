@@ -27,8 +27,6 @@ John Harrison <johndharrion0@gmail.com
 \references{
 http://seleniumhq.org/projects/webdriver/
 }
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in ~~
-~~ the R documentation directory ~~
 \keyword{ package }
 \seealso{
 ~~ Optional links to other man pages, e.g. ~~

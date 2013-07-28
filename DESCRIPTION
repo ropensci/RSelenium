@@ -1,14 +1,17 @@
 Package: RSelenium
 Type: Package
-Title: What the package does (short line)
+Title: R bindings for Selenium webdriver.
 Version: 1.0
 Date: 2012-09-20
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: John Harrison <johndharrison0@gmail.com>
+Maintainer: John Harrison <johndharrison0@gmail.com>
+Description: These are R bindings for the WebDriver API in Selenium 2. They use
+    the JsonWireProtocol defined at
+    http://code.google.com/p/selenium/wiki/JsonWireProtocol to communicate with
+    a Selenium RemoteWebDriver Server.
+License: MIT
 Depends:
-    R (>= 2.14.0),methods,RCurl,RJSONIO
+    R (>= 2.15.0),methods,RCurl,RJSONIO
 LazyData: yes
 Collate:
     'remoteDriver.R'
