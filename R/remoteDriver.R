@@ -97,7 +97,7 @@
 #'        \item{\code{value}:}{The search target. See examples.}
 #'        }
 #'      }
-#'      \item{\code{getActiveElement()}:}{ Get the element on the page that currently has focus.. The located element will be returned as a WebElement id. }
+#'      \item{\code{getActiveElement()}:}{ Get the element on the page that currently has focus. The located element will be returned as a WebElement id. }
 #'      \item{\code{click(buttonId)}:}{ Click any mouse button (at the coordinates set by the last mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
 #'      \item{\code{doubleclick(buttonId)}:}{ Double-Click any mouse button (at the coordinates set by the last mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' }
 #'      \item{\code{buttondown(buttonId)}:}{  Click and hold the given mouse button (at the coordinates set by the
@@ -349,13 +349,13 @@ remoteDriver <- setRefClass("remoteDriver",
                               findElement = function(using = "xpath",value){
                                 elemDetails<-fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element'),
                                                               "POST",data = toJSON(list(using = using,value = value))))
-                                elemDetails$value
+                                webElement$new(elemDetails$value)$import(.self)
                               },
                               
                               findElements = function(using = "xpath",value){
                                 elemDetails<-fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/elements'),
                                                               "POST",data = toJSON(list(using = using,value = value))))
-                                elemDetails$value
+                                lapply(elemDetails$value, function(x){webElement$new(x)$import(.self)})
                               },
                               
                               getActiveElement = function(){

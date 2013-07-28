@@ -215,7 +215,7 @@
   xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
   search target. See examples.} } }
   \item{\code{getActiveElement()}:}{ Get the element on the
-  page that currently has focus.. The located element will
+  page that currently has focus. The located element will
   be returned as a WebElement id. }
   \item{\code{click(buttonId)}:}{ Click any mouse button
   (at the coordinates set by the last mouseMoveToLocation()
