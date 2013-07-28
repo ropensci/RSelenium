@@ -17,3 +17,4 @@ Collate:
     'remoteDriver.R'
     'util.R'
     'webElement.R'
+    'selKeys-data.R'
