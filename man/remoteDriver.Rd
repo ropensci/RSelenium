@@ -196,24 +196,47 @@
   with the given name. This command will be a no-op if ther
   is no such cookie visible to the current page.}
   \item{\code{getPageSource()}:}{ Get the current page
-  source. } \item{\code{findElement()}:}{ Search for an
-  element on the page, starting from the document root. The
-  located element will be returned as an id to be used by
-  an object of webElement class. }
-  \item{\code{findElements()}:}{ Create a new
-  \code{remoteDriver} object. }
-  \item{\code{getActiveElement()}:}{ Create a new
-  \code{remoteDriver} object. }
-  \item{\code{click(buttonId)}:}{ Create a new
-  \code{remoteDriver} object. }
-  \item{\code{doubleclick(buttonId)}:}{ Create a new
-  \code{remoteDriver} object. }
-  \item{\code{buttondown(buttonId)}:}{ Create a new
-  \code{remoteDriver} object. }
-  \item{\code{buttonup(buttonId)}:}{ Create a new
-  \code{remoteDriver} object. } \item{\code{new()}:}{
-  Create a new \code{remoteDriver} object. }
-  \item{\code{new()}:}{ Create a new \code{remoteDriver}
-  object. } }
+  source. } \item{\code{findElement(using ,value)}:}{
+  Search for an element on the page, starting from the
+  document root. The located element will be returned as an
+  id to be used by an object of webElement class.  The
+  inputs are: \describe{ \item{\code{using}:}{Locator
+  scheme to use to search the element, available schemes:
+  {class, class_name, css, id, link, link_text,
+  partial_link_text, tag_name, name, xpath}. Defaults to
+  'xpath'. } \item{\code{value}:}{The search target. See
+  examples.} } } \item{\code{findElements(using ,value)}:}{
+  Search for multiple elements on the page, starting from
+  the document root. The located elements will be returned
+  as an list of WebElement ids.  The inputs are: \describe{
+  \item{\code{using}:}{Locator scheme to use to search the
+  element, available schemes: {class, class_name, css, id,
+  link, link_text, partial_link_text, tag_name, name,
+  xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
+  search target. See examples.} } }
+  \item{\code{getActiveElement()}:}{ Get the element on the
+  page that currently has focus.. The located element will
+  be returned as a WebElement id. }
+  \item{\code{click(buttonId)}:}{ Click any mouse button
+  (at the coordinates set by the last mouseMoveToLocation()
+  command). buttonId - any one of 'LEFT'/0 'MIDDLE'/1
+  'RIGHT'/2. Defaults to 'LEFT'}
+  \item{\code{doubleclick(buttonId)}:}{ Double-Click any
+  mouse button (at the coordinates set by the last
+  mouseMoveToLocation() command). buttonId - any one of
+  'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' }
+  \item{\code{buttondown(buttonId)}:}{ Click and hold the
+  given mouse button (at the coordinates set by the last
+  moveto command). Note that the next mouse-related command
+  that should follow is buttondown . Any other mouse
+  command (such as click or another call to buttondown)
+  will yield undefined behaviour.  buttonId - any one of
+  'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
+  \item{\code{buttonup(buttonId)}:}{ Releases the mouse
+  button previously held (where the mouse is currently at).
+  Must be called once for every buttondown command issued.
+  See the note in click and buttondown about implications
+  of out-of-order commands.  buttonId - any one of 'LEFT'/0
+  'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' } }
 }
 
