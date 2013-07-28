@@ -6,8 +6,10 @@
 RSelnium: An R client for Selenium Remote Webdriver
 }
 \description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
+These are R bindings for the WebDriver API in Selenium 2. They use
+    the JsonWireProtocol defined at
+    http://code.google.com/p/selenium/wiki/JsonWireProtocol to communicate with
+    a Selenium RemoteWebDriver Server.
 }
 \details{
 \tabular{ll}{
@@ -15,11 +17,9 @@ Package: \tab RSelenium\cr
 Type: \tab Package\cr
 Version: \tab 1.0\cr
 Date: \tab 2012-09-20\cr
-License: \tab What license is it under?\cr
-Depends: \tab methods\cr
+License: \tab MIT\cr
+Depends: \tab R (>= 2.15.0),methods,RCurl,RJSONIO\cr
 }
-~~ An overview of how to use the package, including the most important ~~
-~~ functions ~~
 }
 \author{
 John Harrison <johndharrion0@gmail.com
@@ -28,10 +28,6 @@ John Harrison <johndharrion0@gmail.com
 http://seleniumhq.org/projects/webdriver/
 }
 \keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
-}
 \examples{
 remDr <- remoteDriver$new()
 remDr$open()
