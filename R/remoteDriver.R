@@ -107,6 +107,7 @@
 #'      buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
 #'      \item{\code{buttonup(buttonId)}:}{ Releases the mouse button previously held (where the mouse is currently at). Must be called once for every buttondown command issued. See the note in click and buttondown about implications of out-of-order commands.
 #'      buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' }
+#'      \item{\code{closeServer()}:}{ Closes the server in practice terminating the process. This is useful for linux systems. On windows the java binary operates as a seperate shell which the user can terminate. }
 #'  }
 #' @export remoteDriver
 
@@ -380,6 +381,11 @@ remoteDriver <- setRefClass("remoteDriver",
                               buttonup = function(buttonId = 0){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/buttonup'),
                                         "POST",data = toJSON(list(button = buttonId)))
+                              },
+                              
+                              closeServer = function(){
+                                queryRD(paste0("http://", remoteServerAddr, ":", port, "/selenium-server/driver/?cmd=shutDownSeleniumServer"), 
+                                        "GET")
                               }
                               
                             )

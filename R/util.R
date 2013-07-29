@@ -1,25 +1,62 @@
-checkForServer <- function(dir = NULL, update = FALSE){
-  selURL <- 'http://code.google.com/p/selenium/downloads/'
+#' Check for Server binary
+#' 
+#' \code{checkForServer}
+#' A utility function to check if the Selenium Server stanalone binary is present.
+#' @param dir A directory in which the binary is to be placed.
+#' @param update A boolean indicating whether to update the binary if it is present.
+#' @export
+#' @section Detail: The downloads for the Selenium project can be found at http://code.google.com/p/selenium/downloads/list. This convience function downloads the standalone server and places it in the RSelenium package directory bin folder by default.
+#' @examples
+#' \dontrun{
+#' checkForServer()
+#' }
+
+checkForServer <- function (dir = NULL, update = FALSE) 
+{
+  selURL <- "http://code.google.com/p/selenium/downloads/"
   selXML <- htmlParse(paste0(selURL, "list"))
   selJAR <- xpathSApply(selXML, "//a[contains(@href,'selenium-server-standalone')]/@href")[[1]]
-  
-  if(is.null(dir)){
-    selDIR <- paste0(find.package('RSelenium'), '/bin/')
-  }else{
-    selDIR <- dir    
-  }
-  
-  if(update){
-    download.file(selJAR, paste0('http:', selDIR,'selenium-server-standalone.jar'), mode = "wb")   
-  }else{
-    if(!file.exists(paste0(selDIR,'selenium-server-standalone.jar'))){
-      download.file(paste0('http:',selJAR), paste0(selDIR,'selenium-server-standalone.jar'), mode = "wb")
-    }
+  selDIR <- ifelse(is.null(dir), paste0(find.package("RSelenium"), 
+                                        "/bin/"), dir)
+  selFILE <- paste0(selDIR, "selenium-server-standalone.jar")
+  if (update || !file.exists(selFILE)) {
+    print("DOWNLOADING STANDALONE SELENIUM SERVER. THIS MAY TAKE SEVERAL MINUTES")
+    download.file(paste0("http:", selJAR), selFILE, mode = "wb")
   }
 }
 
+#' Start the standalone server.
+#' 
+#' \code{startServer}
+#' A utility function to start the standalone server. 
+#' @param dir A directory in which the binary is to be placed.
+#' @export
+#' @section Detail: By default the binary is assumed to be in
+#' the RSelenium package /bin directory. 
+#' @examples
+#' \dontrun{
+#' startServer()
+#' }
 
-system(paste0("java -jar ", shQuote(paste0(selDIR, 'selenium-server-standalone.jar'))), wait = FALSE, invisible = FALSE)
+startServer <- function (dir = NULL) 
+{
+  selDIR <- ifelse(is.null(dir), paste0(find.package("RSelenium"), 
+                                        "/bin/"), dir)
+  selFILE <- paste0(selDIR, "selenium-server-standalone.jar")
+  if (!file.exists(selFILE)) {
+    stop("No Selenium Server binary exists. Run checkForServer or start server manually.")
+  }
+  else {
+    if (.Platform$OS.type == "unix") {
+      system(paste0("java -jar ", shQuote(selFILE)), wait = FALSE, 
+             ignore.stdout = TRUE, ignore.stderr = TRUE)
+    }
+    else {
+      system(paste0("java -jar ", shQuote(selFILE)), wait = FALSE, 
+             invisible = FALSE)
+    }
+  }
+}
 
 #' @export .DollarNames.remoteDriver
 #' @export .DollarNames.webElement
