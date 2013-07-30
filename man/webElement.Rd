@@ -1,22 +1,23 @@
 \name{webElement}
 \alias{webElement}
 \title{CLASS webElement}
+\usage{
+  webElement(...)
+}
 \description{
   Selenium Webdriver represents all the HTML elements as
   WebElements. This class provides a mechanism to represent
   them as objects & perform various actions on the related
   elements. Typically, the findElement method in
-  \code{\link{remoteDriver}} returns this id for which a
-  webElement object can in instantiated.
+  \code{\link{remoteDriver}} returns an object of class
+  webElement.
 }
 \details{
   webElement is a generator object. To define a new
   webElement class method `new` is called. When a
   webElement class is created an elementId should be given.
-  This is a number in character form. Each webElement
-  inherits from a remoteDriver. The easiest way way to
-  handle this is to import from the remoteDriver from which
-  the elementId came. See the examples.
+  Each webElement inherits from a remoteDriver. webElement
+  is not usually called by the end-user.
 }
 \section{Slots}{
   \describe{ \item{\code{elementId}:}{Object of class

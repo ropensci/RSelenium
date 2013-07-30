@@ -1,12 +1,11 @@
 #' CLASS webElement
 #'
 #' Selenium Webdriver represents all the HTML elements as WebElements. This class provides a mechanism to represent them as objects & perform various actions on the related elements. 
-#' Typically, the findElement method in \code{\link{remoteDriver}} returns this id for which a webElement object can in instantiated.
+#' Typically, the findElement method in \code{\link{remoteDriver}} returns an object of class webElement.
 #'
 #' webElement is a generator object. To define a new webElement class method `new` is called. 
-#' When a webElement class is created an elementId should be given. This is a number in character form.
-#' Each webElement inherits from a remoteDriver. The easiest way way to handle this is to import from 
-#' the remoteDriver from which the elementId came. See the examples. 
+#' When a webElement class is created an elementId should be given.
+#' Each webElement inherits from a remoteDriver. webElement is not usually called by the end-user.   
 #'
 #'@section Slots:      
 #'  \describe{
@@ -43,7 +42,7 @@
 #'  }
 #' @export webElement
 webElement <- setRefClass("webElement",
-  fields   = list(elementId        = "character"),
+  fields   = list(elementId        = "numeric"),
   contains = "remoteDriver",
   methods  = list(
       initialize = function(elementId = "",...){
@@ -54,21 +53,21 @@ webElement <- setRefClass("webElement",
 
       findChildElement = function(using = "xpath",value){
           qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/element')
-          elemDetails <- fromJSON(queryRD(qpath,
-                           "POST",data = toJSON(list(using = using,value = value))))
+          elemDetails <- queryRD(qpath,
+                           "POST",qdata = toJSON(list(using = using,value = value)))
           elemDetails$value
       },
 
       findChildElements = function(using = "xpath",value){
           qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/elements')
-          elemDetails <- fromJSON(queryRD(qpath,
-                           "POST",data = toJSON(list(using = using,value = value))))
+          elemDetails <- queryRD(qpath,
+                           "POST",qdata = toJSON(list(using = using,value = value)))
           elemDetails$value
       },
 
       compareElements = function(otherElem){
-          qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/equals/',otherElem)
-          elemDetails <- fromJSON(queryRD(qpath))
+          qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/equals/',otherElem$elementId)
+          elemDetails <- queryRD(qpath)
           elemDetails
       },
 
@@ -85,27 +84,27 @@ webElement <- setRefClass("webElement",
       sendKeysToElement = function(sendKeys){
           sendKeys<-toJSON(list(value = matchSelKeys(sendKeys)))
           queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/value'),
-                           "POST",data = sendKeys)
+                           "POST",qdata = sendKeys)
       },
 
       isElementSelected = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/selected')))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/selected'))
       },
 
       isElementEnabled = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/enabled')))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/enabled'))
       },
 
       getElementLocation = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/location')))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/location'))
       },
 
       getElementLocationInView = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/location_in_view')))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/location_in_view'))
       },
 
       getElementTagName = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/name')))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/name'))
       },
 
       clearElement = function(){
@@ -114,27 +113,27 @@ webElement <- setRefClass("webElement",
       },
 
       getElementAttribute = function(attrName){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/attribute/',attrName)))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/attribute/',attrName))
       },
 
       isElementDisplayed = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/displayed')))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/displayed'))
       },
 
       getElementSize = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/size')))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/size'))
       },
 
       getElementText = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/text')))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/text'))
       },
 
       getElementValueOfCssProperty = function(propName){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/css/',propName)))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/css/',propName))
       },
 
       describeElement = function(){
-          fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId)))
+          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId))
       }
 
 

@@ -83,14 +83,14 @@
 #'      \item{\code{deleteAllCookies()}:}{ Delete all cookies visible to the current page. }
 #'      \item{\code{deleteCookieNamed(name)}:}{ Delete the cookie with the given name. This command will be a no-op if ther is no such cookie visible to the current page.}
 #'      \item{\code{getPageSource()}:}{ Get the current page source. }
-#'      \item{\code{findElement(using ,value)}:}{ Search for an element on the page, starting from the document root. The located element will be returned as an id to be used by an object of webElement class.
+#'      \item{\code{findElement(using ,value)}:}{ Search for an element on the page, starting from the document root. The located element will be returned as an object of webElement class.
 #'      The inputs are:
 #'        \describe{
 #'        \item{\code{using}:}{Locator scheme to use to search the element, available schemes: {class, class_name, css, id, link, link_text, partial_link_text, tag_name, name, xpath}. Defaults to 'xpath'. }
 #'        \item{\code{value}:}{The search target. See examples.}
 #'        }
 #'      }
-#'      \item{\code{findElements(using ,value)}:}{ Search for multiple elements on the page, starting from the document root. The located elements will be returned as an list of WebElement ids. 
+#'      \item{\code{findElements(using ,value)}:}{ Search for multiple elements on the page, starting from the document root. The located elements will be returned as an list of objects of class WebElement. 
 #'      The inputs are:
 #'        \describe{
 #'        \item{\code{using}:}{Locator scheme to use to search the element, available schemes: {class, class_name, css, id, link, link_text, partial_link_text, tag_name, name, xpath}. Defaults to 'xpath'. }
@@ -110,6 +110,85 @@
 #'      \item{\code{closeServer()}:}{ Closes the server in practice terminating the process. This is useful for linux systems. On windows the java binary operates as a seperate shell which the user can terminate. }
 #'  }
 #' @export remoteDriver
+#' @examples
+#' \dontrun{
+#' # start the server if one isnt running
+#' startServer()
+#' 
+#' # use default server initialisation values
+#' remDr <- remoteDriver$new()
+#' 
+#' # send request to server to initialise session
+#' remDr$open()
+#' 
+#' # navigate to R home page
+#' remDr$navigate("http://www.r-project.org")
+#' 
+#' # navigate to www.bbc.co.uk notice the need for http://
+#' remDr$navigate("http://www.bbc.co.uk")
+#' 
+#' # go backwards and forwards
+#' remDr$goBack()
+#' 
+#' remDr$goForward()
+#' 
+#' remDr$goBack()
+#' 
+#' # Examine the page source
+#' frontPage <- remDr$getPageSource()
+#' 
+#' # The R homepage contains frames
+#' webElem <- remDr$findElements(value = "//frame")
+#' sapply(webElem, function(x){x$getElementAttribute('name')})
+#' 
+#' # The homepage contains 3 frames: logo, contents and banner
+#' # switch to the `contents` frame 
+#' webElem <- remDr$findElement(using = 'name', value = 'contents')
+#' remDr$switchToFrame(webElem$elementId)
+#' 
+#' # re-examine the page source
+#' 
+#' contentPage <- remDr$getPageSource()
+#' identical(contentPage, frontPage) # false we hope!!
+#' 
+#' # Find the link for the search page on R homepage. Use xpath as default.
+#' webElem <- remDr$findElement(value = '//a[@@href = "search.html"]')
+#' webElem$getElementAttribute('href') # "http://www.r-project.org/search.html"
+#' 
+#' # click the search link
+#' webElem$clickElement()
+#' 
+#' # FILL OUT A GOOGLE SEARCH FORM
+#' remDr$navigate("http://www.google.com")
+#' 
+#' # show different methods of accessing DOM components
+#' 
+#' webElem1 <- remDr$findElement(using = 'name', value = 'q')
+#' webElem2 <- remDr$findElement(using = 'id', value = webElem1$getElementAttribute('id'))
+#' webElem3 <- remDr$findElement(using = 'xpath', value = '//input[@@name = "q"]')
+#' 
+#' # Enter some text in the search box
+#' 
+#' webElem1$sendKeysToElement(list('RSelenium was here'))
+#' 
+#' # clear the text previously entered
+#' 
+#' webElem1$clearElement()
+#' 
+#' # show an example of sending a key press
+#' webElem1$sendKeysToElement(list('R', key = 'enter'))
+#' 
+#' # Collate the results for the `R` search
+#' googLinkText <- remDr$findElements(value = "//h3[@@class = 'r']") 
+#' linkHeading <- sapply(googLinkText, function(x) x$getElementText())
+#' googLinkDesc <- remDr$findElements(value = "//div[@@class = 's']") 
+#' linkDescription <- sapply(googLinkDesc, function(x) x$getElementText())
+#' googLinkHref <- remDr$findElements(value = "//h3[@@class = 'r']/a")
+#' linkHref <- sapply(googLinkHref, function(x) x$getElementAttribute('href'))
+#' 
+#' data.frame(heading = linkHeading, description = linkDescription, href = linkHref)
+#' }
+#' 
 
 remoteDriver <- setRefClass("remoteDriver",
                             fields = list(
@@ -161,34 +240,34 @@ remoteDriver <- setRefClass("remoteDriver",
                                   version = version,
                                   javascriptEnabled = javascript)
                                 )
-                                queryRD(paste0(serverURL,'session'),"POST",data = toJSON(serverOpts))
+                                queryRD(paste0(serverURL,'session'),"POST",qdata = toJSON(serverOpts))
                                 serverDetails <- getSessions()
-                                sessionInfo <<- tail(serverDetails$value,n = 1)[[1]]
+                                sessionInfo <<- tail(serverDetails,n = 1)[[1]]
                                 print(serverDetails)
                               },    
                               
                               getSessions = function(){
-                                fromJSON(queryRD(paste0(serverURL,'sessions')))
+                                queryRD(paste0(serverURL,'sessions'))
                               },
                               
                               status = function(){
-                                fromJSON(queryRD(paste0(serverURL,'status')))
+                                queryRD(paste0(serverURL,'status'))
                               },
                               
                               getAlertText = function(){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/alert_text')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/alert_text'))
                               },
                               
                               sendKeysToActiveElement = function(sendKeys){
                                 sendKeys<-toJSON(list(value = matchSelKeys(sendKeys)))
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/keys'),
-                                        "POST",data = sendKeys)
+                                        "POST",qdata = sendKeys)
                               },
                               
                               sendKeysToAlert = function(sendKeys){
                                 sendKeys<-toJSON(list(text = paste(matchSelKeys(sendKeys),collapse = "")))
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/alert_text'),
-                                        "POST",data = sendKeys)
+                                        "POST",qdata = sendKeys)
                               },
                               
                               acceptAlert = function(){
@@ -204,17 +283,17 @@ remoteDriver <- setRefClass("remoteDriver",
                               mouseMoveToLocation = function(x,y,elementId = NULL){
                                 sendLoc<-toJSON(c(element = elementId,list(xoffset = x,yoffset = y)))
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/moveto'),
-                                        "POST",data = sendLoc)
+                                        "POST",qdata = sendLoc)
                               },
                               
                               setAsyncScriptTimeout = function(milliseconds = 10000){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/timeouts/async_script'),
-                                        "POST",data=toJSON(list(ms = milliseconds)))
+                                        "POST",qdata=toJSON(list(ms = milliseconds)))
                               },
                               
                               setImplicitWaitTimeout = function(milliseconds = 10000){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/timeouts/implicit_wait'),
-                                        "POST",data=toJSON(list(ms = milliseconds)))
+                                        "POST",qdata=toJSON(list(ms = milliseconds)))
                               },
                               
                               close = function(){
@@ -234,32 +313,32 @@ remoteDriver <- setRefClass("remoteDriver",
                               },
                               
                               getCurrentWindowHandle = function(){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window_handle')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window_handle'))
                               },
                               
                               getWindowHandles = function(){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window_handles')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window_handles'))
                               },
                               
                               getWindowSize = function(windowId = "current"){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',windowId,'/size')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',windowId,'/size'))
                               },
                               
                               getWindowPosition = function(windowId = "current"){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',windowId,'/position')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',windowId,'/position'))
                               },
                               
                               getCurrentUrl = function(){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/url')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/url'))
                               },
                               
                               navigate = function(url){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/url'),
-                                        "POST",data=toJSON(list(url = url)))
+                                        "POST",qdata=toJSON(list(url = url)))
                               },
                               
                               getTitle = function(url){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/title')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/title'))
                               },
                               
                               goForward = function(){
@@ -280,7 +359,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               executeAsyncScript = function(script,args = NA){
                                 if(.self$javascript){
                                   fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/execute_async'),
-                                                   "POST",data = toJSON(list(script = script,args = list(args)))))
+                                                   "POST",qdata = toJSON(list(script = script,args = list(args)))))
                                 }else{
                                   "Javascript is not enabled"
                                 }
@@ -289,14 +368,14 @@ remoteDriver <- setRefClass("remoteDriver",
                               executeScript = function(script,args = NA){
                                 if(.self$javascript){
                                   fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/execute'),
-                                                   "POST",data = toJSON(list(script = script,args = list(args)))))
+                                                   "POST",qdata = toJSON(list(script = script,args = list(args)))))
                                 }else{
                                   "Javascript is not enabled"
                                 }
                               },
                               
                               screenshot = function(){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/screenshot')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/screenshot'))
                               },
                               
                               #availableEngines = function(){
@@ -305,32 +384,32 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               switchToFrame = function(frameId){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/frame'),
-                                        "POST",data=toJSON(list(id = frameId)))
+                                        "POST",qdata=toJSON(list(id = frameId)))
                               },
                               
                               switchToWindow = function(windowId){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window'),
-                                        "POST",data = toJSON(list(name = windowId)))
+                                        "POST",qdata = toJSON(list(name = windowId)))
                               },
                               
                               setWindowPosition = function(x,y,winHand = 'current'){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',winHand,'/position'),
-                                        "POST",data=toJSON(list(x = x,y = y)))
+                                        "POST",qdata=toJSON(list(x = x,y = y)))
                               },
                               
                               setWindowSize = function(width,height,winHand='current'){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',winHand,'/size'),
-                                        "POST",data = toJSON(list(width = width,height = height)))
+                                        "POST",qdata = toJSON(list(width = width,height = height)))
                               },
                               
                               getAllCookies = function(){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/cookie')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/cookie'))
                               },
                               
                               addCookie = function(name,value,path,domain,secure = FALSE){
                                 cookie<-list(name = name,value = value,path = path,domain = domain,secure = secure)
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/cookie'),
-                                        "POST",data=toJSON(cookie = list(cookie)))
+                                        "POST",qdata=toJSON(cookie = list(cookie)))
                               },
                               
                               deleteAllCookies = function(){
@@ -344,43 +423,45 @@ remoteDriver <- setRefClass("remoteDriver",
                               },
                               
                               getPageSource = function(){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/source')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/source'))
                               },
                               
                               findElement = function(using = "xpath",value){
-                                elemDetails<-fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element'),
-                                                              "POST",data = toJSON(list(using = using,value = value))))
-                                webElement$new(elemDetails$value)$import(.self)
+                                elemDetails <- queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element'),
+                                                       "POST",qdata = toJSON(list(using = using,value = value)),
+                                                       json = TRUE)
+                                webElement$new(as.integer(elemDetails))$import(.self)
                               },
                               
                               findElements = function(using = "xpath",value){
-                                elemDetails<-fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/elements'),
-                                                              "POST",data = toJSON(list(using = using,value = value))))
-                                lapply(elemDetails$value, function(x){webElement$new(x)$import(.self)})
+                                elemDetails <- queryRD(paste0(serverURL,'session/',sessionInfo$id,'/elements'),
+                                                       "POST",qdata = toJSON(list(using = using,value = value)),
+                                                       json = TRUE)
+                                lapply(elemDetails, function(x){webElement$new(as.integer(x))$import(.self)})
                               },
                               
                               getActiveElement = function(){
-                                fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/active')))
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/active'))
                               },
                               
                               click = function(buttonId = 0){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/click'),
-                                        "POST",data = toJSON(list(button = buttonId)))
+                                        "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
                               doubleclick = function(buttonId = 0){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/doubleclick'),
-                                        "POST",data = toJSON(list(button = buttonId)))
+                                        "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
                               buttondown = function(buttonId = 0){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/buttondown'),
-                                        "POST",data = toJSON(list(button = buttonId)))
+                                        "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
                               buttonup = function(buttonId = 0){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/buttonup'),
-                                        "POST",data = toJSON(list(button = buttonId)))
+                                        "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
                               closeServer = function(){

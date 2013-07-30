@@ -1,6 +1,9 @@
 \name{remoteDriver}
 \alias{remoteDriver}
 \title{CLASS remoteDriver}
+\usage{
+  remoteDriver(...)
+}
 \description{
   remoteDriver Class uses the JsonWireProtocol to
   communicate with the Selenium Server. If an error occurs
@@ -199,16 +202,16 @@
   source. } \item{\code{findElement(using ,value)}:}{
   Search for an element on the page, starting from the
   document root. The located element will be returned as an
-  id to be used by an object of webElement class.  The
-  inputs are: \describe{ \item{\code{using}:}{Locator
-  scheme to use to search the element, available schemes:
-  {class, class_name, css, id, link, link_text,
-  partial_link_text, tag_name, name, xpath}. Defaults to
-  'xpath'. } \item{\code{value}:}{The search target. See
-  examples.} } } \item{\code{findElements(using ,value)}:}{
-  Search for multiple elements on the page, starting from
-  the document root. The located elements will be returned
-  as an list of WebElement ids.  The inputs are: \describe{
+  object of webElement class.  The inputs are: \describe{
+  \item{\code{using}:}{Locator scheme to use to search the
+  element, available schemes: {class, class_name, css, id,
+  link, link_text, partial_link_text, tag_name, name,
+  xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
+  search target. See examples.} } }
+  \item{\code{findElements(using ,value)}:}{ Search for
+  multiple elements on the page, starting from the document
+  root. The located elements will be returned as an list of
+  objects of class WebElement.  The inputs are: \describe{
   \item{\code{using}:}{Locator scheme to use to search the
   element, available schemes: {class, class_name, css, id,
   link, link_text, partial_link_text, tag_name, name,
@@ -237,6 +240,89 @@
   Must be called once for every buttondown command issued.
   See the note in click and buttondown about implications
   of out-of-order commands.  buttonId - any one of 'LEFT'/0
-  'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' } }
+  'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' }
+  \item{\code{closeServer()}:}{ Closes the server in
+  practice terminating the process. This is useful for
+  linux systems. On windows the java binary operates as a
+  seperate shell which the user can terminate. } }
+}
+\examples{
+\dontrun{
+# start the server if one isnt running
+startServer()
+
+# use default server initialisation values
+remDr <- remoteDriver$new()
+
+# send request to server to initialise session
+remDr$open()
+
+# navigate to R home page
+remDr$navigate("http://www.r-project.org")
+
+# navigate to www.bbc.co.uk notice the need for http://
+remDr$navigate("http://www.bbc.co.uk")
+
+# go backwards and forwards
+remDr$goBack()
+
+remDr$goForward()
+
+remDr$goBack()
+
+# Examine the page source
+frontPage <- remDr$getPageSource()
+
+# The R homepage contains frames
+webElem <- remDr$findElements(value = "//frame")
+sapply(webElem, function(x){x$getElementAttribute('name')})
+
+# The homepage contains 3 frames: logo, contents and banner
+# switch to the `contents` frame
+webElem <- remDr$findElement(using = 'name', value = 'contents')
+remDr$switchToFrame(webElem$elementId)
+
+# re-examine the page source
+
+contentPage <- remDr$getPageSource()
+identical(contentPage, frontPage) # false we hope!!
+
+# Find the link for the search page on R homepage. Use xpath as default.
+webElem <- remDr$findElement(value = '//a[@href = "search.html"]')
+webElem$getElementAttribute('href') # "http://www.r-project.org/search.html"
+
+# click the search link
+webElem$clickElement()
+
+# FILL OUT A GOOGLE SEARCH FORM
+remDr$navigate("http://www.google.com")
+
+# show different methods of accessing DOM components
+
+webElem1 <- remDr$findElement(using = 'name', value = 'q')
+webElem2 <- remDr$findElement(using = 'id', value = webElem1$getElementAttribute('id'))
+webElem3 <- remDr$findElement(using = 'xpath', value = '//input[@name = "q"]')
+
+# Enter some text in the search box
+
+webElem1$sendKeysToElement(list('RSelenium was here'))
+
+# clear the text previously entered
+
+webElem1$clearElement()
+
+# show an example of sending a key press
+webElem1$sendKeysToElement(list('R', key = 'enter'))
+
+# Collate the results for the `R` search
+googLinkText <- remDr$findElements(value = "//h3[@class = 'r']")
+linkHeading <- sapply(googLinkText, function(x) x$getElementText())
+googLinkDesc <- remDr$findElements(value = "//div[@class = 's']")
+linkDescription <- sapply(googLinkDesc, function(x) x$getElementText())
+googLinkHref <- remDr$findElements(value = "//h3[@class = 'r']/a")
+linkHref <- sapply(googLinkHref, function(x) x$getElementAttribute('href'))
+
+data.frame(heading = linkHeading, description = linkDescription, href = linkHref)
+}
 }
 

@@ -1,4 +1,6 @@
+export(checkForServer)
 export(.DollarNames.remoteDriver)
 export(.DollarNames.webElement)
 export(remoteDriver)
+export(startServer)
 export(webElement)

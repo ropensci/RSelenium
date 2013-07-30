@@ -64,20 +64,27 @@ startServer <- function (dir = NULL)
 queryRD <- function(ipAddr,
                   method = "GET",
                   httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),
-                  data = NULL){
-  if(is.null(data)){
-      res <- rawToChar(getURLContent(ipAddr,
-                                   customrequest = method,
-                                   httpheader = httpheader,
-                                   binary = TRUE))
-  }else{
-      res <- rawToChar(getURLContent(ipAddr,
-                                   customrequest = method,
-                                   httpheader = httpheader,
-                                   postfields = data,
-                                   binary = TRUE))
+                  qdata = NULL,
+                  json = FALSE){
+  
+ if(is.null(qdata)){
+   res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader)
+ }else{
+   res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata)
+ }
+
+  res1 <- ifelse(is.raw(res), rawToChar(res), res)
+  if(method == 'GET' || json){
+    if( isValidJSON(res1)){
+      res1 <- fromJSON(res1) 
+    }
   }
-  res
+ # insert error checking code here based on res1$status
+ if(is.atomic(res1)){
+   return(res1)
+ }else{
+   res1$value
+ }
 }
 
 matchSelKeys <- function(x){
