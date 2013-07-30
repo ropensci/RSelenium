@@ -29,6 +29,9 @@ http://seleniumhq.org/projects/webdriver/
 }
 \keyword{ package }
 \examples{
+\dontrun{
+# run checkForServer() if you need the stand-alone Java binary
+startServer()
 remDr <- remoteDriver$new()
 remDr$open()
 remDr$navigate("http://www.google.com")
@@ -36,4 +39,5 @@ remDr$navigate("http://www.bbc.co.uk")
 remDr$goBack()
 remDr$goForward()
 remDr$quit()
+}
 }
