@@ -75,7 +75,7 @@ queryRD <- function(ipAddr,
 
   res1 <- ifelse(is.raw(res), rawToChar(res), res)
   if(method == 'GET' || json){
-    if( isValidJSON(res1)){
+    if( isValidJSON(res1, asText = TRUE)){
       res1 <- fromJSON(res1) 
     }
   }
