@@ -30,19 +30,30 @@
   \code{remoteDriver} object. ... is used to define the
   appropriate slots.} \item{\code{findChildElement(using
   ,value)}:}{ Search for an element on the page, starting
-  from the identified element. The located element will be
-  returned as a WebElement id. }
+  from the node defined by the parent webElement. The
+  located element will be returned as an object of
+  webElement class.  The inputs are: \describe{
+  \item{\code{using}:}{Locator scheme to use to search the
+  element, available schemes: {class, class_name, css, id,
+  link, link_text, partial_link_text, tag_name, name,
+  xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
+  search target. See examples.} } }
   \item{\code{findChildElements(using ,value)}:}{ Search
-  for multiple element on the page, starting from the
-  identified element. The located elements will be returned
-  as a list of WebElement ids.}
+  for multiple elements on the page, starting from the node
+  defined by the parent webElement. The located elements
+  will be returned as an list of objects of class
+  WebElement.  The inputs are: \describe{
+  \item{\code{using}:}{Locator scheme to use to search the
+  element, available schemes: {class, class_name, css, id,
+  link, link_text, partial_link_text, tag_name, name,
+  xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
+  search target. See examples.} } }
   \item{\code{compareElements(otherElem)}:}{ Test if the
-  current webElement and an other web element referred to
-  by webElement id refer to the same DOM element.}
-  \item{\code{clickElement()}:}{ Click the element.}
-  \item{\code{submitElement()}:}{ Submit a FORM element.
-  The submit command may also be applied to any element
-  that is a descendant of a FORM element.}
+  current webElement and an other web element refer to the
+  same DOM element.} \item{\code{clickElement()}:}{ Click
+  the element.} \item{\code{submitElement()}:}{ Submit a
+  FORM element. The submit command may also be applied to
+  any element that is a descendant of a FORM element.}
   \item{\code{sendKeysToElement(sendKeys)}:}{ Send a
   sequence of key strokes to an element.  The key strokes
   are sent as a list. Plain text is enter as an unnamed

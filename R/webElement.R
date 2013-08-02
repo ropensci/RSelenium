@@ -15,9 +15,21 @@
 #'@section Methods:
 #'  \describe{
 #'      \item{\code{new(...)}:}{ Create a new \code{remoteDriver} object. ... is used to define the appropriate slots.}
-#'      \item{\code{findChildElement(using ,value)}:}{ Search for an element on the page, starting from the identified element. The located element will be returned as a WebElement id. }
-#'      \item{\code{findChildElements(using ,value)}:}{ Search for multiple element on the page, starting from the identified element. The located elements will be returned as a list of WebElement ids.}
-#'      \item{\code{compareElements(otherElem)}:}{ Test if the current webElement and an other web element referred to by webElement id refer to the same DOM element.}
+#'      \item{\code{findChildElement(using ,value)}:}{ Search for an element on the page, starting from the node defined by the parent webElement. The located element will be returned as an object of webElement class.
+#'      The inputs are:
+#'        \describe{
+#'        \item{\code{using}:}{Locator scheme to use to search the element, available schemes: {class, class_name, css, id, link, link_text, partial_link_text, tag_name, name, xpath}. Defaults to 'xpath'. }
+#'        \item{\code{value}:}{The search target. See examples.}
+#'        }
+#'      }
+#'      \item{\code{findChildElements(using ,value)}:}{ Search for multiple elements on the page, starting from the node defined by the parent webElement. The located elements will be returned as an list of objects of class WebElement. 
+#'      The inputs are:
+#'        \describe{
+#'        \item{\code{using}:}{Locator scheme to use to search the element, available schemes: {class, class_name, css, id, link, link_text, partial_link_text, tag_name, name, xpath}. Defaults to 'xpath'. }
+#'        \item{\code{value}:}{The search target. See examples.}
+#'        }
+#'      }
+#'      \item{\code{compareElements(otherElem)}:}{ Test if the current webElement and an other web element refer to the same DOM element.}
 #'      \item{\code{clickElement()}:}{ Click the element.}
 #'      \item{\code{submitElement()}:}{ Submit a FORM element. The submit command may also be applied to any element that is a descendant of a FORM element.}
 #'      \item{\code{sendKeysToElement(sendKeys)}:}{ Send a sequence of key strokes to an element. 
@@ -54,15 +66,15 @@ webElement <- setRefClass("webElement",
       findChildElement = function(using = "xpath",value){
           qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/element')
           elemDetails <- queryRD(qpath,
-                           "POST",qdata = toJSON(list(using = using,value = value)))
-          elemDetails$value
+                           "POST",qdata = toJSON(list(using = using,value = value)), json = TRUE)
+          webElement$new(as.integer(elemDetails))$import(.self$export("remoteDriver"))
       },
 
       findChildElements = function(using = "xpath",value){
           qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/elements')
           elemDetails <- queryRD(qpath,
-                           "POST",qdata = toJSON(list(using = using,value = value)))
-          elemDetails$value
+                           "POST",qdata = toJSON(list(using = using,value = value)), json = TRUE)
+          lapply(elemDetails, function(x){webElement$new(as.integer(x))$import(.self$export("remoteDriver"))})
       },
 
       compareElements = function(otherElem){
