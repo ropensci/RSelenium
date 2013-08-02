@@ -187,6 +187,11 @@
 #' linkHref <- sapply(googLinkHref, function(x) x$getElementAttribute('href'))
 #' 
 #' data.frame(heading = linkHeading, description = linkDescription, href = linkHref)
+#' 
+#' # Example of javascript call
+#' remDr$executeScript("return arguments[0] + arguments[1];", args = 1:2)
+#' # Example of javascript async call
+#' remDr$executeAsyncScript("arguments[arguments.length - 1](arguments[0] + arguments[1]);", args = 1:2)
 #' }
 #' 
 
@@ -358,8 +363,8 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               executeAsyncScript = function(script,args = NA){
                                 if(.self$javascript){
-                                  fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/execute_async'),
-                                                   "POST",qdata = toJSON(list(script = script,args = list(args)))))
+                                  queryRD(paste0(serverURL,'session/',sessionInfo$id,'/execute_async'),
+                                                   "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
                                 }else{
                                   "Javascript is not enabled"
                                 }
@@ -367,8 +372,8 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               executeScript = function(script,args = NA){
                                 if(.self$javascript){
-                                  fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/execute'),
-                                                   "POST",qdata = toJSON(list(script = script,args = list(args)))))
+                                  queryRD(paste0(serverURL,'session/',sessionInfo$id,'/execute'),
+                                                   "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
                                 }else{
                                   "Javascript is not enabled"
                                 }

@@ -323,6 +323,11 @@ googLinkHref <- remDr$findElements(value = "//h3[@class = 'r']/a")
 linkHref <- sapply(googLinkHref, function(x) x$getElementAttribute('href'))
 
 data.frame(heading = linkHeading, description = linkDescription, href = linkHref)
+
+# Example of javascript call
+remDr$executeScript("return arguments[0] + arguments[1];", args = 1:2)
+# Example of javascript async call
+remDr$executeAsyncScript("arguments[arguments.length - 1](arguments[0] + arguments[1]);", args = 1:2)
 }
 }
 
