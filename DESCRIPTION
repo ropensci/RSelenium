@@ -13,6 +13,8 @@ License: MIT
 Depends:
     R (>= 2.15.0),methods,RCurl,RJSONIO,
     XML
+Suggests:
+    testthat
 LazyData: yes
 Collate:
     'remoteDriver.R'
