@@ -14,7 +14,8 @@
 #'    \item{\code{browserName}:}{Object of class \code{"character"}. The name of the browser being used; should be one of {chrome|firefox|htmlunit|internet explorer|iphone}.}
 #'    \item{\code{version}:}{Object of class \code{"character"}. The browser version, or the empty string if unknown.}
 #'    \item{\code{platform}:}{Object of class \code{"character"}. A key specifying which platform the browser is running on. This value should be one of {WINDOWS|XP|VISTA|MAC|LINUX|UNIX}. When requesting a new session, the client may specify ANY to indicate any available platform may be used.}
-#'    \item{\code{javascript}:}{Object of class \code{"character"}. Whether the session supports executing user supplied JavaScript in the context of the current page. }
+#'    \item{\code{javascript}:}{Object of class \code{"logical"}. Whether the session supports executing user supplied JavaScript in the context of the current page. }
+#'    \item{\code{nativeEvents}:}{Object of class \code{"logical"}. Whether the session supports native events. n WebDriver advanced user interactions are provided by either simulating the Javascript events directly (i.e. synthetic events) or by letting the browser generate the Javascript events (i.e. native events). Native events simulate the user interactions better. }
 #'    \item{\code{serverURL}:}{Object of class \code{"character"}. Url of the remote server which JSON requests are sent to. }
 #'    \item{\code{sessionInfo}:}{Object of class \code{"list"}. A list containing information on sessions. }
 #'  }
@@ -70,6 +71,7 @@
 #'      \item{\code{switchToWindow(windowId}:}{ Change focus to another window. The window to change focus to may be specified by its server assigned window handle, or by the value of its name attribute. }
 #'      \item{\code{setWindowPosition(x,y,winHand)}:}{ Set the position (on screen) where you want your browser to be displayed. The windows handle is optional. If not specified the current window in focus is used. }
 #'      \item{\code{setWindowSize(width,height,winHand)}:}{ Set the size of the browser window. The windows handle is optional. If not specified the current window in focus is used.}
+#'      \item{\code{maxWindowSize(winHand)}:}{ Set the size of the browser window to maximum. The windows handle is optional. If not specified the current window in focus is used.}
 #'      \item{\code{getAllCookies()}:}{ Retrieve all cookies visible to the current page. Each cookie will be returned as a list with the following name and value types:
 #'        \describe{
 #'        \item{\code{name}:}{character}
@@ -204,6 +206,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               platform         = "character",
                               javascript       = "logical",
                               autoClose        = "logical",
+                              nativeEvents     = "logical"
                               serverURL        = "character",
                               sessionInfo      = "list"  ),
                             methods = list(
@@ -408,6 +411,11 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               setWindowSize = function(width,height,winHand='current'){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',winHand,'/size'),
+                                        "POST",qdata = toJSON(list(width = width,height = height)))
+                              },
+                              
+                              maxWindowSize = function(winHand='current'){
+                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',winHand,'/maximize'),
                                         "POST",qdata = toJSON(list(width = width,height = height)))
                               },
                               
