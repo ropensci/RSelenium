@@ -416,7 +416,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               maxWindowSize = function(winHand='current'){
                                 queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',winHand,'/maximize'),
-                                        "POST",qdata = toJSON(list(width = width,height = height)))
+                                        "POST")
                               },
                               
                               getAllCookies = function(){
