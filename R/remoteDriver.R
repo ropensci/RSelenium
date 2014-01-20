@@ -213,7 +213,8 @@ remoteDriver <- setRefClass("remoteDriver",
                                                     version          = "",
                                                     platform         = "ANY",
                                                     javascript       = TRUE,
-                                                    autoClose        = FALSE
+                                                    autoClose        = FALSE,
+                                                    nativeEvents     = TRUE
                               ){
                                 remoteServerAddr <<- remoteServerAddr
                                 port <<- port
@@ -222,6 +223,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                 platform <<- platform
                                 javascript <<- javascript
                                 autoClose <<- autoClose
+                                nativeEvents <<- nativeEvents 
                                 #eval(parse(text=paste0('.self$',ls(remoteDriver$def@refMethods))))
                                 
                               },
@@ -241,9 +243,11 @@ remoteDriver <- setRefClass("remoteDriver",
                                 print("Connecting to remote server")
                                 serverURL <<- paste0("http://",remoteServerAddr,":",port,"/wd/hub/")
                                 serverOpts <- list(desiredCapabilities = list(
-                                  browserName = browserName,
-                                  version = version,
-                                  javascriptEnabled = javascript)
+                                  browserName = browserName
+                                  , version = version
+                                  , javascriptEnabled = javascript
+                                  , platform = platform
+                                  , nativeEvents = nativeEvents)
                                 )
                                 queryRD(paste0(serverURL,'session'),"POST",qdata = toJSON(serverOpts))
                                 serverDetails <- getSessions()
