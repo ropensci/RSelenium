@@ -207,6 +207,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               javascript       = "logical",
                               autoClose        = "logical",
                               nativeEvents     = "logical",
+                              extraCapabilities = "list",
                               serverURL        = "character",
                               sessionInfo      = "list"  ),
                             methods = list(
@@ -217,7 +218,8 @@ remoteDriver <- setRefClass("remoteDriver",
                                                     platform         = "ANY",
                                                     javascript       = TRUE,
                                                     autoClose        = FALSE,
-                                                    nativeEvents     = TRUE
+                                                    nativeEvents     = TRUE,
+                                                    extraCapabilities = list()
                               ){
                                 remoteServerAddr <<- remoteServerAddr
                                 port <<- port
@@ -226,7 +228,8 @@ remoteDriver <- setRefClass("remoteDriver",
                                 platform <<- platform
                                 javascript <<- javascript
                                 autoClose <<- autoClose
-                                nativeEvents <<- nativeEvents 
+                                nativeEvents <<- nativeEvents
+                                extraCapabilities <<- extraCapabilities
                                 #eval(parse(text=paste0('.self$',ls(remoteDriver$def@refMethods))))
                                 
                               },
@@ -244,7 +247,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               open = function(){
                                 print("Connecting to remote server")
-                                serverURL <<- paste0("http://",remoteServerAddr,":",port,"/wd/hub/")
+                                serverURL <<- paste0("http://",remoteServerAddr,":",port,"/wd/hub")
                                 serverOpts <- list(desiredCapabilities = list(
                                   browserName = browserName
                                   , version = version
@@ -252,64 +255,74 @@ remoteDriver <- setRefClass("remoteDriver",
                                   , platform = platform
                                   , nativeEvents = nativeEvents)
                                 )
-                                queryRD(paste0(serverURL,'session'),"POST",qdata = toJSON(serverOpts))
-                                serverDetails <- getSessions()
-                                sessionInfo <<- tail(serverDetails,n = 1)[[1]]
-                                print(serverDetails)
+                                if(length(extraCapabilities) > 0){
+                                  serverOpts$desiredCapabilities <- c(serverOpts$desiredCapabilities, extraCapabilities)
+                                }
+                                sessionResult <- queryRD(paste0(serverURL,'/session'),"POST",qdata = toJSON(serverOpts))
+                                serverDetails <- try(getSessions(), TRUE)
+                                if(class(serverDetails) == "try-error"){
+                                  sessionInfo <<- fromJSON(sessionResult)
+                                  sessionInfo$id <<- sessionInfo$sessionId
+                                  print(sessionResult)
+                                }else{
+                                  sessionInfo <<- tail(serverDetails,n = 1)[[1]]
+                                  print(serverDetails)
+                                }
+                                
                               },    
                               
                               getSessions = function(){
-                                queryRD(paste0(serverURL,'sessions'))
+                                queryRD(paste0(serverURL,'/sessions'))
                               },
                               
                               status = function(){
-                                queryRD(paste0(serverURL,'status'))
+                                queryRD(paste0(serverURL,'/status'))
                               },
                               
                               getAlertText = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/alert_text'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/alert_text'))
                               },
                               
                               sendKeysToActiveElement = function(sendKeys){
                                 sendKeys<-toJSON(list(value = matchSelKeys(sendKeys)))
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/keys'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/keys'),
                                         "POST",qdata = sendKeys)
                               },
                               
                               sendKeysToAlert = function(sendKeys){
                                 sendKeys<-toJSON(list(text = paste(matchSelKeys(sendKeys),collapse = "")))
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/alert_text'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/alert_text'),
                                         "POST",qdata = sendKeys)
                               },
                               
                               acceptAlert = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/accept_alert'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/accept_alert'),
                                         "POST")
                               },
                               
                               dismissAlert = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/dismiss_alert'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/dismiss_alert'),
                                         "POST")
                               },
                               
                               mouseMoveToLocation = function(x,y,elementId = NULL){
                                 sendLoc<-toJSON(c(element = elementId,list(xoffset = x,yoffset = y)))
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/moveto'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/moveto'),
                                         "POST",qdata = sendLoc)
                               },
                               
                               setAsyncScriptTimeout = function(milliseconds = 10000){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/timeouts/async_script'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/timeouts/async_script'),
                                         "POST",qdata=toJSON(list(ms = milliseconds)))
                               },
                               
                               setImplicitWaitTimeout = function(milliseconds = 10000){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/timeouts/implicit_wait'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/timeouts/implicit_wait'),
                                         "POST",qdata=toJSON(list(ms = milliseconds)))
                               },
                               
                               close = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window'),
                                         "DELETE")
                               },
                               
@@ -317,7 +330,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                 serverDetails<-getSessions()
                                 sapply(seq_along(serverDetails$value),
                                        function(x){
-                                         queryRD(paste0(serverURL,'session/',serverDetails$value[[x]]$id),
+                                         queryRD(paste0(serverURL,'/session/',serverDetails$value[[x]]$id),
                                                  "DELETE")
                                        }
                                 )
@@ -325,53 +338,53 @@ remoteDriver <- setRefClass("remoteDriver",
                               },
                               
                               getCurrentWindowHandle = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window_handle'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window_handle'))
                               },
                               
                               getWindowHandles = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window_handles'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window_handles'))
                               },
                               
                               getWindowSize = function(windowId = "current"){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',windowId,'/size'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',windowId,'/size'))
                               },
                               
                               getWindowPosition = function(windowId = "current"){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',windowId,'/position'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',windowId,'/position'))
                               },
                               
                               getCurrentUrl = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/url'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/url'))
                               },
                               
                               navigate = function(url){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/url'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/url'),
                                         "POST",qdata=toJSON(list(url = url)))
                               },
                               
                               getTitle = function(url){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/title'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/title'))
                               },
                               
                               goForward = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/forward'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/forward'),
                                         "POST")
                               },
                               
                               goBack = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/back'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/back'),
                                         "POST")
                               },
                               
                               refresh = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/refresh'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/refresh'),
                                         "POST")
                               },
                               
                               executeAsyncScript = function(script,args = NA){
                                 if(.self$javascript){
-                                  queryRD(paste0(serverURL,'session/',sessionInfo$id,'/execute_async'),
-                                                   "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
+                                  queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/execute_async'),
+                                          "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
                                 }else{
                                   "Javascript is not enabled"
                                 }
@@ -379,15 +392,15 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               executeScript = function(script,args = NA){
                                 if(.self$javascript){
-                                  queryRD(paste0(serverURL,'session/',sessionInfo$id,'/execute'),
-                                                   "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
+                                  queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/execute'),
+                                          "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
                                 }else{
                                   "Javascript is not enabled"
                                 }
                               },
                               
                               screenshot = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/screenshot'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/screenshot'))
                               },
                               
                               #availableEngines = function(){
@@ -395,89 +408,89 @@ remoteDriver <- setRefClass("remoteDriver",
                               #}
                               
                               switchToFrame = function(frameId){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/frame'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/frame'),
                                         "POST",qdata=toJSON(list(id = frameId)))
                               },
                               
                               switchToWindow = function(windowId){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window'),
                                         "POST",qdata = toJSON(list(name = windowId)))
                               },
                               
                               setWindowPosition = function(x,y,winHand = 'current'){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',winHand,'/position'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',winHand,'/position'),
                                         "POST",qdata=toJSON(list(x = x,y = y)))
                               },
                               
                               setWindowSize = function(width,height,winHand='current'){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',winHand,'/size'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',winHand,'/size'),
                                         "POST",qdata = toJSON(list(width = width,height = height)))
                               },
                               
                               maxWindowSize = function(winHand='current'){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/window/',winHand,'/maximize'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',winHand,'/maximize'),
                                         "POST")
                               },
                               
                               getAllCookies = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/cookie'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/cookie'))
                               },
                               
                               addCookie = function(name,value,path,domain,secure = FALSE){
                                 cookie<-list(name = name,value = value,path = path,domain = domain,secure = secure)
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/cookie'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/cookie'),
                                         "POST",qdata=toJSON(cookie = list(cookie)))
                               },
                               
                               deleteAllCookies = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/cookie')
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/cookie')
                                         ,"DELETE")
                               },
                               
                               deleteCookieNamed = function(name){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/cookie/',name)
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/cookie/',name)
                                         ,"DELETE")
                               },
                               
                               getPageSource = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/source'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/source'))
                               },
                               
                               findElement = function(using = "xpath",value){
-                                elemDetails <- queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element'),
+                                elemDetails <- queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element'),
                                                        "POST",qdata = toJSON(list(using = using,value = value)),
                                                        json = TRUE)
                                 webElement$new(as.integer(elemDetails))$import(.self)
                               },
                               
                               findElements = function(using = "xpath",value){
-                                elemDetails <- queryRD(paste0(serverURL,'session/',sessionInfo$id,'/elements'),
+                                elemDetails <- queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/elements'),
                                                        "POST",qdata = toJSON(list(using = using,value = value)),
                                                        json = TRUE)
                                 lapply(elemDetails, function(x){webElement$new(as.integer(x))$import(.self)})
                               },
                               
                               getActiveElement = function(){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/active'))
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/active'))
                               },
                               
                               click = function(buttonId = 0){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/click'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/click'),
                                         "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
                               doubleclick = function(buttonId = 0){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/doubleclick'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/doubleclick'),
                                         "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
                               buttondown = function(buttonId = 0){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/buttondown'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/buttondown'),
                                         "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
                               buttonup = function(buttonId = 0){
-                                queryRD(paste0(serverURL,'session/',sessionInfo$id,'/buttonup'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/buttonup'),
                                         "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               

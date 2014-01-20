@@ -64,88 +64,88 @@ webElement <- setRefClass("webElement",
       },
 
       findChildElement = function(using = "xpath",value){
-          qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/element')
+          qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/element')
           elemDetails <- queryRD(qpath,
                            "POST",qdata = toJSON(list(using = using,value = value)), json = TRUE)
           webElement$new(as.integer(elemDetails))$import(.self$export("remoteDriver"))
       },
 
       findChildElements = function(using = "xpath",value){
-          qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/elements')
+          qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/elements')
           elemDetails <- queryRD(qpath,
                            "POST",qdata = toJSON(list(using = using,value = value)), json = TRUE)
           lapply(elemDetails, function(x){webElement$new(as.integer(x))$import(.self$export("remoteDriver"))})
       },
 
       compareElements = function(otherElem){
-          qpath <- paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/equals/',otherElem$elementId)
+          qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/equals/',otherElem$elementId)
           elemDetails <- queryRD(qpath)
           elemDetails
       },
 
       clickElement = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/click'),
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/click'),
                            "POST")
       },
 
       submitElement = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/submit'),
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/submit'),
                            "POST")
       },
 
       sendKeysToElement = function(sendKeys){
           sendKeys<-toJSON(list(value = matchSelKeys(sendKeys)))
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/value'),
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/value'),
                            "POST",qdata = sendKeys)
       },
 
       isElementSelected = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/selected'))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/selected'))
       },
 
       isElementEnabled = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/enabled'))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/enabled'))
       },
 
       getElementLocation = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/location'))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/location'))
       },
 
       getElementLocationInView = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/location_in_view'))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/location_in_view'))
       },
 
       getElementTagName = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/name'))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/name'))
       },
 
       clearElement = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/clear'),
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/clear'),
                                     "POST")
       },
 
       getElementAttribute = function(attrName){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/attribute/',attrName))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/attribute/',attrName))
       },
 
       isElementDisplayed = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/displayed'))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/displayed'))
       },
 
       getElementSize = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/size'))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/size'))
       },
 
       getElementText = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/text'))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/text'))
       },
 
       getElementValueOfCssProperty = function(propName){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId,'/css/',propName))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/css/',propName))
       },
 
       describeElement = function(){
-          queryRD(paste0(serverURL,'session/',sessionInfo$id,'/element/',elementId))
+          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId))
       }
 
 
