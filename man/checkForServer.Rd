@@ -2,7 +2,7 @@
 \alias{checkForServer}
 \title{Check for Server binary}
 \usage{
-  checkForServer(dir = NULL, update = FALSE)
+checkForServer(dir = NULL, update = FALSE)
 }
 \arguments{
   \item{dir}{A directory in which the binary is to be
@@ -12,8 +12,8 @@
   binary if it is present.}
 }
 \description{
-  \code{checkForServer} A utility function to check if the
-  Selenium Server stanalone binary is present.
+\code{checkForServer} A utility function to check if the
+Selenium Server stanalone binary is present.
 }
 \section{Detail}{
   The downloads for the Selenium project can be found at

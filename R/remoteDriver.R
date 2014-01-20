@@ -206,7 +206,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               platform         = "character",
                               javascript       = "logical",
                               autoClose        = "logical",
-                              nativeEvents     = "logical"
+                              nativeEvents     = "logical",
                               serverURL        = "character",
                               sessionInfo      = "list"  ),
                             methods = list(
