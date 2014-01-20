@@ -20,6 +20,7 @@ checkForServer <- function (dir = NULL, update = FALSE)
                                         "/bin/"), dir)
   selFILE <- paste0(selDIR, "selenium-server-standalone.jar")
   if (update || !file.exists(selFILE)) {
+    dir.create(selDIR, showWarnings=FALSE)
     print("DOWNLOADING STANDALONE SELENIUM SERVER. THIS MAY TAKE SEVERAL MINUTES")
     download.file(paste0("http:", selJAR), selFILE, mode = "wb")
   }
