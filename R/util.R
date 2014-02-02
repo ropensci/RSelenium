@@ -100,6 +100,10 @@ matchSelKeys <- function(x){
 }
 
 .DollarNames.webElement <- function(x, pattern){
-    grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
+  grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
+}
+
+.DollarNames.errorHandler <- function(x, pattern){
+  grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 

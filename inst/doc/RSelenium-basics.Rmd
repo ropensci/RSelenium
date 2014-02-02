@@ -1,0 +1,121 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{RSelenium basics}
+-->
+
+```{r, echo = FALSE, message = FALSE}
+library(knitr)
+library(RSelenium)
+opts_chunk$set(comment = "#>", error = TRUE, tidy = FALSE)
+```
+
+# RSelenium basics
+
+## Introduction
+
+The goal of RSelenium is to make it easy to connect to a Selenium Server/ Remote Selenium Server from within R. RSelenium provides R bindings for the Selenium Webdriver API. [Selenium](http://docs.seleniumhq.org/) is a project focused on automating web browsers. RSelenium allows you to carry out unit testing and regression testing on your webapps and webpages across a range of browser/OS combinations. This allows us to integrate from within R testing and manipulation of popular projects such as [shiny](http://www.rstudio.com/shiny/), [sauceLabs](https://saucelabs.com/).
+
+This vignette is divided into five main sections:
+
+* [Connecting to a Selenium Server.](#id1)
+* [Navigating using RSelenium.](#id2)
+* [Accessing elements in the DOM.](#id3)
+* [Sending events to elements.](#id4)
+* [Injecting JavaScript.](#id5)
+
+Each section will be an introduction to a major idea in Selenium, and point to more detailed explanation in other vignettes.
+
+
+## <a id="id1">Connecting to a Selenium Server.</a>
+
+### What is a Selenium Server?
+Selenium Server is  a standalone java program which allows you to run HTML test suites in a range of different browsers, plus extra options like reporting.
+You may, or may not, need to run a Selenium Server, depending on how you intend to use Selenium-WebDriver (RSelenium). 
+
+### Do I need to run a Selenium Server?
+If you intend to drive a browser on the same machine that RSelenium is running on then you will need to have Selenium Server running on that machine. 
+
+### How do I get the Selenium Server stand-alone binary?
+RSelenium has a built-in function that will download the stand-alone java binary and place it in the RSelenium package location in the `/bin/` directory. If you would like to install elsewhere the function takes a `dir` argument and can also update an existing binary. 
+```
+RSelenium::checkForServer()
+```
+If you would like to download the binary manually it is currently found [here](http://code.google.com/p/selenium/downloads/list). Look for `selenium-server-standalone-x.xx.x.jar`.
+
+### How do I run the Selenium Server?
+
+There is a utility function included in `RSelenium` to run an existing stand-alone Selenium Server binary. 
+```
+RSelenium::startServer()
+```
+By default it looks in the `RSelenium` package `/bin/` directory. It has an optional `dir` argument if your binary is elsewhere. Alternatively you can run the binary manually. Open a console in your OS and navigate to where the binary is located and run:
+```
+java -jar selenium-server-standalone-x.xx.x.jar
+```
+By default the `Selenium Server` listens for connections on port 4444.
+
+### How do I connect to a running server?
+`RSelenium` has a main reference class named `remoteDriver`. To connect to a server you need to instantiate a new `remoteDriver` with appropriate options.
+```
+# RSelenium::startServer() if required
+require(RSelenium)
+remDr <- remoteDriver(remoteServerAddr = "localhost" 
+                      , port = 4444
+                      , browserName = "firefox"
+                      )
+```
+It would have been sufficient to call `remDr <- remoteDriver()` but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on the `sauceLabs` vignette. To connect to the server use the `open` method.
+
+```
+remDr$open()
+```
+RSelenium should now have a connection to the Selenium Server. You can query the status of the remote Server using the `status` method.
+```
+> remDr$status()
+$os
+              arch               name            version 
+           "amd64"            "Linux" "3.8.0-35-generic" 
+
+$java
+   version 
+"1.6.0_27" 
+
+$build
+             revision                  time               version 
+            "ff23eac" "2013-12-16 16:11:15"              "2.39.0" 
+
+```
+
+# <a id="id2">Navigating using RSelenium.</a>
+### Basic Navigation
+To start with we navigate to a url.
+```
+remDr$navigate("http://www.google.com")
+```
+Then we navigate to a second page.
+```
+remDr$navigate("http://www.bbc.co.uk")
+
+> remDr$getCurrentUrl()
+[1] "http://www.bbc.co.uk/"
+
+```
+We can go backwards and forwards using the methods `goBack` and `goForward`.
+
+```
+remDr$goBack()
+
+> remDr$getCurrentUrl()
+[1] "https://www.google.com/"
+
+remDr$goForward()
+
+> remDr$getCurrentUrl()
+[1] "http://www.bbc.co.uk/"
+
+```
+## <a id="id3">Accessing elements in the DOM.</a>
+The DOM stands for the Document Object Model. 
+## <a id="id4">Sending events to elements.</a>
+
+## <a id="id5">Injecting JavaScript</a>

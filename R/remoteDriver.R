@@ -112,6 +112,7 @@
 #'      \item{\code{closeServer()}:}{ Closes the server in practice terminating the process. This is useful for linux systems. On windows the java binary operates as a seperate shell which the user can terminate. }
 #'  }
 #' @export remoteDriver
+#' @exportClass remoteDriver
 #' @examples
 #' \dontrun{
 #' # start the server if one isnt running

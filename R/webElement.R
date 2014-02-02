@@ -52,7 +52,9 @@
 #'      property name (e.g. background-color instead of backgroundColor).}
 #'      \item{\code{describeElement()}:}{ Describe the identified element.}
 #'  }
+#' @include remoteDriver.R
 #' @export webElement
+#' @exportClass webElement
 webElement <- setRefClass("webElement",
   fields   = list(elementId        = "numeric"),
   contains = "remoteDriver",
