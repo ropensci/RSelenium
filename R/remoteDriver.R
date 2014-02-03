@@ -249,6 +249,9 @@ remoteDriver <- setRefClass("remoteDriver",
                               #    }
                               #},
                               
+                              #
+                              # add show method here to negate printing of all fields and sub-fields
+                              #
                               open = function(){
                                 print("Connecting to remote server")
                                 serverURL <<- paste0("http://",remoteServerAddr,":",port,"/wd/hub")
@@ -263,6 +266,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                   serverOpts$desiredCapabilities <- c(serverOpts$desiredCapabilities, extraCapabilities)
                                 }
                                 sessionResult <- queryRD(paste0(serverURL,'/session'),"POST",qdata = toJSON(serverOpts))
+                                # fudge for sauceLabs not having /sessions
                                 serverDetails <- try(getSessions(), TRUE)
                                 if(class(serverDetails) == "try-error"){
                                   sessionInfo <<- fromJSON(sessionResult)
