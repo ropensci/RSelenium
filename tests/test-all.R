@@ -1,4 +1,4 @@
 library(testthat)
 library(RSelenium)
 
-test_package("RSelenium")
+test_check("RSelenium")
