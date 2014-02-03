@@ -71,7 +71,7 @@ remDr$open()
 ```
 RSelenium should now have a connection to the Selenium Server. You can query the status of the remote Server using the `status` method.
 ```
-> remDr$status()
+> remDr$getStatus()
 $os
               arch               name            version 
            "amd64"            "Linux" "3.8.0-35-generic" 
@@ -97,6 +97,7 @@ Then we navigate to a second page.
 remDr$navigate("http://www.bbc.co.uk")
 
 > remDr$getCurrentUrl()
+[[1]]
 [1] "http://www.bbc.co.uk/"
 
 ```
@@ -106,16 +107,41 @@ We can go backwards and forwards using the methods `goBack` and `goForward`.
 remDr$goBack()
 
 > remDr$getCurrentUrl()
+[[1]]
 [1] "https://www.google.com/"
 
 remDr$goForward()
 
 > remDr$getCurrentUrl()
+[[1]]
 [1] "http://www.bbc.co.uk/"
 
 ```
+
+To refresh the current page you can use the `refresh method.
+
+```
+remDr$refresh()
+
+```
+
 ## <a id="id3">Accessing elements in the DOM.</a>
-The DOM stands for the Document Object Model. 
+The DOM stands for the Document Object Model. It is a cross-platform and language-independent convention for representing and interacting with objects in HTML, XHTML and XML documents. Interacting with the DOM will be very important for us with Selenium and the webDriver provides a number of methods in which to do this.
+A basic html page is 
+
+```
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>My First Heading</h1>
+
+<p>My first paragraph.</p>
+
+</body>
+</html>
+
+```
 ## <a id="id4">Sending events to elements.</a>
 
 ## <a id="id5">Injecting JavaScript</a>

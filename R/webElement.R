@@ -109,22 +109,27 @@ webElement <- setRefClass("webElement",
 
       isElementSelected = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/selected'))
+          .self$value
       },
 
       isElementEnabled = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/enabled'))
+          .self$value
       },
 
       getElementLocation = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/location'))
+          .self$value
       },
 
       getElementLocationInView = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/location_in_view'))
+          .self$value
       },
 
       getElementTagName = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/name'))
+          .self$value
       },
 
       clearElement = function(){
@@ -134,10 +139,12 @@ webElement <- setRefClass("webElement",
 
       getElementAttribute = function(attrName){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/attribute/',attrName))
+          .self$value
       },
 
       isElementDisplayed = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/displayed'))
+          .self$value
       },
 
       getElementSize = function(){
@@ -146,14 +153,17 @@ webElement <- setRefClass("webElement",
 
       getElementText = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/text'))
+          .self$value
       },
 
       getElementValueOfCssProperty = function(propName){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/css/',propName))
+          .self$value
       },
 
       describeElement = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId))
+          .self$value
       }
 
 

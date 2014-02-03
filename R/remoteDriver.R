@@ -301,14 +301,17 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               getSessions = function(){
                                 queryRD(paste0(serverURL,'/sessions'))
+                                .self$value
                               },
                               
-                              status = function(){
+                              getStatus = function(){
                                 queryRD(paste0(serverURL,'/status'))
+                                .self$value
                               },
                               
                               getAlertText = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/alert_text'))
+                                .self$value
                               },
                               
                               sendKeysToActiveElement = function(sendKeys){
@@ -380,14 +383,17 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               getCurrentWindowHandle = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window_handle'))
+                                .self$value
                               },
                               
                               getWindowHandles = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window_handles'))
+                                .self$value
                               },
                               
                               getWindowSize = function(windowId = "current"){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',windowId,'/size'))
+                                .self$value
                               },
                               
                               getWindowPosition = function(windowId = "current"){
@@ -396,6 +402,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               getCurrentUrl = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/url'))
+                                .self$value
                               },
                               
                               navigate = function(url){
@@ -405,6 +412,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               getTitle = function(url){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/title'))
+                                .self$value
                               },
                               
                               goForward = function(){
@@ -477,6 +485,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               getAllCookies = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/cookie'))
+                                .self$value
                               },
                               
                               addCookie = function(name,value,path,domain,secure = FALSE){
@@ -497,6 +506,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               getPageSource = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/source'))
+                                .self$value
                               },
                               
                               findElement = function(using = "xpath", value){
@@ -518,6 +528,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               getActiveElement = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/active'))
+                                .self$value
                               },
                               
                               click = function(buttonId = 0){
