@@ -16,15 +16,16 @@
 #' }
 #' 
 errorHandler <- setRefClass("errorHandler",
-                            fields   = list(statusCodes = "data.frame"),
+                            fields   = list(statusCodes = "data.frame"
+                                            , status = "numeric"),
                             methods  = list(
                               initialize = function(){
                                 # update statusCodes if needed
                                 # jwireTables <- htmlParse("http://code.google.com/p/selenium/wiki/JsonWireProtocol")
-                                # dput(readHTMLTable(getNodeSet(jwireTables, "/*//table//*[text()[contains(.,'Success')]]/../../..")[[1]], stringsAsFactors = FALSE))
-                                statusCodes <<- structure(list(Code = c("0", "6", "7", "8", "9", "10", "11", 
-                                                                        "12", "13", "15", "17", "19", "21", "23", "24", "25", "26", "27", 
-                                                                        "28", "29", "30", "31", "32", "33", "34")
+                                # dput(readHTMLTable(getNodeSet(jwireTables, "/*//table//*[text()[contains(.,'Success')]]/../../..")[[1]], stringsAsFactors = FALSE, colClasses = c("integer", "character", "character")))
+                                statusCodes <<- structure(list(Code = c(0L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 
+                                                                        15L, 17L, 19L, 21L, 23L, 24L, 25L, 26L, 27L, 28L, 29L, 30L, 31L, 
+                                                                        32L, 33L, 34L)
                                                                , Summary = c("Success", 
                                                                              "NoSuchDriver", "NoSuchElement", "NoSuchFrame", "UnknownCommand", 
                                                                              "StaleElementReference", "ElementNotVisible", "InvalidElementState", 
@@ -57,6 +58,7 @@ errorHandler <- setRefClass("errorHandler",
                                                           , .Names = c("Code", "Summary", "Detail")
                                                           , row.names = c(NA, -25L)
                                                           , class = "data.frame")
+                                status <<- 0 # initial status success
                               },
                               
                               queryRD = function(ipAddr,

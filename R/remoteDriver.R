@@ -386,6 +386,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               },
                               
                               executeAsyncScript = function(script,args = NA){
+                                # change here to test class of args for a webElement
                                 if(.self$javascript){
                                   queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/execute_async'),
                                           "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
@@ -395,6 +396,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               },
                               
                               executeScript = function(script,args = NA){
+                                # change here to test class of args for a webElement
                                 if(.self$javascript){
                                   queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/execute'),
                                           "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
