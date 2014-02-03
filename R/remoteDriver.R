@@ -334,6 +334,17 @@ remoteDriver <- setRefClass("remoteDriver",
                                         "DELETE")
                               },
                               
+                              closeall = function(){
+                                
+                                serverDetails <- getSessions()
+                                sapply(seq_along(serverDetails),
+                                       function(x){
+                                         queryRD(paste0(serverURL,'/session/',serverDetails[[x]]$id),"DELETE")
+                                       }
+                                )
+                                
+                              },
+                              
                               quit = function(){
                                 serverDetails<-getSessions()
                                 sapply(seq_along(serverDetails$value),
