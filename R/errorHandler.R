@@ -17,7 +17,11 @@
 #' 
 errorHandler <- setRefClass("errorHandler",
                             fields   = list(statusCodes = "data.frame"
-                                            , status = "numeric"),
+                                            , status = "numeric"
+                                            , statusclass = "character"
+                                            , sessionid = "character"
+                                            , hcode = "numeric"
+                                            , value = "list"),
                             methods  = list(
                               initialize = function(){
                                 # update statusCodes if needed
@@ -59,6 +63,10 @@ errorHandler <- setRefClass("errorHandler",
                                                           , row.names = c(NA, -25L)
                                                           , class = "data.frame")
                                 status <<- 0 # initial status success
+                                statusclass <<- NA_character_
+                                sessionid <<- NA_character_
+                                hcode <<- NA_integer_
+                                value <<- list()
                               },
                               
                               queryRD = function(ipAddr,
@@ -66,7 +74,7 @@ errorHandler <- setRefClass("errorHandler",
                                                  httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),
                                                  qdata = NULL,
                                                  json = FALSE){
-                                
+                                browser(expr = BANDAID)
                                 if(is.null(qdata)){
                                   res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE)
                                 }else{
@@ -74,17 +82,39 @@ errorHandler <- setRefClass("errorHandler",
                                 }
                                 
                                 res1 <- ifelse(is.raw(res), rawToChar(res), res)
-                                if(method == 'GET' || json){
-                                  if( isValidJSON(res1, asText = TRUE)){
-                                    res1 <- fromJSON(res1) 
+                                #                                if(method == 'GET' || json){
+                                if( isValidJSON(res1, asText = TRUE)){
+                                  res1 <- fromJSON(res1) 
+                                  if(!is.null(res1$status)){status <<- res1$status}
+                                  if(!is.null(res1$class)){statusclass <<- res1$class}
+                                  if(!is.null(res1$sessionId)){sessionid <<- res1$sessionId}
+                                  if(!is.null(res1$hCode)){hcode <<- res1$hCode}
+                                  if(!is.null(res1$value)){
+                                    if(length(res1$value) > 0){
+                                      if(is.list(res1$value)){
+                                        value <<- res1$value
+                                      }else{
+                                        value <<- list(res1$value)                                      
+                                      }
+                                    }else{
+                                      value <<- list()
+                                    }
                                   }
-                                }
-                                # insert error checking code here based on res1$status
-                                if(is.atomic(res1)){
-                                  return(res1)
                                 }else{
-                                  res1$value
+                                  status <<- 0
+                                  statusclass <<- NA_character_
+                                  sessionid <<- NA_character_
+                                  hcode <<- NA_integer_
+                                  value <<- list()
                                 }
+                                #                                }
+                                # insert error checking code here based on res1$status
+                                #                                  
+                                #                                 if(is.atomic(res1)){
+                                #                                   return(res1)
+                                #                                 }else{
+                                #                                   res1$value
+                                #                                 }
                               }
                             )
 )

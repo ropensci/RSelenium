@@ -252,6 +252,30 @@ remoteDriver <- setRefClass("remoteDriver",
                               #
                               # add show method here to negate printing of all fields and sub-fields
                               #
+                              show = function(){
+                                print(list(
+                                  remoteServerAddr = remoteServerAddr,
+                                  port = port,
+                                  browserName = browserName,
+                                  version = version,
+                                  platform = platform,
+                                  javascript = javascript,
+                                  autoClose = autoClose,
+                                  nativeEvents = nativeEvents,
+                                  extraCapabilities = extraCapabilities
+                                ))
+                              },
+                              
+                              showErrorClass = function(){
+                                print(list(
+                                status = status
+                                , statusclass = statusclass
+                                , sessionid = sessionid
+                                , hcode = hcode
+                                , value = value
+                                ))
+                              },
+                              
                               open = function(){
                                 print("Connecting to remote server")
                                 serverURL <<- paste0("http://",remoteServerAddr,":",port,"/wd/hub")
@@ -265,18 +289,14 @@ remoteDriver <- setRefClass("remoteDriver",
                                 if(length(extraCapabilities) > 0){
                                   serverOpts$desiredCapabilities <- c(serverOpts$desiredCapabilities, extraCapabilities)
                                 }
-                                sessionResult <- queryRD(paste0(serverURL,'/session'),"POST",qdata = toJSON(serverOpts))
+                                #                                sessionResult <- queryRD(paste0(serverURL,'/session'),"POST",qdata = toJSON(serverOpts))
+                                queryRD(paste0(serverURL,'/session'),"POST",qdata = toJSON(serverOpts))
                                 # fudge for sauceLabs not having /sessions
-                                serverDetails <- try(getSessions(), TRUE)
-                                if(class(serverDetails) == "try-error"){
-                                  sessionInfo <<- fromJSON(sessionResult)
-                                  sessionInfo$id <<- sessionInfo$sessionId
-                                  print(sessionResult)
-                                }else{
-                                  sessionInfo <<- tail(serverDetails,n = 1)[[1]]
-                                  print(serverDetails)
-                                }
-                                
+                                #                                  sessionInfo <<- fromJSON(sessionResult)
+                                sessionInfo <<- value
+                                sessionInfo$id <<- sessionid
+                                print(sessionInfo)
+                                #                                
                               },    
                               
                               getSessions = function(){
@@ -336,7 +356,8 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               closeall = function(){
                                 
-                                serverDetails <- getSessions()
+                                getSessions()
+                                serverDetails <- value
                                 sapply(seq_along(serverDetails),
                                        function(x){
                                          queryRD(paste0(serverURL,'/session/',serverDetails[[x]]$id),"DELETE")
@@ -346,7 +367,8 @@ remoteDriver <- setRefClass("remoteDriver",
                               },
                               
                               quit = function(){
-                                serverDetails<-getSessions()
+                                getSessions()
+                                serverDetails <- value
                                 sapply(seq_along(serverDetails$value),
                                        function(x){
                                          queryRD(paste0(serverURL,'/session/',serverDetails$value[[x]]$id),
@@ -477,17 +499,20 @@ remoteDriver <- setRefClass("remoteDriver",
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/source'))
                               },
                               
-                              findElement = function(using = "xpath",value){
-                                elemDetails <- queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element'),
+                              findElement = function(using = "xpath", value){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element'),
                                                        "POST",qdata = toJSON(list(using = using,value = value)),
                                                        json = TRUE)
+                                # using value as an argument refer to self
+                                elemDetails <- .self$value[[1]]
                                 webElement$new(as.integer(elemDetails))$import(.self)
                               },
                               
-                              findElements = function(using = "xpath",value){
-                                elemDetails <- queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/elements'),
+                              findElements = function(using = "xpath", value){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/elements'),
                                                        "POST",qdata = toJSON(list(using = using,value = value)),
                                                        json = TRUE)
+                                elemDetails <- .self$value
                                 lapply(elemDetails, function(x){webElement$new(as.integer(x))$import(.self)})
                               },
                               
