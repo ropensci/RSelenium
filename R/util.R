@@ -61,32 +61,8 @@ startServer <- function (dir = NULL)
 
 #' @export .DollarNames.remoteDriver
 #' @export .DollarNames.webElement
+#' @export .DollarNames.errorHandler
 #' 
-queryRD <- function(ipAddr,
-                  method = "GET",
-                  httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),
-                  qdata = NULL,
-                  json = FALSE){
-  
- if(is.null(qdata)){
-   res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader)
- }else{
-   res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata)
- }
-
-  res1 <- ifelse(is.raw(res), rawToChar(res), res)
-  if(method == 'GET' || json){
-    if( isValidJSON(res1, asText = TRUE)){
-      res1 <- fromJSON(res1) 
-    }
-  }
- # insert error checking code here based on res1$status
- if(is.atomic(res1)){
-   return(res1)
- }else{
-   res1$value
- }
-}
 
 matchSelKeys <- function(x){
   if(any(names(x) =='key')){

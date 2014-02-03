@@ -19,8 +19,8 @@ Suggests:
 VignetteBuilder: knitr
 LazyData: yes
 Collate:
-    'remoteDriver.R'
     'errorHandler.R'
+    'remoteDriver.R'
     'selKeys-data.R'
     'util.R'
     'webElement.R'

@@ -111,6 +111,7 @@
 #'      buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' }
 #'      \item{\code{closeServer()}:}{ Closes the server in practice terminating the process. This is useful for linux systems. On windows the java binary operates as a seperate shell which the user can terminate. }
 #'  }
+#' @include errorHandler.R
 #' @export remoteDriver
 #' @exportClass remoteDriver
 #' @examples
@@ -211,6 +212,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               extraCapabilities = "list",
                               serverURL        = "character",
                               sessionInfo      = "list"  ),
+                            contains = "errorHandler",
                             methods = list(
                               initialize = function(remoteServerAddr = "localhost",
                                                     port             = 4444,
