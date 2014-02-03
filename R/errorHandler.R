@@ -74,7 +74,7 @@ errorHandler <- setRefClass("errorHandler",
                                                  httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),
                                                  qdata = NULL,
                                                  json = FALSE){
-                                browser(expr = BANDAID)
+                                # browser(expr = BANDAID)
                                 if(is.null(qdata)){
                                   res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE)
                                 }else{

@@ -61,28 +61,34 @@ webElement <- setRefClass("webElement",
   methods  = list(
       initialize = function(elementId = "",...){
           elementId <<- elementId
-          #eval(parse(text=paste0('.self$',ls(webElement$def@refMethods))))
           callSuper(...)
       },
-
+      
+      show = function(){
+        print("remoteDriver fields")
+        callSuper()
+        print("webElement fields")
+        print(list(elementId = elementId))
+      },
+      
       findChildElement = function(using = "xpath",value){
           qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/element')
-          elemDetails <- queryRD(qpath,
-                           "POST",qdata = toJSON(list(using = using,value = value)), json = TRUE)
+          queryRD(qpath, "POST", qdata = toJSON(list(using = using,value = value)), json = TRUE)
+          elemDetails <- .self$value[[1]]
           webElement$new(as.integer(elemDetails))$import(.self$export("remoteDriver"))
       },
 
       findChildElements = function(using = "xpath",value){
           qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/elements')
-          elemDetails <- queryRD(qpath,
-                           "POST",qdata = toJSON(list(using = using,value = value)), json = TRUE)
+          queryRD(qpath, "POST", qdata = toJSON(list(using = using,value = value)), json = TRUE)
+          elemDetails <- .self$value
           lapply(elemDetails, function(x){webElement$new(as.integer(x))$import(.self$export("remoteDriver"))})
       },
 
       compareElements = function(otherElem){
           qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/equals/',otherElem$elementId)
-          elemDetails <- queryRD(qpath)
-          elemDetails
+          queryRD(qpath)
+          .self$value
       },
 
       clickElement = function(){
