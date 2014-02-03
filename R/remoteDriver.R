@@ -222,7 +222,8 @@ remoteDriver <- setRefClass("remoteDriver",
                                                     javascript       = TRUE,
                                                     autoClose        = FALSE,
                                                     nativeEvents     = TRUE,
-                                                    extraCapabilities = list()
+                                                    extraCapabilities = list(),
+                                                    ...
                               ){
                                 remoteServerAddr <<- remoteServerAddr
                                 port <<- port
@@ -234,7 +235,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                 nativeEvents <<- nativeEvents
                                 extraCapabilities <<- extraCapabilities
                                 #eval(parse(text=paste0('.self$',ls(remoteDriver$def@refMethods))))
-                                
+                                callSuper(...)
                               },
                               
                               #finalize = function(){
