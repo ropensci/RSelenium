@@ -26,6 +26,7 @@ vignette('RSelenium-basics')
 
 ```
 
+or the basic vignette can be viewed on [Rpubs](http://rpubs.com/johndharrison/12843).
 ### Use sauceLabs
 Added support for sauceLabs:
 
