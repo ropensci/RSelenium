@@ -325,5 +325,48 @@ webElem$clickElement()
 ```
 ## <a id="id5">Injecting JavaScript</a>
 
-Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page. `Selenium` has two methods we can use to execute JavaScript namely
-`executeScript` and `executeAsyncScript` from the `remoteDriver` class.
+Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page for example by adding the `JQuery` library to the page if it is missing. `Selenium` has two methods we can use to execute JavaScript namely
+`executeScript` and `executeAsyncScript` from the `remoteDriver` class. We return to the google front page to investigate these methods.
+
+
+### Injecting JavaScript synchronously
+
+Returning to the google homepage we can find the element for the `google` image. The image has `id = "hplogo"` and
+we can use this in an xpath or search by id etc to select the element. In this case we use `css selectors`:
+
+```
+remDr$navigate("http://www.google.com/ncr")
+webElem <- remDr$findElement("css selector", "img#hplogo")
+
+```
+
+Is the image visible? Clearly it is but we can check using javascript. 
+
+```
+> remDr$executeScript("return document.getElementById('hplogo').hidden;", args = list())
+[[1]]
+[1] FALSE
+
+```
+
+Great so the image is not hidden indicated by the `FALSE`. We can hide it executing some simple JavaScript.
+
+```
+remDr$executeScript("document.getElementById('hplogo').hidden = true;", args = list())
+
+> remDr$executeScript("return document.getElementById('hplogo').hidden;", args = list())
+[[1]]
+[1] TRUE
+
+```
+So now the image is hidden. We used an element here given by `id = "hplogo"`. We had to use the JavaScript function
+`getElementById` to access it. It would be nicer if we could have used `webElem` which we had specified earlier. 
+If we pass a webElement object as an argument to either `executeScript` or `executeAsyncScript` `RSelenium` will pass it in an appropriate fashion.
+
+```
+> remDr$executeScript("return arguments[0].hidden = false;", args = list(webElem))
+[[1]]
+[1] FALSE
+
+```
+Notive how we passed the web element to the method `executeScript`. 

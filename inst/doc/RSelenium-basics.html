@@ -466,8 +466,48 @@ resHeaders &lt;- unlist(lapply(webElems, function(x){x$getElementText()}))
 
 <h2><a id="id5">Injecting JavaScript</a></h2>
 
-<p>Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page. <code>Selenium</code> has two methods we can use to execute JavaScript namely
-<code>executeScript</code> and <code>executeAsyncScript</code> from the <code>remoteDriver</code> class.</p>
+<p>Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page for example by adding the <code>JQuery</code> library to the page if it is missing. <code>Selenium</code> has two methods we can use to execute JavaScript namely
+<code>executeScript</code> and <code>executeAsyncScript</code> from the <code>remoteDriver</code> class. We return to the google front page to investigate these methods.</p>
+
+<h3>Injecting JavaScript synchronously</h3>
+
+<p>Returning to the google homepage we can find the element for the <code>google</code> image. The image has <code>id = &quot;hplogo&quot;</code> and
+we can use this in an xpath or search by id etc to select the element. In this case we use <code>css selectors</code>:</p>
+
+<pre><code>remDr$navigate(&quot;http://www.google.com/ncr&quot;)
+webElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;img#hplogo&quot;)
+
+</code></pre>
+
+<p>Is the image visible? Clearly it is but we can check using javascript. </p>
+
+<pre><code>&gt; remDr$executeScript(&quot;return document.getElementById(&#39;hplogo&#39;).hidden;&quot;, args = list())
+[[1]]
+[1] FALSE
+
+</code></pre>
+
+<p>Great so the image is not hidden indicated by the <code>FALSE</code>. We can hide it executing some simple JavaScript.</p>
+
+<pre><code>remDr$executeScript(&quot;document.getElementById(&#39;hplogo&#39;).hidden = true;&quot;, args = list())
+
+&gt; remDr$executeScript(&quot;return document.getElementById(&#39;hplogo&#39;).hidden;&quot;, args = list())
+[[1]]
+[1] TRUE
+
+</code></pre>
+
+<p>So now the image is hidden. We used an element here given by <code>id = &quot;hplogo&quot;</code>. We had to use the JavaScript function
+<code>getElementById</code> to access it. It would be nicer if we could have used <code>webElem</code> which we had specified earlier. 
+If we pass a webElement object as an argument to either <code>executeScript</code> or <code>executeAsyncScript</code> <code>RSelenium</code> will pass it in an appropriate fashion.</p>
+
+<pre><code>&gt; remDr$executeScript(&quot;return arguments[0].hidden = false;&quot;, args = list(webElem))
+[[1]]
+[1] FALSE
+
+</code></pre>
+
+<p>Notive how we passed the web element to the method <code>executeScript</code>. </p>
 
 </body>
 

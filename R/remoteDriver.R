@@ -430,24 +430,48 @@ remoteDriver <- setRefClass("remoteDriver",
                                         "POST")
                               },
                               
-                              executeAsyncScript = function(script,args = NA){
+                              executeAsyncScript = function(script,args = list()){
                                 # change here to test class of args for a webElement
+                                if(any(lapply(args, class) == 'webElement')){
+                                  # some of the function arguments are webElements
+                                  wInd <- lapply(args, class) == 'webElement'
+                                  args <- lapply(args, function(x){
+                                    if(class(x) == 'webElement'){
+                                      setNames(as.character(webElem$elementId), "ELEMENT")
+                                    }else{
+                                      x
+                                    }
+                                  })
+                                }
                                 if(.self$javascript){
                                   queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/execute_async'),
                                           "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
                                 }else{
                                   "Javascript is not enabled"
                                 }
+                                .self$value
                               },
                               
-                              executeScript = function(script,args = NA){
+                              executeScript = function(script,args = list()){
                                 # change here to test class of args for a webElement
+                                if(any(lapply(args, class) == 'webElement')){
+                                  # some of the function arguments are webElements
+                                  wInd <- lapply(args, class) == 'webElement'
+                                  args <- lapply(args, function(x){
+                                    if(class(x) == 'webElement'){
+                                      setNames(as.character(webElem$elementId), "ELEMENT")
+                                    }else{
+                                      x
+                                    }
+                                  })
+                                }
                                 if(.self$javascript){
                                   queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/execute'),
                                           "POST",qdata = toJSON(list(script = script,args = args)), json = TRUE)
                                 }else{
                                   "Javascript is not enabled"
                                 }
+                                .self$value
                               },
                               
                               screenshot = function(){
