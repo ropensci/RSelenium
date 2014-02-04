@@ -364,9 +364,50 @@ So now the image is hidden. We used an element here given by `id = "hplogo"`. We
 If we pass a webElement object as an argument to either `executeScript` or `executeAsyncScript` `RSelenium` will pass it in an appropriate fashion.
 
 ```
-> remDr$executeScript("return arguments[0].hidden = false;", args = list(webElem))
+> remDr$executeScript(script = "return arguments[0].hidden = false;", args = list(webElem))
 [[1]]
 [1] FALSE
 
 ```
-Notive how we passed the web element to the method `executeScript`. 
+Notive how we passed the web element to the method `executeScript`. The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided args. If the function returns an element then this will be returned as an object of class webElement:
+
+```
+test <- remDr$executeScript("return document.getElementById('gbqfq');", args = list())
+
+> test
+[[1]]
+[[1]]$ELEMENT
+[1] "remoteDriver fields"
+$remoteServerAddr
+[1] "localhost"
+
+$port
+[1] 4444
+
+$browserName
+[1] "firefox"
+
+$version
+[1] ""
+
+$platform
+[1] "ANY"
+
+$javascript
+[1] TRUE
+
+$autoClose
+[1] FALSE
+
+$nativeEvents
+[1] TRUE
+
+$extraCapabilities
+list()
+
+[1] "webElement fields"
+$elementId
+[1] 1
+
+
+```

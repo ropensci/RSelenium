@@ -449,7 +449,14 @@ remoteDriver <- setRefClass("remoteDriver",
                                 }else{
                                   "Javascript is not enabled"
                                 }
-                                .self$value
+                                if(any(lapply(.self$value, names) == "ELEMENT")){
+                                  wInd <- lapply(.self$value, names) == "ELEMENT"
+                                  out <- .self$value
+                                  out[[wInd]] <- lapply(out[[wInd]], function(x){webElement$new(as.integer(x))$import(.self)})
+                                  out
+                                }else{
+                                  .self$value
+                                }
                               },
                               
                               executeScript = function(script,args = list()){
@@ -471,7 +478,15 @@ remoteDriver <- setRefClass("remoteDriver",
                                 }else{
                                   "Javascript is not enabled"
                                 }
-                                .self$value
+                                # if any of the returned elements are web Elements retrun them as such
+                                if(any(lapply(.self$value, names) == "ELEMENT")){
+                                  wInd <- lapply(.self$value, names) == "ELEMENT"
+                                  out <- .self$value
+                                  out[[wInd]] <- lapply(out[[wInd]], function(x){webElement$new(as.integer(x))$import(.self)})
+                                  out
+                                }else{
+                                  .self$value
+                                }
                               },
                               
                               screenshot = function(){

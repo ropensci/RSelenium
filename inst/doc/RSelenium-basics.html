@@ -501,13 +501,53 @@ webElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;img#hplogo&quot;
 <code>getElementById</code> to access it. It would be nicer if we could have used <code>webElem</code> which we had specified earlier. 
 If we pass a webElement object as an argument to either <code>executeScript</code> or <code>executeAsyncScript</code> <code>RSelenium</code> will pass it in an appropriate fashion.</p>
 
-<pre><code>&gt; remDr$executeScript(&quot;return arguments[0].hidden = false;&quot;, args = list(webElem))
+<pre><code>&gt; remDr$executeScript(script = &quot;return arguments[0].hidden = false;&quot;, args = list(webElem))
 [[1]]
 [1] FALSE
 
 </code></pre>
 
-<p>Notive how we passed the web element to the method <code>executeScript</code>. </p>
+<p>Notive how we passed the web element to the method <code>executeScript</code>. The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided args. If the function returns an element then this will be returned as an object of class webElement:</p>
+
+<pre><code>test &lt;- remDr$executeScript(&quot;return document.getElementById(&#39;gbqfq&#39;);&quot;, args = list())
+
+&gt; test
+[[1]]
+[[1]]$ELEMENT
+[1] &quot;remoteDriver fields&quot;
+$remoteServerAddr
+[1] &quot;localhost&quot;
+
+$port
+[1] 4444
+
+$browserName
+[1] &quot;firefox&quot;
+
+$version
+[1] &quot;&quot;
+
+$platform
+[1] &quot;ANY&quot;
+
+$javascript
+[1] TRUE
+
+$autoClose
+[1] FALSE
+
+$nativeEvents
+[1] TRUE
+
+$extraCapabilities
+list()
+
+[1] &quot;webElement fields&quot;
+$elementId
+[1] 1
+
+
+</code></pre>
 
 </body>
 
