@@ -9,11 +9,24 @@ selenium-server-standalone.jar.  This binding will not work with the
 This library was influenced by the perl implemetation detailed here 
 https://metacpan.org/release/Selenium-Remote-Driver.
 
+### Install 
+
 To install, install the `devtools` package if necessary (`install.packages("devtools")`) and run:
 
 ```
 devtools::install_github("RSelenium", "johndharrison")
 ```
+
+To get started using `RSelenium` you can look at the introduction vignette located 
+in `/doc/RSelenium-basics.html` once `RSelenium` is installed or run
+
+```
+
+vignette('RSelenium-basics')
+
+```
+
+### Use sauceLabs
 Added support for sauceLabs:
 
 ```

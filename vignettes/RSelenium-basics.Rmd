@@ -142,6 +142,126 @@ A basic html page is
 </html>
 
 ```
+
+The query box on the front page of `http://www.google.com` has html code `input id="gbqfq" class="gbqfif"` associated with it. The full html associated with the input tag is:
+
+```
+<input type="text" value="" autocomplete="off" name="q" class="gbqfif" id="gbqfq" style="border: medium none; padding: 0px; margin: 0px; height: auto; width: 100%; background: url(&quot;data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw%3D%3D&quot;) repeat scroll 0% 0% transparent; position: absolute; z-index: 6; left: 0px; outline: medium none;" dir="ltr" spellcheck="false">
+
+```
+### Search by id.
+
+To find this element in the DOM a number of methods can be used. We can search by the id.
+
+```
+remDr$navigate("http://www.google.com/ncr")
+webElem <- remDr$findElement(using = 'id', value = "gbqfq")
+
+> webElem$getElementAttribute("id")
+[[1]]
+[1] "gbqfq"
+
+> webElem$getElementAttribute("class")
+[[1]]
+[1] "gbqfif"
+
+```
+### Search by class.
+We can also search by class name.
+
+```
+webElem <- remDr$findElement(using = 'class name', "gbqfif")
+
+> webElem$getElementAttribute("class")
+[[1]]
+[1] "gbqfif"
+
+> webElem$getElementAttribute("type")
+[[1]]
+[1] "text"
+
+```
+### Search using css-selectors
+The class is denoted by `.` when using css selectors. To search on class using css selectors we would use
+
+```
+webElem <- remDr$findElement(using = 'css selector', "input.gbqfif")
+
+```
+
+and to search on id using css-selectors
+
+```
+webElem <- remDr$findElement(using = 'css selector', "input#gbqfq")
+
+```
+
+A good example of searching using css-selectors is given [here](http://saucelabs.com/resources/selenium/css-selectors).
+
+### Search by name
+To search using the `name` if given of the element. Note that ids are unique in a given html page. Names are not necessarily unique. 
+
+```
+webElem <- remDr$findElement(using = 'name', "q")
+ 
+> webElem$getElementAttribute("name")
+[[1]]
+[1] "q"
+
+> webElem$getElementAttribute("id")
+[[1]]
+[1] "gbqfq"
+
+```
+
+### Search using xpath
+The final option is to search using xpath. Normally one would use xpath by default when searching. 
+
+Xpath using id.
+
+```
+webElem <- remDr$findElement(using = 'xpath', "//*/input[@id = 'gbqfq']")
+```
+
+Xpath using class.
+
+```
+webElem <- remDr$findElement(using = 'xpath', "//*/input[@class = 'gbqfif']")
+```
+
 ## <a id="id4">Sending events to elements.</a>
+
+To illustrate how to interact with elements we will again use the `http://www.google.com/ncr` as an example.
+
+Suppose we would like to search for `R cran` on google. We would need to find the element for the query box and send the appropriate text to it.
+
+```
+remDr$navigate("http://www.google.com/ncr")
+webElem <- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
+webElem$sendKeysToElement(list("R Cran"))
+
+```
+
+We should see that the text `R Cran` has now been entered into the query box.
+How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as `"\uE007"`. So we could use:
+
+```
+remDr$navigate("http://www.google.com/ncr")
+webElem <- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
+webElem$sendKeysToElement(list("R Cran", "\uE007"))
+
+```
+It is not very easy to remember utf8 codes for appropriate keys so a mapping has been provided in `RSelenium`. `?selkeys' will bring up a help page explaining the mapping. The utf codes given (here)[http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value] have been mapped to easy to remember names. 
+
+To use `selkeys` we would send the following
+
+```
+remDr$navigate("http://www.google.com/ncr")
+webElem <- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
+webElem$sendKeysToElement(list("R Cran", key = "enter"))
+
+```
+
+Typing `selKeys` into the console will bring up the list of mappings.
 
 ## <a id="id5">Injecting JavaScript</a>
