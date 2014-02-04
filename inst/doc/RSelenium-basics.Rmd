@@ -374,9 +374,7 @@ Notive how we passed the web element to the method `executeScript`. The script a
 ```
 test <- remDr$executeScript("return document.getElementById('gbqfq');", args = list())
 
-> test
-[[1]]
-[[1]]$ELEMENT
+> test[[1]]
 [1] "remoteDriver fields"
 $remoteServerAddr
 [1] "localhost"
@@ -409,5 +407,41 @@ list()
 $elementId
 [1] 1
 
+> class(test[[1]])
+[1] "webElement"
+attr(,"package")
+[1] "RSelenium"
 
 ```
+
+### Injecting JavaScript asynchronously
+
+I will briefly touch on asynch versus sync calls here. With the current firefox and selenium server combination (firefox 26.0 sel server 2.39.0) I had issues with async javascript calls when `nativeEvents = TRUE` (the default) was used. 
+
+For the example below I switched to `nativeEvents = FALSE`
+
+```
+
+remDr <- remoteDriver(nativeEvents = FALSE)
+remDr$open()
+remDr$navigate("http://www.google.com/ncr")
+remDr$setAsyncScriptTimeout(5000)
+test <- remDr$executeAsyncScript("window.setTimeout(alert('hello'), 3000); arguments[0]('DONE');", args = list())
+
+```
+
+Observe:
+
+```
+remDr$executeAsyncScript("setTimeout(function(){ alert('Hello');},10000); arguments[arguments.length -1]('DONE');", args = list())
+
+```
+
+versus
+
+```
+remDr$executeScript("setTimeout(function(){ alert('Hello');},10000); return 'DONE';", args = list())
+
+```
+
+

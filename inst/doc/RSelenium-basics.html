@@ -511,9 +511,7 @@ If we pass a webElement object as an argument to either <code>executeScript</cod
 
 <pre><code>test &lt;- remDr$executeScript(&quot;return document.getElementById(&#39;gbqfq&#39;);&quot;, args = list())
 
-&gt; test
-[[1]]
-[[1]]$ELEMENT
+&gt; test[[1]]
 [1] &quot;remoteDriver fields&quot;
 $remoteServerAddr
 [1] &quot;localhost&quot;
@@ -546,6 +544,37 @@ list()
 $elementId
 [1] 1
 
+&gt; class(test[[1]])
+[1] &quot;webElement&quot;
+attr(,&quot;package&quot;)
+[1] &quot;RSelenium&quot;
+
+</code></pre>
+
+<h3>Injecting JavaScript asynchronously</h3>
+
+<p>I will briefly touch on asynch versus sync calls here. With the current firefox and selenium server combination (firefox 26.0 sel server 2.39.0) I had issues with async javascript calls when <code>nativeEvents = TRUE</code> (the default) was used. </p>
+
+<p>For the example below I switched to <code>nativeEvents = FALSE</code></p>
+
+<pre><code>
+remDr &lt;- remoteDriver(nativeEvents = FALSE)
+remDr$open()
+remDr$navigate(&quot;http://www.google.com/ncr&quot;)
+remDr$setAsyncScriptTimeout(5000)
+test &lt;- remDr$executeAsyncScript(&quot;window.setTimeout(alert(&#39;hello&#39;), 3000); arguments[0](&#39;DONE&#39;);&quot;, args = list())
+
+</code></pre>
+
+<p>Observe:</p>
+
+<pre><code>remDr$executeAsyncScript(&quot;setTimeout(function(){ alert(&#39;Hello&#39;);},10000); arguments[arguments.length -1](&#39;DONE&#39;);&quot;, args = list())
+
+</code></pre>
+
+<p>versus</p>
+
+<pre><code>remDr$executeScript(&quot;setTimeout(function(){ alert(&#39;Hello&#39;);},10000); return &#39;DONE&#39;;&quot;, args = list())
 
 </code></pre>
 

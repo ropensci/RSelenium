@@ -452,8 +452,9 @@ remoteDriver <- setRefClass("remoteDriver",
                                 if(any(lapply(.self$value, names) == "ELEMENT")){
                                   wInd <- lapply(.self$value, names) == "ELEMENT"
                                   out <- .self$value
+                                  out[[wInd]] <- unname(out[[wInd]])
                                   out[[wInd]] <- lapply(out[[wInd]], function(x){webElement$new(as.integer(x))$import(.self)})
-                                  out
+                                  unlist(out)
                                 }else{
                                   .self$value
                                 }
@@ -482,8 +483,9 @@ remoteDriver <- setRefClass("remoteDriver",
                                 if(any(lapply(.self$value, names) == "ELEMENT")){
                                   wInd <- lapply(.self$value, names) == "ELEMENT"
                                   out <- .self$value
+                                  out[[wInd]] <- unname(out[[wInd]])
                                   out[[wInd]] <- lapply(out[[wInd]], function(x){webElement$new(as.integer(x))$import(.self)})
-                                  out
+                                  unlist(out)
                                 }else{
                                   .self$value
                                 }
