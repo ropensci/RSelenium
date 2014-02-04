@@ -380,13 +380,17 @@ webElem &lt;- remDr$findElement(using = &#39;id&#39;, value = &quot;gbqfq&quot;)
 
 <p>To illustrate how to interact with elements we will again use the <code>http://www.google.com/ncr</code> as an example.</p>
 
-<p>Suppose we would like to search for <code>R cran</code> on google. We would need to find the element for the query box and send the appropriate text to it.</p>
+<h3>Sending text to elements</h3>
+
+<p>Suppose we would like to search for <code>R cran</code> on google. We would need to find the element for the query box and send the appropriate text to it. We can do this using the <code>sendKeysToElement</code> method for the <code>webElement</code> class.</p>
 
 <pre><code>remDr$navigate(&quot;http://www.google.com/ncr&quot;)
 webElem &lt;- remDr$findElement(using = &quot;xpath&quot;, &quot;//*/input[@id = &#39;gbqfq&#39;]&quot;)
 webElem$sendKeysToElement(list(&quot;R Cran&quot;))
 
 </code></pre>
+
+<h3>Sending key presses to elements</h3>
 
 <p>We should see that the text <code>R Cran</code> has now been entered into the query box.
 How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as <code>&quot;\uE007&quot;</code>. So we could use:</p>
@@ -397,7 +401,7 @@ webElem$sendKeysToElement(list(&quot;R Cran&quot;, &quot;\uE007&quot;))
 
 </code></pre>
 
-<p>It is not very easy to remember utf8 codes for appropriate keys so a mapping has been provided in <code>RSelenium</code>. ?selkeys&#39; will bring up a help page explaining the mapping. The utf codes given (here)[<a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value">http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value</a>] have been mapped to easy to remember names. </p>
+<p>It is not very easy to remember utf8 codes for appropriate keys so a mapping has been provided in <code>RSelenium</code>. ?selkeys&#39; will bring up a help page explaining the mapping. The utf codes given <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value">here</a> have been mapped to easy to remember names. </p>
 
 <p>To use <code>selkeys</code> we would send the following</p>
 
@@ -409,7 +413,61 @@ webElem$sendKeysToElement(list(&quot;R Cran&quot;, key = &quot;enter&quot;))
 
 <p>Typing <code>selKeys</code> into the console will bring up the list of mappings.</p>
 
+<h3>Sending mouse events to elements</h3>
+
+<p>For this example we will go back to the google frontpage and search for
+<code>R Cran</code> then we will click the link for the <code>The Comprehensive R Archive Network</code>.</p>
+
+<pre><code>remDr$navigate(&quot;http://www.google.com/ncr&quot;)
+webElem &lt;- remDr$findElement(using = &quot;xpath&quot;, &quot;//*/input[@id = &#39;gbqfq&#39;]&quot;)
+webElem$sendKeysToElement(list(&quot;R Cran&quot;, key = &quot;enter&quot;))
+
+</code></pre>
+
+<p><code>&lt;li class=&quot;g&quot;&gt;</code> contains the search results we can find all the search entries on the first page using the <code>findElements</code> method. The header for each link is contained further in with a <code>&lt;h3 class = &quot;r&quot;&gt;</code> tag. We will access the <code>h3</code> headers first. It will be succinct to find these elements using <code>css selectors</code>.</p>
+
+<pre><code>webElems &lt;- remDr$findElements(using = &#39;css selector&#39;, &quot;li.g h3.r&quot;)
+resHeaders &lt;- unlist(lapply(webElems, function(x){x$getElementText()}))
+&gt; resHeaders
+ [1] &quot;The Comprehensive R Archive Network&quot;                        
+ [2] &quot;Comprehensive R Archive&quot;                                    
+ [3] &quot;Mirrors&quot;                                                    
+ [4] &quot;Contributed Packages&quot;                                       
+ [5] &quot;R for Mac OS X&quot;                                             
+ [6] &quot;Download R 3.0.2&quot;                                           
+ [7] &quot;CRAN Repository Policy&quot;                                     
+ [8] &quot;The R Project for Statistical Computing&quot;                    
+ [9] &quot;Cran - Wikipedia, the free encyclopedia&quot;                    
+[10] &quot;Comprehensive R Archive Network (CRAN) - StatLib - Carnegie&quot;
+[11] &quot;CRAN - Package R.methodsS3&quot;                                 
+[12] &quot;CRAN - Package R.cache&quot;                                     
+[13] &quot;Ubuntu – Details of package r-cran-sp in lucid&quot;
+
+</code></pre>
+
+<p>We can see that the first link is the one we want but in case googles search results change we refer to it as </p>
+
+<pre><code>webElem &lt;- webElems[[which(resHeaders == &quot;The Comprehensive R Archive Network&quot;)]]
+
+</code></pre>
+
+<p>How do we click the link. We can use the <code>clickElement</code> method:</p>
+
+<pre><code>webElem$clickElement()
+
+&gt; remDr$getCurrentUrl()
+[[1]]
+[1] &quot;http://cran.r-project.org/&quot;
+
+&gt; remDr$getTitle()
+[[1]]
+[1] &quot;The Comprehensive R Archive Network&quot;
+</code></pre>
+
 <h2><a id="id5">Injecting JavaScript</a></h2>
+
+<p>Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page. <code>Selenium</code> has two methods we can use to execute JavaScript namely
+<code>executeScript</code> and <code>executeAsyncScript</code> from the <code>remoteDriver</code> class.</p>
 
 </body>
 

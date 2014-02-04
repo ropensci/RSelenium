@@ -233,7 +233,10 @@ webElem <- remDr$findElement(using = 'xpath', "//*/input[@class = 'gbqfif']")
 
 To illustrate how to interact with elements we will again use the `http://www.google.com/ncr` as an example.
 
-Suppose we would like to search for `R cran` on google. We would need to find the element for the query box and send the appropriate text to it.
+
+### Sending text to elements
+
+Suppose we would like to search for `R cran` on google. We would need to find the element for the query box and send the appropriate text to it. We can do this using the `sendKeysToElement` method for the `webElement` class.
 
 ```
 remDr$navigate("http://www.google.com/ncr")
@@ -241,6 +244,8 @@ webElem <- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
 webElem$sendKeysToElement(list("R Cran"))
 
 ```
+
+### Sending key presses to elements
 
 We should see that the text `R Cran` has now been entered into the query box.
 How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as `"\uE007"`. So we could use:
@@ -251,9 +256,10 @@ webElem <- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
 webElem$sendKeysToElement(list("R Cran", "\uE007"))
 
 ```
-It is not very easy to remember utf8 codes for appropriate keys so a mapping has been provided in `RSelenium`. `?selkeys' will bring up a help page explaining the mapping. The utf codes given (here)[http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value] have been mapped to easy to remember names. 
+It is not very easy to remember utf8 codes for appropriate keys so a mapping has been provided in `RSelenium`. `?selkeys' will bring up a help page explaining the mapping. The utf codes given [here](http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value) have been mapped to easy to remember names. 
 
 To use `selkeys` we would send the following
+
 
 ```
 remDr$navigate("http://www.google.com/ncr")
@@ -264,4 +270,60 @@ webElem$sendKeysToElement(list("R Cran", key = "enter"))
 
 Typing `selKeys` into the console will bring up the list of mappings.
 
+### Sending mouse events to elements
+
+For this example we will go back to the google frontpage and search for
+`R Cran` then we will click the link for the `The Comprehensive R Archive Network`.
+
+```
+remDr$navigate("http://www.google.com/ncr")
+webElem <- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
+webElem$sendKeysToElement(list("R Cran", key = "enter"))
+
+```
+
+`<li class="g">` contains the search results we can find all the search entries on the first page using the `findElements` method. The header for each link is contained further in with a `<h3 class = "r">` tag. We will access the `h3` headers first. It will be succinct to find these elements using `css selectors`.
+
+```
+webElems <- remDr$findElements(using = 'css selector', "li.g h3.r")
+resHeaders <- unlist(lapply(webElems, function(x){x$getElementText()}))
+> resHeaders
+ [1] "The Comprehensive R Archive Network"                        
+ [2] "Comprehensive R Archive"                                    
+ [3] "Mirrors"                                                    
+ [4] "Contributed Packages"                                       
+ [5] "R for Mac OS X"                                             
+ [6] "Download R 3.0.2"                                           
+ [7] "CRAN Repository Policy"                                     
+ [8] "The R Project for Statistical Computing"                    
+ [9] "Cran - Wikipedia, the free encyclopedia"                    
+[10] "Comprehensive R Archive Network (CRAN) - StatLib - Carnegie"
+[11] "CRAN - Package R.methodsS3"                                 
+[12] "CRAN - Package R.cache"                                     
+[13] "Ubuntu – Details of package r-cran-sp in lucid"
+
+```
+We can see that the first link is the one we want but in case googles search results change we refer to it as 
+
+```
+webElem <- webElems[[which(resHeaders == "The Comprehensive R Archive Network")]]
+
+```
+
+How do we click the link. We can use the `clickElement` method:
+
+```
+webElem$clickElement()
+
+> remDr$getCurrentUrl()
+[[1]]
+[1] "http://cran.r-project.org/"
+
+> remDr$getTitle()
+[[1]]
+[1] "The Comprehensive R Archive Network"
+```
 ## <a id="id5">Injecting JavaScript</a>
+
+Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page. `Selenium` has two methods we can use to execute JavaScript namely
+`executeScript` and `executeAsyncScript` from the `remoteDriver` class.
