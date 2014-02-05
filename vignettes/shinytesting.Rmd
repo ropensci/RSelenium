@@ -13,4 +13,37 @@ opts_chunk$set(comment = "#>", error = TRUE, tidy = FALSE)
 
 ## Introduction
 
-The goal of this vignette is to give a basic overview of how one might approach "testing" a shiny app. [Shiny](http://www.rstudio.com/shiny/) is a new package from [RStudio](http://www.rstudio.com/) that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the [Bootstrap](http://getbootstrap.com/javascript/) front-end framework.
+The goal of this vignette is to give a basic overview of how one might approach "testing" a shiny app. [Shiny](http://www.rstudio.com/shiny/) is a new package from [RStudio](http://www.rstudio.com/) that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the [Bootstrap](http://getbootstrap.com/javascript/) front-end framework. In this vignette we will looking at writing unit tests for a simple shiny wep app. The testing package we will use is [testthat](https://github.com/hadley/testthat) which has a short introduction [here](http://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf).
+
+
+This vignette is divided into five main sections:
+
+* [The philosophy for testing.](#id1)
+* [The shiny test app.](#id2)
+* [section 3](#id3)
+* [section 4](#id4)
+* [section 5](#id5)
+
+Each section will be an introduction to an idea in testing shiny apps with Selenium, and point to more detailed explanation in other vignettes.
+
+## <a id="id1">The philosophy for testing.</a>
+When faced with testing for the first time the natural reaction is to think what now? what do i test? how much/many tests do I write? 
+Tests need to do something useful to survive. Automated tests should help the team to make the next move by providing justified confidence a bug has been fixed, confirming refactored code still works as intended, or demonstrating that new features have been successfully implemented. There should be sufficient tests – neither more nor less: more increase the support burden, fewer leave us open to unpleasant surprises in production.
+
+One way to create our tests is to take the view of the user. What does the user want to do?
+They want to see this particular graph of a given data set. How do they do that? They select various options and input various choices. From this list of actions we can create an outline 
+of our code for the test. 
+
+For each method, we need to work out how to implement it in code. How could an automated test select the sliderInput bar? Do alternative ways exist? An understanding of HTML, CSS, and JavaScript will help you if you plan to use browser automation tools. All the visible elements of a web application are reflected in the Document Object Model (DOM) in HTML, and they can be addressed in various ways. Some simple examples of interacting with the DOM using `RSelenium` are given in the `Rselenium-basic` vignette.
+
+## <a id="id2">The shiny test app.</a>
+
+The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the `googleVis` library with output using some of its charts.  
+
+## <a id="id3">section 3</a>
+
+## <a id="id4">section 4</a>
+
+## <a id="id5">section 5</a>
+
+
