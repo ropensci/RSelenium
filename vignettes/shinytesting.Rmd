@@ -1,0 +1,16 @@
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Shiny Testing}
+-->
+
+```{r, echo = FALSE, message = FALSE}
+library(knitr)
+library(RSelenium)
+opts_chunk$set(comment = "#>", error = TRUE, tidy = FALSE)
+```
+
+# RSelenium: Testing Shiny Apps
+
+## Introduction
+
+The goal of this vignette is to give a basic overview of how one might approach "testing" a shiny app. [Shiny](http://www.rstudio.com/shiny/) is a new package from [RStudio](http://www.rstudio.com/) that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the [Bootstrap](http://getbootstrap.com/javascript/) front-end framework.
