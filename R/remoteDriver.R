@@ -493,6 +493,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               screenshot = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/screenshot'))
+                                .self$value
                               },
                               
                               #availableEngines = function(){

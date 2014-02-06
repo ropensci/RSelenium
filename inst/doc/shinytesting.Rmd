@@ -18,7 +18,7 @@ The goal of this vignette is to give a basic overview of how one might approach 
 
 This vignette is divided into five main sections:
 
-* [The philosophy for testing.](#id1)
+* [Some thoughts on testing.](#id1)
 * [The shiny test app.](#id2)
 * [section 3](#id3)
 * [section 4](#id4)
@@ -26,7 +26,9 @@ This vignette is divided into five main sections:
 
 Each section will be an introduction to an idea in testing shiny apps with Selenium, and point to more detailed explanation in other vignettes.
 
-## <a id="id1">The philosophy for testing.</a>
+## <a id="id1">Some thoughts on testing.</a>
+
+### Why test?
 When faced with testing for the first time the natural reaction is to think what now? what do i test? how much/many tests do I write? 
 Tests need to do something useful to survive. Automated tests should help the team to make the next move by providing justified confidence a bug has been fixed, confirming refactored code still works as intended, or demonstrating that new features have been successfully implemented. There should be sufficient tests – neither more nor less: more increase the support burden, fewer leave us open to unpleasant surprises in production.
 
@@ -36,9 +38,28 @@ of our code for the test.
 
 For each method, we need to work out how to implement it in code. How could an automated test select the sliderInput bar? Do alternative ways exist? An understanding of HTML, CSS, and JavaScript will help you if you plan to use browser automation tools. All the visible elements of a web application are reflected in the Document Object Model (DOM) in HTML, and they can be addressed in various ways. Some simple examples of interacting with the DOM using `RSelenium` are given in the `Rselenium-basic` vignette.
 
+### Vary the tests.
+
+Having static tests can lead to problems. Introducing variance into the tests can help pick up unexpected errors. This can be achieved by introducing an element of randomness into automatic inputs or randomizing order of selection etc.
+
+### Vary the browsers/OS.
+
+It can help to test against a variety of browsers and operating systems. `RSelenium` can interact with services like [sauceLabs](http://saucelabs.com/). `sauceLabs` allows one to choose the browser or operating system or the version of the selenium server to use. You can test with iOS/Android/Windows/Mac/Linux and browsers like firefox/chrome/ie/opera/safari. This can be very useful to test how your app works on a range of platforms. More detailed information and examples can be seen on the sauceLabs vignette.
+
+### Record the tests.
+
+RSelenium has the ability to take screenshots of the browser at a particular point in time. 
+On failure of a test a screenshot can be useful to understand what happened. If you interface
+RSelenium with `sauceLabs` you get screenshots and videos automatically. See the sauceLabs vignette for further details.
+
+### Test for fixes.
+
+Lots of bugs are discovered by means other than automated testing – they might be reported by users, for example. Once these bugs are fixed, the fixes must be tested. The tests must establish whether the problem has been fixed and, where practical, show that the root cause has been addressed. Since we want to make sure the bug doesn’t resurface unnoticed in future releases, having automated tests for the bug seems sensible.
+
 ## <a id="id2">The shiny test app.</a>
 
 The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the `googleVis` library with output using some of its charts.  
+
 
 ## <a id="id3">section 3</a>
 
