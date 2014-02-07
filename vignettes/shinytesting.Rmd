@@ -58,8 +58,43 @@ Lots of bugs are discovered by means other than automated testing – they might
 
 ## <a id="id2">The shiny test app.</a>
 
-The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the `googleVis` library with output using some of its charts.  
+### Introduction
+The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the `ggplot2` library as output for one of the charts. The app includes examples of some of the controls included with the `shiny` package namely `selectInput`, `numericInput`, `dateRangeInput` and a `sliderInput`. These controls are used to produce output rendered using `renderPrint`, `renderPlot(base)`  , `renderPlot(ggplot2)` and `renderDataTable`.
+The app can be viewed if you have `shiny` installed. 
+```
+require(shiny)
+runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"))
 
+```
+
+Alternatively there is a version of the app running on the `RStudio` test server `spark` at 
+`http://spark.rstudio.com/johnharrison/shinytestapp/`.
+
+An image of the app using `RSelenium` on a windows 8.1 machine running firefox 16.0
+
+<img src="shinytestapp.png"  />
+
+The image was generated using `RSelenium` and the following code.
+
+```
+user <- "rselenium0"
+pass <- "***************************"
+port <- 80
+ip <- paste0(user, ':', pass, "@ondemand.saucelabs.com")
+browser <- "firefox"
+version <- "26"
+platform <- "Windows 8.1"
+extraCapabilities <- list(name = "Test RSelenium", username = user, accessKey = pass)
+
+remDr <- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = browser
+                          , version = version, platform = platform
+                          , extraCapabilities = extraCapabilities)
+remDr$open()
+remDr$navigate("http://spark.rstudio.com/johnharrison/shinytestapp/")
+webElems <- remDr$findElements("css selector", "#ctrlSelect input")
+lapply(webElems, function(x){x$clickElement()})
+scr <- remDr$screenshot(display = TRUE)
+```
 
 ## <a id="id3">section 3</a>
 

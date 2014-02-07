@@ -11,8 +11,7 @@ Description: These are R bindings for the WebDriver API in Selenium 2. They use
     a Selenium RemoteWebDriver Server.
 License: AGPLv3 and CC-NC
 Depends:
-    R (>= 2.15.0),methods,RCurl,RJSONIO,
-    XML
+    R (>= 2.15.0),methods,RCurl,RJSONIO,caTools,XML
 Suggests:
     testthat,
     knitr

@@ -491,9 +491,16 @@ remoteDriver <- setRefClass("remoteDriver",
                                 }
                               },
                               
-                              screenshot = function(){
+                              screenshot = function(display = FALSE){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/screenshot'))
-                                .self$value
+                                if(display){
+                                  tmp <- paste0(tempdir(), '/tmpScreenShot.png')
+                                  writeBin(base64Decode(.self$value[[1]], "raw"), tmp)
+                                  browseURL(tmp)
+                                }else{
+                                  .self$value
+                                }
+                                
                               },
                               
                               #availableEngines = function(){

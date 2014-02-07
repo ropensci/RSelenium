@@ -197,7 +197,43 @@ RSelenium with <code>sauceLabs</code> you get screenshots and videos automatical
 
 <h2><a id="id2">The shiny test app.</a></h2>
 
-<p>The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the <code>googleVis</code> library with output using some of its charts.  </p>
+<h3>Introduction</h3>
+
+<p>The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the <code>ggplot2</code> library as output for one of the charts. The app includes examples of some of the controls included with the <code>shiny</code> package namely <code>selectInput</code>, <code>numericInput</code>, <code>dateRangeInput</code> and a <code>sliderInput</code>. These controls are used to produce output rendered using <code>renderPrint</code>, <code>renderPlot(base)</code>  , <code>renderPlot(ggplot2)</code> and <code>renderDataTable</code>.
+The app can be viewed if you have <code>shiny</code> installed. </p>
+
+<pre><code>require(shiny)
+runApp(paste0(find.package(&quot;RSelenium&quot;), &quot;/apps/shinytestapp&quot;))
+
+</code></pre>
+
+<p>Alternatively there is a version of the app running on the <code>RStudio</code> test server <code>spark</code> at 
+<code>http://spark.rstudio.com/johnharrison/shinytestapp/</code>.</p>
+
+<p>An image of the app using <code>RSelenium</code> on a windows 8.1 machine running firefox 16.0</p>
+
+<p><img src="shinytestapp.png"  /></p>
+
+<p>The image was generated using <code>RSelenium</code> and the following code.</p>
+
+<pre><code>user &lt;- &quot;rselenium0&quot;
+pass &lt;- &quot;***************************&quot;
+port &lt;- 80
+ip &lt;- paste0(user, &#39;:&#39;, pass, &quot;@ondemand.saucelabs.com&quot;)
+browser &lt;- &quot;firefox&quot;
+version &lt;- &quot;26&quot;
+platform &lt;- &quot;Windows 8.1&quot;
+extraCapabilities &lt;- list(name = &quot;Test RSelenium&quot;, username = user, accessKey = pass)
+
+remDr &lt;- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = browser
+                          , version = version, platform = platform
+                          , extraCapabilities = extraCapabilities)
+remDr$open()
+remDr$navigate(&quot;http://spark.rstudio.com/johnharrison/shinytestapp/&quot;)
+webElems &lt;- remDr$findElements(&quot;css selector&quot;, &quot;#ctrlSelect input&quot;)
+lapply(webElems, function(x){x$clickElement()})
+scr &lt;- remDr$screenshot(display = TRUE)
+</code></pre>
 
 <h2><a id="id3">section 3</a></h2>
 
