@@ -20,7 +20,7 @@ This vignette is divided into five main sections:
 
 * [Some thoughts on testing.](#id1)
 * [The shiny test app.](#id2)
-* [section 3](#id3)
+* [Basic tests.](#id3)
 * [section 4](#id4)
 * [section 5](#id5)
 
@@ -68,11 +68,12 @@ runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"))
 ```
 
 Alternatively there is a version of the app running on the `RStudio` test server `spark` at 
-`http://spark.rstudio.com/johnharrison/shinytestapp/`.
+[`http://spark.rstudio.com/johnharrison/shinytestapp/`](http://spark.rstudio.com/johnharrison/shinytestapp/).
 
-An image of the app using `RSelenium` on a windows 8.1 machine running firefox 16.0
+An image of the app using `RSelenium` on a windows 8.1 machine running firefox 26.0
 
-<img src="shinytestapp.png"  />
+<h6 align = center>shinytestapp on win 8.1 firefox 26.0</h6>
+<img src="shinytestapp.png"  title = "shinytestapp on win 8.1 firefox 26.0"/>
 
 The image was generated using `RSelenium` and the following code.
 
@@ -84,7 +85,7 @@ ip <- paste0(user, ':', pass, "@ondemand.saucelabs.com")
 browser <- "firefox"
 version <- "26"
 platform <- "Windows 8.1"
-extraCapabilities <- list(name = "Test RSelenium", username = user, accessKey = pass)
+extraCapabilities <- list(name = "shinytestapp screenshot", username = user, accessKey = pass)
 
 remDr <- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = browser
                           , version = version, platform = platform
@@ -95,8 +96,28 @@ webElems <- remDr$findElements("css selector", "#ctrlSelect input")
 lapply(webElems, function(x){x$clickElement()})
 scr <- remDr$screenshot(display = TRUE)
 ```
+### Observations
 
-## <a id="id3">section 3</a>
+From the screenshot we retrieved from the remote Driver there are some interesting observations to make. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the `selectInput` and `numericInput` boxes. The 
+
+We could have run with a higher resolution by passing the additional `screen-resolution` parameter to `sauceLabs`. 
+
+```
+extraCapabilities <- list(name = "shinytestapp screenshot", username = user
+                          , accessKey = pass, "screen-resolution" = "1280x1024")
+
+```
+<h6 align = center>shinytestapp on win 8.1 firefox 26.0 res 1280x1024</h6>
+
+<img src="STA-highres.png" title = "shinytestapp on win 8.1 firefox 26.0 res 1280x1024"/>
+
+We can see things look a bit better but the `data-table` search box is a bit compacted.
+
+### Inputs and Outputs
+
+The app is designed to show testing of the basic shiny components. It is a bit contrived so testing it may not be as natural as testing a live working app. 
+
+## <a id="id3">Basic tests.</a>
 
 ## <a id="id4">section 4</a>
 

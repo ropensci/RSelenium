@@ -157,7 +157,7 @@ hr {
 <ul>
 <li><a href="#id1">Some thoughts on testing.</a></li>
 <li><a href="#id2">The shiny test app.</a></li>
-<li><a href="#id3">section 3</a></li>
+<li><a href="#id3">Basic tests.</a></li>
 <li><a href="#id4">section 4</a></li>
 <li><a href="#id5">section 5</a></li>
 </ul>
@@ -208,11 +208,13 @@ runApp(paste0(find.package(&quot;RSelenium&quot;), &quot;/apps/shinytestapp&quot
 </code></pre>
 
 <p>Alternatively there is a version of the app running on the <code>RStudio</code> test server <code>spark</code> at 
-<code>http://spark.rstudio.com/johnharrison/shinytestapp/</code>.</p>
+<a href="http://spark.rstudio.com/johnharrison/shinytestapp/"><code>http://spark.rstudio.com/johnharrison/shinytestapp/</code></a>.</p>
 
-<p>An image of the app using <code>RSelenium</code> on a windows 8.1 machine running firefox 16.0</p>
+<p>An image of the app using <code>RSelenium</code> on a windows 8.1 machine running firefox 26.0</p>
 
-<p><img src="shinytestapp.png"  /></p>
+<h6 align = center>shinytestapp on win 8.1 firefox 26.0</h6>
+
+<p><img src="shinytestapp.png"  title = "shinytestapp on win 8.1 firefox 26.0"/></p>
 
 <p>The image was generated using <code>RSelenium</code> and the following code.</p>
 
@@ -223,7 +225,7 @@ ip &lt;- paste0(user, &#39;:&#39;, pass, &quot;@ondemand.saucelabs.com&quot;)
 browser &lt;- &quot;firefox&quot;
 version &lt;- &quot;26&quot;
 platform &lt;- &quot;Windows 8.1&quot;
-extraCapabilities &lt;- list(name = &quot;Test RSelenium&quot;, username = user, accessKey = pass)
+extraCapabilities &lt;- list(name = &quot;shinytestapp screenshot&quot;, username = user, accessKey = pass)
 
 remDr &lt;- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = browser
                           , version = version, platform = platform
@@ -235,7 +237,28 @@ lapply(webElems, function(x){x$clickElement()})
 scr &lt;- remDr$screenshot(display = TRUE)
 </code></pre>
 
-<h2><a id="id3">section 3</a></h2>
+<h3>Observations</h3>
+
+<p>From the screenshot we retrieved from the remote Driver there are some interesting observations to make. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the <code>selectInput</code> and <code>numericInput</code> boxes. The </p>
+
+<p>We could have run with a higher resolution by passing the additional <code>screen-resolution</code> parameter to <code>sauceLabs</code>. </p>
+
+<pre><code>extraCapabilities &lt;- list(name = &quot;shinytestapp screenshot&quot;, username = user
+                          , accessKey = pass, &quot;screen-resolution&quot; = &quot;1280x1024&quot;)
+
+</code></pre>
+
+<h6 align = center>shinytestapp on win 8.1 firefox 26.0 res 1280x1024</h6>
+
+<p><img src="STA-highres.png" title = "shinytestapp on win 8.1 firefox 26.0 res 1280x1024"/></p>
+
+<p>We can see things look a bit better but the <code>data-table</code> search box is a bit compacted.</p>
+
+<h3>Inputs and Outputs</h3>
+
+<p>The app is designed to show testing of the basic shiny components. It is a bit contrived so testing it may not be as natural as testing a live working app. </p>
+
+<h2><a id="id3">Basic tests.</a></h2>
 
 <h2><a id="id4">section 4</a></h2>
 
