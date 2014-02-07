@@ -4,15 +4,13 @@ shinyUI(
                
                # Sidebar with a slider input
                sidebarPanel(
-                 sliderInput("obs"
-                             , "Number of observations:"
-                             , min = 0
-                             , max = 1000
-                             , value = 500)
+                 checkboxGroupInput("ctrlSelect", "Select controls required:",
+                                    setNames(1:4, c("selectInput", "numericInput", "dateInput", "sliderInput")))
+                 , uiOutput("reqcontrols")           
                  , width = 3
                )
                , mainPanel(
-                 plotOutput("distPlot")
+                 uiOutput("reqplots")
                  , width = 9
                )
              )
