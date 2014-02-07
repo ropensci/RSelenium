@@ -3,6 +3,4 @@ shinyServer(function(input, output, session) {
   source("reqcontrols.R", local = TRUE)
   source("reqplots.R", local = TRUE)
   
-  # googlevis navbar source code
-  
   })
