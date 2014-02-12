@@ -115,9 +115,17 @@ We can see things look a bit better but the `data-table` search box is a bit com
 
 ### Inputs and Outputs
 
-The app is designed to show testing of the basic shiny components. It is a bit contrived so testing it may not be as natural as testing a live working app. 
+The app is designed to show testing of the basic shiny components. It is a bit contrived so testing it may not be as natural as testing a live working app. The outputs (charts and tables) are designed to sit side by side if possible with a maximum of 2 on a "row" then drop down to the next "row". We can test to see if this is happening by checking the posistionof elements. We will investigate this later. 
 
 ## <a id="id3">Basic tests.</a>
+
+### Basic Functionality
+
+Can we connect to the app?<br>
+Do all the inputs function?<br>
+Do the outputs display?<br>
+Do the tabs work?<br>
+
 
 ## <a id="id4">section 4</a>
 

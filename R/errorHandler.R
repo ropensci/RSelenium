@@ -21,7 +21,8 @@ errorHandler <- setRefClass("errorHandler",
                                             , statusclass = "character"
                                             , sessionid = "character"
                                             , hcode = "numeric"
-                                            , value = "list"),
+                                            , value = "list"
+                                            , responseheader = "list"),
                             methods  = list(
                               initialize = function(){
                                 # update statusCodes if needed
@@ -67,6 +68,7 @@ errorHandler <- setRefClass("errorHandler",
                                 sessionid <<- NA_character_
                                 hcode <<- NA_integer_
                                 value <<- list()
+                                responseheader <<- list()
                               },
                               
                               queryRD = function(ipAddr,
@@ -74,17 +76,25 @@ errorHandler <- setRefClass("errorHandler",
                                                  httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),
                                                  qdata = NULL,
                                                  json = FALSE){
-                                 #browser(expr = BANDAID)
+                                # browser(expr = BANDAID)
+                                h = basicHeaderGatherer()
                                 if(is.null(qdata)){
-                                  res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE)
+                                  res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE, headerfunction = h$update)
                                 }else{
-                                  res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE)
+                                  res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE, headerfunction = h$update)
                                 }
-                                
+                                responseheader <<- as.list(h$value())
                                 res1 <- ifelse(is.raw(res), rawToChar(res), res)
-                                #                                if(method == 'GET' || json){
-                                if( isValidJSON(res1, asText = TRUE)){
-                                  res1 <- fromJSON(res1) 
+                                res1 <- try(fromJSON(res1), TRUE)
+                                if(identical(class(res1), "try-error") && grepl("\"value\":", res)){
+                                  # try manually parse JSON RJSONIO wont handle
+                                  testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\1YYYYY\\3", res)
+                                  testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\2", res)
+                                  res1 <- fromJSON(testRes)
+                                  res1$value <- gsub("\\\"", "\"", testValue)
+                                }
+#                                if( isValidJSON(res1, asText = TRUE)){ # not reliable
+                                if( !identical(class(res1), "try-error")){
                                   if(!is.null(res1$status)){status <<- res1$status}
                                   if(!is.null(res1$class)){statusclass <<- res1$class}
                                   if(!is.null(res1$sessionId)){sessionid <<- res1$sessionId}
@@ -101,11 +111,13 @@ errorHandler <- setRefClass("errorHandler",
                                     }
                                   }
                                 }else{
-                                  status <<- 0
+                                  # try JSON
+                                  status <<- 1 # user check for error
                                   statusclass <<- NA_character_
                                   sessionid <<- NA_character_
                                   hcode <<- NA_integer_
-                                  value <<- list()
+                                  value <<- list(res)
+                                  
                                 }
                                 #                                }
                                 # insert error checking code here based on res1$status

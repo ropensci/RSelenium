@@ -119,6 +119,14 @@ The app is designed to show testing of the basic shiny components. It is a bit c
 
 ## <a id="id3">Basic tests.</a>
 
+### Basic Functionality
+
+Can we connect to the app?<br>
+Do all the inputs function?<br>
+Do the outputs display?<br>
+Do the tabs work?<br>
+
+
 ## <a id="id4">section 4</a>
 
 ## <a id="id5">section 5</a>
