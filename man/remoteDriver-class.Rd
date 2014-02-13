@@ -306,7 +306,7 @@ remDr$navigate("http://www.google.com")
 # show different methods of accessing DOM components
 
 webElem1 <- remDr$findElement(using = 'name', value = 'q')
-webElem2 <- remDr$findElement(using = 'id', value = webElem1$getElementAttribute('id'))
+webElem2 <- remDr$findElement(using = 'id', value = webElem1$getElementAttribute('id')[[1]])
 webElem3 <- remDr$findElement(using = 'xpath', value = '//input[@name = "q"]')
 
 # Enter some text in the search box

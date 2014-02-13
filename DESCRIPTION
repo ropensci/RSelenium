@@ -14,7 +14,8 @@ Depends:
     R (>= 2.15.0),methods,RCurl,RJSONIO,caTools,XML
 Suggests:
     testthat,
-    knitr
+    knitr,
+    Rcompression
 VignetteBuilder: knitr
 LazyData: yes
 Collate:
