@@ -67,7 +67,7 @@
 #'
 #'        Arguments may be any JSON-primitive, array, or JSON object. JSON objects that define a WebElement reference will be converted to the corresponding DOM element. Likewise, any WebElements in the script result will be returned to the client as WebElement JSON objects. }
 #'      \item{\code{screenshot()}:}{     Take a screenshot of the current page. The screenshot is returned as a base64 encoded PNG.}
-#'      \item{\code{switchToFrame(frameId)}:}{ Change focus to another frame on the page. If the frame ID is null, the server will switch to the page's default content. }
+#'      \item{\code{switchToFrame(Id)}:}{ Change focus to another frame on the page. Id can be string|number|null|WebElement Object. If the Id is null, the server should switch to the page's default content. }
 #'      \item{\code{switchToWindow(windowId}:}{ Change focus to another window. The window to change focus to may be specified by its server assigned window handle, or by the value of its name attribute. }
 #'      \item{\code{setWindowPosition(x,y,winHand)}:}{ Set the position (on screen) where you want your browser to be displayed. The windows handle is optional. If not specified the current window in focus is used. }
 #'      \item{\code{setWindowSize(width,height,winHand)}:}{ Set the size of the browser window. The windows handle is optional. If not specified the current window in focus is used.}
@@ -507,9 +507,13 @@ remoteDriver <- setRefClass("remoteDriver",
                               #    fromJSON(queryRD(paste0(serverURL,'session/',sessionInfo$id,'/ime/available_engines')))
                               #}
                               
-                              switchToFrame = function(frameId){
+                              switchToFrame = function(Id){
+                                if(identical(class(Id), "webElement")){
+                                  # pass the webElement as Json to SS
+                                  Id <- setNames(as.character(Id$elementId), "ELEMENT")
+                                }
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/frame'),
-                                        "POST",qdata=toJSON(list(id = frameId)))
+                                        "POST",qdata=toJSON(list(id = Id)))
                               },
                               
                               switchToWindow = function(windowId){

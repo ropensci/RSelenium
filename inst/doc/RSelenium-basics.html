@@ -152,7 +152,7 @@ hr {
 
 <p>The goal of RSelenium is to make it easy to connect to a Selenium Server/ Remote Selenium Server from within R. RSelenium provides R bindings for the Selenium Webdriver API. <a href="http://docs.seleniumhq.org/">Selenium</a> is a project focused on automating web browsers. RSelenium allows you to carry out unit testing and regression testing on your webapps and webpages across a range of browser/OS combinations. This allows us to integrate from within R testing and manipulation of popular projects such as <a href="http://www.rstudio.com/shiny/">shiny</a>, <a href="https://saucelabs.com/">sauceLabs</a>.</p>
 
-<p>This vignette is divided into five main sections:</p>
+<p>This vignette is divided into six main sections:</p>
 
 <ul>
 <li><a href="#id1">Connecting to a Selenium Server.</a></li>
@@ -160,6 +160,7 @@ hr {
 <li><a href="#id3">Accessing elements in the DOM.</a></li>
 <li><a href="#id4">Sending events to elements.</a></li>
 <li><a href="#id5">Injecting JavaScript.</a></li>
+<li><a href="#id6">Frames and Tabs.</a></li>
 </ul>
 
 <p>Each section will be an introduction to a major idea in Selenium, and point to more detailed explanation in other vignettes.</p>
@@ -579,6 +580,58 @@ remDr$setAsyncScriptTimeout(10000)
 </code></pre>
 
 <p>The async version waits until the callback (defined as the last argument) is called.</p>
+
+<h2><a id="id6">Frames and Tabs.</a></h2>
+
+<p>In the context of a web browser, a frame is a part of a web page or browser window which displays content independent of its container, with the ability to load content independently.</p>
+
+<h3>Frames in Selenium</h3>
+
+<p>We will demonstrate interacting with frames by way of example. The <a href="http://www.r-project.org/">R project</a> conviently contains frames so we shall use <code>RSelenium</code> to interact with it. 
+Assume we have a remoteDriver opened.</p>
+
+<pre><code>remDr$navigate(&quot;http://www.r-project.org/&quot;)
+webElems &lt;- remDr$findElements(&quot;css selectors&quot;, &quot;frame&quot;)
+
+&gt; htmlParse(remDr$getPageSource()[[1]])
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;The R Project for Statistical Computing&lt;/title&gt;
+&lt;link type=&quot;image/x-icon&quot; href=&quot;favicon.ico&quot; rel=&quot;icon&quot;&gt;
+&lt;link type=&quot;image/x-icon&quot; href=&quot;favicon.ico&quot; rel=&quot;shortcut icon&quot;&gt;
+&lt;link href=&quot;R.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+&lt;frameset border=&quot;0&quot; cols=&quot;1*, 4*&quot;&gt;
+&lt;frameset rows=&quot;120, 1*&quot;&gt;
+&lt;frame frameborder=&quot;0&quot; name=&quot;logo&quot; src=&quot;logo.html&quot;&gt;
+&lt;frame frameborder=&quot;0&quot; name=&quot;contents&quot; src=&quot;navbar.html&quot;&gt;
+&lt;/frameset&gt;
+&lt;frame frameborder=&quot;0&quot; name=&quot;banner&quot; src=&quot;main.shtml&quot;&gt;
+&lt;noframes&gt;
+&amp;lt;h1&amp;gt;The R Project for Statistical Computing&amp;lt;/h1&amp;gt;
+
+Your browser seems not to support frames,
+here is the &amp;lt;A href=&quot;navbar.html&quot;&amp;gt;contents page&amp;lt;/A&amp;gt; of the R Project&#39;s
+website.
+&lt;/noframes&gt;
+&lt;/frameset&gt;
+&lt;/html&gt;
+
+</code></pre>
+
+<p>We can see the content is contained in three frames and we dont appear to have access to the content within a frame. Put in the browser we see all the content:</p>
+
+<pre><code>remDr$maxWindowSize()
+remDr$screenshot(display = TRUE)
+
+</code></pre>
+
+<h6 align = center>RProject front page</h6>
+
+<p><img src="RProject.png"  title = "RProject front page on linux firefox 26.0"/></p>
+
+<p>To access the content we have to switch to a frame using the <code>switchToFrame</code> method of the <code>remoteDriver</code> class.</p>
 
 </body>
 

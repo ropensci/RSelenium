@@ -171,13 +171,14 @@ javascript(TRUE). See examples for more information on use.
   returned to the client as WebElement JSON objects. }
   \item{\code{screenshot()}:}{ Take a screenshot of the
   current page. The screenshot is returned as a base64
-  encoded PNG.} \item{\code{switchToFrame(frameId)}:}{
-  Change focus to another frame on the page. If the frame
-  ID is null, the server will switch to the page's default
-  content. } \item{\code{switchToWindow(windowId}:}{ Change
-  focus to another window. The window to change focus to
-  may be specified by its server assigned window handle, or
-  by the value of its name attribute. }
+  encoded PNG.} \item{\code{switchToFrame(Id)}:}{ Change
+  focus to another frame on the page. Id can be
+  string|number|null|WebElement Object. If the Id is null,
+  the server should switch to the page's default content. }
+  \item{\code{switchToWindow(windowId}:}{ Change focus to
+  another window. The window to change focus to may be
+  specified by its server assigned window handle, or by the
+  value of its name attribute. }
   \item{\code{setWindowPosition(x,y,winHand)}:}{ Set the
   position (on screen) where you want your browser to be
   displayed. The windows handle is optional. If not
