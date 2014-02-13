@@ -508,7 +508,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               #}
                               
                               switchToFrame = function(Id){
-                                if(identical(class(Id), "webElement")){
+                                if(class(Id) == "webElement"){
                                   # pass the webElement as Json to SS
                                   Id <- setNames(as.character(Id$elementId), "ELEMENT")
                                 }

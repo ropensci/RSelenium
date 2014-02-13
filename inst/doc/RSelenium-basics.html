@@ -591,7 +591,6 @@ remDr$setAsyncScriptTimeout(10000)
 Assume we have a remoteDriver opened.</p>
 
 <pre><code>remDr$navigate(&quot;http://www.r-project.org/&quot;)
-webElems &lt;- remDr$findElements(&quot;css selectors&quot;, &quot;frame&quot;)
 
 &gt; htmlParse(remDr$getPageSource()[[1]])
 &lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
@@ -631,7 +630,254 @@ remDr$screenshot(display = TRUE)
 
 <p><img src="RProject.png"  title = "RProject front page on linux firefox 26.0"/></p>
 
-<p>To access the content we have to switch to a frame using the <code>switchToFrame</code> method of the <code>remoteDriver</code> class.</p>
+<p>To access the content we have to switch to a frame using the <code>switchToFrame</code> method of the <code>remoteDriver</code> class. </p>
+
+<pre><code>webElems &lt;- remDr$findElements(using = &quot;tag name&quot;, &quot;frame&quot;)
+# webElems &lt;- remDr$findElements(&quot;//frame&quot;) # using xpath
+
+&gt; sapply(webElems, function(x){x$getElementAttribute(&quot;src&quot;)})
+[[1]]
+[1] &quot;http://www.r-project.org/logo.html&quot;
+
+[[2]]
+[1] &quot;http://www.r-project.org/navbar.html&quot;
+
+[[3]]
+[1] &quot;http://www.r-project.org/main.shtml&quot;
+
+remDr$switchToFrame(webElems[[2]])  
+
+&gt; htmlParse(remDr$getPageSource()[[1]])
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;R Contents&lt;/title&gt;
+&lt;link href=&quot;R.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;em class=&quot;navigation&quot;&gt;About R&lt;/em&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;about.html&quot;&gt;What is R?&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;contributors.html&quot;&gt;Contributors&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;screenshots/screenshots.html&quot;&gt;Screenshots&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;news.html&quot;&gt;What&#39;s new?&lt;/a&gt;&lt;br&gt;&lt;p&gt;
+&lt;em class=&quot;navigation&quot;&gt;Download, Packages&lt;/em&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;http://cran.r-project.org/mirrors.html&quot;&gt;CRAN&lt;/a&gt;
+
+&lt;/p&gt;
+&lt;p&gt;
+&lt;em class=&quot;navigation&quot;&gt;R Project&lt;/em&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;foundation/main.html&quot;&gt;Foundation&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;foundation/memberlist.html&quot;&gt;Members &amp;amp; Donors&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;mail.html&quot;&gt;Mailing Lists&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;_top&quot; href=&quot;http://bugs.R-project.org&quot;&gt;Bug Tracking&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;_top&quot; href=&quot;http://developer.R-project.org&quot;&gt;Developer Page&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;conferences.html&quot;&gt;Conferences&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;search.html&quot;&gt;Search&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;em class=&quot;navigation&quot;&gt;Documentation&lt;/em&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;http://cran.r-project.org/manuals.html&quot;&gt;Manuals&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;http://cran.r-project.org/faqs.html&quot;&gt;FAQs&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;_top&quot; href=&quot;http://journal.r-project.org&quot;&gt;The R Journal&lt;/a&gt;&lt;br&gt;&lt;!--
+&lt;a href=&quot;doc/Rnews/index.html&quot; target=&quot;banner&quot;&gt;Newsletter&lt;/a&gt;&lt;br&gt;
+--&gt;&lt;a target=&quot;_top&quot; href=&quot;http://wiki.r-project.org&quot;&gt;Wiki&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;doc/bib/R-books.html&quot;&gt;Books&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;certification.html&quot;&gt;Certification&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;other-docs.html&quot;&gt;Other&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;
+&lt;em class=&quot;navigation&quot;&gt;Misc&lt;/em&gt;&lt;br&gt;&lt;a target=&quot;_top&quot; href=&quot;http://www.bioconductor.org&quot;&gt;Bioconductor&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;other-projects.html&quot;&gt;Related Projects&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;_top&quot; href=&quot;http://rwiki.sciviews.org/doku.php?id=rugs:r_user_groups&quot;&gt;User Groups&lt;/a&gt;&lt;br&gt;&lt;a target=&quot;banner&quot; href=&quot;links.html&quot;&gt;Links&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
+
+<p>Now we see the source code of the navigation sidePanel. Notice how we used a webElement in the method <code>switchToFrame</code>. To further demonstrate we are now &ldquo;in&rdquo; this frame lets get all the <code>href</code> attributes:</p>
+
+<pre><code>webElems &lt;- remDr$findElements(&quot;css selector&quot;, &quot;[href]&quot;)
+sapply(webElems, function(x){x$getElementAttributes(&quot;href&quot;)})
+
+&gt; unlist(sapply(webElems, function(x){x$getElementAttribute(&quot;href&quot;)}))
+ [1] &quot;http://www.r-project.org/R.css&quot;                          
+ [2] &quot;http://www.r-project.org/about.html&quot;                     
+ [3] &quot;http://www.r-project.org/contributors.html&quot;              
+ [4] &quot;http://www.r-project.org/screenshots/screenshots.html&quot;   
+ [5] &quot;http://www.r-project.org/news.html&quot;                      
+ [6] &quot;http://cran.r-project.org/mirrors.html&quot;                  
+ [7] &quot;http://www.r-project.org/foundation/main.html&quot;           
+ [8] &quot;http://www.r-project.org/foundation/memberlist.html&quot;     
+ [9] &quot;http://www.r-project.org/mail.html&quot;                      
+[10] &quot;http://bugs.r-project.org/&quot;                              
+[11] &quot;http://developer.r-project.org/&quot;                         
+[12] &quot;http://www.r-project.org/conferences.html&quot;               
+[13] &quot;http://www.r-project.org/search.html&quot;                    
+[14] &quot;http://cran.r-project.org/manuals.html&quot;                  
+[15] &quot;http://cran.r-project.org/faqs.html&quot;                     
+[16] &quot;http://journal.r-project.org/&quot;                           
+[17] &quot;http://wiki.r-project.org/&quot;                              
+[18] &quot;http://www.r-project.org/doc/bib/R-books.html&quot;           
+[19] &quot;http://www.r-project.org/certification.html&quot;             
+[20] &quot;http://www.r-project.org/other-docs.html&quot;                
+[21] &quot;http://www.bioconductor.org/&quot;                            
+[22] &quot;http://www.r-project.org/other-projects.html&quot;            
+[23] &quot;http://rwiki.sciviews.org/doku.php?id=rugs:r_user_groups&quot;
+[24] &quot;http://www.r-project.org/links.html&quot; 
+
+</code></pre>
+
+<p>Notice if we pass a <code>NULL</code> value to the method <code>switchToFrame</code> we move back to the default view.</p>
+
+<pre><code>remDr$switchToFrame(NULL)
+
+&gt; htmlParse(remDr$getPageSource()[[1]])
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;The R Project for Statistical Computing&lt;/title&gt;
+&lt;link type=&quot;image/x-icon&quot; href=&quot;favicon.ico&quot; rel=&quot;icon&quot;&gt;
+&lt;link type=&quot;image/x-icon&quot; href=&quot;favicon.ico&quot; rel=&quot;shortcut icon&quot;&gt;
+&lt;link href=&quot;R.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+&lt;frameset border=&quot;0&quot; cols=&quot;1*, 4*&quot;&gt;
+&lt;frameset rows=&quot;120, 1*&quot;&gt;
+&lt;frame frameborder=&quot;0&quot; name=&quot;logo&quot; src=&quot;logo.html&quot;&gt;
+&lt;frame frameborder=&quot;0&quot; name=&quot;contents&quot; src=&quot;navbar.html&quot;&gt;
+&lt;/frameset&gt;
+&lt;frame frameborder=&quot;0&quot; name=&quot;banner&quot; src=&quot;main.shtml&quot;&gt;
+&lt;noframes&gt;
+&amp;lt;h1&amp;gt;The R Project for Statistical Computing&amp;lt;/h1&amp;gt;
+
+Your browser seems not to support frames,
+here is the &amp;lt;A href=&quot;navbar.html&quot;&amp;gt;contents page&amp;lt;/A&amp;gt; of the R Project&#39;s
+website.
+&lt;/noframes&gt;
+&lt;/frameset&gt;
+&lt;/html&gt;
+
+</code></pre>
+
+<p>Finally we can switch to the main panel using a name</p>
+
+<pre><code>remDr$switchToFrame(&quot;banner&quot;)
+
+&gt; htmlParse(remDr$getPageSource()[[1]])
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;title&gt;The R Project for Statistical Computing&lt;/title&gt;
+&lt;link href=&quot;R.css&quot; type=&quot;text/css&quot; rel=&quot;stylesheet&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;h1 align=&quot;left&quot;&gt;The R Project for Statistical Computing&lt;/h1&gt;
+
+&lt;p&gt;
+&lt;/p&gt;
+&lt;center&gt;
+&lt;a href=&quot;misc/acpclust.R&quot;&gt;&lt;img border=&quot;0&quot; alt=&quot;R Graphics Demo&quot; src=&quot;hpgraphic.png&quot;&gt;&lt;/a&gt;
+&lt;/center&gt;
+
+&lt;p&gt;
+&lt;/p&gt;
+&lt;table width=&quot;100%&quot; border=&quot;1&quot;&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;
+    &lt;h2&gt;Getting Started:&lt;/h2&gt;
+    &lt;ul&gt;
+&lt;li&gt;R is a free software environment for statistical
+      computing and graphics. It compiles and runs on a wide variety
+      of UNIX platforms, Windows and MacOS. To &lt;strong&gt;&lt;a href=&quot;http://cran.r-project.org/mirrors.html&quot;&gt;download R&lt;/a&gt;&lt;/strong&gt;, please
+      choose your preferred &lt;a href=&quot;http://cran.r-project.org/mirrors.html&quot;&gt;CRAN mirror&lt;/a&gt;.
+      &lt;/li&gt;
+      &lt;li&gt;
+      If you have questions about R like how to download and install
+      the software, or what the license terms are,
+      please read our &lt;a href=&quot;http://cran.R-project.org/faqs.html&quot;&gt;answers to frequently asked questions&lt;/a&gt; before you send an email.
+      &lt;/li&gt;
+    &lt;p&gt;
+  &lt;/p&gt;
+&lt;/ul&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;
+    &lt;h2&gt;News:&lt;/h2&gt;
+
+    &lt;ul&gt;
+&lt;li&gt;
+&lt;strong&gt;R version 3.0.2&lt;/strong&gt; (Frisbee Sailing) has been
+      released on 2013-09-25.&lt;/li&gt;
+
+      &lt;li&gt;
+      &lt;strong&gt;&lt;a href=&quot;http://www.r-project.org/useR-2013&quot; target=&quot;_top&quot;&gt;
+      useR! 2013&lt;/a&gt;&lt;/strong&gt;, 
+      took place at the University of Castilla-La Mancha,
+      Albacete, Spain, July 10-12 2013.
+
+
+
+      &lt;/li&gt;
+&lt;li&gt;
+  &lt;a target=&quot;_top&quot; href=&quot;http://journal.r-project.org/current.html&quot;&gt;
+      &lt;strong&gt;The R Journal Vol.5/1&lt;/strong&gt;&lt;/a&gt;
+    is available.
+      &lt;/li&gt;
+
+
+      &lt;li&gt;
+&lt;strong&gt;R version 2.15.3&lt;/strong&gt; (Security Blanket) has been
+      released on 2013-03-01.&lt;/li&gt;
+
+
+
+
+&lt;!-- Dead stuff, for later reuse:
+
+            &lt;li&gt;
+      &lt;strong&gt;&lt;a href=&quot;http://cran.R-project.org/src/base-prerelease&quot;&gt;
+      R 3.0.2 (Frisbee Sailing) prerelease versions&lt;/a&gt;&lt;/strong&gt; will
+      appear starting 
+      September 15.
+      Final release is scheduled for September 25, 2013.&lt;br&gt;
+      Thanks to Erin Hodgess for the idea leading to the name.
+      &lt;/li&gt;
+
+      &lt;li&gt;
+      &lt;strong&gt;&lt;a href=&quot;http://cran.R-project.org/src/base-prerelease&quot;&gt;
+      R 3.0.1 prerelease versions&lt;/a&gt;&lt;/strong&gt; will appear starting
+      May 6.
+      Final release is scheduled for May 16, 2013.&lt;br&gt;
+      &lt;/li&gt;
+
+      &lt;li&gt;
+      The R Foundation as been awarded &lt;a
+      href=&quot;soc11/index.html&quot;&gt;
+      fifteen slots for R projects&lt;/a&gt; in the &lt;a
+      href=&quot;http://code.google.com/soc/&quot; target=&quot;_top&quot;&gt;Google Summer of Code 2011&lt;/a&gt;.
+
+     &lt;li&gt;
+      &lt;strong&gt;&lt;a target=&quot;_top&quot;
+      href=&quot;http://www.r-project.org/dsc-2009&quot;&gt; DSC 2009&lt;/a&gt;&lt;/strong&gt;,
+      The 6th workshop on Directions in Statistical Computing, has been
+      held at the Center for Health and Society, University of
+      Copenhagen, Denmark, July 13-14, 2009. &lt;/li&gt;
+
+
+      &lt;li&gt;
+      &lt;strong&gt;&lt;a target=&quot;_top&quot; href=&quot;http://www.agrocampus-rennes.fr/math/useR-2009/&quot;&gt;
+      useR! 2009&lt;/a&gt;&lt;/strong&gt;, the R user conference,
+      has been be held at Agrocampus Rennes, France, July 8-10, 2009.
+
+      &lt;li&gt;
+      The R Foundation as been awarded &lt;a
+      href=&quot;soc09/index.html&quot;&gt;
+      four slots for R projects&lt;/a&gt; in the &lt;a
+      href=&quot;http://socghop.appspot.com/org/home/google/gsoc2009/rf&quot; target=&quot;_top&quot;&gt;Google Summer of Code 2009&lt;/a&gt;.
+
+
+      &lt;li&gt;We have started to collect ideas for the &lt;a
+      href=&quot;http://www.r-project.org/soc09&quot;&gt;Google Summer of Code 2009&lt;/a&gt;.
+
+      &lt;/li&gt;
+--&gt;
+
+
+    &lt;/ul&gt;
+&lt;p&gt;
+  &lt;/p&gt;
+&lt;/td&gt;&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;p&gt;
+
+  This server is hosted by the &lt;a target=&quot;_top&quot; href=&quot;http://statmath.wu.ac.at&quot;&gt;Institute for Statistics and Mathematics&lt;/a&gt; of &lt;a target=&quot;_top&quot; href=&quot;http://www.wu.ac.at&quot;&gt;WU (WirtschaftsuniversitÃÂ¤t Wien)&lt;/a&gt;.
+
+
+
+
+
+&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+</code></pre>
 
 </body>
 

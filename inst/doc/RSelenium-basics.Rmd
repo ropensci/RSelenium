@@ -458,7 +458,6 @@ Assume we have a remoteDriver opened.
 
 ```
 remDr$navigate("http://www.r-project.org/")
-webElems <- remDr$findElements("css selectors", "frame")
 
 > htmlParse(remDr$getPageSource()[[1]])
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -497,4 +496,254 @@ remDr$screenshot(display = TRUE)
 <h6 align = center>RProject front page</h6>
 <img src="RProject.png"  title = "RProject front page on linux firefox 26.0"/>
 
-To access the content we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class.
+To access the content we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class. 
+
+```
+webElems <- remDr$findElements(using = "tag name", "frame")
+# webElems <- remDr$findElements("//frame") # using xpath
+
+> sapply(webElems, function(x){x$getElementAttribute("src")})
+[[1]]
+[1] "http://www.r-project.org/logo.html"
+
+[[2]]
+[1] "http://www.r-project.org/navbar.html"
+
+[[3]]
+[1] "http://www.r-project.org/main.shtml"
+
+remDr$switchToFrame(webElems[[2]])  
+
+> htmlParse(remDr$getPageSource()[[1]])
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>R Contents</title>
+<link href="R.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<em class="navigation">About R</em><br><a target="banner" href="about.html">What is R?</a><br><a target="banner" href="contributors.html">Contributors</a><br><a target="banner" href="screenshots/screenshots.html">Screenshots</a><br><a target="banner" href="news.html">What's new?</a><br><p>
+<em class="navigation">Download, Packages</em><br><a target="banner" href="http://cran.r-project.org/mirrors.html">CRAN</a>
+
+</p>
+<p>
+<em class="navigation">R Project</em><br><a target="banner" href="foundation/main.html">Foundation</a><br><a target="banner" href="foundation/memberlist.html">Members &amp; Donors</a><br><a target="banner" href="mail.html">Mailing Lists</a><br><a target="_top" href="http://bugs.R-project.org">Bug Tracking</a><br><a target="_top" href="http://developer.R-project.org">Developer Page</a><br><a target="banner" href="conferences.html">Conferences</a><br><a target="banner" href="search.html">Search</a><br></p>
+<p>
+<em class="navigation">Documentation</em><br><a target="banner" href="http://cran.r-project.org/manuals.html">Manuals</a><br><a target="banner" href="http://cran.r-project.org/faqs.html">FAQs</a><br><a target="_top" href="http://journal.r-project.org">The R Journal</a><br><!--
+<a href="doc/Rnews/index.html" target="banner">Newsletter</a><br>
+--><a target="_top" href="http://wiki.r-project.org">Wiki</a><br><a target="banner" href="doc/bib/R-books.html">Books</a><br><a target="banner" href="certification.html">Certification</a><br><a target="banner" href="other-docs.html">Other</a><br></p>
+<p>
+<em class="navigation">Misc</em><br><a target="_top" href="http://www.bioconductor.org">Bioconductor</a><br><a target="banner" href="other-projects.html">Related Projects</a><br><a target="_top" href="http://rwiki.sciviews.org/doku.php?id=rugs:r_user_groups">User Groups</a><br><a target="banner" href="links.html">Links</a><br></p>
+</body>
+</html>
+ 
+```
+Now we see the source code of the navigation sidePanel. Notice how we used a webElement in the method `switchToFrame`. To further demonstrate we are now "in" this frame lets get all the `href` attributes:
+
+```
+webElems <- remDr$findElements("css selector", "[href]")
+sapply(webElems, function(x){x$getElementAttributes("href")})
+
+> unlist(sapply(webElems, function(x){x$getElementAttribute("href")}))
+ [1] "http://www.r-project.org/R.css"                          
+ [2] "http://www.r-project.org/about.html"                     
+ [3] "http://www.r-project.org/contributors.html"              
+ [4] "http://www.r-project.org/screenshots/screenshots.html"   
+ [5] "http://www.r-project.org/news.html"                      
+ [6] "http://cran.r-project.org/mirrors.html"                  
+ [7] "http://www.r-project.org/foundation/main.html"           
+ [8] "http://www.r-project.org/foundation/memberlist.html"     
+ [9] "http://www.r-project.org/mail.html"                      
+[10] "http://bugs.r-project.org/"                              
+[11] "http://developer.r-project.org/"                         
+[12] "http://www.r-project.org/conferences.html"               
+[13] "http://www.r-project.org/search.html"                    
+[14] "http://cran.r-project.org/manuals.html"                  
+[15] "http://cran.r-project.org/faqs.html"                     
+[16] "http://journal.r-project.org/"                           
+[17] "http://wiki.r-project.org/"                              
+[18] "http://www.r-project.org/doc/bib/R-books.html"           
+[19] "http://www.r-project.org/certification.html"             
+[20] "http://www.r-project.org/other-docs.html"                
+[21] "http://www.bioconductor.org/"                            
+[22] "http://www.r-project.org/other-projects.html"            
+[23] "http://rwiki.sciviews.org/doku.php?id=rugs:r_user_groups"
+[24] "http://www.r-project.org/links.html" 
+
+```
+
+Notice if we pass a `NULL` value to the method `switchToFrame` we move back to the default view.
+
+```
+remDr$switchToFrame(NULL)
+
+> htmlParse(remDr$getPageSource()[[1]])
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The R Project for Statistical Computing</title>
+<link type="image/x-icon" href="favicon.ico" rel="icon">
+<link type="image/x-icon" href="favicon.ico" rel="shortcut icon">
+<link href="R.css" type="text/css" rel="stylesheet">
+</head>
+<frameset border="0" cols="1*, 4*">
+<frameset rows="120, 1*">
+<frame frameborder="0" name="logo" src="logo.html">
+<frame frameborder="0" name="contents" src="navbar.html">
+</frameset>
+<frame frameborder="0" name="banner" src="main.shtml">
+<noframes>
+&lt;h1&gt;The R Project for Statistical Computing&lt;/h1&gt;
+
+Your browser seems not to support frames,
+here is the &lt;A href="navbar.html"&gt;contents page&lt;/A&gt; of the R Project's
+website.
+</noframes>
+</frameset>
+</html>
+
+```
+
+Finally we can switch to the main panel using a name
+
+```
+remDr$switchToFrame("banner")
+
+> htmlParse(remDr$getPageSource()[[1]])
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>The R Project for Statistical Computing</title>
+<link href="R.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<h1 align="left">The R Project for Statistical Computing</h1>
+
+<p>
+</p>
+<center>
+<a href="misc/acpclust.R"><img border="0" alt="R Graphics Demo" src="hpgraphic.png"></a>
+</center>
+
+<p>
+</p>
+<table width="100%" border="1"><tbody>
+<tr><td>
+    <h2>Getting Started:</h2>
+    <ul>
+<li>R is a free software environment for statistical
+      computing and graphics. It compiles and runs on a wide variety
+      of UNIX platforms, Windows and MacOS. To <strong><a href="http://cran.r-project.org/mirrors.html">download R</a></strong>, please
+      choose your preferred <a href="http://cran.r-project.org/mirrors.html">CRAN mirror</a>.
+      </li>
+      <li>
+      If you have questions about R like how to download and install
+      the software, or what the license terms are,
+      please read our <a href="http://cran.R-project.org/faqs.html">answers to frequently asked questions</a> before you send an email.
+      </li>
+    <p>
+  </p>
+</ul>
+</td></tr>
+<tr><td>
+    <h2>News:</h2>
+    
+    <ul>
+<li>
+<strong>R version 3.0.2</strong> (Frisbee Sailing) has been
+      released on 2013-09-25.</li>
+ 
+      <li>
+      <strong><a href="http://www.r-project.org/useR-2013" target="_top">
+      useR! 2013</a></strong>, 
+      took place at the University of Castilla-La Mancha,
+      Albacete, Spain, July 10-12 2013.
+      
+
+
+      </li>
+<li>
+  <a target="_top" href="http://journal.r-project.org/current.html">
+	  <strong>The R Journal Vol.5/1</strong></a>
+	is available.
+      </li>
+
+     
+      <li>
+<strong>R version 2.15.3</strong> (Security Blanket) has been
+      released on 2013-03-01.</li>
+
+
+
+
+<!-- Dead stuff, for later reuse:
+
+            <li>
+      <strong><a href="http://cran.R-project.org/src/base-prerelease">
+      R 3.0.2 (Frisbee Sailing) prerelease versions</a></strong> will
+      appear starting 
+      September 15.
+      Final release is scheduled for September 25, 2013.<br>
+      Thanks to Erin Hodgess for the idea leading to the name.
+      </li>
+
+      <li>
+      <strong><a href="http://cran.R-project.org/src/base-prerelease">
+      R 3.0.1 prerelease versions</a></strong> will appear starting
+      May 6.
+      Final release is scheduled for May 16, 2013.<br>
+      </li>
+ 
+      <li>
+      The R Foundation as been awarded <a
+      href="soc11/index.html">
+      fifteen slots for R projects</a> in the <a
+      href="http://code.google.com/soc/" target="_top">Google Summer of Code 2011</a>.
+
+     <li>
+      <strong><a target="_top"
+      href="http://www.r-project.org/dsc-2009"> DSC 2009</a></strong>,
+      The 6th workshop on Directions in Statistical Computing, has been
+      held at the Center for Health and Society, University of
+      Copenhagen, Denmark, July 13-14, 2009. </li>
+
+
+      <li>
+      <strong><a target="_top" href="http://www.agrocampus-rennes.fr/math/useR-2009/">
+      useR! 2009</a></strong>, the R user conference,
+      has been be held at Agrocampus Rennes, France, July 8-10, 2009.
+
+      <li>
+      The R Foundation as been awarded <a
+      href="soc09/index.html">
+      four slots for R projects</a> in the <a
+      href="http://socghop.appspot.com/org/home/google/gsoc2009/rf" target="_top">Google Summer of Code 2009</a>.
+
+
+      <li>We have started to collect ideas for the <a
+      href="http://www.r-project.org/soc09">Google Summer of Code 2009</a>.
+
+      </li>
+-->
+
+
+    </ul>
+<p>
+  </p>
+</td></tr>
+</tbody></table>
+<p>
+
+  This server is hosted by the <a target="_top" href="http://statmath.wu.ac.at">Institute for Statistics and Mathematics</a> of <a target="_top" href="http://www.wu.ac.at">WU (WirtschaftsuniversitÃÂ¤t Wien)</a>.
+
+
+
+
+
+</p>
+</body>
+</html>
+
+```
