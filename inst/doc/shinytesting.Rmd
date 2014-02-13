@@ -125,7 +125,9 @@ Can we connect to the app?<br>
 Do all the inputs function?<br>
 Do the outputs display?<br>
 Do the tabs work?<br>
-
+Verify titles of controls (context? seperate test)
+Verify labels of controls (context? seperate test)
+Verify inputs (context? seperate test)
 
 ## <a id="id4">section 4</a>
 
