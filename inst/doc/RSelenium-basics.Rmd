@@ -22,7 +22,7 @@ This vignette is divided into six main sections:
 * [Accessing elements in the DOM.](#id3)
 * [Sending events to elements.](#id4)
 * [Injecting JavaScript.](#id5)
-* [Frames and Tabs.](#id6)
+* [Frames and Windows.](#id6)
 
 Each section will be an introduction to a major idea in Selenium, and point to more detailed explanation in other vignettes.
 
@@ -747,3 +747,61 @@ remDr$switchToFrame("banner")
 </html>
 
 ```
+
+### Windows in Selenium
+
+The easiest way to illustrate Windows in RSelenium is again by way of example. We will use the R project website.
+First we select the `download R` element in the main frame. 
+
+```
+remDr$navigate("http://www.r-project.org")
+remDr$switchToFrame("banner")
+webElem <- remDr$findElement("partial link text", "download R")
+
+> webElem$getElementText()
+[[1]]
+[1] "download R"
+
+```
+
+We now send a selection of key presses to this element to open the link it points to in a new window. If you did it manually you would move the mouse to the element right click on the link press the down arrow key twice then press enter. We will do the same
+
+```
+loc <- webElem$getElementLocation()
+
+> loc[c('x','y')]
+$x
+[1] 347
+
+$y
+[1] 519
+
+remDr$mouseMoveToLocation(webElement = webElem) # move mouse to the element we selected
+remDr$click(2) # 2 indicates click the right mouse button
+remDr$sendKeysToActiveElement(list(key = 'down_arrow', key = 'down_arrow', key = 'enter'))
+
+```
+Notice now that a new windows has opened on the remote browser.
+
+```
+> remDr$getCurrentWindowHandle()
+[[1]]
+[1] "{573d17e5-b95a-41b9-a65f-04092b6a804b}"
+
+> remDr$getWindowHandles()
+[[1]]
+[1] "{573d17e5-b95a-41b9-a65f-04092b6a804b}" "{3336c9b3-4c46-4a95-853e-2786a529ba29}"
+
+> remDr$getTitle()
+[[1]]
+[1] "The R Project for Statistical Computing"
+
+> 
+> remDr$switchToWindow("{3336c9b3-4c46-4a95-853e-2786a529ba29}")
+> remDr$getTitle()
+[[1]]
+[1] "CRAN - Mirrors"
+
+```
+
+So using the code above one can observe how to switch between different windows on the remote browser. 

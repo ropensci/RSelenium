@@ -336,8 +336,22 @@ remoteDriver <- setRefClass("remoteDriver",
                                         "POST")
                               },
                               
-                              mouseMoveToLocation = function(x,y,elementId = NULL){
-                                sendLoc<-toJSON(c(element = elementId,list(xoffset = x,yoffset = y)))
+                              mouseMoveToLocation = function(x = NA_integer_, y = NA_integer_, webElement = NULL){
+                                if(!is.null(webElement)){
+                                  if(class(webElement) != "webElement"){print("webElement should be of class webElement"); return()}
+                                }
+                                sendLoc <- list(element = as.character(webElement$elementId))
+                                if(is.na(x)){
+                                  sendLoc <- sendLoc
+                                }else{
+                                  sendLoc <- c(sendLoc, list(xoffset = x))
+                                }
+                                if(is.na(y)){
+                                  sendLoc <- sendLoc
+                                }else{
+                                  sendLoc <- c(sendLoc, list(yoffset = y))
+                                }
+                                sendLoc<-toJSON(sendLoc)
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/moveto'),
                                         "POST",qdata = sendLoc)
                               },
