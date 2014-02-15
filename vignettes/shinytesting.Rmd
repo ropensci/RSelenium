@@ -319,11 +319,13 @@ ok 1 selectInput dataSet correct
 ok 2 selectInput label correct 
 ok 3 selectInput selection invokes change 
 
-
 ```
+
+Note we set `remDr$setImplicitWaitTimeout(3000)` in this test so that we get a 3 second limit to find an element. 
 
 #### Testing the numericInput
 
+The ideas behind testing the numericInput are similar to testing the selectInput. We test the label. We then test a random value between the allowable limits of the numericInput and check that the output changes. Finally a character string "test" is sent to the element and the appropriate error message on the output is checked. The final test can be adjusted to suit whatever bespoke error display etc is in your app. The test code is in the tests folder of the `Shiny Test App` in a file named `test-numericinput.r`. Again `remDr$setImplicitWaitTimeout(3000)` is called to give some leeway for element loading. Some commented out code indicates other methods one could deal with checking for element existence. Additional detail on timing races in Selenium can be found [here](http://www.bizalgo.com/2012/01/14/timing-races-selenium-2-implicit-waits-explicit-waits/).
 #### Testing the dateRangeInput
 
 #### Testing the sliderInput 

@@ -6,6 +6,7 @@ library(testthat)
 remDr <- remoteDriver()
 remDr$open(silent = TRUE)
 sysDetails <- remDr$getStatus()
+remDr$setImplicitWaitTimeout(3000)
 browser <- remDr$sessionInfo$browserName
 appURL <- "http://127.0.0.1:6012"
 
