@@ -15,10 +15,11 @@ shinyUI(
                )
              )
              )
-#              , navbarMenu("GoogleVis",
-#                           tabPanel("Summary"),
-#                           tabPanel("Table")
-#             )
+             #              , navbarMenu("GoogleVis",
+             #                           tabPanel("Summary"),
+             #                           tabPanel("Table")
+             #             )
              , tabPanel("About", "A simple shiny app to illustrate testing as part of the RSelenium package.") 
   )
+  
 )

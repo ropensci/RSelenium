@@ -447,7 +447,7 @@ remDr$executeScript("setTimeout(function(){ alert('Hello');},5000); return 'DONE
 
 The async version waits until the callback (defined as the last argument) is called.
 
-## <a id="id6">Frames and Tabs.</a>
+## <a id="id6">Frames and Windows.</a>
 
 In the context of a web browser, a frame is a part of a web page or browser window which displays content independent of its container, with the ability to load content independently.
 

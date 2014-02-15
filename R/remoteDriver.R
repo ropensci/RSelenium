@@ -276,7 +276,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                 ))
                               },
                               
-                              open = function(){
+                              open = function(silent = FALSE){
                                 print("Connecting to remote server")
                                 serverURL <<- paste0("http://",remoteServerAddr,":",port,"/wd/hub")
                                 serverOpts <- list(desiredCapabilities = list(
@@ -295,7 +295,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                 #                                  sessionInfo <<- fromJSON(sessionResult)
                                 sessionInfo <<- value
                                 sessionInfo$id <<- sessionid
-                                print(sessionInfo)
+                                if(!silent){print(sessionInfo)}
                                 #                                
                               },    
                               

@@ -239,7 +239,7 @@ scr &lt;- remDr$screenshot(display = TRUE)
 
 <h3>Observations</h3>
 
-<p>From the screenshot we retrieved from the remote Driver there are some interesting observations to make. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the <code>selectInput</code> and <code>numericInput</code> boxes. The </p>
+<p>From the screenshot we retrieved from the remote Driver there are some interesting observations to make. Note that the <code>selectInput</code> and <code>numericInput</code> boxes are sticking out. This is occuring because the sidePanel is given a bootstrap span of 3. This is however fluid. The resolution on the remote machine is low so the pixel count on the span 3 is also low. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the <code>selectInput</code> and <code>numericInput</code> boxes sticking out. </p>
 
 <p>We could have run with a higher resolution by passing the additional <code>screen-resolution</code> parameter to <code>sauceLabs</code>. </p>
 
@@ -262,8 +262,211 @@ scr &lt;- remDr$screenshot(display = TRUE)
 
 <h3>Basic Functionality</h3>
 
-<p>Can we connect to the app?<br>
-Do all the inputs function?<br>
+<p>The first test we will look at implementing will be basic connection to the app. Typically we would make a request for the page and then observe what status code was returned. Selenium doesnt currently give the html status code of a navigation request so instead we will check if the title of the web page is correct. Our <code>Shiny Test App</code> has a title of &ldquo;Shiny Test App&rdquo; so we will check for this.</p>
+
+<p>We create a <code>test/</code> directory in our <code>Shiny Test App</code> folder. The first set of tests will be basic so we create a file <code>test-basic.r</code>. In this file we have the following code to start with:</p>
+
+<pre><code>context(&quot;basic&quot;)
+
+library(RSelenium)
+library(testthat)
+
+remDr &lt;- remoteDriver()
+remDr$open(silent = TRUE)
+appURL &lt;- &quot;http://127.0.0.1:6012&quot;
+
+test_that(&quot;can connect to app&quot;, {  
+  remDr$navigate(appURL)
+  appTitle &lt;- remDr$getTitle()[[1]]
+  expect_equal(appTitle, &quot;Shiny Test App&quot;)  
+})
+
+remDr$close()
+
+</code></pre>
+
+<p>We have a context of &ldquo;basic&rdquo; for the tests in this file. The test &ldquo;can connect to app&rdquo; simply navigates to the app URL and attempts to get the page title. If the page title is &ldquo;Shiny Test App&rdquo; the test is deemed successful. For testing purposes we assume the app is running locally. The easiest way to do this is open a second R session and issue the command:
+<code>runApp(paste0(find.package(&quot;RSelenium&quot;), &quot;/apps/shinytestapp&quot;), port = 6012)</code>. The second R session will listen for connection on port 6012 and return the <code>Shiny Test App</code>. If we ran this basic test we would expect the following output:</p>
+
+<pre><code>&gt; test_dir(&quot;./shinytestapp/tests/&quot;, reporter = &quot;Tap&quot;)
+[1] &quot;Connecting to remote server&quot;
+1..1
+# Context basic 
+ok 1 can connect to app 
+
+</code></pre>
+
+<p>So running the test we observe that we can successfully &ldquo;connect&rdquo; to the <code>Shiny Test App</code>. What other functionality can we add to our &ldquo;basic&rdquo; test context. We can check that the controls and the tabs are present. We can add these tests to our <code>test-basic.r</code> file. </p>
+
+<pre><code>test_that(&quot;controls are present&quot;, {  
+  webElems &lt;- remDr$findElements(&quot;css selector&quot;, &quot;#ctrlSelect label&quot;)
+  appCtrlLabels &lt;- sapply(webElems, function(x){x$getElementText()})
+  expect_equal(appCtrlLabels[[1]], &quot;Select controls required:&quot;)  
+  expect_equal(appCtrlLabels[[2]], &quot;selectInput&quot;)  
+  expect_equal(appCtrlLabels[[3]], &quot;numericInput&quot;)  
+  expect_equal(appCtrlLabels[[4]], &quot;dateRangeInput&quot;)  
+  expect_equal(appCtrlLabels[[5]], &quot;sliderInput&quot;)  
+})
+
+test_that(&quot;tabs are present&quot;, {  
+  webElems &lt;- remDr$findElements(&quot;css selector&quot;, &quot;.nav a&quot;)
+  appTabLabels &lt;- sapply(webElems, function(x){x$getElementText()})
+  expect_equal(appTabLabels[[1]], &quot;Plots&quot;)  
+  expect_equal(appTabLabels[[2]], &quot;About&quot;)  
+})
+
+</code></pre>
+
+<p>When we rerun our basic test we should hopefully now see that it is checking for the prescence of
+the controls and the tabs.</p>
+
+<pre><code>&gt; test_dir(&quot;./shinytestapp/tests/&quot;, reporter = &quot;Tap&quot;)
+[1] &quot;Connecting to remote server&quot;
+1..8
+# Context basic 
+ok 1 can connect to app 
+ok 2 controls are present 
+ok 3 controls are present 
+ok 4 controls are present 
+ok 5 controls are present 
+ok 6 controls are present 
+ok 7 tabs are present 
+ok 8 tabs are present 
+
+</code></pre>
+
+<p>That concludes our basic test of the <code>Shiny Test App</code> functionality. Next we look at testing the input controls.</p>
+
+<h3>Testing the Controls</h3>
+
+<p>Our first test of the controls will be the functioning of the checkbox. We open a new file in the test directory of our <code>Shiny Test App</code> and give it the name <code>test-checkbox.r</code>. We also give it a context of <code>controls</code>.</p>
+
+<pre><code>context(&quot;controls&quot;)
+
+library(RSelenium)
+library(testthat)
+
+remDr &lt;- remoteDriver()
+remDr$open(silent = TRUE)
+sysDetails &lt;- remDr$getStatus()
+browser &lt;- remDr$sessionInfo$browserName
+appURL &lt;- &quot;http://127.0.0.1:6012&quot;
+
+test_that(&quot;can select/deselect checkbox 1&quot;, {  
+  remDr$navigate(appURL)
+  webElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;#ctrlSelect1&quot;)
+  initState &lt;- webElem$isElementSelected()[[1]]
+  # check if we can select/deselect
+  if(browser == &quot;internet explorer&quot;){
+    webElem$sendKeysToElement(list(key = &quot;space&quot;))
+  }else{
+    webElem$clickElement()
+  }
+  changeState &lt;- webElem$isElementSelected()[[1]]
+  expect_is(initState, &quot;logical&quot;)  
+  expect_is(changeState, &quot;logical&quot;)  
+  expect_false(initState == changeState)  
+})
+
+remDr$close()
+
+</code></pre>
+
+<p>In this case I am informed there maybe issues with <code>Internet Explorer</code>. Usually one would select 
+the element for the checkbox and click it. In the case of <code>Internet Explorer</code> it maybe necessary to pass a <code>space</code> key to the element instead. Otherwise the test is straightforward. We check the initial state of the checkbox. We click the checkbox or send a keypress of space to it. We check the changed state of the checkbox. If the initial state is different to the changed state the test is deemed a success. For good measure we also check that the initial and changed states are of class &ldquo;logical&rdquo;. We add code for the other 3 checkboxes. We can check our test as follows:</p>
+
+<pre><code>&gt; test_dir(&quot;./shinytestapp/tests/&quot;, reporter = &quot;Tap&quot;, filter = &quot;checkbox&quot;)
+[1] &quot;Connecting to remote server&quot;
+1..12
+# Context controls 
+ok 1 can select/deselect checkbox 1 
+ok 2 can select/deselect checkbox 1 
+ok 3 can select/deselect checkbox 1 
+ok 4 can select/deselect checkbox 2 
+ok 5 can select/deselect checkbox 2 
+ok 6 can select/deselect checkbox 2 
+ok 7 can select/deselect checkbox 3 
+ok 8 can select/deselect checkbox 3 
+ok 9 can select/deselect checkbox 3 
+ok 10 can select/deselect checkbox 4 
+ok 11 can select/deselect checkbox 4 
+ok 12 can select/deselect checkbox 4 
+
+</code></pre>
+
+<p>We filter here on &ldquo;checkbox&rdquo; to only select this test file to run. If you watch the test running it will filter through the checkbox control checking each checkbox is functioning. The <code>checkboxGroupInput</code> drives the required controls which has id <code>reqcontrols</code>. Each of these controls is one of the building blocks of shiny and we will add a test for each.</p>
+
+<h4>Testing the selectInput</h4>
+
+<p>We write a simple test for the <code>selectInput</code>. It tests the options presented and the label of the control. We isolate the code in a seperate file <code>test-selectinput.r</code> in the test folder of our <code>Shiny Test App</code>. It also then selects an element from the options at random. It is tested whether the output changes or not.</p>
+
+<pre><code>test_that(&quot;selectInput dataSet correct&quot;, {  
+  remDr$navigate(appURL)
+  webElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;#ctrlSelect1&quot;)
+  initState &lt;- webElem$isElementSelected()[[1]]
+  if(!initState){
+    # select the checkbox
+    if(browser == &quot;internet explorer&quot;){
+      webElem$sendKeysToElement(list(key = &quot;space&quot;))
+    }else{
+      webElem$clickElement()
+    }
+  }
+
+  webElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;#reqcontrols #dataset&quot;)
+  # check the available datasets
+  childElems &lt;- webElem$findChildElements(&quot;css selector&quot;, &quot;[value]&quot;)
+  appDataSets &lt;- sapply(childElems, function(x){x$getElementAttribute(&quot;value&quot;)})
+  expect_true(all(c(&quot;rock&quot;, &quot;pressure&quot;, &quot;cars&quot;) %in% appDataSets))
+})
+
+test_that(&quot;selectInput label correct&quot;, {
+  webElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;#reqcontrols label[for = &#39;dataset&#39;]&quot;)
+  expect_output(webElem$getElementText()[[1]], &quot;Choose a dataset:&quot;)
+}
+)
+
+
+test_that(&quot;selectInput selection invokes change&quot;, {
+  webElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;#reqcontrols #dataset&quot;)
+  childElems &lt;- webElem$findChildElements(&quot;css selector&quot;, &quot;[value]&quot;)
+  ceState &lt;- sapply(childElems, function(x){x$isElementSelected()})
+  newState &lt;- sample(seq_along(ceState)[!unlist(ceState)], 1)
+
+  outElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;#summary&quot;)
+  initOutput &lt;- outElem$getElementText()[[1]]
+
+  # change dataset 
+  childElems[[newState]]$clickElement()
+  outElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;#summary&quot;)  
+  changeOutput &lt;- outElem$getElementText()[[1]]
+
+  expect_false(initOutput == changeOutput)
+}
+)
+
+</code></pre>
+
+<p>Running the <code>selectInput</code> test we get:</p>
+
+<pre><code>&gt; test_dir(&quot;./shinytestapp/tests/&quot;, reporter = &quot;Tap&quot;, filter = &quot;selectinput&quot;)
+[1] &quot;Connecting to remote server&quot;
+1..3
+# Context controls 
+ok 1 selectInput dataSet correct 
+ok 2 selectInput label correct 
+ok 3 selectInput selection invokes change 
+
+
+</code></pre>
+
+<h4>Testing the numericInput</h4>
+
+<h4>Testing the dateRangeInput</h4>
+
+<h4>Testing the sliderInput</h4>
+
+<p>Do all the inputs function?<br>
 Do the outputs display?<br>
 Do the tabs work?<br></p>
 

@@ -98,7 +98,7 @@ scr <- remDr$screenshot(display = TRUE)
 ```
 ### Observations
 
-From the screenshot we retrieved from the remote Driver there are some interesting observations to make. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the `selectInput` and `numericInput` boxes. The 
+From the screenshot we retrieved from the remote Driver there are some interesting observations to make. Note that the `selectInput` and `numericInput` boxes are sticking out. This is occuring because the sidePanel is given a bootstrap span of 3. This is however fluid. The resolution on the remote machine is low so the pixel count on the span 3 is also low. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the `selectInput` and `numericInput` boxes sticking out. 
 
 We could have run with a higher resolution by passing the additional `screen-resolution` parameter to `sauceLabs`. 
 
@@ -120,8 +120,214 @@ The app is designed to show testing of the basic shiny components. It is a bit c
 ## <a id="id3">Basic tests.</a>
 
 ### Basic Functionality
+The first test we will look at implementing will be basic connection to the app. Typically we would make a request for the page and then observe what status code was returned. Selenium doesnt currently give the html status code of a navigation request so instead we will check if the title of the web page is correct. Our `Shiny Test App` has a title of "Shiny Test App" so we will check for this.
 
-Can we connect to the app?<br>
+We create a `test/` directory in our `Shiny Test App` folder. The first set of tests will be basic so we create a file `test-basic.r`. In this file we have the following code to start with:
+
+```
+context("basic")
+
+library(RSelenium)
+library(testthat)
+
+remDr <- remoteDriver()
+remDr$open(silent = TRUE)
+appURL <- "http://127.0.0.1:6012"
+
+test_that("can connect to app", {  
+  remDr$navigate(appURL)
+  appTitle <- remDr$getTitle()[[1]]
+  expect_equal(appTitle, "Shiny Test App")  
+})
+
+remDr$close()
+
+```
+We have a context of "basic" for the tests in this file. The test "can connect to app" simply navigates to the app URL and attempts to get the page title. If the page title is "Shiny Test App" the test is deemed successful. For testing purposes we assume the app is running locally. The easiest way to do this is open a second R session and issue the command:
+`runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"), port = 6012)`. The second R session will listen for connection on port 6012 and return the `Shiny Test App`. If we ran this basic test we would expect the following output:
+
+```
+> test_dir("./shinytestapp/tests/", reporter = "Tap")
+[1] "Connecting to remote server"
+1..1
+# Context basic 
+ok 1 can connect to app 
+
+```
+So running the test we observe that we can successfully "connect" to the `Shiny Test App`. What other functionality can we add to our "basic" test context. We can check that the controls and the tabs are present. We can add these tests to our `test-basic.r` file. 
+
+```
+test_that("controls are present", {  
+  webElems <- remDr$findElements("css selector", "#ctrlSelect label")
+  appCtrlLabels <- sapply(webElems, function(x){x$getElementText()})
+  expect_equal(appCtrlLabels[[1]], "Select controls required:")  
+  expect_equal(appCtrlLabels[[2]], "selectInput")  
+  expect_equal(appCtrlLabels[[3]], "numericInput")  
+  expect_equal(appCtrlLabels[[4]], "dateRangeInput")  
+  expect_equal(appCtrlLabels[[5]], "sliderInput")  
+})
+
+test_that("tabs are present", {  
+  webElems <- remDr$findElements("css selector", ".nav a")
+  appTabLabels <- sapply(webElems, function(x){x$getElementText()})
+  expect_equal(appTabLabels[[1]], "Plots")  
+  expect_equal(appTabLabels[[2]], "About")  
+})
+
+```
+
+When we rerun our basic test we should hopefully now see that it is checking for the prescence of
+the controls and the tabs.
+
+```
+> test_dir("./shinytestapp/tests/", reporter = "Tap")
+[1] "Connecting to remote server"
+1..8
+# Context basic 
+ok 1 can connect to app 
+ok 2 controls are present 
+ok 3 controls are present 
+ok 4 controls are present 
+ok 5 controls are present 
+ok 6 controls are present 
+ok 7 tabs are present 
+ok 8 tabs are present 
+
+```
+
+That concludes our basic test of the `Shiny Test App` functionality. Next we look at testing the input controls.
+
+### Testing the Controls
+
+Our first test of the controls will be the functioning of the checkbox. We open a new file in the test directory of our `Shiny Test App` and give it the name `test-checkbox.r`. We also give it a context of `controls`.
+
+```
+context("controls")
+
+library(RSelenium)
+library(testthat)
+
+remDr <- remoteDriver()
+remDr$open(silent = TRUE)
+sysDetails <- remDr$getStatus()
+browser <- remDr$sessionInfo$browserName
+appURL <- "http://127.0.0.1:6012"
+
+test_that("can select/deselect checkbox 1", {  
+  remDr$navigate(appURL)
+  webElem <- remDr$findElement("css selector", "#ctrlSelect1")
+  initState <- webElem$isElementSelected()[[1]]
+  # check if we can select/deselect
+  if(browser == "internet explorer"){
+    webElem$sendKeysToElement(list(key = "space"))
+  }else{
+    webElem$clickElement()
+  }
+  changeState <- webElem$isElementSelected()[[1]]
+  expect_is(initState, "logical")  
+  expect_is(changeState, "logical")  
+  expect_false(initState == changeState)  
+})
+
+remDr$close()
+
+```
+In this case I am informed there maybe issues with `Internet Explorer`. Usually one would select 
+the element for the checkbox and click it. In the case of `Internet Explorer` it maybe necessary to pass a `space` key to the element instead. Otherwise the test is straightforward. We check the initial state of the checkbox. We click the checkbox or send a keypress of space to it. We check the changed state of the checkbox. If the initial state is different to the changed state the test is deemed a success. For good measure we also check that the initial and changed states are of class "logical". We add code for the other 3 checkboxes. We can check our test as follows:
+
+```
+> test_dir("./shinytestapp/tests/", reporter = "Tap", filter = "checkbox")
+[1] "Connecting to remote server"
+1..12
+# Context controls 
+ok 1 can select/deselect checkbox 1 
+ok 2 can select/deselect checkbox 1 
+ok 3 can select/deselect checkbox 1 
+ok 4 can select/deselect checkbox 2 
+ok 5 can select/deselect checkbox 2 
+ok 6 can select/deselect checkbox 2 
+ok 7 can select/deselect checkbox 3 
+ok 8 can select/deselect checkbox 3 
+ok 9 can select/deselect checkbox 3 
+ok 10 can select/deselect checkbox 4 
+ok 11 can select/deselect checkbox 4 
+ok 12 can select/deselect checkbox 4 
+
+```
+
+We filter here on "checkbox" to only select this test file to run. If you watch the test running it will filter through the checkbox control checking each checkbox is functioning. The `checkboxGroupInput` drives the required controls which has id `reqcontrols`. Each of these controls is one of the building blocks of shiny and we will add a test for each.
+
+#### Testing the selectInput
+We write a simple test for the `selectInput`. It tests the options presented and the label of the control. We isolate the code in a seperate file `test-selectinput.r` in the test folder of our `Shiny Test App`. It also then selects an element from the options at random. It is tested whether the output changes or not.
+
+```
+test_that("selectInput dataSet correct", {  
+  remDr$navigate(appURL)
+  webElem <- remDr$findElement("css selector", "#ctrlSelect1")
+  initState <- webElem$isElementSelected()[[1]]
+  if(!initState){
+    # select the checkbox
+    if(browser == "internet explorer"){
+      webElem$sendKeysToElement(list(key = "space"))
+    }else{
+      webElem$clickElement()
+    }
+  }
+  
+  webElem <- remDr$findElement("css selector", "#reqcontrols #dataset")
+  # check the available datasets
+  childElems <- webElem$findChildElements("css selector", "[value]")
+  appDataSets <- sapply(childElems, function(x){x$getElementAttribute("value")})
+  expect_true(all(c("rock", "pressure", "cars") %in% appDataSets))
+})
+
+test_that("selectInput label correct", {
+  webElem <- remDr$findElement("css selector", "#reqcontrols label[for = 'dataset']")
+  expect_output(webElem$getElementText()[[1]], "Choose a dataset:")
+}
+)
+
+
+test_that("selectInput selection invokes change", {
+  webElem <- remDr$findElement("css selector", "#reqcontrols #dataset")
+  childElems <- webElem$findChildElements("css selector", "[value]")
+  ceState <- sapply(childElems, function(x){x$isElementSelected()})
+  newState <- sample(seq_along(ceState)[!unlist(ceState)], 1)
+  
+  outElem <- remDr$findElement("css selector", "#summary")
+  initOutput <- outElem$getElementText()[[1]]
+  
+  # change dataset 
+  childElems[[newState]]$clickElement()
+  outElem <- remDr$findElement("css selector", "#summary")  
+  changeOutput <- outElem$getElementText()[[1]]
+  
+  expect_false(initOutput == changeOutput)
+}
+)
+
+```
+
+Running the `selectInput` test we get:
+
+```
+> test_dir("./shinytestapp/tests/", reporter = "Tap", filter = "selectinput")
+[1] "Connecting to remote server"
+1..3
+# Context controls 
+ok 1 selectInput dataSet correct 
+ok 2 selectInput label correct 
+ok 3 selectInput selection invokes change 
+
+
+```
+
+#### Testing the numericInput
+
+#### Testing the dateRangeInput
+
+#### Testing the sliderInput 
+
 Do all the inputs function?<br>
 Do the outputs display?<br>
 Do the tabs work?<br>
