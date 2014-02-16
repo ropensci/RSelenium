@@ -463,11 +463,35 @@ ok 3 selectInput selection invokes change
 
 <h4>Testing the numericInput</h4>
 
-<p>The ideas behind tesing the numericInput are similar to testing the selectInput. We test the label. We then test a random value between the allowable limits of the numericInput and check that the output changes. Finally a character string &ldquo;test&rdquo; is sent to the element and the appropriate error message on the output is checked. The final test can be adjusted to suit whatever bespoke error display etc is in your app. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-numericinput.r</code>. Again <code>remDr$setImplicitWaitTimeout(3000)</code> is called to give some leeway for element loading. Some commented out code indicates other methods one could deal with checking for element existence. Additional detail on timing races in Selenium can be found <a href="http://www.bizalgo.com/2012/01/14/timing-races-selenium-2-implicit-waits-explicit-waits/">here</a>.</p>
+<p>The ideas behind testing the numericInput are similar to testing the selectInput. We test the label. We then test a random value between the allowable limits of the numericInput and check that the output changes. Finally a character string &ldquo;test&rdquo; is sent to the element and the appropriate error message on the output is checked. The final test can be adjusted to suit whatever bespoke error display etc is in your app. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-numericinput.r</code>. Again <code>remDr$setImplicitWaitTimeout(3000)</code> is called to give some leeway for element loading. Some commented out code indicates other methods one could deal with checking for element existence. Additional detail on timing races in Selenium can be found <a href="http://www.bizalgo.com/2012/01/14/timing-races-selenium-2-implicit-waits-explicit-waits/">here</a>.</p>
 
 <h4>Testing the dateRangeInput</h4>
 
+<p>The test on the dateRangeInput compose of two tests. We test the label and we test the two input dates. We choose two random dates from the set of allowable dates. The output is tested for change after the two dates ave been set. <code>remDr$setImplicitWaitTimeout(3000)</code> is set in the test to allow for race conditions on elements. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-daterangeinput.r</code>.</p>
+
 <h4>Testing the sliderInput</h4>
+
+<p>For the sliderInput we test the label and we test changing the controls. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-sliderinput.r</code>. The label is tested in a similar fashion as the other controls. The second test needs a bit of explaining. There are a number of ways we could interact with the slider control to change its values. Some of the easiest ways would be to execute javascript with <code>Shiny.onInputChange(&quot;range&quot;, [2000, 10000])</code> or 
+<code>Shiny.shinyapp.sendInput({range: [6222, 9333]})</code>. Both these methods would currently work. The Shiny server side would get the new values however the UI would show no change. The underlying sliderInput control is a <code>jslider</code>. Normally one can interact with the <code>jslider</code> thru calls similar to <code>$(&quot;.selector&quot;).slider(&quot;value&quot;, p1, p2)</code> as outlined <a href="http://egorkhmelev.github.io/jslider/">here</a>. We will use mouse movements and the <code>buttondown</code> <code>buttonup</code> methods of the remoteDriver class. </p>
+
+<p>We get the attributes of the slider initially. We then get the dimension of the slider</p>
+
+<pre><code>webElem &lt;- remDr$findElement(&quot;css selector&quot;, &quot;#reqcontrols input#range + .jslider&quot;)
+sliderDim &lt;- webElem$getElementSize()
+
+</code></pre>
+
+<p>This gives us the pixel width of the slider as it currently stands. This will be different across machines. We generate some random values for the two slider points and then we calculate roughly
+how many pixels we need to move the sliders.</p>
+
+<pre><code>remDr$mouseMoveToLocation(webElement = webElems[[x]])
+remDr$buttondown()
+remDr$mouseMoveToLocation(x = as.integer(pxToMoveSldr[x]), y = -1L)#, webElement = webElems[[x]])
+remDr$buttonup()
+
+</code></pre>
+
+<p>The above code moves to the slider elemnent. Pushes the left button down. Moves the mouse on the x axis in the direction calculated then releases the left mouse button. The output of the related data-table before and after the change is recorded and the test should result in the before and after not being equal.</p>
 
 <p>Do all the inputs function?<br>
 Do the outputs display?<br>

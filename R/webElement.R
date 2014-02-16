@@ -149,6 +149,7 @@ webElement <- setRefClass("webElement",
 
       getElementSize = function(){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/size'))
+          .self$value
       },
 
       getElementText = function(){

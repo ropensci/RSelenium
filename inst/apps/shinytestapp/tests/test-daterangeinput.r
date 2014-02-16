@@ -28,6 +28,25 @@ test_that("dateRangeInput label correct", {
 )
 
 test_that("dateRangeInput selection invokes change", {
+  webElems <- remDr$findElements("css selector", "#reqcontrols #daterange .input-small")
+  appMinDate <- webElems[[1]]$getElementAttribute("data-min-date")[[1]]
+  appMaxDate <- webElems[[1]]$getElementAttribute("data-max-date")[[1]]
+  newDates <- sort(sample(seq(as.Date(appMinDate), as.Date(appMaxDate), 1), 2))
+  newDates <- as.character(format(newDates, "%m/%d/%Y"))
+  outElem <- remDr$findElement("css selector", "#ggPlot img")
+  initOutput <- outElem$getElementAttribute("src")[[1]]
   
+  webElems[[1]]$clearElement()
+  webElems[[1]]$sendKeysToElement(list(newDates[1]))
+  webElems[[2]]$clearElement()
+  webElems[[2]]$sendKeysToElement(list(newDates[2]))
+  
+  outElem <- suppressWarnings(remDr$findElement("css selector", "#ggPlot img"))
+  changeOutput <- outElem$getElementAttribute("src")[[1]]
+  
+  expect_false(initOutput == changeOutput)
+  
+}
+)
 
-remdr$close()
+remDr$close()
