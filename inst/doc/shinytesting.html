@@ -158,8 +158,9 @@ hr {
 <li><a href="#id1">Some thoughts on testing.</a></li>
 <li><a href="#id2">The shiny test app.</a></li>
 <li><a href="#id3">Basic tests.</a></li>
-<li><a href="#id4">section 4</a></li>
-<li><a href="#id5">section 5</a></li>
+<li><a href="#id4">Testing the Controls.</a></li>
+<li><a href="#id5">Testing the Output.</a></li>
+<li><a href="#id6">Further Tests.</a></li>
 </ul>
 
 <p>Each section will be an introduction to an idea in testing shiny apps with Selenium, and point to more detailed explanation in other vignettes.</p>
@@ -199,11 +200,11 @@ RSelenium with <code>sauceLabs</code> you get screenshots and videos automatical
 
 <h3>Introduction</h3>
 
-<p>The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the <code>ggplot2</code> library as output for one of the charts. The app includes examples of some of the controls included with the <code>shiny</code> package namely <code>selectInput</code>, <code>numericInput</code>, <code>dateRangeInput</code> and a <code>sliderInput</code>. These controls are used to produce output rendered using <code>renderPrint</code>, <code>renderPlot(base)</code>  , <code>renderPlot(ggplot2)</code> and <code>renderDataTable</code>.
+<p>The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the <code>ggplot2</code> library as output for one of the charts adapted from a discussion on <a href="http://stackoverflow.com/questions/11687739/two-legends-based-on-different-datasets-with-ggplot2">stackoverflow</a>. The app includes examples of some of the controls included with the <code>shiny</code> package namely <code>selectInput</code>, <code>numericInput</code>, <code>dateRangeInput</code> and a <code>sliderInput</code>. These controls are used to produce output rendered using <code>renderPrint</code>, <code>renderPlot(base)</code>  , <code>renderPlot(ggplot2)</code> and <code>renderDataTable</code>.
 The app can be viewed if you have <code>shiny</code> installed. </p>
 
 <pre><code>require(shiny)
-runApp(paste0(find.package(&quot;RSelenium&quot;), &quot;/apps/shinytestapp&quot;))
+runApp(paste0(find.package(&quot;RSelenium&quot;), &quot;/apps/shinytestapp&quot;), port = 6012)
 
 </code></pre>
 
@@ -337,7 +338,7 @@ ok 8 tabs are present
 
 <p>That concludes our basic test of the <code>Shiny Test App</code> functionality. Next we look at testing the input controls.</p>
 
-<h3>Testing the Controls</h3>
+<h2><a id="id4">Testing the Controls</a></h2>
 
 <p>Our first test of the controls will be the functioning of the checkbox. We open a new file in the test directory of our <code>Shiny Test App</code> and give it the name <code>test-checkbox.r</code>. We also give it a context of <code>controls</code>.</p>
 
@@ -396,7 +397,7 @@ ok 12 can select/deselect checkbox 4
 
 <p>We filter here on &ldquo;checkbox&rdquo; to only select this test file to run. If you watch the test running it will filter through the checkbox control checking each checkbox is functioning. The <code>checkboxGroupInput</code> drives the required controls which has id <code>reqcontrols</code>. Each of these controls is one of the building blocks of shiny and we will add a test for each.</p>
 
-<h4>Testing the selectInput</h4>
+<h3>Testing the selectInput</h3>
 
 <p>We write a simple test for the <code>selectInput</code>. It tests the options presented and the label of the control. We isolate the code in a seperate file <code>test-selectinput.r</code> in the test folder of our <code>Shiny Test App</code>. It also then selects an element from the options at random. It is tested whether the output changes or not.</p>
 
@@ -461,18 +462,18 @@ ok 3 selectInput selection invokes change
 
 <p>Note we set <code>remDr$setImplicitWaitTimeout(3000)</code> in this test so that we get a 3 second limit to find an element. </p>
 
-<h4>Testing the numericInput</h4>
+<h3>Testing the numericInput</h3>
 
 <p>The ideas behind testing the numericInput are similar to testing the selectInput. We test the label. We then test a random value between the allowable limits of the numericInput and check that the output changes. Finally a character string &ldquo;test&rdquo; is sent to the element and the appropriate error message on the output is checked. The final test can be adjusted to suit whatever bespoke error display etc is in your app. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-numericinput.r</code>. Again <code>remDr$setImplicitWaitTimeout(3000)</code> is called to give some leeway for element loading. Some commented out code indicates other methods one could deal with checking for element existence. Additional detail on timing races in Selenium can be found <a href="http://www.bizalgo.com/2012/01/14/timing-races-selenium-2-implicit-waits-explicit-waits/">here</a>.</p>
 
-<h4>Testing the dateRangeInput</h4>
+<h3>Testing the dateRangeInput</h3>
 
 <p>The test on the dateRangeInput compose of two tests. We test the label and we test the two input dates. We choose two random dates from the set of allowable dates. The output is tested for change after the two dates ave been set. <code>remDr$setImplicitWaitTimeout(3000)</code> is set in the test to allow for race conditions on elements. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-daterangeinput.r</code>.</p>
 
-<h4>Testing the sliderInput</h4>
+<h3>Testing the sliderInput</h3>
 
 <p>For the sliderInput we test the label and we test changing the controls. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-sliderinput.r</code>. The label is tested in a similar fashion as the other controls. The second test needs a bit of explaining. There are a number of ways we could interact with the slider control to change its values. Some of the easiest ways would be to execute javascript with <code>Shiny.onInputChange(&quot;range&quot;, [2000, 10000])</code> or 
-<code>Shiny.shinyapp.sendInput({range: [6222, 9333]})</code>. Both these methods would currently work. The Shiny server side would get the new values however the UI would show no change. The underlying sliderInput control is a <code>jslider</code>. Normally one can interact with the <code>jslider</code> thru calls similar to <code>$(&quot;.selector&quot;).slider(&quot;value&quot;, p1, p2)</code> as outlined <a href="http://egorkhmelev.github.io/jslider/">here</a>. We will use mouse movements and the <code>buttondown</code> <code>buttonup</code> methods of the remoteDriver class. </p>
+<code>Shiny.shinyapp.sendInput({range: [6222, 9333]})</code>. Both these methods would currently work. The Shiny server side would get the new values however the UI would show no change. The underlying sliderInput control is a <code>jslider</code>. Normally one can interact with the <code>jslider</code> thru calls similar to <code>$(&quot;.selector&quot;).slider(&quot;value&quot;, p1, p2)</code> as outlined <a href="http://egorkhmelev.github.io/jslider/">here</a>. We will use mouse movements and the <code>buttondown</code> <code>buttonup</code> methods of the remoteDriver class. <strong>Note that one may have problems forming the test in this manner, see for example <a href="http://stackoverflow.com/questions/19922578/understanding-of-cannot-perform-native-interaction-could-not-load-native-event">here</a></strong>. However it is useful to illustrate mouse and keyboard interactions in <code>RSelenium</code>.</p>
 
 <p>We get the attributes of the slider initially. We then get the dimension of the slider</p>
 
@@ -493,13 +494,11 @@ remDr$buttonup()
 
 <p>The above code moves to the slider elemnent. Pushes the left button down. Moves the mouse on the x axis in the direction calculated then releases the left mouse button. The output of the related data-table before and after the change is recorded and the test should result in the before and after not being equal.</p>
 
-<p>Do all the inputs function?<br>
-Do the outputs display?<br>
-Do the tabs work?<br></p>
+<h2><a id="id5">Testing the Output.</a></h2>
 
-<h2><a id="id4">section 4</a></h2>
+<p>Finally for this simple example we will look at testing the output. The two chart plots are base64 encoded images which we can check in the HTML source. The outputs should line up side by side with a maximum of 2 on a line. We can check the posistion of the outputs. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-output.r</code>.</p>
 
-<h2><a id="id5">section 5</a></h2>
+<h2><a id="id6">Further Tests.</a></h2>
 
 </body>
 

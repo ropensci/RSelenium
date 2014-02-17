@@ -2,9 +2,14 @@ context("controls")
 
 library(RSelenium)
 library(testthat)
-
-remDr <- remoteDriver()
+if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+  print(rsel.opt)
+  remDr <- do.call(remoteDriver, rsel.opt)
+}else{
+  remDr <- remoteDriver()
+}
 remDr$open(silent = TRUE)
+on.exit(remDr$close())
 sysDetails <- remDr$getStatus()
 remDr$setImplicitWaitTimeout(3000)
 browser <- remDr$sessionInfo$browserName
@@ -27,7 +32,7 @@ test_that("sliderInput label correct", {
 }
 )
 
-test_that("dateRangeInput selection invokes change", {
+test_that("sliderInput selection invokes change", {
   # get the slider element using siblings
   webElem <- remDr$findElement("css selector", "#reqcontrols #range")
   appMin <- as.numeric(webElem$getElementAttribute("data-from"))
@@ -71,5 +76,3 @@ test_that("dateRangeInput selection invokes change", {
   
 }
 )
-
-remDr$close()
