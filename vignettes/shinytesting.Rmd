@@ -16,7 +16,7 @@ RSelenium: Testing Shiny Apps
 
 ## Introduction
 
-The goal of this vignette is to give a basic overview of how one might approach "testing" a shiny app. [Shiny](http://www.rstudio.com/shiny/) is a new package from [RStudio](http://www.rstudio.com/) that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the [Bootstrap](http://getbootstrap.com/javascript/) front-end framework. In this vignette we will looking at writing unit tests for a simple shiny wep app. The testing package we will use is [testthat](https://github.com/hadley/testthat) which has a short introduction [here](http://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf).
+The goal of this vignette is to give a basic overview of how one might approach "testing" a shiny app. [Shiny](http://www.rstudio.com/shiny/) is a new package from [RStudio](http://www.rstudio.com/) that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the [Bootstrap](http://getbootstrap.com/javascript/) front-end framework. In this vignette we will looking at writing unit tests for a simple shiny wep app. The testing package we will use is [testthat](https://github.com/hadley/testthat) which has a short introduction [here](http://journal.r-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf). I am using `testthat` version 0.8. The version on cran is version 0.7.1 and may give trouble for tests where I manipulate the test environment. You can install 0.8 from github `devtools::install_github("testthat", "hadley")`
 
 
 This vignette is divided into five main sections:
@@ -151,7 +151,7 @@ We have a context of "basic" for the tests in this file. The test "can connect t
 `runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"), port = 6012)`. The second R session will listen for connection on port 6012 and return the `Shiny Test App`. If we ran this basic test we would expect the following output:
 
 ```
-> test_dir("./shinytestapp/tests/", reporter = "Tap")
+> test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), filter = 'basic', reporter = "Tap")
 [1] "Connecting to remote server"
 1..1
 # Context basic 
@@ -184,7 +184,7 @@ When we rerun our basic test we should hopefully now see that it is checking for
 the controls and the tabs.
 
 ```
-> test_dir("./shinytestapp/tests/", reporter = "Tap")
+> test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), filter = 'basic', reporter = "Tap")
 [1] "Connecting to remote server"
 1..8
 # Context basic 
@@ -241,7 +241,7 @@ In this case I am informed there maybe issues with `Internet Explorer`. Usually 
 the element for the checkbox and click it. In the case of `Internet Explorer` it maybe necessary to pass a `space` key to the element instead. Otherwise the test is straightforward. We check the initial state of the checkbox. We click the checkbox or send a keypress of space to it. We check the changed state of the checkbox. If the initial state is different to the changed state the test is deemed a success. For good measure we also check that the initial and changed states are of class "logical". We add code for the other 3 checkboxes. We can check our test as follows:
 
 ```
-> test_dir("./shinytestapp/tests/", reporter = "Tap", filter = "checkbox")
+> test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), reporter = "Tap", filter = "checkbox")
 [1] "Connecting to remote server"
 1..12
 # Context controls 
@@ -316,7 +316,7 @@ test_that("selectInput selection invokes change", {
 Running the `selectInput` test we get:
 
 ```
-> test_dir("./shinytestapp/tests/", reporter = "Tap", filter = "selectinput")
+> test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), reporter = "Tap", filter = "selectinput")
 [1] "Connecting to remote server"
 1..3
 # Context controls 
@@ -360,15 +360,62 @@ remDr$buttonup()
 
 ```
 
-The above code moves to the slider elemnent. Pushes the left button down. Moves the mouse on the x axis in the direction calculated then releases the left mouse button. The output of the related data-table before and after the change is recorded and the test should result in the before and after not being equal.
+The above code moves to the slider element. Pushes the left button down. Moves the mouse on the x axis in the direction calculated then releases the left mouse button. The output of the related data-table before and after the change is recorded and the test should result in the before and after not being equal.
+
+
+It is interesting to note that during initial writing of this vignette a new version of firefox 27.0.1 was released. As expected native events did not work under version 2.39 of selenium server and this updated version of firefox. Subsequently our test as formulated above would fail. There is an option to pass a list `rsel.opt` for use with some of the tests. Using this we can set `nativeEvents = FALSE` and the test above will pass again. When your tests fail it is not necessarily bad. This failure indicates a problem with your test setup rather then your app however.
+
+```
+testsel <- test_env()
+with(testsel, rsel.opt <- list(nativeEvents = FALSE))
+test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), reporter = "Tap", filter = "slider", env = testsel)
+
+```
 
 
 ## <a id="id5">Testing the Output.</a>
 
-Finally for this simple example we will look at testing the output. The test code is in the tests folder of the `Shiny Test App` in a file named `test-output.r`. The outputs should line up side by side with a maximum of 2 on a line. We can check the position of the outputs. Our first test will check whether the four outputs line up in a grid. This test will fail on low resolution setups which we will observe latter. The two chart plots are base64 encoded images which we can check in the HTML source. We can check the headers on the outputs. Finally we can check the controls on the datatable.
+Finally for this simple example we will look at testing the output. The test code is in the tests folder of the `Shiny Test App` in a file named `test-output.r`. The outputs should line up side by side with a maximum of 2 on a line. We can check the position of the outputs. Our first test will check whether the four outputs line up in a grid. This test will fail on low resolution setups which we will observe latter. We can check the headers on the outputs. The two chart plots are base64 encoded images which we can check in the HTML source. We can check the headers on the outputs. Finally we can check the controls on the datatable.
 
+
+The first test use the `getElementLocation` method of the `webElement` class to find the location in pixels of the output objects.
+
+```
+webElems <- remDr$findElements("css selector", "#reqplots .span5")
+out <- sapply(webElems, function(x){x$getElementLocation()})
+
+```
+
+The 1st and 2nd and the 3rd and 4th objects should share rows. The 1st and 3rd and the 2nd and 4th should share a column. This test will fail as the resolution of the app decreases and the output objects get compacted. The second test checks output labels in a similar fashion to other test.
+The third test checks whether the chart output are base 64 encoded png. The final test selects the data-table output and randomly selects a column from carat or price. It then checks whether the ordering functions when the column header is clicked.
+
+Finally running all tests with a "summary" reporter we would hope to get:
+
+```
+> test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"))
+basic : [1] "Connecting to remote server"
+........
+controls : [1] "Connecting to remote server"
+............
+controls : [1] "Connecting to remote server"
+..
+controls : [1] "Connecting to remote server"
+...
+outputs : [1] "Connecting to remote server"
+.......
+controls : [1] "Connecting to remote server"
+...
+controls : [1] "Connecting to remote server"
+..
+
+```
 
 ## <a id="id6">Further Tests.</a>
+
+- Test across multiple browsers and OS. See the saucelabs testing vignette
+- Longitudinal type test. Record access times for various components of your app across time.
+See the RBMproxy testing vignette.
+- Analysis current page load times. See the RBMproxy vignette
 
 </xmp>
 <script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>

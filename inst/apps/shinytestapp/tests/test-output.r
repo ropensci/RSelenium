@@ -1,4 +1,4 @@
-context("controls")
+context("outputs")
 
 library(RSelenium)
 library(testthat)
@@ -34,7 +34,7 @@ test_that("output object alignment correct", {
   webElems <- remDr$findElements("css selector", "#reqplots .span5")
   out <- sapply(webElems, function(x){x$getElementLocation()})
   out <- out[c('x', 'y'),]
-  print(out)
+  #print(out)
   expect_equal(as.integer(out['y', 1]) - as.integer(out['y', 2]), 0) # 1st row
   expect_equal(as.integer(out['y', 3]) - as.integer(out['y', 4]), 0) # 2nd row
   expect_equal(as.integer(out['x', 1]) - as.integer(out['x', 3]), 0) # 1st col
@@ -42,3 +42,47 @@ test_that("output object alignment correct", {
 }
 )
 
+test_that("output labels are correct", {
+  
+  webElems <- remDr$findElements("css selector", "#reqplots h6")
+  appLabels <- unlist(sapply(webElems, function(x){x$getElementText()}))
+  checkLabels <- appLabels %in% c("selectInput Output", "numericInput Output", "dateRangeInput Output", 
+                   "sliderInput Output")
+  expect_true(all(checkLabels))
+  
+}
+)
+
+test_that("output check images", {
+  
+  webElems <- remDr$findElements("css selector", "#distPlot img, #ggPlot img")
+  appImages <- sapply(webElems, function(x){x$getElementAttribute("src")})
+  expect_true(all(grepl("image/png;base64",appImages)))
+}
+)
+
+test_that("output check data-table", {
+  
+  webElems <- remDr$findElements("css selector", "#dttable .sorting")
+  appHeaders <- sapply(webElems, function(x){x$getElementText()})
+  # check a random sorting
+  appSort <- sample(seq_along(appHeaders)[c(1,4)], 1)
+  webElems[[appSort]]$clickElement()
+  # check ordering of column after 1st click
+  appSource <- remDr$getPageSource()[[1]]
+  appSource <- htmlParse(appSource)
+  dttable <- readHTMLTable(appSource, stringsAsFactors = FALSE)
+  appCol <- dttable$DataTables_Table_0[[appHeaders[[appSort]]]]
+  ordering1 <- is.unsorted(appCol)
+
+  webElems[[appSort]]$clickElement()
+  # check ordering of column after 2nd click
+  appSource <- remDr$getPageSource()[[1]]
+  appSource <- htmlParse(appSource)
+  dttable <- readHTMLTable(appSource, stringsAsFactors = FALSE)
+  appCol <- dttable$DataTables_Table_0[[appHeaders[[appSort]]]]
+  ordering2 <- is.unsorted(appCol)
+  
+  expect_false(ordering1 == ordering2)
+}
+)
