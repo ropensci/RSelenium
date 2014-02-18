@@ -27,6 +27,14 @@ vignette('RSelenium-basics')
 ```
 
 or the basic vignette can be viewed on [Rpubs](http://rpubs.com/johndharrison/12843).
+
+### Test Shiny Apps
+
+Use RSelenium to test your Shiny Apps.
+
+Read the introductory tutorial on [Rpubs](http://rpubs.com/johndharrison/13408).
+
+
 ### Use sauceLabs
 Added support for sauceLabs:
 

@@ -146,6 +146,8 @@ hr {
 %\VignetteIndexEntry{Shiny Testing}
 -->
 
+<p><xmp theme="cerulean" style="display:none;"></p>
+
 <h1>RSelenium: Testing Shiny Apps</h1>
 
 <h2>Introduction</h2>
@@ -496,9 +498,13 @@ remDr$buttonup()
 
 <h2><a id="id5">Testing the Output.</a></h2>
 
-<p>Finally for this simple example we will look at testing the output. The two chart plots are base64 encoded images which we can check in the HTML source. The outputs should line up side by side with a maximum of 2 on a line. We can check the posistion of the outputs. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-output.r</code>.</p>
+<p>Finally for this simple example we will look at testing the output. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-output.r</code>. The outputs should line up side by side with a maximum of 2 on a line. We can check the position of the outputs. Our first test will check whether the four outputs line up in a grid. This test will fail on low resolution setups which we will observe latter. The two chart plots are base64 encoded images which we can check in the HTML source. We can check the headers on the outputs. Finally we can check the controls on the datatable.</p>
 
 <h2><a id="id6">Further Tests.</a></h2>
+
+<p></xmp></p>
+
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
 
 </body>
 

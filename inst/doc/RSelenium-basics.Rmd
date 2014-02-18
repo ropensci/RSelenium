@@ -3,6 +3,8 @@
 %\VignetteIndexEntry{RSelenium basics}
 -->
 
+<xmp theme="cerulean" style="display:none;">
+
 ```{r, echo = FALSE, message = FALSE}
 library(knitr)
 library(RSelenium)
@@ -805,3 +807,6 @@ Notice now that a new windows has opened on the remote browser.
 ```
 
 So using the code above one can observe how to switch between different windows on the remote browser. 
+
+</xmp>
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>

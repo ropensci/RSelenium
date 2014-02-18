@@ -3,6 +3,8 @@
 %\VignetteIndexEntry{RSelenium basics}
 -->
 
+<xmp theme="cerulean" style="display:none;">
+
 
 
 
@@ -444,7 +446,7 @@ remDr$executeScript("setTimeout(function(){ alert('Hello');},5000); return 'DONE
 
 The async version waits until the callback (defined as the last argument) is called.
 
-## <a id="id6">Frames and Tabs.</a>
+## <a id="id6">Frames and Windows.</a>
 
 In the context of a web browser, a frame is a part of a web page or browser window which displays content independent of its container, with the ability to load content independently.
 
@@ -802,3 +804,6 @@ Notice now that a new windows has opened on the remote browser.
 ```
 
 So using the code above one can observe how to switch between different windows on the remote browser. 
+
+</xmp>
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
