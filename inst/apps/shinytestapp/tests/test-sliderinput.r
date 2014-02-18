@@ -57,18 +57,18 @@ test_that("sliderInput selection invokes change", {
   # move first slider
   moveOrder <- 1:2
   if(newValues[1] > appValue[2]){moveOrder <- rev(moveOrder)}
-  for(x in seq_along(moveOrder)){
+  for(x in moveOrder){
     remDr$mouseMoveToLocation(webElement = webElems[[x]])
     remDr$buttondown()
     remDr$mouseMoveToLocation(x = as.integer(pxToMoveSldr[x]), y = -1L)#, webElement = webElems[[x]])
     remDr$buttonup()
   }
-  webElem <- remDr$findElement("css selector", "#reqcontrols #range")
-  appValue <- webElem$getElementAttribute("value")
+  #webElem <- remDr$findElement("css selector", "#reqcontrols #range")
+  #appValue <- webElem$getElementAttribute("value")
   
   # Shiny.onInputChange("range", [2000, 10000])
   # Shiny.shinyapp.sendInput({range: [6222, 9333]})
-  
+  Sys.sleep(1)
   outElem <- remDr$findElement("css selector", "#dttable")
   changeOutput <- outElem$getElementText()[[1]]
   
