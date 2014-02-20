@@ -42,7 +42,8 @@
 #'      \item{\code{mouseMoveToLocation(x, y, elementId)}:}{ Move the mouse by an offset of the specificed element. If no element is specified, the move is relative to the current mouse cursor. If an element is provided but no offset, the mouse will be moved to the center of the element. If the element is not visible, it will be scrolled into view. }
 #'      \item{\code{setAsyncScriptTimeout(milliseconds)}:}{ Set the amount of time, in milliseconds, that asynchronous scripts executed by execute_async_script() are permitted to run before they are aborted and a |Timeout| error is returned to the client. }
 #'      \item{\code{setImplicitWaitTimeout(milliseconds)}:}{ Set the amount of time the driver should wait when searching for elements. When searching for a single element, the driver will poll the page until an element is found or the timeout expires, whichever occurs first. When searching for multiple elements, the driver should poll the page until at least one element is found or the timeout expires, at which point it will return an empty list. If this method is never called, the driver will default to an implicit wait of 0ms. }
-#'      \item{\code{close()}:}{ Close the current window. }
+#'      \item{\code{closeWindow()}:}{ Close the current window. }
+#'      \item{\code{close()}:}{ Close the current session. }
 #'      \item{\code{quit()}:}{ Delete the session & close open browsers. }
 #'      \item{\code{getCurrentWindowHandle()}:}{ Retrieve the current window handle. }
 #'      \item{\code{getWindowHandles()}:}{ Retrieve the list of window handles used in the session. }
@@ -368,8 +369,13 @@ remoteDriver <- setRefClass("remoteDriver",
                                         "POST",qdata=toJSON(list(ms = milliseconds)))
                               },
                               
-                              close = function(){
+                              closeWindow = function(){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window'),
+                                        "DELETE")
+                              },
+                              
+                              close = function(){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id),
                                         "DELETE")
                               },
                               
