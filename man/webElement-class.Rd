@@ -32,21 +32,21 @@ usually called by the end-user.
   located element will be returned as an object of
   webElement class.  The inputs are: \describe{
   \item{\code{using}:}{Locator scheme to use to search the
-  element, available schemes: {class, class_name, css, id,
-  link, link_text, partial_link_text, tag_name, name,
-  xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
-  search target. See examples.} } }
-  \item{\code{findChildElements(using ,value)}:}{ Search
+  element, available schemes: {"class name", "css
+  selector", "id", "name", "link text", "partial link
+  text", "tag name", "xpath" }. Defaults to 'xpath'. }
+  \item{\code{value}:}{The search target. See examples.} }
+  } \item{\code{findChildElements(using ,value)}:}{ Search
   for multiple elements on the page, starting from the node
   defined by the parent webElement. The located elements
   will be returned as an list of objects of class
   WebElement.  The inputs are: \describe{
   \item{\code{using}:}{Locator scheme to use to search the
-  element, available schemes: {class, class_name, css, id,
-  link, link_text, partial_link_text, tag_name, name,
-  xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
-  search target. See examples.} } }
-  \item{\code{compareElements(otherElem)}:}{ Test if the
+  element, available schemes: {"class name", "css
+  selector", "id", "name", "link text", "partial link
+  text", "tag name", "xpath" }. Defaults to 'xpath'. }
+  \item{\code{value}:}{The search target. See examples.} }
+  } \item{\code{compareElements(otherElem)}:}{ Test if the
   current webElement and an other web element refer to the
   same DOM element.} \item{\code{clickElement()}:}{ Click
   the element.} \item{\code{submitElement()}:}{ Submit a

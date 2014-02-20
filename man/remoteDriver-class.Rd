@@ -121,7 +121,8 @@ javascript(TRUE). See examples for more information on use.
   timeout expires, at which point it will return an empty
   list. If this method is never called, the driver will
   default to an implicit wait of 0ms. }
-  \item{\code{close()}:}{ Close the current window. }
+  \item{\code{closeWindow()}:}{ Close the current window. }
+  \item{\code{close()}:}{ Close the current session. }
   \item{\code{quit()}:}{ Delete the session & close open
   browsers. } \item{\code{getCurrentWindowHandle()}:}{
   Retrieve the current window handle. }
@@ -211,22 +212,34 @@ javascript(TRUE). See examples for more information on use.
   document root. The located element will be returned as an
   object of webElement class.  The inputs are: \describe{
   \item{\code{using}:}{Locator scheme to use to search the
-  element, available schemes: {class, class_name, css, id,
-  link, link_text, partial_link_text, tag_name, name,
-  xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
-  search target. See examples.} } }
-  \item{\code{findElements(using ,value)}:}{ Search for
-  multiple elements on the page, starting from the document
-  root. The located elements will be returned as an list of
-  objects of class WebElement.  The inputs are: \describe{
+  element, available schemes: Defaults to 'xpath'.
+  \describe{ \item{"class name" :}{Returns an element whose
+  class name contains the search value; compound class
+  names are not permitted.} \item{"css selector" :}{Returns
+  an element matching a CSS selector.} \item{"id"
+  :}{Returns an element whose ID attribute matches the
+  search value.} \item{"name" :}{Returns an element whose
+  NAME attribute matches the search value.} \item{"link
+  text" :}{Returns an anchor element whose visible text
+  matches the search value.} \item{"partial link text"
+  :}{Returns an anchor element whose visible text partially
+  matches the search value.} \item{"tag name" :}{Returns an
+  element whose tag name matches the search value.}
+  \item{"xpath" :}{Returns an element matching an XPath
+  expression.} } } \item{\code{value}:}{The search target.
+  See examples.} } } \item{\code{findElements(using
+  ,value)}:}{ Search for multiple elements on the page,
+  starting from the document root. The located elements
+  will be returned as an list of objects of class
+  WebElement.  The inputs are: \describe{
   \item{\code{using}:}{Locator scheme to use to search the
-  element, available schemes: {class, class_name, css, id,
-  link, link_text, partial_link_text, tag_name, name,
-  xpath}. Defaults to 'xpath'. } \item{\code{value}:}{The
-  search target. See examples.} } }
-  \item{\code{getActiveElement()}:}{ Get the element on the
-  page that currently has focus. The located element will
-  be returned as a WebElement id. }
+  element, available schemes: {"class name", "css
+  selector", "id", "name", "link text", "partial link
+  text", "tag name", "xpath" }. Defaults to 'xpath'. }
+  \item{\code{value}:}{The search target. See examples.} }
+  } \item{\code{getActiveElement()}:}{ Get the element on
+  the page that currently has focus. The located element
+  will be returned as a WebElement id. }
   \item{\code{click(buttonId)}:}{ Click any mouse button
   (at the coordinates set by the last mouseMoveToLocation()
   command). buttonId - any one of 'LEFT'/0 'MIDDLE'/1
