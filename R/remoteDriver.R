@@ -637,6 +637,11 @@ remoteDriver <- setRefClass("remoteDriver",
                                         "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
+#                               phantomExecute = function(script, args){
+#                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/phantom/execute'),
+#                                         "POST",qdata = toJSON(list(script = script, args = args)))
+#                               },
+# 
                               closeServer = function(){
                                 queryRD(paste0("http://", remoteServerAddr, ":", port, "/selenium-server/driver/?cmd=shutDownSeleniumServer"), 
                                         "GET")
