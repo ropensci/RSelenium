@@ -63,6 +63,7 @@ startServer <- function (dir = NULL)
 #' \code{getFirefoxProfile}
 #' A utility function to get a firefox profile. 
 #' @param profDir The directory in which the firefox profile resides
+#' @param useBase Logical indicating whether to attempt to use zip from utils package. Maybe easier for Windows users.
 #' @export
 #' @section Detail: A firefox profile directory is zipped and base64 encoded. It can then be passed
 #' to the selenium server as a required capability with key firefox_profile 
@@ -73,12 +74,18 @@ startServer <- function (dir = NULL)
 #' remDr$open()
 #' }
 
-getFirefoxProfile <- function(profDir){
+getFirefoxProfile <- function(profDir, useBase = FALSE){
   
-  require(Rcompression)
+  if(!useBase){
+    require(Rcompression)
+  }
   tmpfile <- tempfile(fileext = '.zip')
   reqFiles <- list.files(profDir, recursive = TRUE)
-  zip(tmpfile, paste(profDir, reqFiles, sep ="/"),  altNames = reqFiles)
+  if(!useBase){
+    zip(tmpfile, paste(profDir, reqFiles, sep ="/"),  altNames = reqFiles)
+  }else{
+    zip(tmpfile, paste0(path.expand(profDir), reqFiles), flags = "-r9Xjq")
+  }
   zz <- file(tmpfile, "rb")
   ar <- readBin(tmpfile, "raw", file.info(tmpfile)$size)
   fireprof <- base64encode(ar)
