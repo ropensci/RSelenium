@@ -77,6 +77,9 @@ errorHandler <- setRefClass("errorHandler",
                                                  qdata = NULL,
                                                  json = FALSE){
                                 # browser(expr = BANDAID)
+                                # optional logger here to log calls
+                                # can log in an environment in the package namespace
+                                print(deparse(sys.calls()[[sys.nframe()-1]]))
                                 h = basicHeaderGatherer()
                                 if(is.null(qdata)){
                                   res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE, headerfunction = h$update)

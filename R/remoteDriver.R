@@ -306,13 +306,25 @@ remoteDriver <- setRefClass("remoteDriver",
                                 # fudge for sauceLabs not having /sessions
                                 #                                  sessionInfo <<- fromJSON(sessionResult)
                                 sessionInfo <<- value
-                                sessionInfo$id <<- sessionid
+                                if(is.na(sessionid)){
+                                  # fix for problem with sauceLab when calling internet explorer
+                                  sessionInfo$id <<- sub(".*hub/session/(.*)", "\\1", responseheader$Location)
+                                  sessionInfo <<- getSession()
+                                  sessionInfo$id <<- sessionid
+                                }else{
+                                  sessionInfo$id <<- sessionid
+                                }
                                 if(!silent){print(sessionInfo)}
                                 #                                
                               },    
                               
                               getSessions = function(){
                                 queryRD(paste0(serverURL,'/sessions'))
+                                .self$value
+                              },
+                              
+                              getSession = function(){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id))
                                 .self$value
                               },
                               
@@ -470,7 +482,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                   wInd <- lapply(args, class) == 'webElement'
                                   args <- lapply(args, function(x){
                                     if(class(x) == 'webElement'){
-                                      setNames(as.character(webElem$elementId), "ELEMENT")
+                                      setNames(as.character(x$elementId), "ELEMENT")
                                     }else{
                                       x
                                     }
@@ -500,7 +512,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                   wInd <- lapply(args, class) == 'webElement'
                                   args <- lapply(args, function(x){
                                     if(class(x) == 'webElement'){
-                                      setNames(as.character(webElem$elementId), "ELEMENT")
+                                      setNames(as.character(x$elementId), "ELEMENT")
                                     }else{
                                       x
                                     }
@@ -512,7 +524,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                 }else{
                                   "Javascript is not enabled"
                                 }
-                                # if any of the returned elements are web Elements retrun them as such
+                                # if any of the returned elements are web Elements return them as such
                                 if(any(lapply(.self$value, names) == "ELEMENT")){
                                   wInd <- lapply(.self$value, names) == "ELEMENT"
                                   out <- .self$value
@@ -637,11 +649,11 @@ remoteDriver <- setRefClass("remoteDriver",
                                         "POST",qdata = toJSON(list(button = buttonId)))
                               },
                               
-#                               phantomExecute = function(script, args){
-#                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/phantom/execute'),
-#                                         "POST",qdata = toJSON(list(script = script, args = args)))
-#                               },
-# 
+                              #                               phantomExecute = function(script, args){
+                              #                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/phantom/execute'),
+                              #                                         "POST",qdata = toJSON(list(script = script, args = args)))
+                              #                               },
+                              # 
                               closeServer = function(){
                                 queryRD(paste0("http://", remoteServerAddr, ":", port, "/selenium-server/driver/?cmd=shutDownSeleniumServer"), 
                                         "GET")
