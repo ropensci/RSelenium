@@ -443,6 +443,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               getWindowPosition = function(windowId = "current"){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',windowId,'/position'))
+                                .self$value
                               },
                               
                               getCurrentUrl = function(){
