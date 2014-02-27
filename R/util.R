@@ -13,16 +13,18 @@
 
 checkForServer <- function (dir = NULL, update = FALSE) 
 {
-  selURL <- "http://code.google.com/p/selenium/downloads/"
-  selXML <- htmlParse(paste0(selURL, "list"))
-  selJAR <- xpathSApply(selXML, "//a[contains(@href,'selenium-server-standalone')]/@href")[[1]]
+  selURL <- "http://selenium-release.storage.googleapis.com"
+  selXML <- xmlParse(paste0(selURL), "/?delimiter=")
+  selJAR <- xpathSApply(selXML, "//s:Key[contains(text(),'selenium-server-standalone')]", namespaces = c(s = "http://doc.s3.amazonaws.com/2006-03-01"), xmlValue)
+# get the most up-to-date jar
+  selJAR <- selJAR[order(as.numeric(gsub("(.*)/.*", "\\1",selJAR)), decreasing = TRUE)][1]
   selDIR <- ifelse(is.null(dir), paste0(find.package("RSelenium"), 
                                         "/bin/"), dir)
   selFILE <- paste0(selDIR, "selenium-server-standalone.jar")
   if (update || !file.exists(selFILE)) {
     dir.create(selDIR, showWarnings=FALSE)
     print("DOWNLOADING STANDALONE SELENIUM SERVER. THIS MAY TAKE SEVERAL MINUTES")
-    download.file(paste0("http:", selJAR), selFILE, mode = "wb")
+    download.file(paste0( selURL, "/", selJAR), selFILE, mode = "wb")
   }
 }
 
