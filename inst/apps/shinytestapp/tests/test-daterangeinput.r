@@ -3,7 +3,12 @@ context("controls")
 library(RSelenium)
 library(testthat)
 
-remDr <- remoteDriver()
+if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+  # print(rsel.opt)
+  remDr <- do.call(remoteDriver, rsel.opt)
+}else{
+  remDr <- remoteDriver()
+}
 remDr$open(silent = TRUE)
 sysDetails <- remDr$getStatus()
 remDr$setImplicitWaitTimeout(3000)
@@ -40,7 +45,9 @@ test_that("dateRangeInput selection invokes change", {
   webElems[[1]]$sendKeysToElement(list(newDates[1]))
   webElems[[2]]$clearElement()
   webElems[[2]]$sendKeysToElement(list(newDates[2]))
-  
+  if(browser == "phantomjs"){
+    Sys.sleep(1)
+  }
   outElem <- suppressWarnings(remDr$findElement("css selector", "#ggPlot img"))
   changeOutput <- outElem$getElementAttribute("src")[[1]]
   

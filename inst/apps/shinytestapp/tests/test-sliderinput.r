@@ -3,7 +3,7 @@ context("controls")
 library(RSelenium)
 library(testthat)
 if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
-  print(rsel.opt)
+  # print(rsel.opt)
   remDr <- do.call(remoteDriver, rsel.opt)
 }else{
   remDr <- remoteDriver()

@@ -3,7 +3,12 @@ context("basic")
 library(RSelenium)
 library(testthat)
 
-remDr <- remoteDriver()
+if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+  # print(rsel.opt)
+  remDr <- do.call(remoteDriver, rsel.opt)
+}else{
+  remDr <- remoteDriver()
+}
 remDr$open(silent = TRUE)
 appURL <- "http://127.0.0.1:6012"
 

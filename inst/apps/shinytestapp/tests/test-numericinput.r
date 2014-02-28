@@ -3,7 +3,12 @@ context("controls")
 library(RSelenium)
 library(testthat)
 
-remDr <- remoteDriver()
+if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+  # print(rsel.opt)
+  remDr <- do.call(remoteDriver, rsel.opt)
+}else{
+  remDr <- remoteDriver()
+}
 remDr$open(silent = TRUE)
 sysDetails <- remDr$getStatus()
 remDr$setImplicitWaitTimeout(3000)

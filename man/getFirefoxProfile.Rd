@@ -2,11 +2,15 @@
 \alias{getFirefoxProfile}
 \title{Get Firefox profile.}
 \usage{
-getFirefoxProfile(profDir)
+getFirefoxProfile(profDir, useBase = FALSE)
 }
 \arguments{
   \item{profDir}{The directory in which the firefox profile
   resides}
+
+  \item{useBase}{Logical indicating whether to attempt to
+  use zip from utils package. Maybe easier for Windows
+  users.}
 }
 \description{
 \code{getFirefoxProfile} A utility function to get a
