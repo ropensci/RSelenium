@@ -56,7 +56,7 @@
 #' @export webElement
 #' @exportClass webElement
 webElement <- setRefClass("webElement",
-  fields   = list(elementId        = "numeric"),
+  fields   = list(elementId        = "character"),
   contains = "remoteDriver",
   methods  = list(
       initialize = function(elementId = "",...){
@@ -75,14 +75,14 @@ webElement <- setRefClass("webElement",
           qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/element')
           queryRD(qpath, "POST", qdata = toJSON(list(using = using,value = value)), json = TRUE)
           elemDetails <- .self$value[[1]]
-          webElement$new(as.integer(elemDetails))$import(.self$export("remoteDriver"))
+          webElement$new(as.character(elemDetails))$import(.self$export("remoteDriver"))
       },
 
       findChildElements = function(using = "xpath",value){
           qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/elements')
           queryRD(qpath, "POST", qdata = toJSON(list(using = using,value = value)), json = TRUE)
           elemDetails <- .self$value
-          lapply(elemDetails, function(x){webElement$new(as.integer(x))$import(.self$export("remoteDriver"))})
+          lapply(elemDetails, function(x){webElement$new(as.character(x))$import(.self$export("remoteDriver"))})
       },
 
       compareElements = function(otherElem){
