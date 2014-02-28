@@ -27,7 +27,7 @@ if(exists('sauceTest', where = parent.env(environment()) , inherits = FALSE)){
     loadPage <- function(pgStr){
       paste0("http://", file.path(htmlSrc, paste0(pgStr, ".html")))
     }
-    
+    rsel.opt$id <<- remDr$sessionInfo$id
   }
 }
 
