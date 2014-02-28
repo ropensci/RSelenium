@@ -22,7 +22,8 @@ errorHandler <- setRefClass("errorHandler",
                                             , sessionid = "character"
                                             , hcode = "numeric"
                                             , value = "list"
-                                            , responseheader = "list"),
+                                            , responseheader = "list"
+                                            , debugheader = "list"),
                             methods  = list(
                               initialize = function(){
                                 # update statusCodes if needed
@@ -69,6 +70,7 @@ errorHandler <- setRefClass("errorHandler",
                                 hcode <<- NA_integer_
                                 value <<- list()
                                 responseheader <<- list()
+                                debugheader <<- list()
                               },
                               
                               queryRD = function(ipAddr,
@@ -76,24 +78,26 @@ errorHandler <- setRefClass("errorHandler",
                                                  httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),
                                                  qdata = NULL,
                                                  json = FALSE){
-                                # browser(expr = BANDAID)
+                                #browser(expr = BANDAID)
                                 # optional logger here to log calls
                                 # can log in an environment in the package namespace
                                 print(deparse(sys.calls()[[sys.nframe()-1]]))
                                 h = basicHeaderGatherer()
+                                d <- debugGatherer()
                                 if(is.null(qdata)){
                                   res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE, headerfunction = h$update)
                                 }else{
-                                  res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE, headerfunction = h$update)
+                                  res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE, headerfunction = h$update)#, .opts = list(verbose = TRUE), debugfunction = d$update)
                                 }
                                 responseheader <<- as.list(h$value())
+                                debugheader <<- as.list(d$value())
                                 res1 <- ifelse(is.raw(res), rawToChar(res), res)
-                                res1 <- try(fromJSON(res1), TRUE)
+                                res1 <- try(fromJSON(res1, simplifyWithNames = FALSE), TRUE)
                                 if(identical(class(res1), "try-error") && grepl("\"value\":", res)){
                                   # try manually parse JSON RJSONIO wont handle
                                   testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\1YYYYY\\3", res)
                                   testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\2", res)
-                                  res1 <- fromJSON(testRes)
+                                  res1 <- fromJSON(testRes, simplifyWithNames = FALSE)
                                   res1$value <- gsub("\\\"", "\"", testValue)
                                 }
 #                                if( isValidJSON(res1, asText = TRUE)){ # not reliable
