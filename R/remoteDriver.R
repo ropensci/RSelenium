@@ -495,11 +495,19 @@ remoteDriver <- setRefClass("remoteDriver",
                                 }else{
                                   "Javascript is not enabled"
                                 }
+                                if(length(.self$value) == 1){
+                                  if(any(names(.self$value) == "ELEMENT")){
+                                    return(list(webElement$new(as.character(.self$value))$import(.self)))
+                                  }else{
+                                    .self$value
+                                  }
+                                }
+                                
                                 if(any(lapply(.self$value, names) == "ELEMENT")){
                                   wInd <- lapply(.self$value, names) == "ELEMENT"
                                   out <- .self$value
                                   out[[wInd]] <- unname(out[[wInd]])
-                                  out[[wInd]] <- lapply(out[[wInd]], function(x){webElement$new(as.integer(x))$import(.self)})
+                                  out[[wInd]] <- lapply(out[[wInd]], function(x){webElement$new(as.character(x))$import(.self)})
                                   unlist(out)
                                 }else{
                                   .self$value
@@ -526,11 +534,19 @@ remoteDriver <- setRefClass("remoteDriver",
                                   "Javascript is not enabled"
                                 }
                                 # if any of the returned elements are web Elements return them as such
+                                if(length(.self$value) == 1){
+                                  if(any(names(.self$value) == "ELEMENT")){
+                                    return(list(webElement$new(as.character(.self$value))$import(.self)))
+                                  }else{
+                                    .self$value
+                                  }
+                                }
+                                
                                 if(any(lapply(.self$value, names) == "ELEMENT")){
                                   wInd <- lapply(.self$value, names) == "ELEMENT"
                                   out <- .self$value
                                   out[[wInd]] <- unname(out[[wInd]])
-                                  out[[wInd]] <- lapply(out[[wInd]], function(x){webElement$new(as.integer(x))$import(.self)})
+                                  out[[wInd]] <- lapply(out[[wInd]], function(x){webElement$new(as.character(x))$import(.self)})
                                   unlist(out)
                                 }else{
                                   .self$value
@@ -614,7 +630,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                         json = TRUE)
                                 # using value as an argument refer to self
                                 elemDetails <- .self$value[[1]]
-                                webElement$new(as.integer(elemDetails))$import(.self)
+                                webElement$new(as.character(elemDetails))$import(.self)
                               },
                               
                               findElements = function(using = "xpath", value){
@@ -622,7 +638,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                         "POST",qdata = toJSON(list(using = using,value = value)),
                                         json = TRUE)
                                 elemDetails <- .self$value
-                                lapply(elemDetails, function(x){webElement$new(as.integer(x))$import(.self)})
+                                lapply(elemDetails, function(x){webElement$new(as.character(x))$import(.self)})
                               },
                               
                               getActiveElement = function(){
