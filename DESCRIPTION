@@ -1,7 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R bindings for Selenium webdriver.
-Version: 1.1
+Version: 1.2
 Date: 2012-09-20
 Author: John Harrison <johndharrison0@gmail.com>
 Maintainer: John Harrison <johndharrison0@gmail.com>
