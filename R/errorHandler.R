@@ -100,12 +100,12 @@ errorHandler <- setRefClass("errorHandler",
                                   responseheader <<- as.list(h$value())
                                 }
                                 debugheader <<- as.list(d$value())
-                                res1 <- ifelse(is.raw(res), rawToChar(res), res)
-                                res1 <- try(fromJSON(res1, simplifyWithNames = FALSE), TRUE)
+                                res <- ifelse(is.raw(res), rawToChar(res), res)
+                                res1 <- try(fromJSON(res, simplifyWithNames = FALSE), TRUE)
                                 if(identical(class(res1), "try-error") && grepl("\"value\":", res)){
                                   # try manually parse JSON RJSONIO wont handle
-                                  testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\1YYYYY\\3", res)
-                                  testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\2", res)
+                                  testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\1YYYYY\\3", res1)
+                                  testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\2", res1)
                                   res1 <- fromJSON(testRes, simplifyWithNames = FALSE)
                                   res1$value <- gsub("\\\"", "\"", testValue)
                                 }
