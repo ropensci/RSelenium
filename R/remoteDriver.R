@@ -619,8 +619,8 @@ remoteDriver <- setRefClass("remoteDriver",
                                         ,"DELETE")
                               },
                               
-                              getPageSource = function(){
-                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/source'))
+                              getPageSource = function(header = TRUE){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/source'), header = header)
                                 .self$value
                               },
                               

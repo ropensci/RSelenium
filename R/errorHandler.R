@@ -77,7 +77,8 @@ errorHandler <- setRefClass("errorHandler",
                                                  method = "GET",
                                                  httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),
                                                  qdata = NULL,
-                                                 json = FALSE){
+                                                 json = FALSE,
+                                                 header = TRUE){
                                 #browser(expr = BANDAID)
                                 # optional logger here to log calls
                                 # can log in an environment in the package namespace
@@ -85,11 +86,19 @@ errorHandler <- setRefClass("errorHandler",
                                 h = basicHeaderGatherer()
                                 d <- debugGatherer()
                                 if(is.null(qdata)){
-                                  res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE, headerfunction = h$update)
+                                  getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE)
+                                  if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update))}
+                                  res <- do.call(getURLContent, getUC.params)
+                                  #res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE, headerfunction = h$update)
                                 }else{
-                                  res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE, headerfunction = h$update)#, .opts = list(verbose = TRUE), debugfunction = d$update)
+                                  getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE)
+                                  if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update))}
+                                  res <- do.call(getURLContent, getUC.params)
+                                  #res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE, headerfunction = h$update)#, .opts = list(verbose = TRUE), debugfunction = d$update)
                                 }
-                                responseheader <<- as.list(h$value())
+                                if(header){
+                                  responseheader <<- as.list(h$value())
+                                }
                                 debugheader <<- as.list(d$value())
                                 res1 <- ifelse(is.raw(res), rawToChar(res), res)
                                 res1 <- try(fromJSON(res1, simplifyWithNames = FALSE), TRUE)
