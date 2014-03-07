@@ -399,7 +399,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               },
                               
                               setTimeout = function(type = "page load", milliseconds = 10000){
-                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/timeouts/implicit_wait'),
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/timeouts'),
                                         "POST",qdata=toJSON(list(type = type, ms = milliseconds)))
                               },
                               
