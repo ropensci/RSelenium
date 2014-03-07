@@ -42,6 +42,12 @@
 #'      \item{\code{mouseMoveToLocation(x, y, elementId)}:}{ Move the mouse by an offset of the specificed element. If no element is specified, the move is relative to the current mouse cursor. If an element is provided but no offset, the mouse will be moved to the center of the element. If the element is not visible, it will be scrolled into view. }
 #'      \item{\code{setAsyncScriptTimeout(milliseconds)}:}{ Set the amount of time, in milliseconds, that asynchronous scripts executed by execute_async_script() are permitted to run before they are aborted and a |Timeout| error is returned to the client. }
 #'      \item{\code{setImplicitWaitTimeout(milliseconds)}:}{ Set the amount of time the driver should wait when searching for elements. When searching for a single element, the driver will poll the page until an element is found or the timeout expires, whichever occurs first. When searching for multiple elements, the driver should poll the page until at least one element is found or the timeout expires, at which point it will return an empty list. If this method is never called, the driver will default to an implicit wait of 0ms. }
+#'      \item{\code{setTimeout(type, milliseconds)}:}{ Configure the amount of time that a particular type of operation can execute for before they are aborted and a |Timeout| error is returned to the client. 
+#'        \describe{
+#'        \item{\code{type}:}{The type of operation to set the timeout for. Valid values are: "script" for script timeouts, "implicit" for modifying the implicit wait timeout and "page load" for setting a page load timeout. Defaults to "page load" }
+#'        \item{\code{milliseconds}:}{The amount of time, in milliseconds, that time-limited commands are permitted to run. Defaults to 10000 milliseconds. }
+#'        }
+#'      }
 #'      \item{\code{closeWindow()}:}{ Close the current window. }
 #'      \item{\code{close()}:}{ Close the current session. }
 #'      \item{\code{quit()}:}{ Delete the session & close open browsers. }
@@ -390,6 +396,11 @@ remoteDriver <- setRefClass("remoteDriver",
                               setImplicitWaitTimeout = function(milliseconds = 10000){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/timeouts/implicit_wait'),
                                         "POST",qdata=toJSON(list(ms = milliseconds)))
+                              },
+                              
+                              setTimeout = function(type = "page load", milliseconds = 10000){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/timeouts/implicit_wait'),
+                                        "POST",qdata=toJSON(list(type = type, ms = milliseconds)))
                               },
                               
                               closeWindow = function(){
