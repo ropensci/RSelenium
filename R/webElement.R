@@ -51,124 +51,150 @@
 #'      query should be specified using the CSS property name, not the JavaScript
 #'      property name (e.g. background-color instead of backgroundColor).}
 #'      \item{\code{describeElement()}:}{ Describe the identified element.}
+#'      \item{\code{setElementAttribute(attributeName, value)}:}{ Utility function to set an elements atrributes.}
+#'      \item{\code{highlightElement()}:}{ Utility function to highlight current Element}
 #'  }
 #' @include remoteDriver.R
 #' @export webElement
 #' @exportClass webElement
 webElement <- setRefClass("webElement",
-  fields   = list(elementId        = "character"),
-  contains = "remoteDriver",
-  methods  = list(
-      initialize = function(elementId = "",...){
-          elementId <<- elementId
-          callSuper(...)
-      },
-      
-      show = function(){
-        print("remoteDriver fields")
-        callSuper()
-        print("webElement fields")
-        print(list(elementId = elementId))
-      },
-      
-      findChildElement = function(using = "xpath",value){
-          qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/element')
-          queryRD(qpath, "POST", qdata = toJSON(list(using = using,value = value)), json = TRUE)
-          elemDetails <- .self$value[[1]]
-          webElement$new(as.character(elemDetails))$import(.self$export("remoteDriver"))
-      },
-
-      findChildElements = function(using = "xpath",value){
-          qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/elements')
-          queryRD(qpath, "POST", qdata = toJSON(list(using = using,value = value)), json = TRUE)
-          elemDetails <- .self$value
-          lapply(elemDetails, function(x){webElement$new(as.character(x))$import(.self$export("remoteDriver"))})
-      },
-
-      compareElements = function(otherElem){
-          qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/equals/',otherElem$elementId)
-          queryRD(qpath)
-          .self$value
-      },
-
-      clickElement = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/click'),
-                           "POST")
-      },
-
-      submitElement = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/submit'),
-                           "POST")
-      },
-
-      sendKeysToElement = function(sendKeys){
-          sendKeys<-toJSON(list(value = matchSelKeys(sendKeys)))
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/value'),
-                           "POST",qdata = sendKeys)
-      },
-
-      isElementSelected = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/selected'))
-          .self$value
-      },
-
-      isElementEnabled = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/enabled'))
-          .self$value
-      },
-
-      getElementLocation = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/location'))
-          .self$value
-      },
-
-      getElementLocationInView = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/location_in_view'))
-          .self$value
-      },
-
-      getElementTagName = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/name'))
-          .self$value
-      },
-
-      clearElement = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/clear'),
-                                    "POST")
-      },
-
-      getElementAttribute = function(attrName){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/attribute/',attrName))
-          .self$value
-      },
-
-      isElementDisplayed = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/displayed'))
-          .self$value
-      },
-
-      getElementSize = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/size'))
-          .self$value
-      },
-
-      getElementText = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/text'))
-          .self$value
-      },
-
-      getElementValueOfCssProperty = function(propName){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/css/',propName))
-          .self$value
-      },
-
-      describeElement = function(){
-          queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId))
-          .self$value
-      }
-
-
-  )
+                          fields   = list(elementId        = "character"),
+                          contains = "remoteDriver",
+                          methods  = list(
+                            initialize = function(elementId = "",...){
+                              elementId <<- elementId
+                              callSuper(...)
+                            },
+                            
+                            show = function(){
+                              print("remoteDriver fields")
+                              callSuper()
+                              print("webElement fields")
+                              print(list(elementId = elementId))
+                            },
+                            
+                            findChildElement = function(using = "xpath",value){
+                              qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/element')
+                              queryRD(qpath, "POST", qdata = toJSON(list(using = using,value = value)), json = TRUE)
+                              elemDetails <- .self$value[[1]]
+                              webElement$new(as.character(elemDetails))$import(.self$export("remoteDriver"))
+                            },
+                            
+                            findChildElements = function(using = "xpath",value){
+                              qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/elements')
+                              queryRD(qpath, "POST", qdata = toJSON(list(using = using,value = value)), json = TRUE)
+                              elemDetails <- .self$value
+                              lapply(elemDetails, function(x){webElement$new(as.character(x))$import(.self$export("remoteDriver"))})
+                            },
+                            
+                            compareElements = function(otherElem){
+                              qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/equals/',otherElem$elementId)
+                              queryRD(qpath)
+                              .self$value
+                            },
+                            
+                            clickElement = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/click'),
+                                      "POST")
+                            },
+                            
+                            submitElement = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/submit'),
+                                      "POST")
+                            },
+                            
+                            sendKeysToElement = function(sendKeys){
+                              sendKeys<-toJSON(list(value = matchSelKeys(sendKeys)))
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/value'),
+                                      "POST",qdata = sendKeys)
+                            },
+                            
+                            isElementSelected = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/selected'))
+                              .self$value
+                            },
+                            
+                            isElementEnabled = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/enabled'))
+                              .self$value
+                            },
+                            
+                            getElementLocation = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/location'))
+                              .self$value
+                            },
+                            
+                            getElementLocationInView = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/location_in_view'))
+                              .self$value
+                            },
+                            
+                            getElementTagName = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/name'))
+                              .self$value
+                            },
+                            
+                            clearElement = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/clear'),
+                                      "POST")
+                            },
+                            
+                            getElementAttribute = function(attrName){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/attribute/',attrName))
+                              .self$value
+                            },
+                            
+                            isElementDisplayed = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/displayed'))
+                              .self$value
+                            },
+                            
+                            getElementSize = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/size'))
+                              .self$value
+                            },
+                            
+                            getElementText = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/text'))
+                              .self$value
+                            },
+                            
+                            getElementValueOfCssProperty = function(propName){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/css/',propName))
+                              .self$value
+                            },
+                            
+                            describeElement = function(){
+                              queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId))
+                              .self$value
+                            },
+                            
+                            setElementAttribute = function(attributeName, value){
+                              executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", list(.self, attributeName, value))
+                            },
+                            
+                            highlightElement = function(){
+                              if(.self$javascript){
+                                wait <- 75/1000
+                                style1 <- "color: yellow; border: 5px solid yellow; background-color: black;"
+                                style2 <- "color: black; border: 5px solid black; background-color: yellow;"
+                                originalStyle <- getElementAttribute("style")[[1]]
+                                setElementAttribute("style", style1)
+                                Sys.sleep(wait)
+                                setElementAttribute("style", style2)
+                                Sys.sleep(wait)
+                                setElementAttribute("style", style1)
+                                Sys.sleep(wait)
+                                setElementAttribute("style", style2)
+                                Sys.sleep(wait)
+                                setElementAttribute("style", originalStyle)
+                              }else{
+                                "Javascript is not enabled"
+                              }
+                              
+                            }
+                            
+                          )
 )
 
 

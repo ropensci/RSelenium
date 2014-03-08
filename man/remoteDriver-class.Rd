@@ -121,11 +121,23 @@ javascript(TRUE). See examples for more information on use.
   timeout expires, at which point it will return an empty
   list. If this method is never called, the driver will
   default to an implicit wait of 0ms. }
-  \item{\code{closeWindow()}:}{ Close the current window. }
-  \item{\code{close()}:}{ Close the current session. }
-  \item{\code{quit()}:}{ Delete the session & close open
-  browsers. } \item{\code{getCurrentWindowHandle()}:}{
-  Retrieve the current window handle. }
+  \item{\code{setTimeout(type, milliseconds)}:}{ Configure
+  the amount of time that a particular type of operation
+  can execute for before they are aborted and a |Timeout|
+  error is returned to the client.  \describe{
+  \item{\code{type}:}{The type of operation to set the
+  timeout for. Valid values are: "script" for script
+  timeouts, "implicit" for modifying the implicit wait
+  timeout and "page load" for setting a page load timeout.
+  Defaults to "page load" } \item{\code{milliseconds}:}{The
+  amount of time, in milliseconds, that time-limited
+  commands are permitted to run. Defaults to 10000
+  milliseconds. } } } \item{\code{closeWindow()}:}{ Close
+  the current window. } \item{\code{close()}:}{ Close the
+  current session. } \item{\code{quit()}:}{ Delete the
+  session & close open browsers. }
+  \item{\code{getCurrentWindowHandle()}:}{ Retrieve the
+  current window handle. }
   \item{\code{getWindowHandles()}:}{ Retrieve the list of
   window handles used in the session. }
   \item{\code{getWindowSize(windowId)}:}{ Retrieve the

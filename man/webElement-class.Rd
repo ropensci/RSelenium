@@ -90,6 +90,9 @@ usually called by the end-user.
   CSS property name, not the JavaScript property name (e.g.
   background-color instead of backgroundColor).}
   \item{\code{describeElement()}:}{ Describe the identified
-  element.} }
+  element.} \item{\code{setElementAttribute(attributeName,
+  value)}:}{ Utility function to set an elements
+  atrributes.} \item{\code{highlightElement()}:}{ Utility
+  function to highlight current Element} }
 }
 
