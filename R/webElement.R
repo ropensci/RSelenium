@@ -52,7 +52,7 @@
 #'      property name (e.g. background-color instead of backgroundColor).}
 #'      \item{\code{describeElement()}:}{ Describe the identified element.}
 #'      \item{\code{setElementAttribute(attributeName, value)}:}{ Utility function to set an elements atrributes.}
-#'      \item{\code{highlightElement()}:}{ Utility function to highlight current Element}
+#'      \item{\code{highlightElement(wait)}:}{ Utility function to highlight current Element. Wait denotes the time in seconds between style changes on element.}
 #'  }
 #' @include remoteDriver.R
 #' @export webElement
@@ -170,23 +170,22 @@ webElement <- setRefClass("webElement",
                             },
                             
                             setElementAttribute = function(attributeName, value){
-                              executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", list(.self, attributeName, value))
+                              if(.self$javascript){
+                                executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", list(.self, attributeName, value))
+                              }else{
+                                "Javascript is not enabled"
+                              }
                             },
                             
-                            highlightElement = function(){
+                            highlightElement = function(wait = 75/1000){
                               if(.self$javascript){
-                                wait <- 75/1000
                                 style1 <- "color: yellow; border: 5px solid yellow; background-color: black;"
                                 style2 <- "color: black; border: 5px solid black; background-color: yellow;"
                                 originalStyle <- getElementAttribute("style")[[1]]
-                                setElementAttribute("style", style1)
-                                Sys.sleep(wait)
-                                setElementAttribute("style", style2)
-                                Sys.sleep(wait)
-                                setElementAttribute("style", style1)
-                                Sys.sleep(wait)
-                                setElementAttribute("style", style2)
-                                Sys.sleep(wait)
+                                for(x in rep(c(style1, style2), 2)){
+                                  setElementAttribute("style", x)
+                                  Sys.sleep(wait)
+                                }
                                 setElementAttribute("style", originalStyle)
                               }else{
                                 "Javascript is not enabled"

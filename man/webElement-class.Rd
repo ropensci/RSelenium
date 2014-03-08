@@ -92,7 +92,9 @@ usually called by the end-user.
   \item{\code{describeElement()}:}{ Describe the identified
   element.} \item{\code{setElementAttribute(attributeName,
   value)}:}{ Utility function to set an elements
-  atrributes.} \item{\code{highlightElement()}:}{ Utility
-  function to highlight current Element} }
+  atrributes.} \item{\code{highlightElement(wait)}:}{
+  Utility function to highlight current Element. Wait
+  denotes the time in seconds between style changes on
+  element.} }
 }
 
