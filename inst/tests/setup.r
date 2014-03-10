@@ -23,7 +23,11 @@ if(exists('sauceTest', where = parent.env(environment()) , inherits = FALSE)){
     # this will serve the files from the selenium project on port 3000
     # myname.local maps to 127.0.0.1 in hosts hopefully to allow windows to
     # work on sauceConnect
-    htmlSrc <- "myname.local:3000"
+    if(browser %in% c("iPhone", "iPad", "safari")){
+      htmlSrc <- "localhost:3000"      
+    }else{
+      htmlSrc <- "myname.local:3000"      
+    }
     loadPage <- function(pgStr){
       paste0("http://", file.path(htmlSrc, paste0(pgStr, ".html")))
     }

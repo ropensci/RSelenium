@@ -141,6 +141,10 @@ test_that("FindElementByTagNameWithinElement", {
 
 #17-18
 test_that("SwitchToWindow", {
+  if(browser == 'safari'){
+    # see https://code.google.com/p/selenium/issues/detail?id=3693
+    return()
+  } 
   title_1 = "XHTML Test Page"
   title_2 = "We Arrive Here"
   #         switch_to_window_timeout = 5
@@ -193,6 +197,11 @@ test_that("IsSelectedAndToggle", {
 
 #25-27
 test_that("Navigate", {
+  if(browser == 'safari'){
+    # see http://code.google.com/p/selenium/issues/detail?id=3771&can=1&q=browser%3DSafari%20component%3DWebDriver%20status%3ANew%2CAccepted%2CWorkingAsIntended%2CWontFix%2CNotFeasible&colspec=ID%20Stars%20Type%20Status%20Priority%20Owner%20Summary%20Browser%20Component
+    return()
+  } 
+  
   remDr$navigate(loadPage("formPage"))
   remDr$findElement(using = "id", "imageButton")$submitElement()
   expect_equal("We Arrive Here", remDr$getTitle()[[1]])
@@ -286,6 +295,11 @@ test_that("IsElementDisplayed", {
 
 #42-43
 test_that("MoveWindowPosition", {
+  if(browser == 'android' || browser == "safari"){
+    print("Not applicable")
+    return()
+  }
+  
   remDr$navigate(loadPage("blank"))
   loc <- remDr$getWindowPosition()
   # note can't test 0,0 since some OS's dont allow that location
@@ -308,6 +322,11 @@ test_that("MoveWindowPosition", {
 
 #44-45
 test_that("ChangeWindowSize", {
+  if(browser == 'android'){
+    print("Not applicable")
+    return()
+  }
+  
   remDr$navigate(loadPage("blank"))
   size <- remDr$getWindowSize()
   newSize <- rep(600, 2)
