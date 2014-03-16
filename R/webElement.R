@@ -7,14 +7,16 @@
 #' When a webElement class is created an elementId should be given.
 #' Each webElement inherits from a remoteDriver. webElement is not usually called by the end-user.   
 #'
-#'@section Slots:      
+#' @import RJSONIO
+#' @import methods
+#' @section Fields:      
 #'  \describe{
 #'    \item{\code{elementId}:}{Object of class \code{"character"}, giving a character representation of the element id.}
 #'  }
 #'  
 #'@section Methods:
 #'  \describe{
-#'      \item{\code{new(...)}:}{ Create a new \code{remoteDriver} object. ... is used to define the appropriate slots.}
+#'      \item{\code{new(...)}:}{ Create a new \code{webElement} object. ... is used to define the appropriate slots.}
 #'      \item{\code{findChildElement(using ,value)}:}{ Search for an element on the page, starting from the node defined by the parent webElement. The located element will be returned as an object of webElement class.
 #'      The inputs are:
 #'        \describe{
@@ -57,6 +59,7 @@
 #' @include remoteDriver.R
 #' @export webElement
 #' @exportClass webElement
+#' @aliases webElement
 webElement <- setRefClass("webElement",
                           fields   = list(elementId        = "character"),
                           contains = "remoteDriver",
