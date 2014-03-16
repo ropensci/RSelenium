@@ -5,7 +5,8 @@
 #' @param dir A directory in which the binary is to be placed.
 #' @param update A boolean indicating whether to update the binary if it is present.
 #' @export
-#' @section Detail: The downloads for the Selenium project can be found at http://code.google.com/p/selenium/downloads/list. This convience function downloads the standalone server and places it in the RSelenium package directory bin folder by default.
+#' @import XML
+#' @section Detail: The downloads for the Selenium project can be found at http://selenium-release.storage.googleapis.com/index.html. This convience function downloads the standalone server and places it in the RSelenium package directory bin folder by default.
 #' @examples
 #' \dontrun{
 #' checkForServer()
@@ -83,11 +84,11 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
   }
   tmpfile <- tempfile(fileext = '.zip')
   reqFiles <- list.files(profDir, recursive = TRUE)
-  if(!useBase){
+#  if(!useBase){
     zip(tmpfile, paste(profDir, reqFiles, sep ="/"),  altNames = reqFiles)
-  }else{
-    zip(tmpfile, paste0(path.expand(profDir), reqFiles), flags = "-r9Xjq")
-  }
+#  }else{
+#    zip(tmpfile, paste0(path.expand(profDir), reqFiles), flags = "-r9Xjq")
+#  }
   zz <- file(tmpfile, "rb")
   ar <- readBin(tmpfile, "raw", file.info(tmpfile)$size)
   fireprof <- base64encode(ar)
@@ -99,6 +100,7 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
 #' @export .DollarNames.remoteDriver
 #' @export .DollarNames.webElement
 #' @export .DollarNames.errorHandler
+#' @import methods
 #' 
 
 matchSelKeys <- function(x){
