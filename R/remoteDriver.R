@@ -1,13 +1,16 @@
 #' CLASS remoteDriver
 #'
-#' remoteDriver Class uses the JsonWireProtocol to communicate with the Selenium Server. If an error occurs while executing the command then the server sends back an HTTP error code with a JSON encoded reponse that indicates the precise Response Error Code. The module will then croak with the error message associated with this code. If no error occurred, then the subroutine called will return the value sent back from the server (if a return value was sent). 
-#' So a rule of thumb while invoking methods on the driver is if the method did not croak when called, then you can safely assume the command was successful even if nothing was returned by the method.
+#' remoteDriver Class uses the JsonWireProtocol to communicate with the Selenium Server. If an error occurs while executing the command then the server sends back an HTTP error code with a JSON encoded reponse that indicates the precise Response Error Code. The remoteDriver class inherits from the \code{errorHandler} class. If no error occurred, then the subroutine called will return the value sent back from the server (if a return value was sent). 
+#' So a rule of thumb while invoking methods on the driver is if the method did not return a status greater then zero when called, then you can safely assume the command was successful even if nothing was returned by the method.
 #'
 #' remoteDriver is a generator object. To define a new remoteDriver class method `new` is called. The slots (default value) that are user defined are:
 #' remoteServerAddr(localhost), port(4444), browserName(firefox), version(""), platform(ANY),
 #' javascript(TRUE). See examples for more information on use.
 #'
-#'@section Slots:      
+#' @import RJSONIO
+#' @import caTools
+#' @import methods
+#' @section Fields:      
 #'  \describe{
 #'    \item{\code{remoteServerAddr}:}{Object of class \code{"character"}, giving the ip of the remote server. Defaults to localhost}
 #'    \item{\code{port}:}{Object of class \code{"numeric"}, the port of the remote server on which to connect.}
@@ -132,6 +135,7 @@
 #' @include errorHandler.R
 #' @export remoteDriver
 #' @exportClass remoteDriver
+#' @aliases remoteDriver
 #' @examples
 #' \dontrun{
 #' # start the server if one isnt running
@@ -213,7 +217,8 @@
 #' # Example of javascript call
 #' remDr$executeScript("return arguments[0] + arguments[1];", args = 1:2)
 #' # Example of javascript async call
-#' remDr$executeAsyncScript("arguments[arguments.length - 1](arguments[0] + arguments[1]);", args = 1:2)
+#' jsscript <- "arguments[arguments.length - 1](arguments[0] + arguments[1]);"
+#' remDr$executeAsyncScript(jsscript, args = 1:2)
 #' }
 #' 
 
