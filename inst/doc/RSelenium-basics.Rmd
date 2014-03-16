@@ -2,14 +2,10 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{RSelenium basics}
 -->
-
 <xmp theme="cerulean" style="display:none;">
 
-```{r, echo = FALSE, message = FALSE}
-library(knitr)
-library(RSelenium)
-opts_chunk$set(comment = "#>", error = TRUE, tidy = FALSE)
-```
+
+
 
 # RSelenium basics
 

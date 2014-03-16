@@ -3,7 +3,6 @@
 %\VignetteIndexEntry{RSelenium basics}
 -->
 
-<xmp theme="cerulean" style="display:none;">
 
 ```{r, echo = FALSE, message = FALSE}
 library(knitr)
@@ -385,12 +384,33 @@ If you have got to this point it is most likely you will now be able to drive th
 
 ##### Selendroid
 
+Finally we need to download the selendroid driver. The selendroid [homepage](http://selendroid.io/) has a link at the bootom to the most recent [jar](https://github.com/selendroid/selendroid/releases/download/0.8.0/selendroid-standalone-0.8.0-with-dependencies.jar).
+This jar should be saved on the local computer. I saved the jar in the Documents folder namely `C:\Users\john\Documents`. To begin running tests you need to run the jar with java
+in a command prompt.
+
+```
+java -jar selendroid-standalone-0.8.0-with-dependencies.jar
+
+```
+
+##### RSelenium and Selendroid
+
+Finally we are ready to use `RSelenium` to control an android browser.
+
+```
+require(RSelenium)
+remDr <- remoteDriver(browserName = "android")
+remDr$open()
+remDr$navigate("http://www.google.com/ncr")
+
+```
+
+<h6 align = center>Android with RSelenium on win 8.1</h6>
+<img src="androidRSelenium.png"  title = "Android with RSelenium on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"/>
+
 ### <a id="id3b">iOS</a>
 
 ## <a id="id4">RSelenium with remote browsers and external sites.</a>
 
 ## <a id="id5">RSelenium with remote browsers and local sites.</a>
 
-
-</xmp>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
