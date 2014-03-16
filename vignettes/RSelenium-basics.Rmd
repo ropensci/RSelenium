@@ -2,7 +2,6 @@
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{RSelenium basics}
 -->
-
 <xmp theme="cerulean" style="display:none;">
 
 ```{r, echo = FALSE, message = FALSE}
@@ -303,7 +302,7 @@ resHeaders <- unlist(lapply(webElems, function(x){x$getElementText()}))
 [10] "Comprehensive R Archive Network (CRAN) - StatLib - Carnegie"
 [11] "CRAN - Package R.methodsS3"                                 
 [12] "CRAN - Package R.cache"                                     
-[13] "Ubuntu – Details of package r-cran-sp in lucid"
+[13] "Ubuntu - Details of package r-cran-sp in lucid"
 
 ```
 We can see that the first link is the one we want but in case googles search results change we refer to it as 
@@ -738,7 +737,7 @@ remDr$switchToFrame("banner")
 </tbody></table>
 <p>
 
-  This server is hosted by the <a target="_top" href="http://statmath.wu.ac.at">Institute for Statistics and Mathematics</a> of <a target="_top" href="http://www.wu.ac.at">WU (WirtschaftsuniversitÃÂ¤t Wien)</a>.
+  This server is hosted by the <a target="_top" href="http://statmath.wu.ac.at">Institute for Statistics and Mathematics</a> of <a target="_top" href="http://www.wu.ac.at">WU (Wirtschaftsuniversien)</a>.
 
 
 

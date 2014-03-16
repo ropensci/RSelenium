@@ -3,7 +3,6 @@
 %\VignetteIndexEntry{RSelenium basics}
 -->
 
-<xmp theme="cerulean" style="display:none;">
 
 ```{r, echo = FALSE, message = FALSE}
 library(knitr)
@@ -264,7 +263,7 @@ A few small issues. I suspect if you were running win 7 or lower and the 32 bit 
 Next we shall look at running what is known as headless browsers. Usually a browser can do three things 
 
 1. For given url, download the html page (or any other content apart from html)
-2. Render the content into dom, eg executing javascript inside the script tag. and the executed result will be reflected on the browser’s dom.
+2. Render the content into dom, eg executing javascript inside the script tag. and the executed result will be reflected on the browsers dom.
 3. Render the dom into visualised content.
 
 A headless browser handles items 1 and 2 but doesnt carryout 3. This means it doesnt display anything. All pages etc. are in memory rather then displayed to the user. The result of this is that headless browsers should perform faster then their full-fledged competitors which could be welcome news to speed up testing.
@@ -362,7 +361,7 @@ After setting `ANDROID_HOME` `%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools
 <h6 align = center>Android SDK on win 8.1</h6>
 <img src="androidsdk.png"  title = "Android SDK on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"/>
 
-From the tools make sure all are installed. From the latest android release Android 4.4.2 (API 19) in this case make sure all are installed. From the Extras folder, select the checkbox for the Android Support Library and make sure it is installed. You will also want to install the Intel® Hardware Accelerated Execution Manager. Instructions on how to do so are [here](http://software.intel.com/en-us/android/articles/installation-instructions-for-intel-hardware-accelerated-execution-manager-windows). Basically checking the box Intel x86 Emulator Accelerator (HAXM) and "installing" will download it to `%ANDROID_HOME%/extras/intel`. In this folder is an exe `IntelHaxm.exe` which should be ran to finish the install.
+From the tools make sure all are installed. From the latest android release Android 4.4.2 (API 19) in this case make sure all are installed. From the Extras folder, select the checkbox for the Android Support Library and make sure it is installed. You will also want to install the Intel Hardware Accelerated Execution Manager. Instructions on how to do so are [here](http://software.intel.com/en-us/android/articles/installation-instructions-for-intel-hardware-accelerated-execution-manager-windows). Basically checking the box Intel x86 Emulator Accelerator (HAXM) and "installing" will download it to `%ANDROID_HOME%/extras/intel`. In this folder is an exe `IntelHaxm.exe` which should be ran to finish the install.
 
 ##### Creating an Android Virtual Device.
 
@@ -385,12 +384,33 @@ If you have got to this point it is most likely you will now be able to drive th
 
 ##### Selendroid
 
+Finally we need to download the selendroid driver. The selendroid [homepage](http://selendroid.io/) has a link at the bootom to the most recent [jar](https://github.com/selendroid/selendroid/releases/download/0.8.0/selendroid-standalone-0.8.0-with-dependencies.jar).
+This jar should be saved on the local computer. I saved the jar in the Documents folder namely `C:\Users\john\Documents`. To begin running tests you need to run the jar with java
+in a command prompt.
+
+```
+java -jar selendroid-standalone-0.8.0-with-dependencies.jar
+
+```
+
+##### RSelenium and Selendroid
+
+Finally we are ready to use `RSelenium` to control an android browser.
+
+```
+require(RSelenium)
+remDr <- remoteDriver(browserName = "android")
+remDr$open()
+remDr$navigate("http://www.google.com/ncr")
+
+```
+
+<h6 align = center>Android with RSelenium on win 8.1</h6>
+<img src="androidRSelenium.png"  title = "Android with RSelenium on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"/>
+
 ### <a id="id3b">iOS</a>
 
 ## <a id="id4">RSelenium with remote browsers and external sites.</a>
 
 ## <a id="id5">RSelenium with remote browsers and local sites.</a>
 
-
-</xmp>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>

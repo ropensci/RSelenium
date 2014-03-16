@@ -34,7 +34,7 @@ Each section will be an introduction to an idea in testing shiny apps with Selen
 
 ### Why test?
 When faced with testing for the first time the natural reaction is to think what now? what do i test? how much/many tests do I write? 
-Tests need to do something useful to survive. Automated tests should help the team to make the next move by providing justified confidence a bug has been fixed, confirming refactored code still works as intended, or demonstrating that new features have been successfully implemented. There should be sufficient tests – neither more nor less: more increase the support burden, fewer leave us open to unpleasant surprises in production.
+Tests need to do something useful to survive. Automated tests should help the team to make the next move by providing justified confidence a bug has been fixed, confirming refactored code still works as intended, or demonstrating that new features have been successfully implemented. There should be sufficient tests - neither more nor less: more increase the support burden, fewer leave us open to unpleasant surprises in production.
 
 One way to create our tests is to take the view of the user. What does the user want to do?
 They want to see this particular graph of a given data set. How do they do that? They select various options and input various choices. From this list of actions we can create an outline 
@@ -58,7 +58,7 @@ RSelenium with `sauceLabs` you get screenshots and videos automatically. See the
 
 ### Test for fixes.
 
-Lots of bugs are discovered by means other than automated testing – they might be reported by users, for example. Once these bugs are fixed, the fixes must be tested. The tests must establish whether the problem has been fixed and, where practical, show that the root cause has been addressed. Since we want to make sure the bug doesn’t resurface unnoticed in future releases, having automated tests for the bug seems sensible.
+Lots of bugs are discovered by means other than automated testing - they might be reported by users, for example. Once these bugs are fixed, the fixes must be tested. The tests must establish whether the problem has been fixed and, where practical, show that the root cause has been addressed. Since we want to make sure the bug doesn't resurface unnoticed in future releases, having automated tests for the bug seems sensible.
 
 ## <a id="id2">The shiny test app.</a>
 
