@@ -11,7 +11,7 @@ can download from http://selenium-release.storage.googleapis.com/index.html .Thi
 
 ### Install 
 
-To install, install the `devtools` package if necessary (`install.packages("devtools")`) and run:
+To install RSelenium from CRAN run install.packages('RSelenium'). If you require the development version you will need the devtools package. If necessary (install.packages("devtools")) and run:
 
 ```
 devtools::install_github("RSelenium", "johndharrison")
@@ -27,6 +27,8 @@ vignette('RSelenium-basics')
 ```
 
 or the basic vignette can be viewed on [Rpubs](http://rpubs.com/johndharrison/12843).
+
+There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at [RSelenium: Driving OS/Browsers local and remote](http://rpubs.com/johndharrison/13885).
 
 ### Test Shiny Apps
 
