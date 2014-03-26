@@ -1,6 +1,6 @@
 <!--
 %\VignetteEngine{knitr::knitr}
-%\VignetteIndexEntry{RSelenium basics}
+%\VignetteIndexEntry{RSelenium: Driving OS/Browsers local and remote}
 -->
 
 
