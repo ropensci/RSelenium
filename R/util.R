@@ -47,16 +47,18 @@ startServer <- function (dir = NULL)
   selDIR <- ifelse(is.null(dir), paste0(find.package("RSelenium"), 
                                         "/bin/"), dir)
   selFILE <- paste0(selDIR, "selenium-server-standalone.jar")
+  logFILE <- paste0(selDIR, "sellog.txt")
+  write("", logFILE)
   if (!file.exists(selFILE)) {
     stop("No Selenium Server binary exists. Run checkForServer or start server manually.")
   }
   else {
     if (.Platform$OS.type == "unix") {
-      system(paste0("java -jar ", shQuote(selFILE)), wait = FALSE, 
+      system(paste0("java -jar ", shQuote(selFILE), " -log ", shQuote(logFILE)), wait = FALSE, 
              ignore.stdout = TRUE, ignore.stderr = TRUE)
     }
     else {
-      system(paste0("java -jar ", shQuote(selFILE)), wait = FALSE, 
+      system(paste0("java -jar ", shQuote(selFILE), " -log ", shQuote(logFILE)), wait = FALSE, 
              invisible = FALSE)
     }
   }
