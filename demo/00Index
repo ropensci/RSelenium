@@ -1,5 +1,6 @@
 selDownloadZip        Demonstration of using a firefox profile
 selExecJSexample      Demonstration of injecting javascript
+selExecJSexample2      Demonstration of injecting javascript 2
 selJavascriptButtons  Demonstration of switching frames and clicking buttons
 selPhantomJSexample   Demonstration of using a headless browser
 shinyDiscussScrape    Demonstration of scrolling to element

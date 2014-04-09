@@ -171,10 +171,13 @@ javascript(TRUE). See examples for more information on use.
   will be converted to the corresponding DOM element.
   Likewise, any WebElements in the script result will be
   returned to the client as WebElement JSON objects. }
-  \item{\code{screenshot()}:}{ Take a screenshot of the
-  current page. The screenshot is returned as a base64
-  encoded PNG.} \item{\code{switchToFrame(Id)}:}{ Change
-  focus to another frame on the page. Id can be
+  \item{\code{screenshot(display, useViewer)}:}{ Take a
+  screenshot of the current page. The screenshot is
+  returned as a base64 encoded PNG. If display is TRUE the
+  screenshot is displayed locally. If useViewer is TRUE and
+  RStudio is in use the screenshot is displayed in the
+  RStudio viewer panel.} \item{\code{switchToFrame(Id)}:}{
+  Change focus to another frame on the page. Id can be
   string|number|null|WebElement Object. If the Id is null,
   the server should switch to the page's default content. }
   \item{\code{switchToWindow(windowId}:}{ Change focus to
