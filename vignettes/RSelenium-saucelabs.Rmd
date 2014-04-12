@@ -410,7 +410,15 @@ remDr$navigate("http://www.google.com/ncr")
 
 ### <a id="id3b">iOS</a>
 
+Testing iOS requires a Mac. The setup is similar to selendroid. [Appium](http://appium.io/getting-started.html) and [ios-driver](http://ios-driver.github.io/ios-driver/?page=setup) can be used. An SDK is required namely iPhone simulator SDK and a virtual phone is ran in a similar fashion to Selendroid.
+
 ## <a id="id4">RSelenium with remote browsers and external sites.</a>
+
+Setting up multiple OS/browsers combinations locally is not always the best use of ones time. It is an interesting exercise to implement for example an Android platform locally but the overhead of having multiple systems and browsers quickly overcomes the utility. There are professional service providers who maintain a suite of OS/browsers that can be utilised for testing. Companies such as [https://saucelabs.com/](Sauce Labs) and [http://www.browserstack.com](Browser Stack) offer free automated testing to open source projects. In this vignette we will demonstrate remote testing using Sauce Labs. 
+
+### Setting up Sauce Labs
+
+We assume in this vignette that you are setting up Sauce Labs for an open source project. Firstly you should register your project [here](https://saucelabs.com/opensauce). On the [account page](https://saucelabs.com/account) you will find the access key for your account that is in a similar format to `49953c74-5c46-4ff9-b584-cf31a4c71809`. 
 
 ## <a id="id5">RSelenium with remote browsers and local sites.</a>
 
