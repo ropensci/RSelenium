@@ -41,8 +41,9 @@ Use RSelenium to test your Shiny Apps.
 Read the introductory tutorial on [Rpubs](http://rpubs.com/johndharrison/13408).
 
 
-### Use sauceLabs
-Added support for sauceLabs:
+### Use Sauce Labs and BrowserStack
+
+#### Sauce Labs
 
 ```
 user <- "rselenium0"
@@ -56,6 +57,22 @@ extraCapabilities <- list(name = "Test RSelenium", username = user, accessKey = 
 
 remDr <- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = browser
                           , version = version, platform = platform
+                          , extraCapabilities = extraCapabilities)
+```
+#### BrowserStack
+
+```
+require(RSelenium)
+user <- "johnharrison" 
+pass <- "*******************"
+port <- 80
+ip <- paste0(user, ':', pass, "@hub.browserstack.com")
+extraCapabilities <- list("browser" = "IE",
+                          "browser_version" = "7.0",
+                          "os" = "Windows",
+                          "os_version" = "XP",
+                          "browserstack.debug" = "true")
+remDr <- remoteDriver$new(remoteServerAddr = ip, port = port
                           , extraCapabilities = extraCapabilities)
 ```
 
