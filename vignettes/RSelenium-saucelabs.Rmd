@@ -31,7 +31,11 @@ This vignette is divided into five main sections:
   * [Android.](#id3a)
   * [iOS.](#id3b)
 4. [RSelenium with remote browsers and external sites.](#id4)
+  * [Setting up Sauce Labs](#id4a)
+  * [Testing multiple OS/Browsers](#id4b)
 5. [RSelenium with remote browsers and local sites.](#id5)
+  * [Sauce Connect](#id5a)
+  * [Basic Example](#id5b)
 
 
 ## <a id="id1">RSelenium with local fully-fledged browsers.</a>
@@ -416,9 +420,164 @@ Testing iOS requires a Mac. The setup is similar to selendroid. [Appium](http://
 
 Setting up multiple OS/browsers combinations locally is not always the best use of ones time. It is an interesting exercise to implement for example an Android platform locally but the overhead of having multiple systems and browsers quickly overcomes the utility. There are professional service providers who maintain a suite of OS/browsers that can be utilised for testing. Companies such as [https://saucelabs.com/](Sauce Labs) and [http://www.browserstack.com](Browser Stack) offer free automated testing to open source projects. In this vignette we will demonstrate remote testing using Sauce Labs. 
 
-### Setting up Sauce Labs
+### <a id="id4a">Setting up Sauce Labs</a>
 
-We assume in this vignette that you are setting up Sauce Labs for an open source project. Firstly you should register your project [here](https://saucelabs.com/opensauce). On the [account page](https://saucelabs.com/account) you will find the access key for your account that is in a similar format to `49953c74-5c46-4ff9-b584-cf31a4c71809`. 
+We assume in this vignette that you are setting up Sauce Labs for an open source project. Firstly you should register your project [here](https://saucelabs.com/opensauce). On the [account page](https://saucelabs.com/account) you will find the access key for your account that is in a similar format to `49953c74-5c46-4ff9-b584-cf31a4c71809`. Using Sauce Labs is pretty straightforward. You need to tell it what OS/Browser combination you would like. A list of possible setups can be viewed [here](https://saucelabs.com/platforms). As an example lets suppose we wished to run google chrome version 33 on OSX version mavericks. 
+
+```
+require(RSelenium)
+user <- "rselenium0" # Your Sauce Labs username
+pass <- "49953c74-5c46-4ff9-b584-cf31a4c71809" # Your Sauce Labs access key 
+port <- 80
+ip <- paste0(user, ':', pass, "@ondemand.saucelabs.com")
+rdBrowser <- "chrome"
+version <- "33"
+platform <- "OS X 10.9"
+extraCapabilities <- list(name = "RSelenium OS/Browsers vignette first example", username = user
+                          , accessKey = pass, tags = list("RSelenium-vignette", "OS/Browsers-vignette"))
+remDr <- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = rdBrowser
+                          , version = version, platform = platform
+                          , extraCapabilities = extraCapabilities)
+```
+
+We state the browser and OS we require (chrome 33/ Mac OSX 10.9). The user and password are used to form an appropriate ip address for our remote server ([http://rselenium0:49953c74-5c46-4ff9-b584-cf31a4c71809@ondemand.saucelabs.com](http://rselenium0:49953c74-5c46-4ff9-b584-cf31a4c71809@ondemand.saucelabs.com) in this case). They are also passed as `extraCapabilities` to the remote Selenium server.
+We give our test a `name` and any additional `tags` we wish that are passed to the remote Selenium server. Details of the name and tags are given [here](https://saucelabs.com/docs/additional-config). They are used to annotate our tests.
+
+#### Basic example
+
+As a basic first example we will run a script using the mavericks/ chrome 33 combination. We run the following commands:
+
+```
+testScript <- function(remDr){
+  remDr$open()
+  remDr$navigate("http://www.google.com/ncr")
+  Sys.sleep(2)
+  # highlight the query box
+  remDr$findElement("name", "q")$highlightElement()
+  Sys.sleep(2)
+  # goto rproject
+  remDr$navigate("http://www.r-project.org")
+  # go Back
+  remDr$goBack()
+  # go Forward
+  remDr$goForward()
+  Sys.sleep(2)
+  webElems <- remDr$findElements("css selector", "frame")
+  # highlight the frames
+  lapply(webElems, function(x){x$highlightElement()})
+  
+  remDr$close()
+}
+
+testScript(remDr)
+```
+
+And thats it. We have ran our first remote test using Sauce Labs. The results of the test can be viewed [https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329](https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329). I think you will agree its a nice setup. We have access to screenshots of all the commands we issued and a video (screencast) of the test run. We can view the selenium server logs and the medadata associated with our test.
+
+### <a id="id4b">Testing multiple OS/Browsers</a>
+
+We can easily extend the simple test we ran for multiple OS/Browser combinations. The browser and platform variables need to be assigned the combinations we require.
+
+```
+osBrowser <- list("OS X 10.9" = list(browser = list("safari", "firefox")
+                  , version = list('7', '28')),
+                  "Windows 8" = list(browser = list("chrome", "firefox", "internet explorer")
+                  , version = list('33', '28', '10')),
+                  "Linux" = list(browser = list("chrome", "firefox", "opera")
+                  , version = list('33', '28', '12'))
+                  )
+lapply(seq_along(osBrowser), function(x){
+  platform <- names(osBrowser)[x]
+  lapply(seq_along(osBrowser[[x]]$browser), function(y){
+    rdBrowser <- osBrowser[[x]]$browser[[y]]
+    version <- osBrowser[[x]]$version[[y]]
+    remDr <- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = rdBrowser
+                              , version = version, platform = platform
+                              , extraCapabilities = extraCapabilities)
+    testScript(remDr)
+  })
+}) 
+
+```
+
+To view the results you can goto the `RSelenium` project page on Sauce Labs [https://saucelabs.com/u/rselenium0](https://saucelabs.com/u/rselenium0). Listed here are all the tests ran on the `RSelenium` package. A partial search by name `Browsers vignette first example` will give the results of this test. There are a few repeats of the first Mavericks/ chrome 33 test where I tuned the script. 
+<h6 align = center>Sauce Labs results for simple test script</h6>
+<img src="saucelabsOSBrowsers.png"  title = "Sauce Labs results for simple test script" style = "margin-left: auto;margin-right: auto; display: block;"/>
 
 ## <a id="id5">RSelenium with remote browsers and local sites.</a>
 
+Testing external webpages and websites across a range of operating systems and browsers can be achieved using Sauce Labs as we observed in the last section. Often however especially in a developement phase of a project we either do not have or do not want an external version of our webpage/website/webapp. A good example would be our `shinytestapp`. Lets open a new R session and run our testapp. 
+
+```
+require(shiny)
+runApp(file.path(find.package("RSelenium"), "apps", "shinytestapp"), port = 3000)
+```
+
+To access our app we would require the ip address `http://localhost:3000/`. How do we access this from a remote webdriver?
+
+### <a id="id5a">Sauce Connect</a>
+
+Thankfully Sauce Labs have a solution for this known as [Sauce Connect](https://saucelabs.com/docs/connect). Sauce Connect is a secure tunneling app which allows you to execute tests securely when testing behind firewalls via a secure connection between Sauce Labs’ client cloud and your environment. This allows you to drive an external Browser and have it interact with a local webpage/website/webapp. 
+
+#### Setting up Sauce Connect
+
+Firstly you need to download the Sauce Connect zip for the operating system you are using to run your tests on. This machine I will be testing from is running windows 8.1 so I download the [windows](https://saucelabs.com/downloads/sc-4.0-latest-win32.zip) zip. I unzipped Sauce Connect to the Documents folder so it is now accessible at `C:\Users\john\Documents\sc-4.1-win32`. From a windows command prompt we navigate to the Sauce Connect bin directory and run the .exe file supplying our Sauce Labs user name and access key. 
+
+```
+C:\Users\john\Documents\sc-4.1-win32\bin>sc.exe -u rselenium0 -k 49953c74-5c46-4
+ff9-b584-cf31a4c71809
+```
+
+### <a id="id5b">Basic Example</a>
+
+We opened our shinytestapp on port 3000 because Sauce Connect only supports a set number of ports. All ports can be used but for this you need a locally-defined domain name (which can be set in your hosts file) rather than localhost. This is simple to do but for the purposes of this vignette we shall connect to `http://localhost:3000`. Again to start with we shall use Mavericks with Chrome 33.
+
+```
+require(RSelenium)
+user <- "rselenium0" # Your Sauce Labs username
+pass <- "49953c74-5c46-4ff9-b584-cf31a4c71809" # Your Sauce Labs access key 
+```
+~~port <- 80~~<br>
+~~ip <- paste0(user, ':', pass, "@ondemand.saucelabs.com")~~
+
+```
+port <- 4445
+ip <- paste0(user, ':', pass, "@localhost")
+rdBrowser <- "firefox"
+version <- "26"
+platform <- "Linux"
+extraCapabilities <- list(name = "RSelenium OS/Browsers vignette second example", username = user
+                          , accessKey = pass, tags = list("RSelenium-vignette", 
+                                                          "OS/Browsers-vignette", "Example 2"))
+remDr <- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = rdBrowser
+                          , version = version, platform = platform
+                          , extraCapabilities = extraCapabilities)
+```
+Everything is as before the exeception is that when we ask to browse to a localhost address Sauce Connect will intervene. Also we connect to Sauce Labs through Sauce Connect on `localhost:4445` by default instead of `ondemand.saucelabs.com:80`.
+
+```
+localScript <- function(remDr){
+  remDr$open()
+  remDr$setImplicitWaitTimeout(2000) # wait for elements for 2 seconds
+  remDr$navigate("http://localhost:3000")
+  Sys.sleep(2)
+  # highlight the labels
+  webElems <- remDr$findElements("css selector", "#ctrlSelect span")
+  lapply(webElems, function(x){x$highlightElement()})
+  Sys.sleep(2)
+  appIds <- c("summary", "distPlot", "ggPlot", "dttable")
+  # Click each checkbox and check for its output
+  lapply(seq_along(webElems), function(x){
+    if(!webElems[[x]]$isElementSelected()[[1]]){
+      webElems[[x]]$clickElement()
+      # test for its output
+      out <- remDr$findElement("id", appIds[x])
+      out$highlightElement()
+    }
+  })
+  
+  remDr$close()
+}
+
+localScript(remDr)
+```
