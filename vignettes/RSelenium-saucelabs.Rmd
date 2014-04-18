@@ -202,8 +202,11 @@ require(RSelenium)
 remDr <- remoteDriver(browserName = "opera")
 remDr$open()
 
-> remDr$value$message
-[1] "Could not find a platform that supports bundled launchers, please set it manually\nBuild info: version: '2.40.0', revision: 'fbe29a9', time: '2014-02-19 20:54:28'\nSystem info: host: 'johnlt', ip: '192.168.58.1', os.name: 'Windows 8', os.arch: 'amd64', os.version: '6.2', java.version: '1.7.0_45'\nDriver info: driver.version: OperaDriver"
+> cat(remDr$value$message)
+Could not find a platform that supports bundled launchers, please set it manually
+Build info: version: '2.40.0', revision: 'fbe29a9', time: '2014-02-19 20:54:28'
+System info: host: 'johnlt', ip: '192.168.58.1', os.name: 'Windows 8', os.arch: 'amd64', os.version: '6.2', java.version: '1.7.0_45'
+Driver info: driver.version: OperaDriver
 
 ```
 
