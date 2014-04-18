@@ -265,6 +265,19 @@ javascript(TRUE). See examples for more information on use.
   See the note in click and buttondown about implications
   of out-of-order commands.  buttonId - any one of 'LEFT'/0
   'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' }
+  \item{\code{getLogTypes()}:}{Get available log types.
+  Common log types include 'client' = Logs from the client,
+  'driver' = Logs from the webdriver, 'browser' = Logs from
+  the browser, 'server' = Logs from the server. Other log
+  types, for instance, for performance logging may also be
+  available. phantomjs for example returns a har log type
+  which is a single-entry log, with the HAR (HTTP Archive)
+  of the current webpage, since the first load (it's
+  cleared at every unload event)}
+  \item{\code{log(type)}:}{Get the log for a given log
+  type. Log buffer is reset after each request.  \describe{
+  \item{\code{type}:}{The log type. Typically 'client',
+  'driver', 'browser', 'server'} } }
   \item{\code{closeServer()}:}{ Closes the server in
   practice terminating the process. This is useful for
   linux systems. On windows the java binary operates as a

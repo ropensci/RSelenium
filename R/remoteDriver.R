@@ -130,6 +130,12 @@
 #'      buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
 #'      \item{\code{buttonup(buttonId)}:}{ Releases the mouse button previously held (where the mouse is currently at). Must be called once for every buttondown command issued. See the note in click and buttondown about implications of out-of-order commands.
 #'      buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT' }
+#'      \item{\code{getLogTypes()}:}{Get available log types. Common log types include 'client' = Logs from the client, 'driver' = Logs from the webdriver, 'browser' =	Logs from the browser, 'server' = Logs from the server. Other log types, for instance, for performance logging may also be available. phantomjs for example returns a har log type which is a single-entry log, with the HAR (HTTP Archive) of the current webpage, since the first load (it's cleared at every unload event)}
+#'      \item{\code{log(type)}:}{Get the log for a given log type. Log buffer is reset after each request.
+#'      \describe{
+#'        \item{\code{type}:}{The log type. Typically 'client', 'driver', 'browser', 'server'}
+#'        }
+#'      }
 #'      \item{\code{closeServer()}:}{ Closes the server in practice terminating the process. This is useful for linux systems. On windows the java binary operates as a seperate shell which the user can terminate. }
 #'  }
 #' @include errorHandler.R
@@ -685,6 +691,18 @@ remoteDriver <- setRefClass("remoteDriver",
                               buttonup = function(buttonId = 0){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/buttonup'),
                                         "POST",qdata = toJSON(list(button = buttonId)))
+                              },
+                              
+                              getLogTypes = function(){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/log/types'))
+                                .self$value
+                                
+                              },
+                              
+                              log = function(type){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/log'),
+                                        "POST",qdata = toJSON(list(type = type)))
+                                .self$value
                               },
                               
                               #                               phantomExecute = function(script, args){
