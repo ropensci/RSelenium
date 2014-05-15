@@ -90,9 +90,9 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
     zip(tmpfile, paste(profDir, reqFiles, sep ="/"),  altNames = reqFiles)
   }else{
     currWd <- getwd()
+    on.exit(setwd(currWd))
     setwd(profDir)
     zip(tmpfile, reqFiles)
-    setwd(currWd)
   }
   zz <- file(tmpfile, "rb")
   ar <- readBin(tmpfile, "raw", file.info(tmpfile)$size)
