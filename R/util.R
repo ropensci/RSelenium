@@ -92,7 +92,15 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
     currWd <- getwd()
     on.exit(setwd(currWd))
     setwd(profDir)
-    zip(tmpfile, reqFiles)
+    # break the zip into chunks as windows command line has limit of 8191 characters
+    # ignore .sqllite files
+    reqFiles <- reqFiles[grep("^.*\\.sqlite$", reqFiles, perl = TRUE, invert = TRUE)]
+    chunks <- sum(nchar(reqFiles))%/%8000 + 2
+    chunks <- as.integer(seq(1, length(reqFiles), length.out= chunks))
+    chunks <- mapply(`:`, head(chunks, -1)
+           , tail(chunks, -1) - c(rep(1, length(chunks) - 2), 0)
+           , SIMPLIFY = FALSE)
+    out <- lapply(chunks, function(x){zip(tmpfile, reqFiles[x])})
   }
   zz <- file(tmpfile, "rb")
   ar <- readBin(tmpfile, "raw", file.info(tmpfile)$size)
