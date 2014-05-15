@@ -86,11 +86,14 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
   }
   tmpfile <- tempfile(fileext = '.zip')
   reqFiles <- list.files(profDir, recursive = TRUE)
-#  if(!useBase){
+  if(!useBase){
     zip(tmpfile, paste(profDir, reqFiles, sep ="/"),  altNames = reqFiles)
-#  }else{
-#    zip(tmpfile, paste0(path.expand(profDir), reqFiles), flags = "-r9Xjq")
-#  }
+  }else{
+    currWd <- getwd()
+    setwd(profDir)
+    zip(tmpfile, reqFiles)
+    setwd(currWd)
+  }
   zz <- file(tmpfile, "rb")
   ar <- readBin(tmpfile, "raw", file.info(tmpfile)$size)
   fireprof <- base64encode(ar)
