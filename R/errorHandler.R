@@ -63,6 +63,7 @@
 errorHandler <- setRefClass("errorHandler",
                             fields   = list(statusCodes = "data.frame"
                                             , status = "numeric"
+                                            , encoding = "character"
                                             , statusclass = "character"
                                             , sessionid = "character"
                                             , hcode = "numeric"
@@ -110,6 +111,7 @@ errorHandler <- setRefClass("errorHandler",
                                                           , row.names = c(NA, -25L)
                                                           , class = "data.frame")
                                 status <<- 0 # initial status success
+                                encoding <<- NA_character_
                                 statusclass <<- NA_character_
                                 sessionid <<- NA_character_
                                 hcode <<- NA_integer_
@@ -129,15 +131,16 @@ errorHandler <- setRefClass("errorHandler",
                                 # can log in an environment in the package namespace
                                 # print(deparse(sys.calls()[[sys.nframe()-1]]))
                                 h = basicHeaderGatherer()
+                                w = basicTextGatherer()
                                 d <- debugGatherer()
                                 if(is.null(qdata)){
                                   getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE)
-                                  if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update))}
+                                  if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update, writefunction = w$update))}
                                   res <- do.call(getURLContent, getUC.params)
                                   #res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE, headerfunction = h$update)
                                 }else{
                                   getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE)
-                                  if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update))}
+                                  if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update, writefunction = w$update))}
                                   res <- do.call(getURLContent, getUC.params)
                                   #res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE, headerfunction = h$update)#, .opts = list(verbose = TRUE), debugfunction = d$update)
                                 }
@@ -145,13 +148,14 @@ errorHandler <- setRefClass("errorHandler",
                                   responseheader <<- as.list(h$value())
                                 }
                                 debugheader <<- as.list(d$value())
+                                res <- w$value()
                                 res <- ifelse(is.raw(res), rawToChar(res), res)
-                                res1 <- try(fromJSON(res, simplifyWithNames = FALSE), TRUE)
+                                res1 <- try(fromJSON(res, simplifyWithNames = FALSE, encoding = encoding), TRUE)
                                 if(identical(class(res1), "try-error") && grepl("\"value\":", res)){
                                   # try manually parse JSON RJSONIO wont handle
                                   testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\1YYYYY\\3", res)
                                   testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\2", res)
-                                  res1 <- fromJSON(testRes, simplifyWithNames = FALSE)
+                                  res1 <- fromJSON(testRes, simplifyWithNames = FALSE, encoding = encoding)
                                   res1$value <- gsub("\\\"", "\"", testValue)
                                 }
 #                                if( isValidJSON(res1, asText = TRUE)){ # not reliable
