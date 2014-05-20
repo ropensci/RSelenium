@@ -2,6 +2,7 @@
 
 * Add getLogtypes() and log(type) methods to remoteDriver class
 * Fix getFirefoxProfile so useBase = TRUE works under windows.
+* Add additional support for encoding (thanks to Nicola Logrillo issue #16)
 
 # RSelenium 1.2.3
 
