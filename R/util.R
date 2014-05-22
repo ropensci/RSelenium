@@ -109,6 +109,45 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
   list("firefox_profile" = fireprof)
 }
 
+#' Get Chrome profile.
+#' 
+#' \code{getChromeProfile}
+#' A utility function to get a Chrome profile. 
+#' @param dataDir Specifies the user data directory, which is where the browser will look for all of its state.
+#' @param profileDir Selects directory of profile to associate with the first browser launched.
+#' @export
+#' @section Detail: A chrome profile directory is passed as an extraCapability.
+#' The data dir has a number of default locations
+#' \describe{
+#' \item{Windows XP}{
+#' Google Chrome: C:/Documents and Settings/\%USERNAME\%/Local Settings/Application Data/Google/Chrome/User Data
+#' }
+#' \item{Windows 8 or 7 or Vista}{
+#' Google Chrome: C:/Users/\%USERNAME\%/AppData/Local/Google/Chrome/User Data
+#' }
+#' \item{Mac OS X}{
+#' Google Chrome: ~/Library/Application Support/Google/Chrome
+#' }
+#' \item{Linux}{
+#' Google Chrome: ~/.config/google-chrome
+#' }
+#' }
+#' The profile directory is contained in the user directory and by default is named "Default" 
+#' @examples
+#' \dontrun{
+#' # example from windows using a profile directory "Profile 1"
+#' cprof <- getChromeProfile("C:\\Users\\john\\AppData\\Local\\Google\\Chrome\\User Data", "Profile 1")
+#' remDr <- remoteDriver(browserName = "chrome", extraCapabilities = cprof)
+#' }
+getChromeProfile <- function(dataDir, profileDir){
+  # see
+  # http://peter.sh/experiments/chromium-command-line-switches/#user-data-dir
+  # http://peter.sh/experiments/chromium-command-line-switches/#profile-directory
+  cprof <- list(chromeOptions = list(args = list(paste0('--user-data-dir=',dataDir)
+                                                 , paste0('--profile-directory=',profileDir))))
+  cprof
+}
+
 
 #' @export .DollarNames.remoteDriver
 #' @export .DollarNames.webElement
