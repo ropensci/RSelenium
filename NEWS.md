@@ -3,6 +3,7 @@
 * Add getLogtypes() and log(type) methods to remoteDriver class
 * Fix getFirefoxProfile so useBase = TRUE works under windows.
 * Add additional support for encoding (thanks to Nicola Logrillo issue #16)
+* Add file argument to screenshot method in remoteDriver class to allow writing screenshot to file
 
 # RSelenium 1.2.3
 

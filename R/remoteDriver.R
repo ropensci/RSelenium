@@ -76,7 +76,7 @@
 #'        The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided args array and the values may be accessed via the arguments object in the order specified.
 #'
 #'        Arguments may be any JSON-primitive, array, or JSON object. JSON objects that define a WebElement reference will be converted to the corresponding DOM element. Likewise, any WebElements in the script result will be returned to the client as WebElement JSON objects. }
-#'      \item{\code{screenshot(display, useViewer)}:}{     Take a screenshot of the current page. The screenshot is returned as a base64 encoded PNG. If display is TRUE the screenshot is displayed locally. If useViewer is TRUE and RStudio is in use the screenshot is displayed in the RStudio viewer panel.}
+#'      \item{\code{screenshot(display, useViewer, file)}:}{     Take a screenshot of the current page. The screenshot is returned as a base64 encoded PNG. If display is TRUE the screenshot is displayed locally. If useViewer is TRUE and RStudio is in use the screenshot is displayed in the RStudio viewer panel. If file is not NULL and display = FALSE the screenshot is written to the file denoted by file.}
 #'      \item{\code{switchToFrame(Id)}:}{ Change focus to another frame on the page. Id can be string|number|null|WebElement Object. If the Id is null, the server should switch to the page's default content. }
 #'      \item{\code{switchToWindow(windowId}:}{ Change focus to another window. The window to change focus to may be specified by its server assigned window handle, or by the value of its name attribute. }
 #'      \item{\code{setWindowPosition(x,y,winHand)}:}{ Set the position (on screen) where you want your browser to be displayed. The windows handle is optional. If not specified the current window in focus is used. }
@@ -575,7 +575,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                 }
                               },
                               
-                              screenshot = function(display = FALSE, useViewer = TRUE){
+                              screenshot = function(display = FALSE, useViewer = TRUE, file = NULL){
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/screenshot'))
                                 if(display){
                                   tmp <- paste0(tempdir(), '/tmpScreenShot.png')
@@ -587,7 +587,11 @@ remoteDriver <- setRefClass("remoteDriver",
                                     utils::browseURL(tmp)
                                   }
                                 }else{
-                                  .self$value
+                                  if(is.null(file)){
+                                    .self$value
+                                  }else{
+                                    writeBin(base64Decode(.self$value[[1]], "raw"), file)
+                                  }
                                 }
                                 
                               },
@@ -705,11 +709,11 @@ remoteDriver <- setRefClass("remoteDriver",
                                 .self$value
                               },
                               
-                              #                               phantomExecute = function(script, args){
-                              #                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/phantom/execute'),
-                              #                                         "POST",qdata = toJSON(list(script = script, args = args)))
-                              #                               },
-                              # 
+                              phantomExecute = function(script, args){
+                                queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/phantom/execute'),
+                                        "POST",qdata = toJSON(list(script = script, args = args)))
+                              },
+                              
                               closeServer = function(){
                                 queryRD(paste0("http://", remoteServerAddr, ":", port, "/selenium-server/driver/?cmd=shutDownSeleniumServer"), 
                                         "GET")
