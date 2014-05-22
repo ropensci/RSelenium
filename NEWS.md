@@ -4,6 +4,7 @@
 * Fix getFirefoxProfile so useBase = TRUE works under windows.
 * Add additional support for encoding (thanks to Nicola Logrillo issue #16)
 * Add file argument to screenshot method in remoteDriver class to allow writing screenshot to file
+* Add a getChromeProfile utility function.
 
 # RSelenium 1.2.3
 
