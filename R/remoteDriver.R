@@ -10,20 +10,16 @@
 #' @import RJSONIO
 #' @import caTools
 #' @import methods
-#' @section Fields:      
-#'  \describe{
-#'    \item{\code{remoteServerAddr}:}{Object of class \code{"character"}, giving the ip of the remote server. Defaults to localhost}
-#'    \item{\code{port}:}{Object of class \code{"numeric"}, the port of the remote server on which to connect.}
-#'    \item{\code{browserName}:}{Object of class \code{"character"}. The name of the browser being used; should be one of {chrome|firefox|htmlunit|internet explorer|iphone}.}
-#'    \item{\code{version}:}{Object of class \code{"character"}. The browser version, or the empty string if unknown.}
-#'    \item{\code{platform}:}{Object of class \code{"character"}. A key specifying which platform the browser is running on. This value should be one of {WINDOWS|XP|VISTA|MAC|LINUX|UNIX}. When requesting a new session, the client may specify ANY to indicate any available platform may be used.}
-#'    \item{\code{javascript}:}{Object of class \code{"logical"}. Whether the session supports executing user supplied JavaScript in the context of the current page. }
-#'    \item{\code{nativeEvents}:}{Object of class \code{"logical"}. Whether the session supports native events. n WebDriver advanced user interactions are provided by either simulating the Javascript events directly (i.e. synthetic events) or by letting the browser generate the Javascript events (i.e. native events). Native events simulate the user interactions better. }
-#'    \item{\code{serverURL}:}{Object of class \code{"character"}. Url of the remote server which JSON requests are sent to. }
-#'    \item{\code{sessionInfo}:}{Object of class \code{"list"}. A list containing information on sessions. }
-#'  }
-#'  
-#'@section Methods:
+#' @field remoteServerAddr Object of class \code{"character"}, giving the ip of the remote server. Defaults to localhost
+#' @field port Object of class \code{"numeric"}, the port of the remote server on which to connect
+#' @field browserName Object of class \code{"character"}. The name of the browser being used; should be one of {chrome|firefox|htmlunit|internet explorer|iphone}.
+#' @field version Object of class \code{"character"}. The browser version, or the empty string if unknown.
+#' @field platform Object of class \code{"character"}. A key specifying which platform the browser is running on. This value should be one of {WINDOWS|XP|VISTA|MAC|LINUX|UNIX}. When requesting a new session, the client may specify ANY to indicate any available platform may be used.
+#' @field javascript Object of class \code{"logical"}. Whether the session supports executing user supplied JavaScript in the context of the current page.
+#' @field nativeEvents Object of class \code{"logical"}. Whether the session supports native events. n WebDriver advanced user interactions are provided by either simulating the Javascript events directly (i.e. synthetic events) or by letting the browser generate the Javascript events (i.e. native events). Native events simulate the user interactions better.
+#' @field serverURL Object of class \code{"character"}. Url of the remote server which JSON requests are sent to.
+#' @field sessionInfo Object of class \code{"list"}. A list containing information on sessions.
+#' @section Methods:
 #'  \describe{
 #'      \item{\code{new(...)}:}{ Create a new \code{remoteDriver} object. ... is used to define the appropriate slots.}
 #'      \item{\code{open()}:}{ Send a request to the remote server to instantiate the browser. }
