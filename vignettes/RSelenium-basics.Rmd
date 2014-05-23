@@ -1,29 +1,29 @@
+---
+title: "RSelenium basics"
+output:
+  html_document:
+    theme: cerulean
+    toc: yes
+---
+
 <!--
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{RSelenium basics}
 -->
-<xmp theme="cerulean" style="display:none;">
 
 ```{r, echo = FALSE, message = FALSE}
 library(knitr)
 library(RSelenium)
-opts_chunk$set(comment = "#>", error = TRUE, tidy = FALSE)
+opts_chunk$set(comment = "#>", error = TRUE, tidy = TRUE)
+
 ```
 
-# RSelenium basics
 
 ## Introduction
 
 The goal of RSelenium is to make it easy to connect to a Selenium Server/ Remote Selenium Server from within R. RSelenium provides R bindings for the Selenium Webdriver API. [Selenium](http://docs.seleniumhq.org/) is a project focused on automating web browsers. RSelenium allows you to carry out unit testing and regression testing on your webapps and webpages across a range of browser/OS combinations. This allows us to integrate from within R testing and manipulation of popular projects such as [shiny](http://www.rstudio.com/shiny/), [sauceLabs](https://saucelabs.com/).
 
 This vignette is divided into six main sections:
-
-* [Connecting to a Selenium Server.](#id1)
-* [Navigating using RSelenium.](#id2)
-* [Accessing elements in the DOM.](#id3)
-* [Sending events to elements.](#id4)
-* [Injecting JavaScript.](#id5)
-* [Frames and Windows.](#id6)
 
 Each section will be an introduction to a major idea in Selenium, and point to more detailed explanation in other vignettes.
 
@@ -88,7 +88,7 @@ $build
 
 ```
 
-# <a id="id2">Navigating using RSelenium.</a>
+## <a id="id2">Navigating using RSelenium.</a>
 ### Basic Navigation
 To start with we navigate to a url.
 ```
@@ -495,7 +495,8 @@ remDr$screenshot(display = TRUE)
 
 ```
 <h6 align = center>RProject front page</h6>
-<img src="RProject.png"  title = "RProject front page on linux firefox 26.0"/>
+<img src="RProject.png" title = "RProject front page on linux firefox 26.0" width = '100%'/>
+
 
 To access the content we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class. 
 
@@ -807,5 +808,3 @@ Notice now that a new windows has opened on the remote browser.
 
 So using the code above one can observe how to switch between different windows on the remote browser. 
 
-</xmp>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
