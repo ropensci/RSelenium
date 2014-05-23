@@ -1,3 +1,7 @@
+# RSelenium 1.2.5
+
+* Update reference classes to use `@field` and inline docstrings for methods
+
 # RSelenium 1.2.4
 
 * Add getLogtypes() and log(type) methods to remoteDriver class
