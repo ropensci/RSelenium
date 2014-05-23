@@ -29,17 +29,19 @@ Each webElement inherits from a remoteDriver. webElement is not usually called b
 
 \item{\code{describeElement()}}{Describe the identified element.}
 
-\item{\code{findChildElement(using = "xpath", value)}}{Search for an element on the page, starting from the node defined by the parent webElement. The located element will be returned as an object of webElement class.
+\item{\code{findChildElement(using = c("xpath", "css selector", "id", "name", "tag name",
+  "class name", "link text", "partial link text"), value)}}{Search for an element on the page, starting from the node defined by the parent webElement. The located element will be returned as an object of webElement class.
 The inputs are:
 \describe{
-\item{\code{using}:}{Locator scheme to use to search the element, available schemes: {"class name", "css selector", "id", "name", "link text", "partial link text", "tag name", "xpath" }. Defaults to 'xpath'. }
+\item{\code{using}:}{Locator scheme to use to search the element, available schemes: {"class name", "css selector", "id", "name", "link text", "partial link text", "tag name", "xpath" }. Defaults to 'xpath'. Partial string matching is accepted.}
 \item{\code{value}:}{The search target. See examples.}
 }}
 
-\item{\code{findChildElements(using = "xpath", value)}}{Search for multiple elements on the page, starting from the node defined by the parent webElement. The located elements will be returned as an list of objects of class WebElement. 
+\item{\code{findChildElements(using = c("xpath", "css selector", "id", "name", "tag name",
+  "class name", "link text", "partial link text"), value)}}{Search for multiple elements on the page, starting from the node defined by the parent webElement. The located elements will be returned as an list of objects of class WebElement. 
 The inputs are:
 \describe{
-\item{\code{using}:}{Locator scheme to use to search the element, available schemes: {"class name", "css selector", "id", "name", "link text", "partial link text", "tag name", "xpath" }. Defaults to 'xpath'. }
+\item{\code{using}:}{Locator scheme to use to search the element, available schemes: {"class name", "css selector", "id", "name", "link text", "partial link text", "tag name", "xpath" }. Defaults to 'xpath'. Partial string matching is accepted.}
 \item{\code{value}:}{The search target. See examples.}
 }}
 
