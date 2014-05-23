@@ -1,6 +1,8 @@
 # RSelenium 1.2.5
 
 * Update reference classes to use `@field` and inline docstrings for methods
+* Allow partial string matching on the `using` argument of the findElement and findElements method from the remoteDriver class.
+* Allow partial string matching on the `using` argument of the findChildElement and findChildElements method from the webElement class.
 
 # RSelenium 1.2.4
 
