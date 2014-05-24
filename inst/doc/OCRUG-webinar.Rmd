@@ -44,7 +44,7 @@ remDr <- remoteDriver(browserName = 'chrome', extraCapabilities = cprof)
 
 ### Added to RSelenium
 
-I add the above functionality to RSelenium. So now the `screenshot` method of the `remoteDriver` class has an optional `file` argument. If `display` is `FALSE` and a `file` argument is given `RSelenium` will now save the `png` to file. 
+I added the above functionality to RSelenium. So now the `screenshot` method of the `remoteDriver` class has an optional `file` argument. If `display` is `FALSE` and a `file` argument is given `RSelenium` will now save the `png` to file. 
 
 Secondly there is now a `getChromeProfile` utility function in a similar vein to the existing getFirefoxProfile function. The function is documented in the RSelenium package. Its basic usage is as follows:
   
@@ -67,14 +67,18 @@ and remember to file any issues you may have. to github so `RSelenium` can impro
 ## The webinar screencast
 
 <iframe width="653" height="480" src="//www.youtube.com/embed/ic65SWRWrKA?rel=0" frameborder="0" allowfullscreen></iframe>
-  
-  ## The directors cut
+
+### SauceLabs test results
+
+At the end of the webinar the simple test on the shinytestapp was ran against multiple OS and browsers using Sauce Labs as an external provider for the selenium server and the browsers. These test results can be seen bu navigating to the RSelenium Sauce Labs page [https://saucelabs.com/u/rselenium0](https://saucelabs.com/u/rselenium0) and searching for `OCRUG TEST 1` in the search session name panel. 
+
+## The directors cut
   
   I have shot an extended version of the webinar with the fabled missing `javascript` example which follows:
   
   <iframe width="653" height="480" src="//www.youtube.com/embed/zcUGla8EjjY?rel=0" frameborder="0" allowfullscreen></iframe>
   
-  ## The slides and R scripts.
+## The slides and R scripts.
   
   And finally I have posted the slides for the webinar to github. Please find them at [http://johndharrison.github.io/RSOCRUG](http://johndharrison.github.io/RSOCRUG). There are also some R scripts contained in the master branch of the github project https://github.com/johndharrison/RSOCRUG .
 

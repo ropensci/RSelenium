@@ -186,7 +186,7 @@ remDr &lt;- remoteDriver(browserName = &#39;chrome&#39;, extraCapabilities = cpr
 
 <h3>Added to RSelenium</h3>
 
-<p>I add the above functionality to RSelenium. So now the <code>screenshot</code> method of the <code>remoteDriver</code> class has an optional <code>file</code> argument. If <code>display</code> is <code>FALSE</code> and a <code>file</code> argument is given <code>RSelenium</code> will now save the <code>png</code> to file. </p>
+<p>I added the above functionality to RSelenium. So now the <code>screenshot</code> method of the <code>remoteDriver</code> class has an optional <code>file</code> argument. If <code>display</code> is <code>FALSE</code> and a <code>file</code> argument is given <code>RSelenium</code> will now save the <code>png</code> to file. </p>
 
 <p>Secondly there is now a <code>getChromeProfile</code> utility function in a similar vein to the existing getFirefoxProfile function. The function is documented in the RSelenium package. Its basic usage is as follows:</p>
 
@@ -208,15 +208,18 @@ remDr &lt;- remoteDriver(browserName = &quot;chrome&quot;, extraCapabilities = c
 <h2>The webinar screencast</h2>
 
 <iframe width="653" height="480" src="//www.youtube.com/embed/ic65SWRWrKA?rel=0" frameborder="0" allowfullscreen></iframe>
-  
 
-<p>## The directors cut</p>
+<h3>SauceLabs test results</h3>
+
+<p>At the end of the webinar the simple test on the shinytestapp was ran against multiple OS and browsers using Sauce Labs as an external provider for the selenium server and the browsers. These test results can be seen bu navigating to the RSelenium Sauce Labs page <a href="https://saucelabs.com/u/rselenium0">https://saucelabs.com/u/rselenium0</a> and searching for <code>OCRUG TEST 1</code> in the search session name panel. </p>
+
+<h2>The directors cut</h2>
 
 <p>I have shot an extended version of the webinar with the fabled missing <code>javascript</code> example which follows:</p>
 
 <p><iframe width="653" height="480" src="//www.youtube.com/embed/zcUGla8EjjY?rel=0" frameborder="0" allowfullscreen></iframe></p>
 
-<p>## The slides and R scripts.</p>
+<h2>The slides and R scripts.</h2>
 
 <p>And finally I have posted the slides for the webinar to github. Please find them at <a href="http://johndharrison.github.io/RSOCRUG">http://johndharrison.github.io/RSOCRUG</a>. There are also some R scripts contained in the master branch of the github project <a href="https://github.com/johndharrison/RSOCRUG">https://github.com/johndharrison/RSOCRUG</a> .</p>
 
