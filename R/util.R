@@ -87,7 +87,7 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
   tmpfile <- tempfile(fileext = '.zip')
   reqFiles <- list.files(profDir, recursive = TRUE)
   if(!useBase){
-    zip(tmpfile, paste(profDir, reqFiles, sep ="/"),  altNames = reqFiles)
+    Rcompression::zip(tmpfile, paste(profDir, reqFiles, sep ="/"),  altNames = reqFiles)
   }else{
     currWd <- getwd()
     on.exit(setwd(currWd))
