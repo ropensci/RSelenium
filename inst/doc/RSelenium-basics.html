@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>RSelenium basics</title>
+<title>Introduction</title>
 
 
 
@@ -153,24 +153,11 @@ hr {
 %\VignetteIndexEntry{RSelenium basics}
 -->
 
-<p><xmp theme="cerulean" style="display:none;"></p>
-
-<h1>RSelenium basics</h1>
-
 <h2>Introduction</h2>
 
 <p>The goal of RSelenium is to make it easy to connect to a Selenium Server/ Remote Selenium Server from within R. RSelenium provides R bindings for the Selenium Webdriver API. <a href="http://docs.seleniumhq.org/">Selenium</a> is a project focused on automating web browsers. RSelenium allows you to carry out unit testing and regression testing on your webapps and webpages across a range of browser/OS combinations. This allows us to integrate from within R testing and manipulation of popular projects such as <a href="http://www.rstudio.com/shiny/">shiny</a>, <a href="https://saucelabs.com/">sauceLabs</a>.</p>
 
 <p>This vignette is divided into six main sections:</p>
-
-<ul>
-<li><a href="#id1">Connecting to a Selenium Server.</a></li>
-<li><a href="#id2">Navigating using RSelenium.</a></li>
-<li><a href="#id3">Accessing elements in the DOM.</a></li>
-<li><a href="#id4">Sending events to elements.</a></li>
-<li><a href="#id5">Injecting JavaScript.</a></li>
-<li><a href="#id6">Frames and Windows.</a></li>
-</ul>
 
 <p>Each section will be an introduction to a major idea in Selenium, and point to more detailed explanation in other vignettes.</p>
 
@@ -242,7 +229,7 @@ $build
 
 </code></pre>
 
-<h1><a id="id2">Navigating using RSelenium.</a></h1>
+<h2><a id="id2">Navigating using RSelenium.</a></h2>
 
 <h3>Basic Navigation</h3>
 
@@ -637,7 +624,28 @@ remDr$screenshot(display = TRUE)
 
 <h6 align = center>RProject front page</h6>
 
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+<img src="RProject.png" title = "RProject front page on linux firefox 26.0" width = '100%'/></p>
+
+<h1></h1>
+
 <p><img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/basics/RProject.png"  title = "RProject front page on linux firefox 26.0"/></p>
+
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>saucelabs</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
 
 <p>To access the content we have to switch to a frame using the <code>switchToFrame</code> method of the <code>remoteDriver</code> class. </p>
 
@@ -943,10 +951,6 @@ remDr$sendKeysToActiveElement(list(key = &#39;down_arrow&#39;, key = &#39;down_a
 </code></pre>
 
 <p>So using the code above one can observe how to switch between different windows on the remote browser. </p>
-
-<p></xmp></p>
-
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
 
 </body>
 

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Orange County R Users Group (OC-RUG): RSelenium Webinar</title>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<!--
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{Orange County R Users Group (OC-RUG): RSelenium Webinar}
+-->
+
+<h1>Orange County R Users Group (OC-RUG): RSelenium Webinar</h1>
+
+<p>Yesterday I gave a webinar on the <a href="https://github.com/johndharrison/RSelenium">Rselenium</a> package to the OC-RUG. 
+When I published RSelenium on CRAN Ray DiGiacomo the president of OC-RUG was kind enough to
+invite me to present RSelenium and that webinar was held on the 21st of May. I would like to thank
+OC-RUG and Ray in particular for the opportunity. </p>
+
+<p>I will use this blog to present the video of the webinar and also for a bit of bookkeeeping. Firstly I would like to return to two of the questions asked in the Q&amp;A. </p>
+
+<h2>Q&amp;A question 2 and 3</h2>
+
+<h3>How would you save a screenshot to file using RSelenium?</h3>
+
+<p>In the seminar I suggested that the Selenium webdriver returned the png in a  base 64 encoded format. I tried to save the output to file using <code>writeBin</code>
+and remarked that I probably needed to decode the output. So here is what I should have done:</p>
+
+<pre><code>b64out &lt;- remDr$screenshot()
+writeBin(base64Decode(b64out, &quot;raw&quot;), &#39;nameoffile.png&#39;)
+</code></pre>
+
+<h3>How would you use a chrome profile?</h3>
+
+<p>In the seminar I remarked that the google chrome browser had hundreds of startup options. They are actually termed <a href="http://peter.sh/experiments/chromium-command-line-switches">command line switches</a>. The two I was after were <code>--user-data-dir</code> and <code>--profile-directory</code>. It would then have been sufficient to use:</p>
+
+<pre><code>args = list(paste0(&#39;--user-data-dir=&#39;,dataDir)
+            , paste0(&#39;--profile-directory=&#39;,profileDir))
+cprof &lt;- list(chromeOptions = list(args = args))
+remDr &lt;- remoteDriver(browserName = &#39;chrome&#39;, extraCapabilities = cprof)
+
+</code></pre>
+
+<h3>Added to RSelenium</h3>
+
+<p>I add the above functionality to RSelenium. So now the <code>screenshot</code> method of the <code>remoteDriver</code> class has an optional <code>file</code> argument. If <code>display</code> is <code>FALSE</code> and a <code>file</code> argument is given <code>RSelenium</code> will now save the <code>png</code> to file. </p>
+
+<p>Secondly there is now a <code>getChromeProfile</code> utility function in a similar vein to the existing getFirefoxProfile function. The function is documented in the RSelenium package. Its basic usage is as follows:</p>
+
+<pre><code># example from windows using a profile directory &quot;Profile 1&quot;
+dataDir &lt;- &quot;C:\\Users\\john\\AppData\\Local\\Google\\Chrome\\User Data&quot;
+cprof &lt;- getChromeProfile(dataDir, &quot;Profile 1&quot;)
+remDr &lt;- remoteDriver(browserName = &quot;chrome&quot;, extraCapabilities = cprof)
+</code></pre>
+
+<p>So it takes two arguments: a users chrome data directory and the profile directory within that data directory from which you want to run.</p>
+
+<p>I will update the version of <code>RSelenium</code> on CRAN in the coming weeks. If you would like to run the dev version with added features you can install it with:</p>
+
+<pre><code>devtools::install_github(&quot;johndharrison/RSelenium&quot;)
+</code></pre>
+
+<p>and remember to file any issues you may have. to github so <code>RSelenium</code> can improve as a package :).</p>
+
+<h2>The webinar screencast</h2>
+
+<iframe width="653" height="480" src="//www.youtube.com/embed/ic65SWRWrKA?rel=0" frameborder="0" allowfullscreen></iframe>
+  
+
+<p>## The directors cut</p>
+
+<p>I have shot an extended version of the webinar with the fabled missing <code>javascript</code> example which follows:</p>
+
+<p><iframe width="653" height="480" src="//www.youtube.com/embed/zcUGla8EjjY?rel=0" frameborder="0" allowfullscreen></iframe></p>
+
+<p>## The slides and R scripts.</p>
+
+<p>And finally I have posted the slides for the webinar to github. Please find them at <a href="http://johndharrison.github.io/RSOCRUG">http://johndharrison.github.io/RSOCRUG</a>. There are also some R scripts contained in the master branch of the github project <a href="https://github.com/johndharrison/RSOCRUG">https://github.com/johndharrison/RSOCRUG</a> .</p>
+
+<h2>Conclusion</h2>
+
+<p>Hopefully that ties up any loose ends. It was great fun preparing the webinar. I enjoyed giving it and I&#39;m gratefully to everyone who attended. </p>
+
+</body>
+
+</html>
