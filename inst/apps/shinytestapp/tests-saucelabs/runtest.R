@@ -1,5 +1,5 @@
 user <- "rselenium0"
-pass <- "49953c74-5c46-4ff9-b584-cf31a4c71809"
+pass <- "49953c74-5c46-4ff9-b584-cf31a4c71809" # insert appropriate key here
 port <- 80
 ip <- paste0(user, ':', pass, "@ondemand.saucelabs.com")
 #browser <- "safari"
