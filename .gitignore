@@ -1,3 +1,13 @@
 .Rproj.user
 .Rhistory
 .RData
+data/selKeys.rda
+demo/apps/shinytestapp/global.R
+demo/apps/shinytestapp/reqcontrols.R
+demo/apps/shinytestapp/reqplots.R
+demo/apps/shinytestapp/server.R
+demo/apps/shinytestapp/ui.R
+inst/doc/RProject.png
+inst/doc/STA-highres.png
+inst/doc/shinytestapp.png
+inst/doc/tmpScreenShot.png
