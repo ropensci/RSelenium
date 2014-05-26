@@ -57,6 +57,8 @@ All invalid requests should result in the server returning a 4xx HTTP response. 
 \section{Methods}{
 
 \describe{
+\item{\code{checkStatus()}}{An internal method to check the status returned by the server. If status indicates an error an appropriate error message is thrown.}
+
 \item{\code{queryRD(ipAddr, method = "GET", httpheader = c(`Content-Type` =
   "application/json;charset=UTF-8"), qdata = NULL, json = FALSE,
   header = TRUE)}}{A method to communicate with the remote server implementing the JSON wire protocol.}

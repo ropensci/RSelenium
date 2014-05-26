@@ -120,15 +120,22 @@ errorHandler <- setRefClass("errorHandler",
                                 d <- debugGatherer()
                                 if(is.null(qdata)){
                                   getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE)
-                                  if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update, writefunction = w$update))}
-                                  res <- do.call(getURLContent, getUC.params)
-                                  #res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE, headerfunction = h$update)
                                 }else{
                                   getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE)
-                                  if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update, writefunction = w$update))}
-                                  res <- do.call(getURLContent, getUC.params)
-                                  #res <- getURLContent(ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE, headerfunction = h$update)#, .opts = list(verbose = TRUE), debugfunction = d$update)
                                 }
+                                if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update, writefunction = w$update))}
+                                res <- tryCatch({do.call(getURLContent, getUC.params)}, error = function(e){
+                                  err <- switch(e$message
+                                         , "<url> malformed" = paste0("Invalid call to server. Please check you have opened a browser.")
+                                         , "couldn't connect to host" = paste0("Couldnt connect to host on ", serverURL, ".\nPlease ensure a Selenium server is running."),
+                                         "Undefined error in RCurl call."
+                                  )
+                                  cat(err)
+                                  NA
+                                }
+                                )
+                                if(is.na(res)){stop()}
+                                
                                 if(header){
                                   responseheader <<- as.list(h$value())
                                 }
@@ -143,7 +150,6 @@ errorHandler <- setRefClass("errorHandler",
                                   res1 <- fromJSON(testRes, simplifyWithNames = FALSE, encoding = encoding)
                                   res1$value <- gsub("\\\"", "\"", testValue)
                                 }
-#                                if( isValidJSON(res1, asText = TRUE)){ # not reliable
                                 if( !identical(class(res1), "try-error")){
                                   if(!is.null(res1$status)){status <<- res1$status}
                                   if(!is.null(res1$class)){statusclass <<- res1$class}
@@ -162,21 +168,27 @@ errorHandler <- setRefClass("errorHandler",
                                   }
                                 }else{
                                   # try JSON
-                                  status <<- 1 # user check for error
+                                  status <<- 1L # user check for error
                                   statusclass <<- NA_character_
                                   sessionid <<- NA_character_
                                   hcode <<- NA_integer_
                                   value <<- list(res)
                                   
                                 }
-                                #                                }
-                                # insert error checking code here based on res1$status
-                                #                                  
-                                #                                 if(is.atomic(res1)){
-                                #                                   return(res1)
-                                #                                 }else{
-                                #                                   res1$value
-                                #                                 }
+                                checkStatus()
+                              }
+                              , checkStatus = function(){
+                                "An internal method to check the status returned by the server. If status indicates an error an appropriate error message is thrown."
+                                if(status > 1){
+                                  errId <- which(statusCodes$Code == as.integer(status))
+                                  if(length(errId) > 0){
+                                    errMessage <- statusCodes[errId, c("Summary", "Detail")]
+                                    errMessage$class <- value$class
+                                    errMessage <- paste("\t", paste(names(errMessage), errMessage, sep = ": "))
+                                    errMessage[-1] <- paste("\n", errMessage[-1])
+                                    stop(errMessage, call. = FALSE)
+                                  }
+                                }
                               }
                             )
 )
