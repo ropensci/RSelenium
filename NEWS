@@ -1,3 +1,6 @@
+# Rselenium 1.3.2
+* Methods now fail with errors if the server returns an error related status code. Summary and Detail of the error are outputted as well as the associated java class.
+
 # RSelenium 1.3.0
 * Add the content from OC-RUG webinar as a vignette.
 * Update the Driving OS/Browsers local and remote vignette.
