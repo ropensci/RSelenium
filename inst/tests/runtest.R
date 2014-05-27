@@ -52,6 +52,6 @@ lapply(out, function(x){
       res <- getURLContent(ip, customrequest = "PUT", httpheader = "Content-Type:text/json", postfields = qdata, isHTTP = FALSE)
       
     }
-  }
-}
+  })
+})
 
