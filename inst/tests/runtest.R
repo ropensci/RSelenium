@@ -39,14 +39,19 @@ out <- lapply(names(osBrowser), function(x){
   })
 }) 
 
-if(!any(testRes$failed) && testsel[['sauceTest']]){
-  # test passed rsel.opt should contain the jobid
-  pv <- packageVersion("RSelenium")
-  
-  ip <- paste0(user, ':', pass, "@saucelabs.com/rest/v1/", user, "/jobs/", testsel[['rsel.opt']]$id)
-  qdata <- toJSON(list(passed = TRUE, "custom-data" = list(release = do.call(paste, list(pv, collapse = ".")), testresult = testRes)))
-  res <- getURLContent(ip, customrequest = "PUT", httpheader = "Content-Type:text/json", postfields = qdata, isHTTP = FALSE)
-  
+lapply(out, function(x){
+  lapply(x, function(y){
+    testId <- y[[1]]
+    testRes <- y[[2]]
+    if(!any(testRes$failed)){
+      # test passed rsel.opt should contain the jobid
+      pv <- packageVersion("RSelenium")
+      
+      ip <- paste0(user, ':', pass, "@saucelabs.com/rest/v1/", user, "/jobs/", testId)
+      qdata <- toJSON(list(passed = TRUE, "custom-data" = list(release = do.call(paste, list(pv, collapse = ".")), testresult = testRes)))
+      res <- getURLContent(ip, customrequest = "PUT", httpheader = "Content-Type:text/json", postfields = qdata, isHTTP = FALSE)
+      
+    }
+  }
 }
-
 
