@@ -12,7 +12,7 @@ slBuild <- sapply(querySelectorAll(slSource, "#jobGrid .slick-row .r4")
 slPass <- sapply(querySelectorAll(slSource, "#jobGrid .slick-row .r5")
                  , xmlValue)
 
-removeIds <- slIds[slBuild == "120" & slPass != "Pass"]
+removeIds <- slIds[slBuild == "132" & slPass != "Pass"]
 user <- "rselenium0"
 pass <- "49953c74-5c46-4ff9-b584-cf31a4c71809"
 

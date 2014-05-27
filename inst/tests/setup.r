@@ -10,7 +10,7 @@ if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
 remDr$open(silent = TRUE)
 sysDetails <- remDr$getStatus()
 remDr$setImplicitWaitTimeout(3000)
-browser <- remDr$sessionInfo$browserName
+rdBrowser <- remDr$sessionInfo$browserName
 
 htmlSrc <- Sys.getenv("SEL_TEST_DIR")
 loadPage <- function(pgStr){
@@ -23,7 +23,7 @@ if(exists('sauceTest', where = parent.env(environment()) , inherits = FALSE)){
     # this will serve the files from the selenium project on port 3000
     # myname.local maps to 127.0.0.1 in hosts hopefully to allow windows to
     # work on sauceConnect
-    if(browser %in% c("iPhone", "iPad", "safari")){
+    if(rdBrowser %in% c("iPhone", "iPad", "safari")){
       htmlSrc <- "localhost:3000"      
     }else{
       htmlSrc <- "myname.local:3000"      
