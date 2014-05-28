@@ -81,9 +81,6 @@ startServer <- function (dir = NULL)
 
 getFirefoxProfile <- function(profDir, useBase = FALSE){
   
-  if(!useBase){
-    require(Rcompression)
-  }
   tmpfile <- tempfile(fileext = '.zip')
   reqFiles <- list.files(profDir, recursive = TRUE)
   if(!useBase){
