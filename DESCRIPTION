@@ -14,7 +14,7 @@ URL: http://johndharrison.github.io/RSelenium
 BugReports: http://github.com/johndharrison/RSelenium/issues
 Additional_repositories: http://www.omegahat.org/R
 Depends:
-    R (>= 3.0.0),methods,RCurl,RJSONIO,caTools,XML
+    R (>= 3.0.0),methods,RCurl,RJSONIO,caTools,XML,tools
 Suggests:
     testthat,
     knitr,
