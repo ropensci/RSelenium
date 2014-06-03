@@ -191,7 +191,8 @@ phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
   if (.Platform$OS.type == "windows"){
     system2(pjsPath, pjsargs, invisible = TRUE, wait = FALSE, ...)
     pjsPID <- read.csv(text = system("tasklist /v /fo csv", intern = TRUE))
-    pjsPID <- pjsPID$PID[which(pjsPID$Image.Name == "phantomjs.exe")]
+    # support for MS-DOS-compatible (short) file name
+    pjsPID <- pjsPID$PID[grepl("phantomjs.exe|PHANTO~1.EXE", pjsPID$Image.Name)]
   }else{
     system2(pjsPath, pjsargs, wait = FALSE, ...)
     # pjsPID <- system('pgrep -f phantomjs', intern = TRUE)[1] # pgrep not on MAC?
