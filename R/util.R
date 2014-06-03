@@ -152,6 +152,7 @@ getChromeProfile <- function(dataDir, profileDir){
 #' @param pjs_cmd The name, full or partial path of a phantomjs executable. This is optional only state if the executable is not in your path.
 #' @param port An integer giving the port on which phantomjs will listen. Defaults to 4444. format [[<IP>:]<PORT>]
 #' @param extras An optional character vector: see 'Details'.
+#' @param ... Arguments to pass to \code{\link{system2}}
 #' @export
 #' @importFrom tools pskill
 #' @section Detail: phantom() is used to start a phantomjs binary in webdriver mode. This can be used to drive
@@ -179,19 +180,20 @@ getChromeProfile <- function(dataDir, profileDir){
 #' pJS$stop()
 #' }
 
-phantom <- function (pjs_cmd = "", port = 4444L, extras = ""){
+phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
   if (!nzchar(pjs_cmd)) {
     pjsPath <- Sys.which("phantomjs")
   }else{
     pjsPath <- Sys.which(gs_cmd)    
   }
+  if(nchar(pjsPath) == 0){stop("PhantomJS binary not located.")}
   pjsargs <- c(paste0("--webdriver=", port), extras)
   if (.Platform$OS.type == "windows"){
-    invisible(system2(pjsPath, pjsargs, invisible = TRUE, wait = FALSE))
+    system2(pjsPath, pjsargs, invisible = TRUE, wait = FALSE, ...)
     pjsPID <- read.csv(text = system("tasklist /v /fo csv", intern = TRUE))
     pjsPID <- pjsPID$PID[which(pjsPID$Image.Name == "phantomjs.exe")]
   }else{
-    invisible(system2(pjsPath, pjsargs, wait = FALSE))
+    system2(pjsPath, pjsargs, wait = FALSE, ...)
     # pjsPID <- system('pgrep -f phantomjs', intern = TRUE)[1] # pgrep not on MAC?
     pjsPID <- read.csv(text = system('ps -Ao"%p,%a"', intern = TRUE), stringsAsFactors = FALSE)
     pjsPID <- as.integer(pjsPID$PID[grepl("phantomjs", pjsPID$COMMAND)])
