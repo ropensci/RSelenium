@@ -1,5 +1,6 @@
 # Rselenium 1.3.2
 * Methods now fail with errors if the server returns an error related status code. Summary and Detail of the error are outputted as well as the associated java class.
+* Add a phantom utility function to enable driving of phantomjs in webdriver mode independent of Selenium Server.
 
 # RSelenium 1.3.0
 * Add the content from OC-RUG webinar as a vignette.
