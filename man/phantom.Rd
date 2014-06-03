@@ -3,7 +3,7 @@
 \alias{phantom}
 \title{Start a phantomjs binary in webdriver mode.}
 \usage{
-phantom(pjs_cmd = "", port = 4444L, extras = "")
+phantom(pjs_cmd = "", port = 4444L, extras = "", ...)
 }
 \arguments{
 \item{pjs_cmd}{The name, full or partial path of a phantomjs executable. This is optional only state if the executable is not in your path.}
@@ -11,6 +11,8 @@ phantom(pjs_cmd = "", port = 4444L, extras = "")
 \item{port}{An integer giving the port on which phantomjs will listen. Defaults to 4444. format [[<IP>:]<PORT>]}
 
 \item{extras}{An optional character vector: see 'Details'.}
+
+\item{...}{Arguments to pass to \code{\link{system2}}}
 }
 \description{
 \code{phantom}

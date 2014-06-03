@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>RSelenium : Headless browsing.</title>
+
+
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<!--
+  %\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{RSelenium: Headless browsing.}
+-->
+
+<h1>RSelenium : Headless browsing.</h1>
+
+<p>This vignette is divided into three main sections:</p>
+
+<ol>
+<li><a href="#id1"><code>PhantomJS</code></a>
+
+<ul>
+<li><a href="#id1a">Driving <code>PhantomJS</code> directly.</a></li>
+<li><a href="#id1b">Driving <code>PhantomJS</code> using Selenium Server.</a></li>
+<li><a href="#id1b">Additional <code>PhantomJS</code> capabilities.</a></li>
+</ul></li>
+<li><a href="#id2">X Virtual Frame Buffer</a> 
+
+<ul>
+<li><a href="#id2a">Setup</a></li>
+</ul></li>
+</ol>
+
+<h2><a id="id1"><code>PhantomJS</code></a></h2>
+
+<p><code>PhantomJS</code> is a headless WebKit scriptable with a JavaScript API. It has fast and native support for various web standards: DOM handling, CSS selector, JSON, Canvas, and SVG. <code>RSelenium</code> can drive <code>PhantomJS</code> using two methods: directly or via the standalone Selenium Server. </p>
+
+<h3><a id="id1a">Driving <code>PhantomJS</code> directly.</a></h3>
+
+<p>The <code>PhantomJS</code> binary can be driven directly with <code>RSelenium</code>. <code>PhantomJS</code> needs to be started in webdriver mode then <code>RSelenium</code> can <strong>communicate with it directly without the need for Selenium Server.</strong> The command line options for <code>PhantomJS</code> are outlined at <a href="http://phantomjs.org/api/command-line.html">http://phantomjs.org/api/command-line.html</a>. We note that it is necessary to start <code>PhantomJS</code> with the <code>--webdriver</code> option and an optional IP/port. <code>RSelenium</code> as of <code>v1.3.2</code> has a utility function <code>phantom</code> that will handle starting the <code>PhantomJS</code> binary in webdriver mode by default on port 4444. So to drive <code>PhantomJS</code> sans Selenium Server can be done as follows:</p>
+
+<pre><code>require(RSelenium)
+pJS &lt;- phantom()
+Sys.sleep(5) # give the binary a moment
+remDr &lt;- remoteDriver(browserName = &#39;phantomjs&#39;)
+remDr$open()
+remDr$navigate(&quot;http://www.google.com/ncr&quot;)
+remDr$getTitle()[[1]] # [1] &quot;Google&quot;
+remDr$close
+pJS$stop() # close the PhantomJS process, note we dont call remDr$closeServer()
+</code></pre>
+
+<h3><a id="id1b">Driving <code>PhantomJS</code> using Selenium Server.</a></h3>
+
+<p>For completeness we outline the process of opening a <code>PhantomJS</code> browser using selenium server. It is assummed that the <code>PhantomJS</code> binary is in the users path.</p>
+
+<pre><code>require(RSelenium)
+RSelenium::startServer()
+remDr &lt;- remoteDriver(browserName = &quot;phantomjs&quot;)
+remDr$open()
+remDr$navigate(&quot;http://www.google.com/ncr&quot;)
+remDr$close()
+remDr$closeServer()
+</code></pre>
+
+<h4>Providing the <code>PhantomJS</code> path</h4>
+
+<p>It may not be possible for a user to have the <code>PhantomJS</code> binary in their path. In this case
+a user may pass the path of the <code>PhantomJS</code> binary to Selenium Server:</p>
+
+<pre><code>require(RSelenium)
+RSelenium::startServer()
+eCap &lt;- list(phantomjs.binary.path = &quot;C:/Users/john/Desktop/phantomjs.exe&quot;)
+remDr &lt;- remoteDriver(browserName = &quot;phantomjs&quot;, extraCapabilities = eCap)
+remDr$open()
+....
+
+</code></pre>
+
+<p>So in the above example I suppose the <code>PhantomJS</code> binary has been moved to my Desktop which we assume is not in my path. An extra capability <code>phantomjs.binary.path</code> detailed <a href="https://github.com/detro/ghostdriver">https://github.com/detro/ghostdriver</a> can be used to provide the path to <code>PhantomJS</code> to Selenium Server.</p>
+
+<h3><a id="id1c">Additional <code>PhantomJS</code> capabilities.</a></h3>
+
+<h4>Setting a user agent</h4>
+
+<p>A user agent can be set using the <code>phantomjs.page.settings.userAgent</code> capability. </p>
+
+<pre><code>pJS &lt;- phantom()
+Sys.sleep(5)
+remDr &lt;- remoteDriver(browserName = &quot;phantomjs&quot;)
+remDr$open()
+remDr$navigate(&quot;http://www.whatsmyuseragent.com/&quot;)
+remDr$findElement(&quot;id&quot;, &quot;userAgent&quot;)$getElementText()[[1]]
+# [1] &quot;Your User Agent String is:\nMozilla/5.0 (Unknown; Linux x86_64)
+# AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.7 Safari/534.34&quot;
+remDr$close()
+eCap &lt;- list(phantomjs.page.settings.userAgent 
+             = &quot;Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20120101 Firefox/29.0&quot;)
+remDr &lt;- remoteDriver(browserName = &quot;phantomjs&quot;, extraCapabilities = eCap)
+remDr$open()
+remDr$navigate(&quot;http://www.whatsmyuseragent.com/&quot;)
+remDr$findElement(&quot;id&quot;, &quot;userAgent&quot;)$getElementText()[[1]]
+# [1] &quot;Your User Agent String is:\nMozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0)
+# Gecko/20120101 Firefox/29.0&quot;
+remDr$close()
+pJS$stop()
+</code></pre>
+
+<p>The <a href="https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#webpage-settings">https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#webpage-settings</a>
+In the above example it can be seen that the default useragent identifies us as <code>PhantomJS</code>. Some web content maybe inaccessible or blocked for <code>PhantomJS</code> users. Here we demonstrate changing our user agent so the website sees us as <code>Firefox 29.0</code>.</p>
+
+<h4>Other possible options</h4>
+
+<p>The general form of specifying <a href="https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#webpage-settings">PhantomJS internal page objects</a> take the form <code>phantomjs.page.settings.SETTING = VALUE</code> where <code>SETTING</code> is the appropriate PhantomJS internal page object.
+As an example we inhibit the loading of inline images:</p>
+
+<pre><code>require(RSelenium)
+pJS &lt;- phantom()
+Sys.sleep(5)
+eCap &lt;- list(phantomjs.page.settings.loadImages = FALSE)
+remDr &lt;- remoteDriver(browserName = &quot;phantomjs&quot;, extraCapabilities = eCap)
+remDr$open()
+remDr$navigate(&quot;http://www.google.com/ncr&quot;)
+remDr$screenshot(display = TRUE)
+remDr$close()
+pJS$stop()
+</code></pre>
+
+<p>We can see that the images are not loaded:
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/Screenshot%202014-06-03%2014.32.18.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;"/></p>
+
+<h2><a id="id2">X Virtual Frame Buffer</a></h2>
+
+<p>For the discussion on <code>xvfb</code> and the related VPS I refer you to <a href="http://johndharrison.blogspot.com/2014/03/rstudioshiny-server-on-digital-ocean.html">this blog entry</a>. How to setup a VPS with rstudio server and shiny server etc. is outlined. </p>
+
+<h3><a id="id2a">Setup.</a></h3>
+
+<p>The VPS i am connecting to has an ip of <code>128.199.255.233</code>. I have rstudio server running on port 8787. On the remote server we observe</p>
+
+<pre><code>&gt; library(RSelenium)
+&gt; RSelenium::startServer()
+&gt; Sys.which(&#39;phantomjs&#39;)
+                 phantomjs 
+&quot;/usr/local/bin/phantomjs&quot; 
+&gt; Sys.which(&#39;firefox&#39;)
+firefox 
+     &quot;&quot; 
+&gt; Sys.which(&#39;chrome&#39;)
+chrome 
+    &quot;&quot; 
+</code></pre>
+
+<p>So  we have started a selenium server running on (default) port 4444. Firefox and google chrome are not currently installed on this remote machine. Lets install firefox first. On the remote VPS we run </p>
+
+<pre><code>sudo apt-get install firefox
+</code></pre>
+
+<p>Now checking in the remote rstudio </p>
+
+<pre><code>&gt; Sys.which(&#39;firefox&#39;)
+           firefox 
+&quot;/usr/bin/firefox&quot; 
+</code></pre>
+
+<p>If we try now to connect to the remote server and open firefox:</p>
+
+<pre><code>&gt; remDr &lt;- remoteDriver(remoteServerAddr = &quot;128.199.255.233&quot;)
+&gt; remDr$open()
+[1] &quot;Connecting to remote server&quot;
+Error:    Summary: UnknownError
+     Detail: An unknown server-side error occurred while processing the command.
+     class: org.openqa.selenium.WebDriverException
+
+</code></pre>
+
+<p>We can see the problem if we try to run firefox in the remote shell:</p>
+
+<p><img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/firefox.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;"/></p>
+
+</body>
+
+</html>
