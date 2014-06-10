@@ -2,7 +2,7 @@ R Bindings for Selenium 2.0 Remote WebDriver
 ==========================
 
 #### Travis build status
-[![Build Status](https://travis-ci.org/johndharrison/RSelenium.svg?branch=master)](https://travis-ci.org/johndharrison/RSelenium)
+[![Build Status](https://travis-ci.org/ropensci/RSelenium.svg?branch=master)](https://travis-ci.org/ropensci/RSelenium)
 
 #### Selenium test status
 [![Selenium Test Status](https://saucelabs.com/buildstatus/rselenium0)](https://saucelabs.com/u/rselenium0)
