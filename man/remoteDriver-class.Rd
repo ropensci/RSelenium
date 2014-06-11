@@ -156,6 +156,9 @@ The inputs are:
 
 \item{\code{open(silent = FALSE)}}{Send a request to the remote server to instantiate the browser.}
 
+\item{\code{phantomExecute(script, args = list())}}{This API allows you to send a string of JavaScript via 'script', written for PhantomJS, and be interpreted within the context of a WebDriver Page. In other words, for the given script then this variable is initialized to be the current Page.
+See \link{https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage} and the example in this help file. NOTE: Calling the PhantomJS API currently only works when PhantomJS is driven directly via \code{\link{phantom}}}
+
 \item{\code{quit()}}{Delete the session & close open browsers.}
 
 \item{\code{refresh()}}{Reload the current page.}
@@ -269,6 +272,24 @@ remDr$executeScript("return arguments[0] + arguments[1];", args = 1:2)
 # Example of javascript async call
 jsscript <- "arguments[arguments.length - 1](arguments[0] + arguments[1]);"
 remDr$executeAsyncScript(jsscript, args = 1:2)
+
+# EXAMPLE INJECTING INTO PHANTOMJS using phantomExecute
+require(RSelenium)
+pJS <- phantom()
+remDr <- remoteDriver(browserName = "phantomjs")
+remDr$open(silent = TRUE)
+remDr$navigate("http://ariya.github.com/js/random/")
+remDr$findElement("id", "numbers")$getElementText()[[1]] # returns a set of random numbers
+result = remDr$phantomExecute("var page = this;
+                               page.onInitialized = function () {
+                               page.evaluate(function () {
+                               Math.random = function() { return 42 / 100 }
+                               })
+                               }", list());
+remDr$navigate("http://ariya.github.com/js/random/")
+remDr$findElement("id", "numbers")$getElementText()[[1]] # Math.random returns our custom function
+remDr$close()
+pJS$stop()
 }
 }
 
