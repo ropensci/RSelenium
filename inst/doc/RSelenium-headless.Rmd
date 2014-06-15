@@ -18,6 +18,8 @@ This vignette is divided into three main sections:
   * [Additional `PhantomJS` capabilities.](#id1b)
 2. [X Virtual Frame Buffer](#id2) 
   * [Setup](#id2a)
+3. [`PhantomJS` API examples](#id3)
+  * [Interacting with the console](#id3a)
 
 ## <a id="id1">`PhantomJS`</a>
 
@@ -118,7 +120,7 @@ pJS$stop()
 ```
 
 We can see that the images are not loaded:
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/Screenshot%202014-06-03%2014.32.18.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/Screenshot%202014-06-03%2014.32.18.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;"  width = 800/>
 
 ## <a id="id2">X Virtual Frame Buffer</a>
 
@@ -171,5 +173,44 @@ Error:    Summary: UnknownError
 
 We can see the problem if we try to run firefox in the remote shell:
 
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/firefox.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/firefox.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;" width = 800/>
 
+Firefox is install but there is no display on our headless VPS. We can use [xvfb](http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml) to provide a virtual display for our browser to run in. 
+
+```
+Xvfb :0 -screen 0 1024x768x24 2>&1 >/dev/null &
+export DISPLAY=:0
+nohup xvfb-run java -jar selenium-server-standalone.jar > selenium.log &
+```
+
+## <a id="id3">`PhantomJS` API examples</a>
+
+The `phantomExecute` method of the `remoteDriver` class allows the user to interact with
+the `PhantomJS` API. Currently the method only works for direct calls to `PhantomJS` using
+the `phantom` utility function. Driving `PhantomJS` through the `Selenium` Server and calling the `phantomExecute` method currently doesnt function and is an open issue (in the ghostDriver project). In the following sections we outline examples of using the `PhantomJS` API.
+
+### <a id="id3a"> Interacting with the console
+The `PhantomJS` API implements a number of callbacks which can be defined. [onLoadFinished])(ttp://phantomjs.org/api/webpage/handler/on-load-finished.html) is one such callback. This callback is invoked when the page finishes the loading. It may accept a single argument indicating the pages status: `success` if no network errors occurred, otherwise `fail`.
+We give a simple example of writing to the console log when a page is loaded. 
+```
+library(RSelenium)
+pJS <- phantom()
+remDr <- remoteDriver(browserName = "phantom")
+remDr$open()
+result <- remDr$phantomExecute("var page = this;
+                                page.onLoadFinished = function(status) {
+                                var url = page.url;
+                                console.log(\"Status:  \" + status);
+                                console.log(\"Loaded:  \" + url);
+                               };")
+# > remDr$navigate("http://www.google.com/ncr")
+# Status:  success
+# Loaded:  http://www.google.com/
+#  > 
+# > remDr$navigate("http://www.bbc.co.uk")
+# Status:  success
+# Loaded:  http://www.bbc.co.uk/
+#   Status:  success
+# Loaded:  http://www.bbc.com/
+pJS$stop()
+```

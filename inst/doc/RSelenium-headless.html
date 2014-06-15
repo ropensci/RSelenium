@@ -170,6 +170,11 @@ hr {
 <ul>
 <li><a href="#id2a">Setup</a></li>
 </ul></li>
+<li><a href="#id3"><code>PhantomJS</code> API examples</a>
+
+<ul>
+<li><a href="#id3a">Interacting with the console</a></li>
+</ul></li>
 </ol>
 
 <h2><a id="id1"><code>PhantomJS</code></a></h2>
@@ -268,7 +273,7 @@ pJS$stop()
 </code></pre>
 
 <p>We can see that the images are not loaded:
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/Screenshot%202014-06-03%2014.32.18.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;"/></p>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/Screenshot%202014-06-03%2014.32.18.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;"  width = 800/></p>
 
 <h2><a id="id2">X Virtual Frame Buffer</a></h2>
 
@@ -316,7 +321,47 @@ Error:    Summary: UnknownError
 
 <p>We can see the problem if we try to run firefox in the remote shell:</p>
 
-<p><img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/firefox.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;"/></p>
+<p><img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/firefox.png"  title = "PhantomJS loadImages = FALSE" style = "margin-left: auto;margin-right: auto; display: block;" width = 800/></p>
+
+<p>Firefox is install but there is no display on our headless VPS. We can use <a href="http://www.x.org/archive/X11R7.7/doc/man/man1/Xvfb.1.xhtml">xvfb</a> to provide a virtual display for our browser to run in. </p>
+
+<pre><code>Xvfb :0 -screen 0 1024x768x24 2&gt;&amp;1 &gt;/dev/null &amp;
+export DISPLAY=:0
+nohup xvfb-run java -jar selenium-server-standalone.jar &gt; selenium.log &amp;
+</code></pre>
+
+<h2><a id="id3"><code>PhantomJS</code> API examples</a></h2>
+
+<p>The <code>phantomExecute</code> method of the <code>remoteDriver</code> class allows the user to interact with
+the <code>PhantomJS</code> API. Currently the method only works for direct calls to <code>PhantomJS</code> using
+the <code>phantom</code> utility function. Driving <code>PhantomJS</code> through the <code>Selenium</code> Server and calling the <code>phantomExecute</code> method currently doesnt function and is an open issue (in the ghostDriver project). In the following sections we outline examples of using the <code>PhantomJS</code> API.</p>
+
+<h3><a id="id3a"> Interacting with the console</h3>
+
+<p>The <code>PhantomJS</code> API implements a number of callbacks which can be defined. [onLoadFinished])(ttp://phantomjs.org/api/webpage/handler/on-load-finished.html) is one such callback. This callback is invoked when the page finishes the loading. It may accept a single argument indicating the pages status: <code>success</code> if no network errors occurred, otherwise <code>fail</code>.
+We give a simple example of writing to the console log when a page is loaded. </p>
+
+<pre><code>library(RSelenium)
+pJS &lt;- phantom()
+remDr &lt;- remoteDriver(browserName = &quot;phantom&quot;)
+remDr$open()
+result &lt;- remDr$phantomExecute(&quot;var page = this;
+                                page.onLoadFinished = function(status) {
+                                var url = page.url;
+                                console.log(\&quot;Status:  \&quot; + status);
+                                console.log(\&quot;Loaded:  \&quot; + url);
+                               };&quot;)
+# &gt; remDr$navigate(&quot;http://www.google.com/ncr&quot;)
+# Status:  success
+# Loaded:  http://www.google.com/
+#  &gt; 
+# &gt; remDr$navigate(&quot;http://www.bbc.co.uk&quot;)
+# Status:  success
+# Loaded:  http://www.bbc.co.uk/
+#   Status:  success
+# Loaded:  http://www.bbc.com/
+pJS$stop()
+</code></pre>
 
 </body>
 
