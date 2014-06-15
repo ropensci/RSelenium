@@ -20,6 +20,9 @@ This vignette is divided into three main sections:
   * [Setup](#id2a)
 3. [`PhantomJS` API examples](#id3)
   * [Interacting with the console](#id3a)
+  * [`PhantomJS` writing to file](#id3b)
+  * [Injecting a library into `PhantomJS`](#id3c)
+  * [Starting a `PhantomJS` Web Server](#id3d)
 
 ## <a id="id1">`PhantomJS`</a>
 
@@ -190,7 +193,7 @@ the `PhantomJS` API. Currently the method only works for direct calls to `Phanto
 the `phantom` utility function. Driving `PhantomJS` through the `Selenium` Server and calling the `phantomExecute` method currently doesnt function and is an open issue (in the ghostDriver project). In the following sections we outline examples of using the `PhantomJS` API.
 
 ### <a id="id3a"> Interacting with the console
-The `PhantomJS` API implements a number of callbacks which can be defined. [onLoadFinished])(ttp://phantomjs.org/api/webpage/handler/on-load-finished.html) is one such callback. This callback is invoked when the page finishes the loading. It may accept a single argument indicating the pages status: `success` if no network errors occurred, otherwise `fail`.
+The `PhantomJS` API implements a number of callbacks which can be defined. [onLoadFinished](http://phantomjs.org/api/webpage/handler/on-load-finished.html) is one such callback. This callback is invoked when the page finishes the loading. It may accept a single argument indicating the pages status: `success` if no network errors occurred, otherwise `fail`.
 We give a simple example of writing to the console log when a page is loaded. 
 ```
 library(RSelenium)
@@ -214,3 +217,108 @@ result <- remDr$phantomExecute("var page = this;
 # Loaded:  http://www.bbc.com/
 pJS$stop()
 ```
+It can be seen that the callback persists across page calls.
+
+### <a id="id3b">  `PhantomJS` writing to file
+
+The next example demonstrates writing to file from `PhantomJS`. Once again the `onLoadFinished` callback is utilised. In this example the html source of the page that is navigated to is downloaded to `output.htm` relative to `getwd()`. An example is given of using `phantom.exit()` to close `PhantomJS` from the API.
+
+```
+library(RSelenium)
+pJS <- phantom()
+remDr <- remoteDriver(browserName = "phantom")
+remDr$open()
+result <- remDr$phantomExecute("var page = this;
+                                var fs = require(\"fs\");
+                                page.onLoadFinished = function(status) {
+                                var file = fs.open(\"output.htm\", \"w\");
+                                file.write(page.content);
+                                file.close();
+                                phantom.exit();
+                               };")
+remDr$navigate("http://www.google.com/ncr")
+# > htmlParse("output.htm")['//title/text()'][[1]]
+# Google 
+pJS$stop()
+```
+
+### <a id="id3c">  Injecting a library into `PhantomJS`
+
+Next we look at [includeJs](http://phantomjs.org/api/webpage/method/include-js.html). 
+This includes an external script from the specified url (usually a remote location) on the page and executes the callback upon completion. The library we shall include is `JQuery` using the google CDN. Now any page we call with `PhantomJS` will have the `JQuery` library loaded after the page has finished loading.
+
+```
+library(RSelenium)
+pJS <- phantom()
+remDr <- remoteDriver(browserName = "phantom")
+remDr$open()
+remDr$navigate("http://www.google.com/ncr")
+# check if the JQuery library is loaded
+remDr$executeScript("return window.jQuery == undefined;")[[1]]
+# TRUE is returned indicating JQuery is not present
+result <- remDr$phantomExecute("var page = this;
+                                page.onLoadFinished = function(status) {
+                                 var url = page.url;
+                                 var jURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';
+                                 console.log(\"Status:  \" + status);
+                                 console.log(\"Loaded:  \" + url);
+                                 page.includeJs(jURL, function() {console.log(\"Loaded jQuery!\");})
+                                };"
+                               )
+remDr$navigate("http://www.google.com/ncr")
+# Status:  success
+# Loaded:  http://www.google.com/
+# Loaded jQuery!
+remDr$executeScript("return window.jQuery == undefined;")[[1]]
+# FALSE is returned indicating that JQuery is present
+webElem <- remDr$executeScript("return $(\"[name='q']\").get(0);")[[1]]
+webElem$sendKeysToElement(list("PhantomJS was here"))
+remDr$screenshot(display = TRUE)
+pJS$stop()
+```
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/googlePhantomJS.png"  title = "PhantomJS with Jquery injected" style = "margin-left: auto;margin-right: auto; display: block;"  width = 800/>
+
+
+### <a id="id3d">  Starting a `PhantomJS` Web Server
+
+`PhantomJS` has the ability to act as a [Web Server](http://phantomjs.org/api/webserver/). Here we demonstrate 
+setting `PhantomJS` up as a web server on the localhost on port `8080`. When a user browses to `http://localhost:8080`
+they are returned a list of the current blog titles on [http://www.r-bloggers.com](http://www.r-bloggers.com). The `Jquery` library is also injected
+to aid extraction of the blog titles.
+
+```
+pJS <- phantom()
+remDr <- remoteDriver(browserName = "phantom")
+remDr$open()
+"
+var server = require('webserver').create();
+server.listen(8080, function (request, response) {
+  var page = new WebPage();
+  page.open('http://www.r-bloggers.com/', function (status) {
+    var jURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';
+    page.includeJs(jURL, function() {
+      console.log(\"Loaded jQuery!\");
+      var blogs = page.evaluate(function () {
+        res = $('#mainwrapper .post a[rel=\"bookmark\"]');
+        return res.map(function(){return this.innerHTML}).toArray().join('\\n');
+      });
+      response.statusCode = 200;
+      response.write('Current blogs on r-bloggers:\\n');
+      response.write(blogs);
+      response.write('\\n');
+      response.close();
+      page.close();
+    });
+  });
+});" -> wsScript
+
+remDr$phantomExecute(wsScript)
+# > head(readLines("http://localhost:8080/"))
+# Loaded jQuery!
+# [1] "Current blogs on r-bloggers:"                        "Specifying complicated groups of time series in hts"
+# [3] "Creating Inset Map with ggplot2"                     "R and Vertica"                                      
+# [5] "RGolf: NGSL Scrabble"                                "European talks. June-July 2014" 
+
+```
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/headless/phantomWebserver.png"  title = "PhantomJS as a Web Server" style = "margin-left: auto;margin-right: auto; display: block;"  width = 800/>
+
