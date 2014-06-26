@@ -19,9 +19,9 @@ checkForServer <- function (dir = NULL, update = FALSE)
   selJAR <- xpathSApply(selXML, "//s:Key[contains(text(),'selenium-server-standalone')]", namespaces = c(s = "http://doc.s3.amazonaws.com/2006-03-01"), xmlValue)
   # get the most up-to-date jar
   selJAR <- selJAR[order(as.numeric(gsub("(.*)/.*", "\\1",selJAR)), decreasing = TRUE)][1]
-  selDIR <- ifelse(is.null(dir), paste0(find.package("RSelenium"), 
-                                        "/bin/"), dir)
-  selFILE <- paste0(selDIR, "selenium-server-standalone.jar")
+  selDIR <- ifelse(is.null(dir), file.path(find.package("RSelenium"), 
+                                        "bin"), dir)
+  selFILE <- file.path(selDIR, "selenium-server-standalone.jar")
   if (update || !file.exists(selFILE)) {
     dir.create(selDIR, showWarnings=FALSE)
     print("DOWNLOADING STANDALONE SELENIUM SERVER. THIS MAY TAKE SEVERAL MINUTES")
@@ -44,10 +44,10 @@ checkForServer <- function (dir = NULL, update = FALSE)
 
 startServer <- function (dir = NULL) 
 {
-  selDIR <- ifelse(is.null(dir), paste0(find.package("RSelenium"), 
-                                        "/bin/"), dir)
-  selFILE <- paste0(selDIR, "selenium-server-standalone.jar")
-  logFILE <- paste0(selDIR, "sellog.txt")
+  selDIR <-  ifelse(is.null(dir), file.path(find.package("RSelenium"), 
+                                        "bin"), dir)
+  selFILE <- file.path(selDIR, "selenium-server-standalone.jar")
+  logFILE <- file.path(selDIR, "sellog.txt")
   write("", logFILE)
   if (!file.exists(selFILE)) {
     stop("No Selenium Server binary exists. Run checkForServer or start server manually.")
