@@ -235,3 +235,61 @@ matchSelKeys <- function(x){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
+makePrefjs <- function(opts) {
+  op <- options(useFancyQuotes = FALSE)
+  on.exit(options(op))
+  
+  optsQuoted <- lapply(opts, function(x) {
+    if(is.character(x)) {
+      dQuote(x)
+    } else if(is.double(x)) {
+      sprintf("%f", x)
+    } else if(is.integer(x)) {
+      sprintf("%d", x)
+    } else if(is.logical(x)) {
+      if(x) {
+        "true"
+      } else {
+        "false"
+      }
+    }
+  })
+  
+  sprintf("user_pref(\"%s\", %s);", names(opts), optsQuoted)
+}
+
+#' Make Firefox profile.
+#' 
+#' \code{makeFirefoxProfile}
+#' A utility function to make a firefox profile. 
+#' @param opts option list of firefox
+#' @export
+#' @section Detail: A firefox profile directory is zipped and base64 encoded. It can then be passed
+#' to the selenium server as a required capability with key firefox_profile 
+#' @examples
+#' \dontrun{
+#' fprof <- makeFirefoxProfile(list(browser.download.dir = "D:/temp"))
+#' remDr <- remoteDriver(extraCapabilities = fprof)
+#' remDr$open()
+#' }
+
+makeFirefoxProfile <- function(opts){
+  # make profile
+  profDir <- file.path(tempdir(), "firefoxprofile")
+  dir.create(profDir, showWarnings = FALSE)
+  prefs.js <- file.path(profDir, "prefs.js")
+  writeLines(makePrefjs(opts), con = prefs.js)
+  
+  # zip
+  tmpfile <- tempfile(fileext = '.zip')
+  zip(tmpfile, prefs.js, flags = "-r9Xjq")
+  zz <- file(tmpfile, "rb")
+  ar <- readBin(tmpfile, "raw", file.info(tmpfile)$size)
+  
+  # base64
+  fireprof <- base64encode(ar)
+  close(zz)
+  
+  # output
+  list("firefox_profile" = fireprof)
+}
