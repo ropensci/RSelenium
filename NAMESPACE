@@ -7,11 +7,8 @@ export(checkForServer)
 export(errorHandler)
 export(getChromeProfile)
 export(getFirefoxProfile)
-<<<<<<< HEAD
-export(phantom)
-=======
 export(makeFirefoxProfile)
->>>>>>> roxygenise
+export(phantom)
 export(remoteDriver)
 export(selKeys)
 export(startServer)
