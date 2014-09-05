@@ -195,8 +195,14 @@ phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
     pjsPID <- pjsPID$PID[grepl("phantomjs.exe|PHANTO~1.EXE", pjsPID$Image.Name)]
   }else{
     system2(pjsPath, pjsargs, wait = FALSE, ...)
-    # pjsPID <- system('pgrep -f phantomjs', intern = TRUE)[1] # pgrep not on MAC?
-    pjsPID <- read.csv(text = system('ps -Ao"%p,%a"', intern = TRUE), stringsAsFactors = FALSE)
+    if(Sys.info()["sysname"] == "Darwin"){
+      pjsPID <- system('ps -Ao"pid,args"', intern = TRUE)
+      pjsPID <- sub("^\\s*(\\d+)(.*)", "\\1,\\2", pjsPID)
+      pjsPID <- read.csv(text = pjsPID[-1], stringsAsFactors = FALSE, header = FALSE) 
+      names(pjsPID) <- c("PID", "COMMAND")       
+    }else{
+      pjsPID <- read.csv(text = system('ps -Ao"%p,%a"', intern = TRUE), stringsAsFactors = FALSE)        
+    }
     pjsPID <- as.integer(pjsPID$PID[grepl("phantomjs", pjsPID$COMMAND)])
   }
   
