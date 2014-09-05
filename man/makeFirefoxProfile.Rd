@@ -12,6 +12,11 @@ makeFirefoxProfile(opts)
 \code{makeFirefoxProfile}
 A utility function to make a firefox profile.
 }
+\note{
+Note: Windows doesn't come with command-line zip capability. Installing rtools
+\url{http://cran.r-project.org/bin/windows/Rtools/index.html} is a straightforward to gain
+this capability.
+}
 \section{Detail}{
  A firefox profile directory is zipped and base64 encoded. It can then be passed
 to the selenium server as a required capability with key firefox_profile
