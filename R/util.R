@@ -184,7 +184,7 @@ phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
   if (!nzchar(pjs_cmd)) {
     pjsPath <- Sys.which("phantomjs")
   }else{
-    pjsPath <- Sys.which(gs_cmd)    
+    pjsPath <- Sys.which(pjs_cmd)    
   }
   if(nchar(pjsPath) == 0){stop("PhantomJS binary not located.")}
   pjsargs <- c(paste0("--webdriver=", port), extras)
@@ -271,7 +271,10 @@ makePrefjs <- function(opts) {
 #' @param opts option list of firefox
 #' @export
 #' @section Detail: A firefox profile directory is zipped and base64 encoded. It can then be passed
-#' to the selenium server as a required capability with key firefox_profile 
+#' to the selenium server as a required capability with key firefox_profile
+#' @note Windows doesn't come with command-line zip capability. Installing rtools
+#' \url{http://cran.r-project.org/bin/windows/Rtools/index.html} is a straightforward way to gain 
+#' this capability.
 #' @examples
 #' \dontrun{
 #' fprof <- makeFirefoxProfile(list(browser.download.dir = "D:/temp"))
