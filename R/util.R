@@ -184,7 +184,7 @@ phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
   if (!nzchar(pjs_cmd)) {
     pjsPath <- Sys.which("phantomjs")
   }else{
-    pjsPath <- Sys.which(gs_cmd)    
+    pjsPath <- Sys.which(pjs_cmd)    
   }
   if(nchar(pjsPath) == 0){stop("PhantomJS binary not located.")}
   pjsargs <- c(paste0("--webdriver=", port), extras)
@@ -195,8 +195,14 @@ phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
     pjsPID <- pjsPID$PID[grepl("phantomjs.exe|PHANTO~1.EXE", pjsPID$Image.Name)]
   }else{
     system2(pjsPath, pjsargs, wait = FALSE, ...)
-    # pjsPID <- system('pgrep -f phantomjs', intern = TRUE)[1] # pgrep not on MAC?
-    pjsPID <- read.csv(text = system('ps -Ao"%p,%a"', intern = TRUE), stringsAsFactors = FALSE)
+    if(Sys.info()["sysname"] == "Darwin"){
+      pjsPID <- system('ps -Ao"pid,args"', intern = TRUE)
+      pjsPID <- sub("^\\s*(\\d+)(.*)", "\\1,\\2", pjsPID)
+      pjsPID <- read.csv(text = pjsPID[-1], stringsAsFactors = FALSE, header = FALSE) 
+      names(pjsPID) <- c("PID", "COMMAND")       
+    }else{
+      pjsPID <- read.csv(text = system('ps -Ao"%p,%a"', intern = TRUE), stringsAsFactors = FALSE)        
+    }
     pjsPID <- as.integer(pjsPID$PID[grepl("phantomjs", pjsPID$COMMAND)])
   }
   
@@ -235,3 +241,64 @@ matchSelKeys <- function(x){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
+makePrefjs <- function(opts) {
+  op <- options(useFancyQuotes = FALSE)
+  on.exit(options(op))
+  
+  optsQuoted <- lapply(opts, function(x) {
+    if(is.character(x)) {
+      dQuote(x)
+    } else if(is.double(x)) {
+      sprintf("%f", x)
+    } else if(is.integer(x)) {
+      sprintf("%d", x)
+    } else if(is.logical(x)) {
+      if(x) {
+        "true"
+      } else {
+        "false"
+      }
+    }
+  })
+  
+  sprintf("user_pref(\"%s\", %s);", names(opts), optsQuoted)
+}
+
+#' Make Firefox profile.
+#' 
+#' \code{makeFirefoxProfile}
+#' A utility function to make a firefox profile. 
+#' @param opts option list of firefox
+#' @export
+#' @section Detail: A firefox profile directory is zipped and base64 encoded. It can then be passed
+#' to the selenium server as a required capability with key firefox_profile
+#' @note Windows doesn't come with command-line zip capability. Installing rtools
+#' \url{http://cran.r-project.org/bin/windows/Rtools/index.html} is a straightforward way to gain 
+#' this capability.
+#' @examples
+#' \dontrun{
+#' fprof <- makeFirefoxProfile(list(browser.download.dir = "D:/temp"))
+#' remDr <- remoteDriver(extraCapabilities = fprof)
+#' remDr$open()
+#' }
+
+makeFirefoxProfile <- function(opts){
+  # make profile
+  profDir <- file.path(tempdir(), "firefoxprofile")
+  dir.create(profDir, showWarnings = FALSE)
+  prefs.js <- file.path(profDir, "prefs.js")
+  writeLines(makePrefjs(opts), con = prefs.js)
+  
+  # zip
+  tmpfile <- tempfile(fileext = '.zip')
+  zip(tmpfile, prefs.js, flags = "-r9Xjq")
+  zz <- file(tmpfile, "rb")
+  ar <- readBin(tmpfile, "raw", file.info(tmpfile)$size)
+  
+  # base64
+  fireprof <- base64encode(ar)
+  close(zz)
+  
+  # output
+  list("firefox_profile" = fireprof)
+}
