@@ -18,7 +18,7 @@ can download from http://selenium-release.storage.googleapis.com/index.html .Thi
 To install RSelenium from CRAN run install.packages('RSelenium'). If you require the development version you will need the devtools package. If necessary (install.packages("devtools")) and run:
 
 ```
-devtools::install_github("RSelenium", "johndharrison")
+devtools::install_github("ropensci/RSelenium")
 ```
 
 To get started using `RSelenium` you can look at the introduction vignette located 
