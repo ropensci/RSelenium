@@ -10,8 +10,8 @@ Description: The RSelenium package provides a set of R bindings for the
     browsers (commonly referred to as browsers). Using RSelenium you can
     automate browsers locally or remotely.
 License: AGPL-3
-URL: http://johndharrison.github.io/RSelenium
-BugReports: http://github.com/johndharrison/RSelenium/issues
+URL: http://ropensci.github.io/RSelenium
+BugReports: http://github.com/ropensci/RSelenium/issues
 Additional_repositories: http://www.omegahat.org/R
 Depends:
     R (>= 3.0.0),RCurl,RJSONIO,XML
