@@ -712,7 +712,7 @@ remoteDriver <- setRefClass("remoteDriver",
                               
                               phantomExecute = function(script, args = list()){
                                 "This API allows you to send a string of JavaScript via 'script', written for PhantomJS, and be interpreted within the context of a WebDriver Page. In other words, for the given script then this variable is initialized to be the current Page.
-                                See \\link{https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage} and the example in this help file. NOTE: Calling the PhantomJS API currently only works when PhantomJS is driven directly via \\code{\\link{phantom}}"
+                                See \\url{https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage} and the example in this help file. NOTE: Calling the PhantomJS API currently only works when PhantomJS is driven directly via \\code{\\link{phantom}}"
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/phantom/execute'),
                                         "POST",qdata = toJSON(list(script = script, args = args)))
                                 .self$value
