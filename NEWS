@@ -1,5 +1,6 @@
 # Rselenium 1.3.4
 * Fix custom path not being passed correctly to phantom utility function.
+* Allowing passing of commandline arguments via utility function startServer.
 
 # Rselenium 1.3.3
 * Add utility function makeFirefoxProfile (Thanks Shan Huang #24)
