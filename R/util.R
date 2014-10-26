@@ -169,7 +169,7 @@ getChromeProfile <- function(dataDir, profileDir){
 #' @importFrom tools pskill
 #' @section Detail: phantom() is used to start a phantomjs binary in webdriver mode. This can be used to drive
 #' a phantomjs binary on a machine without selenium server. 
-#' Argument extras can be used to specify optional extra command line arguments see \link{http://phantomjs.org/api/command-line.html}
+#' Argument extras can be used to specify optional extra command line arguments see \url{http://phantomjs.org/api/command-line.html}
 #' @section Value: phantom() returns a list with two functions:
 #' \describe{
 #' \item{getPID}{returns the process id of the phantomjs binary running in webdriver mode.}
@@ -303,7 +303,7 @@ makeFirefoxProfile <- function(opts){
   
   # zip
   tmpfile <- tempfile(fileext = '.zip')
-  zip(tmpfile, prefs.js, flags = "-r9Xjq")
+  utils::zip(tmpfile, prefs.js, flags = "-r9Xjq")
   zz <- file(tmpfile, "rb")
   ar <- readBin(tmpfile, "raw", file.info(tmpfile)$size)
   
