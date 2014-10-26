@@ -157,7 +157,7 @@ The inputs are:
 \item{\code{open(silent = FALSE)}}{Send a request to the remote server to instantiate the browser.}
 
 \item{\code{phantomExecute(script, args = list())}}{This API allows you to send a string of JavaScript via 'script', written for PhantomJS, and be interpreted within the context of a WebDriver Page. In other words, for the given script then this variable is initialized to be the current Page.
-See \link{https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage} and the example in this help file. NOTE: Calling the PhantomJS API currently only works when PhantomJS is driven directly via \code{\link{phantom}}}
+See \url{https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage} and the example in this help file. NOTE: Calling the PhantomJS API currently only works when PhantomJS is driven directly via \code{\link{phantom}}}
 
 \item{\code{quit()}}{Delete the session & close open browsers.}
 

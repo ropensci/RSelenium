@@ -21,7 +21,7 @@ A utility function to control a phantomjs binary in webdriver mode.
 \section{Detail}{
  phantom() is used to start a phantomjs binary in webdriver mode. This can be used to drive
 a phantomjs binary on a machine without selenium server.
-Argument extras can be used to specify optional extra command line arguments see \link{http://phantomjs.org/api/command-line.html}
+Argument extras can be used to specify optional extra command line arguments see \url{http://phantomjs.org/api/command-line.html}
 }
 
 \section{Value}{
