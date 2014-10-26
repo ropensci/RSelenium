@@ -184,7 +184,7 @@ phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
   if (!nzchar(pjs_cmd)) {
     pjsPath <- Sys.which("phantomjs")
   }else{
-    pjsPath <- Sys.which(pjs_cmd)    
+    pjsPath <- pjs_cmd
   }
   if(nchar(pjsPath) == 0){stop("PhantomJS binary not located.")}
   pjsargs <- c(paste0("--webdriver=", port), extras)
