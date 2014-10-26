@@ -34,32 +34,40 @@ checkForServer <- function (dir = NULL, update = FALSE)
 #' \code{startServer}
 #' A utility function to start the standalone server. 
 #' @param dir A directory in which the binary is to be placed.
+#' @param args Additional arguments to be passed to Selenium Server.
+#' @param invisible Windows specific. Show shell or not.
+#' @param log Logical value indicating whether to write a log file to the directory containing the Selenium Server binary.
 #' @export
 #' @section Detail: By default the binary is assumed to be in
-#' the RSelenium package /bin directory. 
+#' the RSelenium package /bin directory. The log argument is for convience. Setting it to FALSE and 
+#' stipulating args = c("-log /user/etc/somePath/somefile.log") allows a custom location. Using log = TRUE sets the location
+#' to a file named sellog.txt in the directory containing the Selenium Server binary.
 #' @examples
 #' \dontrun{
 #' startServer()
 #' }
 
-startServer <- function (dir = NULL) 
+startServer <- function (dir = NULL, args = NULL, invisible = TRUE, log = TRUE) 
 {
   selDIR <-  ifelse(is.null(dir), file.path(find.package("RSelenium"), 
                                         "bin"), dir)
   selFILE <- file.path(selDIR, "selenium-server-standalone.jar")
   logFILE <- file.path(selDIR, "sellog.txt")
-  write("", logFILE)
+  selArgs <- c(paste("-jar", shQuote(selFILE)))
+  if(log){
+    write("", logFILE)
+    selArgs <- c(selArgs, paste("-log", shQuote(logFILE)))
+  }
   if (!file.exists(selFILE)) {
     stop("No Selenium Server binary exists. Run checkForServer or start server manually.")
   }
   else {
+    selArgs <- c(selArgs, args)
     if (.Platform$OS.type == "unix") {
-      system(paste0("java -jar ", shQuote(selFILE), " -log ", shQuote(logFILE)), wait = FALSE, 
-             ignore.stdout = TRUE, ignore.stderr = TRUE)
+      system2("java", selArgs, wait = FALSE, stdout = FALSE, stderr = FALSE)
     }
     else {
-      system(paste0("java -jar ", shQuote(selFILE), " -log ", shQuote(logFILE)), wait = FALSE, 
-             invisible = FALSE)
+      system2("java", selArgs, wait = FALSE, invisible = invisible)
     }
   }
 }
