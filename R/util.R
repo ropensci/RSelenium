@@ -45,6 +45,10 @@ checkForServer <- function (dir = NULL, update = FALSE)
 #' @examples
 #' \dontrun{
 #' startServer()
+#' # example of commandline passing
+#' startServer(args = c("-port 4455"), log = FALSE, invisible = FALSE)
+#' remDr <- remoteDriver(browserName = "chrome", port = 4455)
+#' remDr$open()
 #' }
 
 startServer <- function (dir = NULL, args = NULL, invisible = TRUE, log = TRUE) 

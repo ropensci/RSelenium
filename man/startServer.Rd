@@ -27,6 +27,10 @@ to a file named sellog.txt in the directory containing the Selenium Server binar
 \examples{
 \dontrun{
 startServer()
+# example of commandline passing
+startServer(args = c("-port 4455"), log = FALSE, invisible = FALSE)
+remDr <- remoteDriver(browserName = "chrome", port = 4455)
+remDr$open()
 }
 }
 
