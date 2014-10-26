@@ -3,10 +3,16 @@
 \alias{startServer}
 \title{Start the standalone server.}
 \usage{
-startServer(dir = NULL)
+startServer(dir = NULL, args = NULL, invisible = TRUE, log = TRUE)
 }
 \arguments{
 \item{dir}{A directory in which the binary is to be placed.}
+
+\item{args}{Additional arguments to be passed to Selenium Server.}
+
+\item{invisible}{Windows specific. Show shell or not.}
+
+\item{log}{Logical value indicating whether to write a log file to the directory containing the Selenium Server binary.}
 }
 \description{
 \code{startServer}
@@ -14,7 +20,9 @@ A utility function to start the standalone server.
 }
 \section{Detail}{
  By default the binary is assumed to be in
-the RSelenium package /bin directory.
+the RSelenium package /bin directory. The log argument is for convience. Setting it to FALSE and
+stipulating args = c("-log /user/etc/somePath/somefile.log") allows a custom location. Using log = TRUE sets the location
+to a file named sellog.txt in the directory containing the Selenium Server binary.
 }
 \examples{
 \dontrun{

@@ -13,8 +13,8 @@ makeFirefoxProfile(opts)
 A utility function to make a firefox profile.
 }
 \note{
-Note: Windows doesn't come with command-line zip capability. Installing rtools
-\url{http://cran.r-project.org/bin/windows/Rtools/index.html} is a straightforward to gain
+Windows doesn't come with command-line zip capability. Installing rtools
+\url{http://cran.r-project.org/bin/windows/Rtools/index.html} is a straightforward way to gain
 this capability.
 }
 \section{Detail}{
