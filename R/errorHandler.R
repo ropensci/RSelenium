@@ -109,14 +109,15 @@ errorHandler <- setRefClass("errorHandler",
                                                  httpheader = c('Content-Type' = 'application/json;charset=UTF-8'),
                                                  qdata = NULL,
                                                  json = FALSE,
-                                                 header = TRUE){
+                                                 header = TRUE,
+                                                 .mapUnicode = TRUE){
                                 "A method to communicate with the remote server implementing the JSON wire protocol."
                                 #browser(expr = BANDAID)
                                 # optional logger here to log calls
                                 # can log in an environment in the package namespace
                                 # print(deparse(sys.calls()[[sys.nframe()-1]]))
                                 h = basicHeaderGatherer()
-                                w = basicTextGatherer()
+                                w = basicTextGatherer(.mapUnicode = .mapUnicode)
                                 d <- debugGatherer()
                                 if(is.null(qdata)){
                                   getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE)
