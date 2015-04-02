@@ -35,8 +35,8 @@ checkForServer <- function (dir = NULL, update = FALSE)
 #' A utility function to start the standalone server. 
 #' @param dir A directory in which the binary is to be placed.
 #' @param args Additional arguments to be passed to Selenium Server.
-#' @param invisible Windows specific. Show shell or not.
 #' @param log Logical value indicating whether to write a log file to the directory containing the Selenium Server binary.
+#' @param ... arguments passed \code{\link{system2}}. Unix defaults wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults wait = FALSE, invisible = TRUE. 
 #' @export
 #' @section Detail: By default the binary is assumed to be in
 #' the RSelenium package /bin directory. The log argument is for convience. Setting it to FALSE and 
@@ -51,7 +51,7 @@ checkForServer <- function (dir = NULL, update = FALSE)
 #' remDr$open()
 #' }
 
-startServer <- function (dir = NULL, args = NULL, invisible = TRUE, log = TRUE) 
+startServer <- function (dir = NULL, args = NULL, log = TRUE, ...) 
 {
   selDIR <-  ifelse(is.null(dir), file.path(find.package("RSelenium"), 
                                         "bin"), dir)
@@ -67,12 +67,15 @@ startServer <- function (dir = NULL, args = NULL, invisible = TRUE, log = TRUE)
   }
   else {
     selArgs <- c(selArgs, args)
+    userArgs <- list(...)
     if (.Platform$OS.type == "unix") {
-      system2("java", selArgs, wait = FALSE, stdout = FALSE, stderr = FALSE)
+      initArgs <- list(command = "java", args = selArgs, wait = FALSE, stdout = FALSE, stderr = FALSE)
     }
     else {
-      system2("java", selArgs, wait = FALSE, invisible = invisible)
+      initArgs <- list(command = "java",args = selArgs, wait = FALSE, invisible = TRUE)
     }
+    initArgs[names(userArgs)] <- userArgs 
+    do.call(system2, initArgs)
   }
 }
 #' Get Firefox profile.
