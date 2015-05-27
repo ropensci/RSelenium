@@ -211,14 +211,15 @@ phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
   }else{
     system2(pjsPath, pjsargs, wait = FALSE, ...)
     if(Sys.info()["sysname"] == "Darwin"){
-      pjsPID <- system('ps -Ao"pid,args"', intern = TRUE)
-      pjsPID <- sub("^\\s*(\\d+)(.*)", "\\1,\\2", pjsPID)
-      pjsPID <- read.csv(text = pjsPID[-1], stringsAsFactors = FALSE, header = FALSE) 
-      names(pjsPID) <- c("PID", "COMMAND")       
+      pids <- system('ps -Ao"pid"', intern = TRUE)
+      args <- system('ps -Ao"args"', intern = TRUE)
     }else{
-      pjsPID <- read.csv(text = system('ps -Ao"%p,%a"', intern = TRUE), stringsAsFactors = FALSE)        
+      pids <- system('ps -Ao"%p"', intern = TRUE)
+      args <- system('ps -Ao"%a"', intern = TRUE)
     }
-    pjsPID <- as.integer(pjsPID$PID[grepl("phantomjs", pjsPID$COMMAND)])
+    idx <- grepl("phantomjs", args)
+    if(!any(idx)) warning("Couldn't find the phantomjs process")
+    pjsPID <- pids[idx]
   }
   
   list(
