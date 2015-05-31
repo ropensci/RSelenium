@@ -594,7 +594,7 @@ remoteDriver <- setRefClass("remoteDriver",
                                 "Set a cookie on the domain. The inputs are required apart from `secure` which defaults to FALSE."
                                 cookie<-list(name = name,value = value,path = path,domain = domain,secure = secure)
                                 queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/cookie'),
-                                        "POST",qdata=toJSON(cookie = list(cookie)))
+                                        "POST",qdata=toJSON(list(cookie = cookie)))
                               },
                               
                               deleteAllCookies = function(){
