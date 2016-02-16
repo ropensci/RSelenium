@@ -57,6 +57,8 @@ startServer <- function (dir = NULL, args = NULL, log = TRUE, ...)
                                         "bin"), dir)
   selFILE <- file.path(selDIR, "selenium-server-standalone.jar")
   logFILE <- file.path(selDIR, "sellog.txt")
+  outFILE <- file.path(selDIR, "stdout.txt")
+  errFILE <- file.path(selDIR, "stderr.txt")
   selArgs <- c(paste("-jar", shQuote(selFILE)))
   if(log){
     write("", logFILE)
@@ -68,14 +70,28 @@ startServer <- function (dir = NULL, args = NULL, log = TRUE, ...)
   else {
     selArgs <- c(selArgs, args)
     userArgs <- list(...)
+    write("", outFILE)
+    write("", errFILE)
     if (.Platform$OS.type == "unix") {
-      initArgs <- list(command = "java", args = selArgs, wait = FALSE, stdout = FALSE, stderr = FALSE)
+      initArgs <- list(command = "java", args = selArgs, wait = FALSE, stdout = outFILE, stderr = errFILE)
     }
     else {
       initArgs <- list(command = "java",args = selArgs, wait = FALSE, invisible = TRUE)
     }
     initArgs[names(userArgs)] <- userArgs 
     do.call(system2, initArgs)
+    out.list <- list(stderr="", log="")
+    while(sum(sapply(out.list, length)) <= 2){
+      out.list$stderr <- readLines(errFILE)
+      out.list$log <- readLines(logFILE)
+    }
+    if(any(grepl("Exception", out.list$stderr))){
+      err.txt <- paste(out.list$stderr, collapse="\n")
+      cat(err.txt)
+      stop("stderr contains 'Exception'")
+    }else{
+      out.list
+    }
   }
 }
 #' Get Firefox profile.
