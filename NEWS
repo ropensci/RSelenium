@@ -1,15 +1,19 @@
-# Rselenium 1.3.6
+# RSelenium 1.3.7
+  Add fix for multiple/Beta JARS in checkForServer (Thanks Dean Attali #79)
+  Update reference for Selenium download (Thanks @mnel)
+
+# RSelenium 1.3.6
   Allow passing of system2 arguments in startServer utility function
 
-# Rselenium 1.3.4
+# RSelenium 1.3.4
 * Fix custom path not being passed correctly to phantom utility function.
 * Allowing passing of commandline arguments via utility function startServer.
 
-# Rselenium 1.3.3
+# RSelenium 1.3.3
 * Add utility function makeFirefoxProfile (Thanks Shan Huang #24)
 * Fix phantom utility function for OSX (Thanks Carson Sievert #25)
 
-# Rselenium 1.3.2
+# RSelenium 1.3.2
 * Methods now fail with errors if the server returns an error related status code. Summary and Detail of the error are outputted as well as the associated java class.
 * Add a phantom utility function to enable driving of phantomjs in webdriver mode independent of Selenium Server.
 * Fixed file paths in startServer for windows (Thanks @mnel #22)
