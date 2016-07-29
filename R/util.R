@@ -233,11 +233,6 @@ phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
   )
 }
 
-#' @export .DollarNames.remoteDriver
-#' @export .DollarNames.webElement
-#' @export .DollarNames.errorHandler
-#' @import methods
-#' 
 
 matchSelKeys <- function(x){
   if(any(names(x) =='key')){
@@ -246,14 +241,26 @@ matchSelKeys <- function(x){
   unname(x)      
 }
 
+#' @export
+#' @import methods
+#' @import utils
+#' 
 .DollarNames.remoteDriver <- function(x, pattern){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
+#' @export
+#' @import methods
+#' @import utils
+#' 
 .DollarNames.webElement <- function(x, pattern){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
+#' @export
+#' @import methods
+#' @import utils
+#' 
 .DollarNames.errorHandler <- function(x, pattern){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }

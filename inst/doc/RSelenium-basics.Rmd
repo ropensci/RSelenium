@@ -7,7 +7,7 @@ output:
 ---
 
 <!--
-%\VignetteEngine{knitr::knitr}
+%\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{RSelenium basics}
 -->
 
@@ -42,7 +42,7 @@ RSelenium has a built-in function that will download the stand-alone java binary
 ```
 RSelenium::checkForServer()
 ```
-If you would like to download the binary manually it is currently found [here](http://code.google.com/p/selenium/downloads/list). Look for `selenium-server-standalone-x.xx.x.jar`.
+If you would like to download the binary manually it is currently found [here](http://selenium-release.storage.googleapis.com/index.html). Look for `selenium-server-standalone-x.xx.x.jar`.
 
 ### How do I run the Selenium Server?
 

@@ -71,9 +71,6 @@ runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"), port = 6012)
 
 ```
 
-Alternatively there is a version of the app running on the `RStudio` test server `spark` at 
-[`http://spark.rstudio.com/johnharrison/shinytestapp/`](http://spark.rstudio.com/johnharrison/shinytestapp/).
-
 An image of the app using `RSelenium` on a windows 8.1 machine running firefox 26.0
 
 <h6 align = center>shinytestapp on win 8.1 firefox 26.0</h6>

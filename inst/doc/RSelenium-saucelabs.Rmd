@@ -162,7 +162,7 @@ $browserName
 ### <a id="id1c">Safari</a>
 
 
-Currently Apple have discontinued developement of safari for windows. The latest version for windows was 5.1.7 available [here](http://support.apple.com/kb/dl1531). Starting with Selenium 2.30.0, the SafariDriver comes bundled with the Selenium server so nothing other then having safari installed should be required. For the purposes of this vignette I downloaded and installed safari 5.1.7 on a windows 8.1 system. 
+Currently Apple have discontinued developement of safari for windows. The latest version for windows was 5.1.7 available [here](http://filehippo.com/download_safari/). Starting with Selenium 2.30.0, the SafariDriver comes bundled with the Selenium server so nothing other then having safari installed should be required. For the purposes of this vignette I downloaded and installed safari 5.1.7 on a windows 8.1 system. 
 Once installed controlling safari was as easy as:
 
 ```
@@ -277,7 +277,7 @@ A headless browser handles items 1 and 2 but doesnt carryout 3. This means it do
 
 ### <a id="id2a">phantomjs</a>
 
-The first headless browser we shall look at is `phantomjs`. Firstly download the relevant zip file for your OS from [here](http://phantomjs.org/download.html). We are using windows so we downloaded [ phantomjs-1.9.7-windows.zip](https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-windows.zip). It is sufficient to place the location of the directory containing `phantomjs.exe` in your path. In this case we probably could have just extracted `phantomjs.exe` to the Documents folder where chromedriver etc current reside. 
+The first headless browser we shall look at is `phantomjs`. Firstly download the relevant zip file for your OS from [here](http://phantomjs.org/download.html). We are using windows so we downloaded [ phantomjs-2.1.1-windows.zip](https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-windows.zip). It is sufficient to place the location of the directory containing `phantomjs.exe` in your path. In this case we probably could have just extracted `phantomjs.exe` to the Documents folder where chromedriver etc current reside. 
 However I extracted it to the desktop keeping the contents of the zip. The reasoning behind this was that phantomjs is driven by selenium using [ghostdriver](https://github.com/detro/ghostdriver). At some point the version of ghostdriver phantomjs uses will be upgraded and will accept calls from an unexposed method `phantomExecute` of the RSelenium `remoteDriver` class. There are interesting scripts contained in the phantomjs /example directory like netsniff.js which captures network traffic in HAR format. When the `phantomExecute` method is exposed these scripts will be useful. So I added the location of the .exe to my path namely the directory C:\Users\john\Desktop\phantomjs-1.9.7-windows. Once your operating system can find `phantomjs.exe` or the equivalent driving a phantomjs browser is as easy as:
 
 ```
