@@ -33,7 +33,7 @@ checkForServer <- function (dir = NULL, update = FALSE)
 #' Start the standalone server.
 #' 
 #' \code{startServer}
-#' A utility function to start the standalone server. 
+#' A utility function to start the standalone server. Return two functions see values.
 #' @param dir A directory in which the binary is to be placed.
 #' @param args Additional arguments to be passed to Selenium Server.
 #' @param log Logical value indicating whether to write a log file to the directory containing the Selenium Server binary.
@@ -43,13 +43,19 @@ checkForServer <- function (dir = NULL, update = FALSE)
 #' the RSelenium package /bin directory. The log argument is for convience. Setting it to FALSE and 
 #' stipulating args = c("-log /user/etc/somePath/somefile.log") allows a custom location. Using log = TRUE sets the location
 #' to a file named sellog.txt in the directory containing the Selenium Server binary.
+#' @return Returns a list containing two functions. The 'getpid' function returns the process id of the started Selenium binary. 
+#' The 'stop' function stops the started Selenium server using the process id. 
 #' @examples
 #' \dontrun{
-#' startServer()
+#' selServ <- startServer()
 #' # example of commandline passing
-#' startServer(args = c("-port 4455"), log = FALSE, invisible = FALSE)
+#' selServ <- startServer(args = c("-port 4455"), log = FALSE, invisible = FALSE)
 #' remDr <- remoteDriver(browserName = "chrome", port = 4455)
 #' remDr$open()
+#' # get the process id of the selenium binary
+#' selServ$getpid()
+#' # stop the selenium binary
+#' selServ$stop()
 #' }
 
 startServer <- function (dir = NULL, args = NULL, log = TRUE, ...) 
@@ -77,6 +83,37 @@ startServer <- function (dir = NULL, args = NULL, log = TRUE, ...)
     }
     initArgs[names(userArgs)] <- userArgs 
     do.call(system2, initArgs)
+    if (.Platform$OS.type == "windows"){
+      wmicOut <- system2("wmic",
+                         args = c("path win32_process get Caption,Processid,Commandline"
+                                                 , "/format:htable")
+                         , stdout=TRUE, stderr=NULL)
+      wmicOut <- readHTMLTable(htmlParse(wmicOut), header = TRUE, stringsAsFactors = FALSE)[[1]]
+      wmicOut[["ProcessId"]] <- as.integer(wmicOut[["ProcessId"]])
+      idx <- grepl(selFILE, wmicOut$CommandLine)
+      if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check java is installed.")
+      selPID <- wmicOut[idx,"ProcessId"]
+    }else{
+      if(Sys.info()["sysname"] == "Darwin"){
+        sPids <- system('ps -Ao"pid"', intern = TRUE)
+        sArgs <- system('ps -Ao"args"', intern = TRUE)
+      }else{
+        sPids <- system('ps -Ao"%p"', intern = TRUE)
+        sArgs <- system('ps -Ao"%a"', intern = TRUE)
+      }
+      idx <- grepl(selFILE, sArgs)
+      if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check java is installed.")
+      selPID <- as.integer(sPids[idx])
+    }
+    
+    list(
+      stop = function(){
+        tools::pskill(selPID)
+      },
+      getPID = function(){
+        return(selPID)
+      }
+    )
   }
 }
 #' Get Firefox profile.

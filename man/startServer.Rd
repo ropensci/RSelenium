@@ -15,9 +15,13 @@ startServer(dir = NULL, args = NULL, log = TRUE, ...)
 
 \item{...}{arguments passed \code{\link{system2}}. Unix defaults wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults wait = FALSE, invisible = TRUE.}
 }
+\value{
+Returns a list containing two functions. The 'getpid' function returns the process id of the started Selenium binary. 
+The 'stop' function stops the started Selenium server using the process id.
+}
 \description{
 \code{startServer}
-A utility function to start the standalone server.
+A utility function to start the standalone server. Return two functions see values.
 }
 \section{Detail}{
  By default the binary is assumed to be in
@@ -27,11 +31,15 @@ to a file named sellog.txt in the directory containing the Selenium Server binar
 }
 \examples{
 \dontrun{
-startServer()
+selServ <- startServer()
 # example of commandline passing
-startServer(args = c("-port 4455"), log = FALSE, invisible = FALSE)
+selServ <- startServer(args = c("-port 4455"), log = FALSE, invisible = FALSE)
 remDr <- remoteDriver(browserName = "chrome", port = 4455)
 remDr$open()
+# get the process id of the selenium binary
+selServ$getpid()
+# stop the selenium binary
+selServ$stop()
 }
 }
 
