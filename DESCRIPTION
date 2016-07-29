@@ -1,7 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for Selenium WebDriver
-Version: 1.3.8
+Version: 1.4.0
 Date: 2016-07-29
 Author: John Harrison <johndharrison0@gmail.com>
 Maintainer: John Harrison <johndharrison0@gmail.com>

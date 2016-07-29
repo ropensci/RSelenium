@@ -1,3 +1,8 @@
+# RSelenium 1.4.0
+  startServer utility function now returns a list of function; getpid returns the process id of the
+  started server, the stop function stops the started server using the process id. Thanks to  
+  Dan Tenenbaum #67 and Toby Dylan Hocking #72
+
 # RSelenium 1.3.7
   Add fix for multiple/Beta JARS in checkForServer (Thanks Dean Attali #79)
   Update reference for Selenium download (Thanks @mnel)
