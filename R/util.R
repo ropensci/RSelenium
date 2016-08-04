@@ -75,7 +75,7 @@ checkForServer <- function (dir = NULL, update = FALSE, rename = TRUE, beta = FA
 startServer <- function (dir = NULL, args = NULL, javaargs = NULL, log = TRUE,  ...) 
 {
   selDIR <-  ifelse(is.null(dir), file.path(find.package("RSelenium"), 
-                                        "bin"), dir)
+                                            "bin"), dir)
   selFILE <- file.path(selDIR, "selenium-server-standalone.jar")
   logFILE <- file.path(selDIR, "sellog.txt")
   selArgs <- c(paste("-jar", shQuote(selFILE)))
@@ -90,51 +90,51 @@ startServer <- function (dir = NULL, args = NULL, javaargs = NULL, log = TRUE,  
     }
     # pick most recent driver
     selFILE <- possFiles[order(gsub(".*-(.*).jar$", "\\1", possFiles), decreasing = TRUE)][1]
+    selFILE <- file.path(selDIR, selFILE)
+  }
+  selArgs <- c(javaargs, selArgs, args)
+  userArgs <- list(...)
+  if (.Platform$OS.type == "unix") {
+    initArgs <- list(command = "java", args = selArgs, wait = FALSE, stdout = FALSE, stderr = FALSE)
   }
   else {
-    selArgs <- c(javaargs, selArgs, args)
-    userArgs <- list(...)
-    if (.Platform$OS.type == "unix") {
-      initArgs <- list(command = "java", args = selArgs, wait = FALSE, stdout = FALSE, stderr = FALSE)
-    }
-    else {
-      initArgs <- list(command = "java",args = selArgs, wait = FALSE, invisible = TRUE)
-    }
-    initArgs[names(userArgs)] <- userArgs 
-    do.call(system2, initArgs)
-    if (.Platform$OS.type == "windows"){
-      wmicOut <- system2("wmic",
-                         args = c("path win32_process get Caption,Processid,Commandline"
-                                                 , "/format:htable")
-                         , stdout=TRUE, stderr=NULL)
-      wmicOut <- readHTMLTable(htmlParse(wmicOut), header = TRUE, stringsAsFactors = FALSE)[[1]]
-      wmicOut[["ProcessId"]] <- as.integer(wmicOut[["ProcessId"]])
-      idx <- grepl(selFILE, wmicOut$CommandLine)
-      if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check java is installed.")
-      selPID <- wmicOut[idx,"ProcessId"]
-    }else{
-      if(Sys.info()["sysname"] == "Darwin"){
-        sPids <- system('ps -Ao"pid"', intern = TRUE)
-        sArgs <- system('ps -Ao"args"', intern = TRUE)
-      }else{
-        sPids <- system('ps -Ao"%p"', intern = TRUE)
-        sArgs <- system('ps -Ao"%a"', intern = TRUE)
-      }
-      idx <- grepl(selFILE, sArgs)
-      if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check java is installed.")
-      selPID <- as.integer(sPids[idx])
-    }
-    
-    list(
-      stop = function(){
-        tools::pskill(selPID)
-      },
-      getPID = function(){
-        return(selPID)
-      }
-    )
+    initArgs <- list(command = "java",args = selArgs, wait = FALSE, invisible = TRUE)
   }
+  initArgs[names(userArgs)] <- userArgs 
+  do.call(system2, initArgs)
+  if (.Platform$OS.type == "windows"){
+    wmicOut <- system2("wmic",
+                       args = c("path win32_process get Caption,Processid,Commandline"
+                                , "/format:htable")
+                       , stdout=TRUE, stderr=NULL)
+    wmicOut <- readHTMLTable(htmlParse(wmicOut), header = TRUE, stringsAsFactors = FALSE)[[1]]
+    wmicOut[["ProcessId"]] <- as.integer(wmicOut[["ProcessId"]])
+    idx <- grepl(selFILE, wmicOut$CommandLine)
+    if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check java is installed.")
+    selPID <- wmicOut[idx,"ProcessId"]
+  }else{
+    if(Sys.info()["sysname"] == "Darwin"){
+      sPids <- system('ps -Ao"pid"', intern = TRUE)
+      sArgs <- system('ps -Ao"args"', intern = TRUE)
+    }else{
+      sPids <- system('ps -Ao"%p"', intern = TRUE)
+      sArgs <- system('ps -Ao"%a"', intern = TRUE)
+    }
+    idx <- grepl(selFILE, sArgs)
+    if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check java is installed.")
+    selPID <- as.integer(sPids[idx])
+  }
+  
+  list(
+    stop = function(){
+      tools::pskill(selPID)
+    },
+    getPID = function(){
+      return(selPID)
+    }
+  )
 }
+
 #' Get Firefox profile.
 #' 
 #' \code{getFirefoxProfile}
