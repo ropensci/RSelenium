@@ -77,12 +77,6 @@ startServer <- function (dir = NULL, args = NULL, javaargs = NULL, log = TRUE,  
   selDIR <-  ifelse(is.null(dir), file.path(find.package("RSelenium"), 
                                             "bin"), dir)
   selFILE <- file.path(selDIR, "selenium-server-standalone.jar")
-  logFILE <- file.path(selDIR, "sellog.txt")
-  selArgs <- c(paste("-jar", shQuote(selFILE)))
-  if(log){
-    write("", logFILE)
-    selArgs <- c(selArgs, paste("-log", shQuote(logFILE)))
-  }
   if (!file.exists(selFILE)) {
     possFiles <- list.files(selDIR, "selenium-server-standalone")
     if(length(possFiles) == 0){
@@ -91,6 +85,12 @@ startServer <- function (dir = NULL, args = NULL, javaargs = NULL, log = TRUE,  
     # pick most recent driver
     selFILE <- possFiles[order(gsub(".*-(.*).jar$", "\\1", possFiles), decreasing = TRUE)][1]
     selFILE <- file.path(selDIR, selFILE)
+  }
+  logFILE <- file.path(selDIR, "sellog.txt")
+  selArgs <- c(paste("-jar", shQuote(selFILE)))
+  if(log){
+    write("", logFILE)
+    selArgs <- c(selArgs, paste("-log", shQuote(logFILE)))
   }
   selArgs <- c(javaargs, selArgs, args)
   userArgs <- list(...)
