@@ -33,7 +33,7 @@ checkForServer <- function (dir = NULL, update = FALSE, rename = TRUE, beta = FA
   selFILE <- if(rename){
     file.path(selDIR, "selenium-server-standalone.jar")
   }else{
-    gsub(".*(selenium-server-standalone.*)", "\\1", selJARdownload)
+    file.path(selDIR, gsub(".*(selenium-server-standalone.*)", "\\1", selJARdownload))
   }
   
   if (update || !file.exists(selFILE)) {
