@@ -4,12 +4,16 @@
 \alias{checkForServer}
 \title{Check for Server binary}
 \usage{
-checkForServer(dir = NULL, update = FALSE)
+checkForServer(dir = NULL, update = FALSE, rename = TRUE, beta = FALSE)
 }
 \arguments{
 \item{dir}{A directory in which the binary is to be placed.}
 
 \item{update}{A boolean indicating whether to update the binary if it is present.}
+
+\item{rename}{A boolean indicating whether to rename to "selenium-server-standalone.jar".}
+
+\item{beta}{A boolean indicating whether to include beta releases.}
 }
 \description{
 \code{checkForServer}
