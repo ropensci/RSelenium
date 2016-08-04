@@ -4,12 +4,14 @@
 \alias{startServer}
 \title{Start the standalone server.}
 \usage{
-startServer(dir = NULL, args = NULL, log = TRUE, ...)
+startServer(dir = NULL, args = NULL, javaargs = NULL, log = TRUE, ...)
 }
 \arguments{
 \item{dir}{A directory in which the binary is to be placed.}
 
 \item{args}{Additional arguments to be passed to Selenium Server.}
+
+\item{javaargs}{arguments passed to JVM as opposed to the Selenium Server jar.}
 
 \item{log}{Logical value indicating whether to write a log file to the directory containing the Selenium Server binary.}
 

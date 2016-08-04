@@ -36,6 +36,7 @@ checkForServer <- function (dir = NULL, update = FALSE)
 #' A utility function to start the standalone server. Return two functions see values.
 #' @param dir A directory in which the binary is to be placed.
 #' @param args Additional arguments to be passed to Selenium Server.
+#' @param javaargs arguments passed to JVM as opposed to the Selenium Server jar.
 #' @param log Logical value indicating whether to write a log file to the directory containing the Selenium Server binary.
 #' @param ... arguments passed \code{\link{system2}}. Unix defaults wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults wait = FALSE, invisible = TRUE. 
 #' @export
@@ -58,7 +59,7 @@ checkForServer <- function (dir = NULL, update = FALSE)
 #' selServ$stop()
 #' }
 
-startServer <- function (dir = NULL, args = NULL, log = TRUE, ...) 
+startServer <- function (dir = NULL, args = NULL, javaargs = NULL, log = TRUE,  ...) 
 {
   selDIR <-  ifelse(is.null(dir), file.path(find.package("RSelenium"), 
                                         "bin"), dir)
@@ -73,7 +74,7 @@ startServer <- function (dir = NULL, args = NULL, log = TRUE, ...)
     stop("No Selenium Server binary exists. Run checkForServer or start server manually.")
   }
   else {
-    selArgs <- c(selArgs, args)
+    selArgs <- c(javaargs, selArgs, args)
     userArgs <- list(...)
     if (.Platform$OS.type == "unix") {
       initArgs <- list(command = "java", args = selArgs, wait = FALSE, stdout = FALSE, stderr = FALSE)
