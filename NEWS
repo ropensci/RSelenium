@@ -1,14 +1,20 @@
+# RSelenium 1.4.1
+* Add option to pass arguments to JVM in startServer.
+* In startServer look for multiple copies of selenium binary in selDIR 
+* Make renaming selenium binary optional in checkForServer
+* Add option to download beta releases in checkForServer
+
 # RSelenium 1.4.0
-  startServer utility function now returns a list of function; getpid returns the process id of the
+* startServer utility function now returns a list of function; getpid returns the process id of the
   started server, the stop function stops the started server using the process id. Thanks to  
   Dan Tenenbaum #67 and Toby Dylan Hocking #72
 
 # RSelenium 1.3.7
-  Add fix for multiple/Beta JARS in checkForServer (Thanks Dean Attali #79)
-  Update reference for Selenium download (Thanks @mnel)
+* Add fix for multiple/Beta JARS in checkForServer (Thanks Dean Attali #79)
+* Update reference for Selenium download (Thanks @mnel)
 
 # RSelenium 1.3.6
-  Allow passing of system2 arguments in startServer utility function
+* Allow passing of system2 arguments in startServer utility function
 
 # RSelenium 1.3.4
 * Fix custom path not being passed correctly to phantom utility function.
