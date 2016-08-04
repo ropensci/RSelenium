@@ -4,6 +4,8 @@
 #' A utility function to check if the Selenium Server stanalone binary is present.
 #' @param dir A directory in which the binary is to be placed.
 #' @param update A boolean indicating whether to update the binary if it is present.
+#' @param rename A boolean indicating whether to rename to "selenium-server-standalone.jar".
+#' @param beta A boolean indicating whether to include beta releases.
 #' @export
 #' @import XML
 #' @section Detail: The downloads for the Selenium project can be found at http://selenium-release.storage.googleapis.com/index.html. This convience function downloads the standalone server and places it in the RSelenium package directory bin folder by default.
@@ -12,17 +14,28 @@
 #' checkForServer()
 #' }
 
-checkForServer <- function (dir = NULL, update = FALSE) 
+checkForServer <- function (dir = NULL, update = FALSE, rename = TRUE, beta = FALSE) 
 {
   selURL <- "http://selenium-release.storage.googleapis.com"
   selXML <- xmlParse(paste0(selURL), "/?delimiter=")
   selJAR <- xpathSApply(selXML, "//s:Key[contains(text(),'selenium-server-standalone')]", namespaces = c(s = "http://doc.s3.amazonaws.com/2006-03-01"), xmlValue)
+  
   # get the most up-to-date jar
-  selJARstable <- grep("^.*-([0-9\\.]*)\\.jar$", selJAR, value = TRUE)
-  selJARdownload <- selJARstable[order(gsub(".*-(.*).jar$", "\\1", selJARstable), decreasing = TRUE)][1]
+  selJAR <- if(beta){
+    grep("^.*-([0-9\\.]*)\\.jar$", selJAR, value = TRUE)
+  }else{
+    selJAR
+  }
+  
+  selJARdownload <- selJAR[order(gsub(".*-(.*).jar$", "\\1", selJAR), decreasing = TRUE)][1]
   selDIR <- ifelse(is.null(dir), file.path(find.package("RSelenium"), 
-                                        "bin"), dir)
-  selFILE <- file.path(selDIR, "selenium-server-standalone.jar")
+                                           "bin"), dir)
+  selFILE <- if(rename){
+    file.path(selDIR, "selenium-server-standalone.jar")
+  }else{
+    gsub(".*(selenium-server-standalone.*)", "\\1", selJARdownload)
+  }
+  
   if (update || !file.exists(selFILE)) {
     dir.create(selDIR, showWarnings=FALSE)
     print("DOWNLOADING STANDALONE SELENIUM SERVER. THIS MAY TAKE SEVERAL MINUTES")
@@ -71,7 +84,12 @@ startServer <- function (dir = NULL, args = NULL, javaargs = NULL, log = TRUE,  
     selArgs <- c(selArgs, paste("-log", shQuote(logFILE)))
   }
   if (!file.exists(selFILE)) {
-    stop("No Selenium Server binary exists. Run checkForServer or start server manually.")
+    possFiles <- list.files(selDIR, "selenium-server-standalone")
+    if(length(possFiles) == 0){
+      stop("No Selenium Server binary exists. Run checkForServer or start server manually.")
+    }
+    # pick most recent driver
+    selFILE <- possFiles[order(gsub(".*-(.*).jar$", "\\1", possFiles), decreasing = TRUE)][1]
   }
   else {
     selArgs <- c(javaargs, selArgs, args)
