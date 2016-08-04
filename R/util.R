@@ -21,7 +21,7 @@ checkForServer <- function (dir = NULL, update = FALSE, rename = TRUE, beta = FA
   selJAR <- xpathSApply(selXML, "//s:Key[contains(text(),'selenium-server-standalone')]", namespaces = c(s = "http://doc.s3.amazonaws.com/2006-03-01"), xmlValue)
   
   # get the most up-to-date jar
-  selJAR <- if(beta){
+  selJAR <- if(!beta){
     grep("^.*-([0-9\\.]*)\\.jar$", selJAR, value = TRUE)
   }else{
     selJAR
