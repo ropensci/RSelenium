@@ -40,6 +40,7 @@ There is a second vignette dealing with running RSelenium on different browsers/
 3.  [RSelenium: Testing Shiny Apps](http://rpubs.com/johndharrison/13408)
 4.  [Orange County R Users Group (OC-RUG): RSelenium Webinar](http://johndharrison.blogspot.com/2014/05/orange-county-r-users-group-oc-rug.html)
 5.  [RSelenium: Headless browsing.](http://rpubs.com/johndharrison/RSelenium-headless)
+6.  [RSelenium: Docker Containers](http://rpubs.com/johndharrison/RSelenium-Docker)
 
 ### Test Shiny Apps
 
