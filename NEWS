@@ -1,3 +1,6 @@
+# RSelenium 1.4.2
+* Add vignette on RSelenium and Docker containers.
+
 # RSelenium 1.4.1
 * Add option to pass arguments to JVM in startServer.
 * In startServer look for multiple copies of selenium binary in selDIR 
