@@ -187,9 +187,21 @@ errorHandler <- setRefClass("errorHandler",
                                     errMessage$class <- value$class
                                     errMessage <- paste("\t", paste(names(errMessage), errMessage, sep = ": "))
                                     errMessage[-1] <- paste("\n", errMessage[-1])
+                                    errMessage <- c(errMessage, "\n\t Further Details: run errorDetails method")
+                                    if(!is.null(value$message)){
+                                      cat("\nSelenium message:", value$message, "\n")
+                                    }
                                     stop(errMessage, call. = FALSE)
                                   }
                                 }
+                              }
+                              , errorDetails = function(type = "value"){
+                                "Return error details. Type can one of c(\"value\", \"class\", \"status\")"
+                                switch(type,
+                                       value = value,
+                                       class = statusClass,
+                                       status = status
+                                       )
                               }
                             )
 )
