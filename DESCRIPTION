@@ -14,9 +14,9 @@ URL: http://ropensci.github.io/RSelenium
 BugReports: http://github.com/ropensci/RSelenium/issues
 Additional_repositories: http://www.omegahat.net/R
 Depends:
-    R (>= 3.0.0),RCurl,RJSONIO,XML
+    R (>= 3.0.0),RCurl,XML
 Imports:
-    methods,caTools,tools,utils
+    methods,caTools,tools,utils,RJSONIO
 Suggests:
     testthat,
     knitr,
