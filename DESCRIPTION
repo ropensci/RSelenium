@@ -21,7 +21,8 @@ Suggests:
     testthat,
     knitr,
     Rcompression,
-    covr
+    covr,
+    rmarkdown
 VignetteBuilder: knitr
 LazyData: yes
 Collate:
