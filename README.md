@@ -1,11 +1,11 @@
 R Bindings for Selenium 2.0 Remote WebDriver
 ==========================
+| CRAN version       | Travis build status    | SauceTests  | Coverage |
+| :-------------: |:-------------:|:-------------:|:-------------:|
+| [![](http://www.r-pkg.org/badges/version/RSelenium)](http://cran.rstudio.com/web/packages/RSelenium/index.html) | [![Build Status](https://travis-ci.org/ropensci/RSelenium.svg?branch=master)](https://travis-ci.org/ropensci/RSelenium) | [[![Selenium Test Status](https://saucelabs.com/buildstatus/rselenium0)](https://saucelabs.com/u/rselenium0) | [[![codecov](https://codecov.io/gh/ropensci/RSelenium/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/RSelenium)|
 
-#### Travis build status
-[![Build Status](https://travis-ci.org/ropensci/RSelenium.svg?branch=master)](https://travis-ci.org/ropensci/RSelenium)
 
 #### Selenium test status
-[![Selenium Test Status](https://saucelabs.com/buildstatus/rselenium0)](https://saucelabs.com/u/rselenium0)
 
 [![Selenium Test Status](https://saucelabs.com/browser-matrix/rselenium0.svg)](https://saucelabs.com/u/rselenium0)
 
