@@ -38,7 +38,7 @@ checkForServer <- function (dir = NULL, update = FALSE, rename = TRUE, beta = FA
   
   if (update || !file.exists(selFILE)) {
     dir.create(selDIR, showWarnings=FALSE)
-    print("DOWNLOADING STANDALONE SELENIUM SERVER. THIS MAY TAKE SEVERAL MINUTES")
+    message("DOWNLOADING STANDALONE SELENIUM SERVER. THIS MAY TAKE SEVERAL MINUTES")
     download.file(paste0( selURL, "/", selJARdownload), selFILE, mode = "wb")
   }
 }
