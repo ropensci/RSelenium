@@ -13,6 +13,7 @@ initFun <- function(){
     source(file.path("tests", "testthat", 'setup.R'), local = TRUE)
   }else{
     remDr <- remoteDriver(browserName = "chrome")
+    remDr$open()
     remDr$setTimeout(milliseconds = 10000) # set page load timeout to 3 secs
     remDr$setTimeout(type = "implicit", milliseconds = 5000) # wait 5 secs for elements to load
     htmlSrc <- if(identical(Sys.getenv("TRAVIS"), "true")){
