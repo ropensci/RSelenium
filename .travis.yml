@@ -1,6 +1,5 @@
 sudo: required
 language: R
-cache: packages
 r_packages:
 - RJSONIO
 services:
