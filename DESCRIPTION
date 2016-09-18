@@ -20,7 +20,8 @@ Imports:
 Suggests:
     testthat,
     knitr,
-    Rcompression
+    Rcompression,
+    covr
 VignetteBuilder: knitr
 LazyData: yes
 Collate:
