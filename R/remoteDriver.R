@@ -7,7 +7,7 @@
 #' remoteServerAddr(localhost), port(4444), browserName(firefox), version(""), platform(ANY),
 #' javascript(TRUE). See examples for more information on use.
 #'
-#' @import RJSONIO
+#' @import rjson
 #' @import caTools
 #' @import methods
 #' @field remoteServerAddr Object of class \code{"character"}, giving the ip of the remote server. Defaults to localhost

@@ -16,7 +16,7 @@ Additional_repositories: http://www.omegahat.net/R
 Depends:
     R (>= 3.0.0),RCurl,XML
 Imports:
-    methods,caTools,tools,utils,RJSONIO
+    methods,caTools,tools,utils,rjson
 Suggests:
     testthat,
     knitr,

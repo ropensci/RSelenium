@@ -7,7 +7,7 @@
 #' When a webElement class is created an elementId should be given.
 #' Each webElement inherits from a remoteDriver. webElement is not usually called by the end-user.   
 #'
-#' @import RJSONIO
+#' @import rjson
 #' @import methods
 #' @field elementId Object of class \code{"character"}, giving a character representation of the element id.
 #' @include remoteDriver.R

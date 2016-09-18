@@ -18,7 +18,7 @@ Type: \tab Package\cr
 Version: \tab 1.0\cr
 Date: \tab 2012-09-20\cr
 License: \tab MIT\cr
-Depends: \tab R (>= 2.15.0),methods,RCurl,RJSONIO\cr
+Depends: \tab R (>= 2.15.0),methods,RCurl,rjson\cr
 }
 }
 \author{

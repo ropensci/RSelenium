@@ -6,7 +6,7 @@
 #'  
 #' @import RCurl
 #' @import methods
-#' @import RJSONIO
+#' @import rjson
 #' @field statusCodes A list with status codes and their descriptions.
 #' @field status A status code summarizing the result of the command. A non-zero value indicates that the command failed. A value of one is not a failure but may  indicate a problem.
 #' @field statusclass Class associated with the java library underlying the server. For Example: org.openqa.selenium.remote.Response
@@ -143,12 +143,12 @@ errorHandler <- setRefClass("errorHandler",
                                 debugheader <<- as.list(d$value())
                                 res <- w$value()
                                 res <- ifelse(is.raw(res), rawToChar(res), res)
-                                res1 <- try(fromJSON(res, simplifyWithNames = FALSE, encoding = encoding), TRUE)
+                                res1 <- try(fromJSON(res), TRUE)
                                 if(identical(class(res1), "try-error") && grepl("\"value\":", res)){
-                                  # try manually parse JSON RJSONIO wont handle
+                                  # try manually parse JSON rjson wont handle
                                   testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\1YYYYY\\3", res)
                                   testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\2", res)
-                                  res1 <- fromJSON(testRes, simplifyWithNames = FALSE, encoding = encoding)
+                                  res1 <- fromJSON(testRes)
                                   res1$value <- gsub("\\\"", "\"", testValue)
                                 }
                                 if( !identical(class(res1), "try-error")){

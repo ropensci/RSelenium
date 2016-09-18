@@ -60,6 +60,8 @@ All invalid requests should result in the server returning a 4xx HTTP response. 
 \describe{
 \item{\code{checkStatus()}}{An internal method to check the status returned by the server. If status indicates an error an appropriate error message is thrown.}
 
+\item{\code{errorDetails(type = "value")}}{Return error details. Type can one of c("value", "class", "status")}
+
 \item{\code{queryRD(ipAddr, method = "GET", httpheader = c(`Content-Type` =
   "application/json;charset=UTF-8"), qdata = NULL, json = FALSE,
   header = TRUE, .mapUnicode = TRUE)}}{A method to communicate with the remote server implementing the JSON wire protocol.}
