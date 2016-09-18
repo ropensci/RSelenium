@@ -1,6 +1,8 @@
 sudo: required
 language: R
 cache: packages
+r_packages:
+- RJSONIO
 r_github_packages:
 - ropensci/RSelenium
 services:
