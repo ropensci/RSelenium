@@ -1,3 +1,8 @@
+# RSelenium 1.4.3
+* Moved testing to TRAVIS
+* Switch to rjson from RJSONIO as issue with RJSONIO and TRAVIS/covr
+* Ported api tests to TRAVIS
+
 # RSelenium 1.4.2
 * Add vignette on RSelenium and Docker containers.
 
