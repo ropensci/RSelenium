@@ -1,7 +1,7 @@
 context("page_loading_tests")
 init <- initFun()
 remDr <- init$remDr; rdBrowser <- init$rdBrowser; loadPage <- init$loadPage
-on.exit(remDr$deleteSession())
+on.exit(remDr$close())
 
 test_that("testShouldWaitForDocumentToBeLoaded", {
   remDr$navigate(loadPage("simpleTest"))
