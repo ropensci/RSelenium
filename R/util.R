@@ -110,7 +110,7 @@ startServer <- function (dir = NULL, args = NULL, javaargs = NULL, log = TRUE,  
     wmicOut <- readHTMLTable(htmlParse(wmicOut), header = TRUE, stringsAsFactors = FALSE)[[1]]
     wmicOut[["ProcessId"]] <- as.integer(wmicOut[["ProcessId"]])
     idx <- grepl(selFILE, wmicOut$CommandLine)
-    if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check java is installed.")
+    if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check if java is installed.")
     selPID <- wmicOut[idx,"ProcessId"]
   }else{
     if(Sys.info()["sysname"] == "Darwin"){
@@ -121,7 +121,7 @@ startServer <- function (dir = NULL, args = NULL, javaargs = NULL, log = TRUE,  
       sArgs <- system('ps -Ao"%a"', intern = TRUE)
     }
     idx <- grepl(selFILE, sArgs)
-    if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check java is installed.")
+    if(!any(idx)) stop("Selenium binary error: Unable to start Selenium binary. Check if java is installed.")
     selPID <- as.integer(sPids[idx])
   }
   
