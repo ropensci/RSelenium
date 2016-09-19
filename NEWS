@@ -1,5 +1,7 @@
 # RSelenium 1.4.4
 * Deprecate startServer and checkForServer (look at processx to manage process)
+* Use message rather than print (thanks Dean Attali #88) in checkForServer. Fix typo in startServer (thanks Charles Thompson #85)
+* Copy startServer and checkForServer to examples/serverUtils 
 
 # RSelenium 1.4.3
 * Moved testing to TRAVIS
