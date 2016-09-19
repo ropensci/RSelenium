@@ -1,3 +1,6 @@
+# RSelenium 1.4.4
+* Deprecate startServer and checkForServer (look at processx to manage process)
+
 # RSelenium 1.4.3
 * Moved testing to TRAVIS
 * Switch to rjson from RJSONIO as issue with RJSONIO and TRAVIS/covr
