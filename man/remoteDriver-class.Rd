@@ -40,7 +40,8 @@ javascript(TRUE). See examples for more information on use.
 \describe{
 \item{\code{acceptAlert()}}{Accepts the currently displayed alert dialog.  Usually, this is equivalent to clicking the 'OK' button in the dialog.}
 
-\item{\code{addCookie(name, value, path, domain, secure = FALSE)}}{Set a cookie on the domain. The inputs are required apart from `secure` which defaults to FALSE.}
+\item{\code{addCookie(name, value, path = "/", domain = NULL, httpOnly = NULL,
+  expiry = NULL, secure = FALSE)}}{Set a cookie on the domain. The inputs are required apart from those with default values.}
 
 \item{\code{buttondown(buttonId = 0)}}{Click and hold the given mouse button (at the coordinates set by the
 last moveto command). Note that the next mouse-related command that
