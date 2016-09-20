@@ -9,14 +9,15 @@ test_that("canShowRemoteDriver", {
 )
 
 test_that("canShowErrorClass", {
-  expect_identical(remDr$showErrorClass()$status, 0L)
+  status <- remDr$showErrorClass()$status
+  expect_equal(status, 0L)
 }
 )
 
 test_that("canGetSessions", {
   sessions <- remDr$getSessions()  
   expect_equal(length(sessions), 1L)
-  expect_identical(session[[1]][["id"]], remDr$sessionid)
+  expect_identical(sessions[[1]][["id"]], remDr$sessionid)
 }
 )
 
