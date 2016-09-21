@@ -100,4 +100,6 @@ The RSelenium package is licensed under the <a href="http://www.tldrlegal.com/l/
 
 As a summary, the AGPLv3 license requires, attribution, include copyright and license in copies of the software, state changes if you modify the code, and disclose all source code. Details are in the COPYING file.
 
+---
+
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
