@@ -84,6 +84,16 @@ remDr <- remoteDriver$new(remoteServerAddr = ip, port = port
                           , extraCapabilities = extraCapabilities)
 ```
 
+### RELATED WORK
+
+* [seleniumPipes](https://github.com/johndharrison/seleniumPipes) seleniumPipes is a lightweight implementation of the w3c webdriver specification. It has been built utilising xml2, httr and magrittr so provides an alternative for users who are familiar with piping.
+
+* [webdriver](https://github.com/MangoTheCat/webdriver) A client for the 'WebDriver' 'API'. It allows driving a (probably headless) web browser, and can be used to test web applications, including 'Shiny' apps. In theory it works with any 'WebDriver' implementation, but it was only tested with 'PhantomJS'.
+
+* [rwebdriver](https://github.com/crubba/Rwebdriver) R bindings to the Webdriver API
+
+* [rdom](https://github.com/cpsievert/rdom) Render and parse the DOM from R via phantomjs.
+
 ### License
 
 The RSelenium package is licensed under the <a href="http://www.tldrlegal.com/l/AGPL3" target="_blank">AGPLv3</a>. The help files are licensed under the creative commons attribution, non-commercial, share-alike license <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC-NC-SA</a>.
