@@ -1,3 +1,6 @@
+# RSelenium 1.4.5
+* Use canonical form for referring to r-project
+
 # RSelenium 1.4.4
 * Deprecate startServer and checkForServer (look at processx to manage process)
 * Use message rather than print (thanks Dean Attali #88) in checkForServer. Fix typo in startServer (thanks Charles Thompson #85)

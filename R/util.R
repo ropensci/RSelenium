@@ -374,7 +374,7 @@ makePrefjs <- function(opts) {
 #' @section Detail: A firefox profile directory is zipped and base64 encoded. It can then be passed
 #' to the selenium server as a required capability with key firefox_profile
 #' @note Windows doesn't come with command-line zip capability. Installing rtools
-#' \url{http://cran.r-project.org/bin/windows/Rtools/index.html} is a straightforward way to gain 
+#' \url{https://CRAN.R-project.org/bin/windows/Rtools/index.html} is a straightforward way to gain 
 #' this capability.
 #' @examples
 #' \dontrun{
