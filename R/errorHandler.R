@@ -126,12 +126,12 @@ errorHandler <- setRefClass("errorHandler",
                                 }
                                 if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update, writefunction = w$update))}
                                 res <- tryCatch({do.call(getURLContent, getUC.params)}, error = function(e){
-                                  err <- switch(e$message
-                                         , "<url> malformed" = paste0("Invalid call to server. Please check you have opened a browser.")
-                                         , "couldn't connect to host" = paste0("Couldnt connect to host on ", serverURL, ".\nPlease ensure a Selenium server is running."),
-                                         "Undefined error in RCurl call."
+                                  err <- switch(e$message, 
+                                                "<url> malformed" = paste0("Invalid call to server. Please check you have opened a browser."),
+                                                "couldn't connect to host" = paste0("Couldnt connect to host on ", serverURL, ".\nPlease ensure a Selenium server is running."),
+                                                paste0("Undefined error in RCurl call. Rcurl output: ", e$message)
                                   )
-                                  cat(err)
+                                  message(err)
                                   NA
                                 }
                                 )
@@ -189,7 +189,7 @@ errorHandler <- setRefClass("errorHandler",
                                     errMessage[-1] <- paste("\n", errMessage[-1])
                                     errMessage <- c(errMessage, "\n\t Further Details: run errorDetails method")
                                     if(!is.null(value$message)){
-                                      cat("\nSelenium message:", value$message, "\n")
+                                      message("\nSelenium message:", value$message, "\n")
                                     }
                                     stop(errMessage, call. = FALSE)
                                   }
