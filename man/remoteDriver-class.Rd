@@ -6,190 +6,334 @@
 \alias{remoteDriver-class}
 \title{CLASS remoteDriver}
 \description{
-remoteDriver Class uses the JsonWireProtocol to communicate with the Selenium Server. If an error occurs while executing the command then the server sends back an HTTP error code with a JSON encoded reponse that indicates the precise Response Error Code. The remoteDriver class inherits from the \code{errorHandler} class. If no error occurred, then the subroutine called will return the value sent back from the server (if a return value was sent). 
-So a rule of thumb while invoking methods on the driver is if the method did not return a status greater then zero when called, then you can safely assume the command was successful even if nothing was returned by the method.
+remoteDriver Class uses the JsonWireProtocol to communicate with the 
+   Selenium Server. If an error occurs while executing the command then 
+   the server sends back an HTTP error code with a JSON encoded reponse 
+   that indicates the precise Response Error Code. The remoteDriver 
+   class inherits from the \code{errorHandler} class. If no error 
+   occurred, then the subroutine called will return the value sent back 
+   from the server (if a return value was sent).
+   So a rule of thumb while invoking methods on the driver is if the 
+   method did not return a status greater then zero when called, then 
+   you can safely assume the command was successful even if nothing was 
+   returned by the method.
 }
 \details{
-remoteDriver is a generator object. To define a new remoteDriver class method `new` is called. The slots (default value) that are user defined are:
-remoteServerAddr(localhost), port(4444), browserName(firefox), version(""), platform(ANY),
-javascript(TRUE). See examples for more information on use.
+remoteDriver is a generator object. To define a new remoteDriver class 
+   method `new` is called. The slots (default value) that are user 
+   defined are:
+     remoteServerAddr(localhost), port(4444), browserName(firefox), 
+     version(""), platform(ANY),
+     javascript(TRUE). See examples for more information on use.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{remoteServerAddr}}{Object of class \code{"character"}, giving the ip of the remote server. Defaults to localhost}
+\item{\code{remoteServerAddr}}{Object of class \code{"character"}, giving the 
+ip of the remote server. Defaults to localhost}
 
-\item{\code{port}}{Object of class \code{"numeric"}, the port of the remote server on which to connect}
+\item{\code{port}}{Object of class \code{"numeric"}, the port of the remote 
+server on which to connect}
 
-\item{\code{browserName}}{Object of class \code{"character"}. The name of the browser being used; should be one of {chrome|firefox|htmlunit|internet explorer|iphone}.}
+\item{\code{browserName}}{Object of class \code{"character"}. The name of the 
+browser being used; should be one of {chrome|firefox|htmlunit|
+internet explorer|iphone}.}
 
-\item{\code{version}}{Object of class \code{"character"}. The browser version, or the empty string if unknown.}
+\item{\code{version}}{Object of class \code{"character"}. The browser version, 
+or the empty string if unknown.}
 
-\item{\code{platform}}{Object of class \code{"character"}. A key specifying which platform the browser is running on. This value should be one of {WINDOWS|XP|VISTA|MAC|LINUX|UNIX}. When requesting a new session, the client may specify ANY to indicate any available platform may be used.}
+\item{\code{platform}}{Object of class \code{"character"}. A key specifying 
+which platform the browser is running on. This value should be one 
+of {WINDOWS|XP|VISTA|MAC|LINUX|UNIX}. When requesting a new session, 
+the client may specify ANY to indicate any available platform may be 
+used.}
 
-\item{\code{javascript}}{Object of class \code{"logical"}. Whether the session supports executing user supplied JavaScript in the context of the current page.}
+\item{\code{javascript}}{Object of class \code{"logical"}. Whether the session 
+supports executing user supplied JavaScript in the context of the 
+current page.}
 
-\item{\code{nativeEvents}}{Object of class \code{"logical"}. Whether the session supports native events. n WebDriver advanced user interactions are provided by either simulating the Javascript events directly (i.e. synthetic events) or by letting the browser generate the Javascript events (i.e. native events). Native events simulate the user interactions better.}
+\item{\code{nativeEvents}}{Object of class \code{"logical"}. Whether the 
+session supports native events. n WebDriver advanced user 
+interactions are provided by either simulating the Javascript events 
+directly (i.e. synthetic events) or by letting the browser generate 
+the Javascript events (i.e. native events). Native events simulate 
+the user interactions better.}
 
-\item{\code{serverURL}}{Object of class \code{"character"}. Url of the remote server which JSON requests are sent to.}
+\item{\code{serverURL}}{Object of class \code{"character"}. Url of the remote 
+server which JSON requests are sent to.}
 
-\item{\code{sessionInfo}}{Object of class \code{"list"}. A list containing information on sessions.}
+\item{\code{sessionInfo}}{Object of class \code{"list"}. A list containing 
+information on sessions.}
 }}
 \section{Methods}{
 
 \describe{
-\item{\code{acceptAlert()}}{Accepts the currently displayed alert dialog.  Usually, this is equivalent to clicking the 'OK' button in the dialog.}
+\item{\code{acceptAlert()}}{Accepts the currently displayed alert dialog.  Usually, this is 
+equivalent to clicking the 'OK' button in the dialog.}
 
 \item{\code{addCookie(name, value, path = "/", domain = NULL, httpOnly = NULL,
-  expiry = NULL, secure = FALSE)}}{Set a cookie on the domain. The inputs are required apart from those with default values.}
+  expiry = NULL, secure = FALSE)}}{Set a cookie on the domain. The inputs are required apart from 
+those with default values.}
 
-\item{\code{buttondown(buttonId = 0)}}{Click and hold the given mouse button (at the coordinates set by the
-last moveto command). Note that the next mouse-related command that
-should follow is buttondown . Any other mouse command (such as click
-or another call to buttondown) will yield undefined behaviour. 
-buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
+\item{\code{buttondown(buttonId = 0)}}{Click and hold the given mouse button (at the coordinates set by 
+the last moveto command). Note that the next mouse-related command 
+that should follow is buttondown . Any other mouse command (such 
+as click or another call to buttondown) will yield undefined 
+behaviour. buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. 
+Defaults to 'LEFT'}
 
-\item{\code{buttonup(buttonId = 0)}}{Releases the mouse button previously held (where the mouse is currently at). Must be called once for every buttondown command issued. See the note in click and buttondown about implications of out-of-order commands.
-buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
+\item{\code{buttonup(buttonId = 0)}}{Releases the mouse button previously held (where the mouse is 
+currently at). Must be called once for every buttondown command 
+issued. See the note in click and buttondown about implications of 
+out-of-order commands. buttonId - any one of 'LEFT'/0 'MIDDLE'/1 
+'RIGHT'/2. Defaults to 'LEFT'}
 
-\item{\code{click(buttonId = 0)}}{Click any mouse button (at the coordinates set by the last mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
+\item{\code{click(buttonId = 0)}}{Click any mouse button (at the coordinates set by the last 
+mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 
+'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
 
 \item{\code{close()}}{Close the current session.}
 
-\item{\code{closeServer()}}{Closes the server in practice terminating the process. This is useful for linux systems. On windows the java binary operates as a seperate shell which the user can terminate.}
+\item{\code{closeServer()}}{Closes the server in practice terminating the process. This is 
+useful for linux systems. On windows the java binary operates as a 
+seperate shell which the user can terminate.}
 
 \item{\code{closeWindow()}}{Close the current window.}
 
 \item{\code{deleteAllCookies()}}{Delete all cookies visible to the current page.}
 
-\item{\code{deleteCookieNamed(name)}}{Delete the cookie with the given name. This command will be a no-op if there is no such cookie visible to the current page.}
+\item{\code{deleteCookieNamed(name)}}{Delete the cookie with the given name. This command will be a 
+no-op if there is no such cookie visible to the current page.}
 
-\item{\code{dismissAlert()}}{Dismisses the currently displayed alert dialog. For comfirm() and prompt() dialogs, this is equivalent to clicking the 'Cancel' button. For alert() dialogs, this is equivalent to clicking the 'OK' button.}
+\item{\code{dismissAlert()}}{Dismisses the currently displayed alert dialog. For comfirm() and 
+prompt() dialogs, this is equivalent to clicking the 'Cancel' 
+button. For alert() dialogs, this is equivalent to clicking the 
+'OK' button.}
 
-\item{\code{doubleclick(buttonId = 0)}}{Double-Click any mouse button (at the coordinates set by the last mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
+\item{\code{doubleclick(buttonId = 0)}}{Double-Click any mouse button (at the coordinates set by the last 
+mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 
+'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'}
 
-\item{\code{executeAsyncScript(script, args = list())}}{Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame. The executed script is assumed to be 
-asynchronous and must signal that is done by invoking the provided callback, which is always provided as the final argument to the function. The value to this callback will be returned to the client. 
-Asynchronous script commands may not span page loads. If an unload event is fired while waiting for a script result, an error should be returned to the client. }
+\item{\code{executeAsyncScript(script, args = list())}}{Inject a snippet of JavaScript into the page for execution in the 
+context of the currently selected frame. The executed script is 
+assumed to be asynchronous and must signal that is done by 
+invoking the provided callback, which is always provided as the 
+final argument to the function. The value to this callback will be 
+returned to the client. Asynchronous script commands may not span 
+page loads. If an unload event is fired while waiting for a script 
+result, an error should be returned to the client. }
 
-\item{\code{executeScript(script, args = list())}}{Inject a snippet of JavaScript into the page for execution in the context of the currently selected frame. The executed script is assumed to be synchronous and the result of evaluating the script is returned to the client.
-                                 The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided args array and the values may be accessed via the arguments object in the order specified.
-
-                                 Arguments may be any JSON-primitive, array, or JSON object. JSON objects that define a WebElement reference will be converted to the corresponding DOM element. Likewise, any WebElements in the script result will be returned to the client as WebElement JSON objects.}
+\item{\code{executeScript(script, args = list())}}{Inject a snippet of JavaScript into the page for execution in the 
+context of the currently selected frame. The executed script is 
+assumed to be synchronous and the result of evaluating the script 
+is returned to the client. The script argument defines the script 
+to execute in the form of a function body. The value returned by 
+that function will be returned to the client. The function will be 
+invoked with the provided args array and the values may be 
+accessed via the arguments object in the order specified. 
+Arguments may be any JSON-primitive, array, or JSON object. JSON 
+objects that define a WebElement reference will be converted to 
+the corresponding DOM element. Likewise, any WebElements in the 
+script result will be returned to the client as WebElement JSON 
+objects.}
 
 \item{\code{findElement(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)}}{Search for an element on the page, starting from the document root. The located element will be returned as an object of webElement class.
-The inputs are:
+  "class name", "link text", "partial link text"), value)}}{Search for an element on the page, starting from the document 
+root. The located element will be returned as an object of 
+webElement class.The inputs are:
 \describe{
-       \item{\code{using}:}{Locator scheme to use to search the element, available schemes: Defaults to 'xpath'. Partial string matching is accepted.
-         \describe{
-           \item{"class name" :}{Returns an element whose class name contains the search value; compound class names are not permitted.}
-           \item{"css selector" :}{Returns an element matching a CSS selector.}
-           \item{"id" :}{Returns an element whose ID attribute matches the search value.}
-           \item{"name" :}{Returns an element whose NAME attribute matches the search value.}
-           \item{"link text" :}{Returns an anchor element whose visible text matches the search value.}
-           \item{"partial link text" :}{Returns an anchor element whose visible text partially matches the search value.}
-           \item{"tag name" :}{Returns an element whose tag name matches the search value.}
-           \item{"xpath" :}{Returns an element matching an XPath expression.}
-         }
-       }
-       \item{\code{value}:}{The search target. See examples.}
-       }}
+  \item{\code{using}:}{Locator scheme to use to search the 
+    element, available schemes: Defaults to 'xpath'. Partial 
+    string matching is accepted.
+    \describe{
+      \item{"class name" :}{Returns an element whose class name 
+        contains the search value; compound class names are not 
+        permitted.}
+      \item{"css selector" :}{Returns an element matching a CSS 
+        selector.}
+      \item{"id" :}{Returns an element whose ID attribute 
+        matches the search value.}
+      \item{"name" :}{Returns an element whose NAME attribute 
+        matches the search value.}
+      \item{"link text" :}{Returns an anchor element whose 
+        visible text matches the search value.}
+      \item{"partial link text" :}{Returns an anchor element 
+        whose visible text partially matches the search value.}
+      \item{"tag name" :}{Returns an element whose tag name 
+        matches the search value.}
+      \item{"xpath" :}{Returns an element matching an XPath 
+        expression.}
+    }
+  }
+  \item{\code{value}:}{The search target. See examples.}
+}}
 
 \item{\code{findElements(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)}}{Search for multiple elements on the page, starting from the document root. The located elements will be returned as an list of objects of class WebElement. 
-The inputs are:
+  "class name", "link text", "partial link text"), value)}}{Search for multiple elements on the page, starting from the 
+document root. The located elements will be returned as an list of 
+objects of class WebElement. The inputs are:
 \describe{
-        \item{\code{using}:}{Locator scheme to use to search the element, available schemes: {"class name", "css selector", "id", "name", "link text", "partial link text", "tag name", "xpath" }. Defaults to 'xpath'. Partial string matching is accepted.}
-        \item{\code{value}:}{The search target. See examples.}
-        }}
+  \item{\code{using}:}{Locator scheme to use to search the 
+  element, available schemes: {"class name", "css selector", 
+  "id", "name", "link text", "partial link text", 
+  "tag name", "xpath" }. Defaults to 'xpath'. Partial string 
+  matching is accepted. See the findElement method for details}
+  \item{\code{value}:}{The search target. See examples.}
+}}
 
-\item{\code{getActiveElement()}}{Get the element on the page that currently has focus. The located element will be returned as a WebElement id.}
+\item{\code{getActiveElement()}}{Get the element on the page that currently has focus. The located 
+element will be returned as a WebElement id.}
 
-\item{\code{getAlertText()}}{Gets the text of the currently displayed JavaScript alert(), confirm() or prompt() dialog.}
+\item{\code{getAlertText()}}{Gets the text of the currently displayed JavaScript alert(), 
+confirm() or prompt() dialog.}
 
-\item{\code{getAllCookies()}}{Retrieve all cookies visible to the current page. Each cookie will be returned as a list with the following name and value types:
+\item{\code{getAllCookies()}}{Retrieve all cookies visible to the current page. Each cookie 
+will be returned as a list with the following name and value types:
 \describe{
-\item{\code{name}:}{character}
-\item{\code{value}:}{character}
-\item{\code{path}:}{character}
-\item{\code{domain}:}{character}
-\item{\code{secure}:}{logical}
+  \item{\code{name}:}{character}
+  \item{\code{value}:}{character}
+  \item{\code{path}:}{character}
+  \item{\code{domain}:}{character}
+  \item{\code{secure}:}{logical}
 }}
 
 \item{\code{getCurrentUrl()}}{Retrieve the url of the current page.}
 
 \item{\code{getCurrentWindowHandle()}}{Retrieve the current window handle.}
 
-\item{\code{getLogTypes()}}{Get available log types. Common log types include 'client' = Logs from the client, 'driver' = Logs from the webdriver, 'browser' =  Logs from the browser, 'server' = Logs from the server. Other log types, for instance, for performance logging may also be available. phantomjs for example returns a har log type which is a single-entry log, with the HAR (HTTP Archive) of the current webpage, since the first load (it's cleared at every unload event)}
+\item{\code{getLogTypes()}}{Get available log types. Common log types include 'client' = Logs 
+from the client, 'driver' = Logs from the webdriver, 'browser' =  
+Logs from the browser, 'server' = Logs from the server. Other log 
+types, for instance, for performance logging may also be 
+available. phantomjs for example returns a har log type which is a 
+single-entry log, with the HAR (HTTP Archive) of the current 
+webpage, since the first load (it's cleared at every unload event)}
 
 \item{\code{getPageSource(header = TRUE, .mapUnicode = FALSE)}}{Get the current page source.}
 
-\item{\code{getSessions()}}{Returns a list of the currently active sessions. Each session will be returned as a list containing amongst other items:
+\item{\code{getSessions()}}{Returns a list of the currently active sessions. Each session 
+will be returned as a list containing amongst other items:
 \describe{
-\item{\code{id}:}{The session ID}
-\item{\code{capabilities}:}{An object describing session's capabilities}
+  \item{\code{id}:}{The session ID}
+  \item{\code{capabilities}:}{An object describing session's 
+    capabilities}
 }}
 
-\item{\code{getStatus()}}{Query the server's current status. All server implementations should return two basic objects describing the server's current platform and when the server was built.}
+\item{\code{getStatus()}}{Query the server's current status. All server implementations 
+should return two basic objects describing the server's current 
+platform and when the server was built.}
 
 \item{\code{getTitle(url)}}{Get the current page title.}
 
 \item{\code{getWindowHandles()}}{Retrieve the list of window handles used in the session.}
 
-\item{\code{getWindowPosition(windowId = "current")}}{Retrieve the window position. `windowid` is optional (default is 'current' window). Can pass an appropriate `handle`}
+\item{\code{getWindowPosition(windowId = "current")}}{Retrieve the window position. `windowid` is optional (default is 
+'current' window). Can pass an appropriate `handle`}
 
-\item{\code{getWindowSize(windowId = "current")}}{Retrieve the window size. `windowid` is optional (default is 'current' window). Can pass an appropriate `handle`}
+\item{\code{getWindowSize(windowId = "current")}}{Retrieve the window size. `windowid` is optional (default is 
+'current' window). Can pass an appropriate `handle`}
 
 \item{\code{goBack()}}{Equivalent to hitting the back button on the browser.}
 
 \item{\code{goForward()}}{Equivalent to hitting the forward button on the browser.}
 
-\item{\code{log(type)}}{Get the log for a given log type. Log buffer is reset after each request.
+\item{\code{log(type)}}{Get the log for a given log type. Log buffer is reset after each 
+request.
 \describe{
-\item{\code{type}:}{The log type. Typically 'client', 'driver', 'browser', 'server'}
+  \item{\code{type}:}{The log type. Typically 'client', 'driver', 
+    'browser', 'server'}
 }}
 
-\item{\code{maxWindowSize(winHand = "current")}}{Set the size of the browser window to maximum. The windows handle is optional. If not specified the current window in focus is used.}
+\item{\code{maxWindowSize(winHand = "current")}}{Set the size of the browser window to maximum. The windows handle 
+is optional. If not specified the current window in focus is used.}
 
-\item{\code{mouseMoveToLocation(x = NA_integer_, y = NA_integer_, webElement = NULL)}}{Move the mouse by an offset of the specificed element. If no element is specified, the move is relative to the current mouse cursor. If an element is provided but no offset, the mouse will be moved to the center of the element. If the element is not visible, it will be scrolled into view.}
+\item{\code{mouseMoveToLocation(x = NA_integer_, y = NA_integer_, webElement = NULL)}}{Move the mouse by an offset of the specificed element. If no 
+element is specified, the move is relative to the current mouse 
+cursor. If an element is provided but no offset, the mouse will be 
+moved to the center of the element. If the element is not visible, 
+it will be scrolled into view.}
 
 \item{\code{navigate(url)}}{Navigate to a given url.}
 
 \item{\code{open(silent = FALSE)}}{Send a request to the remote server to instantiate the browser.}
 
-\item{\code{phantomExecute(script, args = list())}}{This API allows you to send a string of JavaScript via 'script', written for PhantomJS, and be interpreted within the context of a WebDriver Page. In other words, for the given script then this variable is initialized to be the current Page.
-See \url{https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage} and the example in this help file. NOTE: Calling the PhantomJS API currently only works when PhantomJS is driven directly via \code{\link{phantom}}}
+\item{\code{phantomExecute(script, args = list())}}{This API allows you to send a string of JavaScript via 'script', 
+written for PhantomJS, and be interpreted within the context of a 
+WebDriver Page. In other words, for the given script then this 
+variable is initialized to be the current Page. See 
+\url{https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage} 
+and the example in this help file. NOTE: Calling the PhantomJS API 
+currently only works when PhantomJS is driven directly via 
+\code{\link{phantom}}}
 
 \item{\code{quit()}}{Delete the session & close open browsers.}
 
 \item{\code{refresh()}}{Reload the current page.}
 
-\item{\code{screenshot(display = FALSE, useViewer = TRUE, file = NULL)}}{Take a screenshot of the current page. The screenshot is returned as a base64 encoded PNG. If display is TRUE the screenshot is displayed locally. If useViewer is TRUE and RStudio is in use the screenshot is displayed in the RStudio viewer panel. If file is not NULL and display = FALSE the screenshot is written to the file denoted by file.}
+\item{\code{screenshot(display = FALSE, useViewer = TRUE, file = NULL)}}{Take a screenshot of the current page. The screenshot is returned 
+as a base64 encoded PNG. If display is TRUE the screenshot is 
+displayed locally. If useViewer is TRUE and RStudio is in use the 
+screenshot is displayed in the RStudio viewer panel. If file is 
+not NULL and display = FALSE the screenshot is written to the file 
+denoted by file.}
 
-\item{\code{sendKeysToActiveElement(sendKeys)}}{Send a sequence of key strokes to the active element. This command is similar to the send keys command in every aspect except the implicit termination: The modifiers are not released at the end of the call. Rather, the state of the modifier keys is kept between calls, so mouse interactions can be performed while modifier keys are depressed.
-The key strokes are sent as a list. Plain text is enter as an unnamed element of the list. Keyboard entries are defined in `selKeys` and should be listed with name `key`. See the examples. }
+\item{\code{sendKeysToActiveElement(sendKeys)}}{Send a sequence of key strokes to the active element. This 
+command is similar to the send keys command in every aspect except 
+the implicit termination: The modifiers are not released at the 
+end of the call. Rather, the state of the modifier keys is kept 
+between calls, so mouse interactions can be performed while 
+modifier keys are depressed. The key strokes are sent as a list. 
+Plain text is enter as an unnamed element of the list. Keyboard 
+entries are defined in `selKeys` and should be listed with name 
+`key`. See the examples. }
 
-\item{\code{sendKeysToAlert(sendKeys)}}{Sends keystrokes to a JavaScript prompt() or alert() dialog. 
-The key strokes are sent as a list. Plain text is enter as an unnamed element of the list. Keyboard entries are defined in `selKeys` and should be listed with name `key`. See the examples.}
+\item{\code{sendKeysToAlert(sendKeys)}}{Sends keystrokes to a JavaScript prompt() or alert() dialog.
+The key strokes are sent as a list. Plain text is enter as an 
+unnamed element of the list. Keyboard entries are defined in 
+`selKeys` and should be listed with name `key`. See the examples.}
 
-\item{\code{setAsyncScriptTimeout(milliseconds = 10000)}}{Set the amount of time, in milliseconds, that asynchronous scripts executed by execute_async_script() are permitted to run before they are aborted and a |Timeout| error is returned to the client.}
+\item{\code{setAsyncScriptTimeout(milliseconds = 10000)}}{Set the amount of time, in milliseconds, that asynchronous 
+scripts executed by execute_async_script() are permitted to run 
+before they are aborted and a |Timeout| error is returned to the 
+client.}
 
-\item{\code{setImplicitWaitTimeout(milliseconds = 10000)}}{Set the amount of time the driver should wait when searching for elements. When searching for a single element, the driver will poll the page until an element is found or the timeout expires, whichever occurs first. When searching for multiple elements, the driver should poll the page until at least one element is found or the timeout expires, at which point it will return an empty list. If this method is never called, the driver will default to an implicit wait of 0ms.}
+\item{\code{setImplicitWaitTimeout(milliseconds = 10000)}}{Set the amount of time the driver should wait when searching for 
+elements. When searching for a single element, the driver will poll
+the page until an element is found or the timeout expires, 
+whichever occurs first. When searching for multiple elements, the 
+driver should poll the page until at least one element is found or 
+the timeout expires, at which point it will return an empty list. 
+If this method is never called, the driver will default to an 
+implicit wait of 0ms.}
 
-\item{\code{setTimeout(type = "page load", milliseconds = 10000)}}{Configure the amount of time that a particular type of operation can execute for before they are aborted and a |Timeout| error is returned to the client. 
+\item{\code{setTimeout(type = "page load", milliseconds = 10000)}}{Configure the amount of time that a particular type of operation 
+can execute for before they are aborted and a |Timeout| error is 
+returned to the client.
 \describe{
-\item{\code{type}:}{The type of operation to set the timeout for. Valid values are: "script" for script timeouts, "implicit" for modifying the implicit wait timeout and "page load" for setting a page load timeout. Defaults to "page load" }
-\item{\code{milliseconds}:}{The amount of time, in milliseconds, that time-limited commands are permitted to run. Defaults to 10000 milliseconds. }
+  \item{\code{type}:}{The type of operation to set the timeout 
+    for. Valid values are: "script" for script timeouts, 
+    "implicit" for modifying the implicit wait timeout and 
+    "page load" for setting a page load timeout. Defaults to 
+    "page load" }
+  \item{\code{milliseconds}:}{The amount of time, in 
+    milliseconds, that time-limited commands are permitted to run. 
+    Defaults to 10000 milliseconds. }
 }}
 
-\item{\code{setWindowPosition(x, y, winHand = "current")}}{Set the position (on screen) where you want your browser to be displayed. The windows handle is optional. If not specified the current window in focus is used.}
+\item{\code{setWindowPosition(x, y, winHand = "current")}}{Set the position (on screen) where you want your browser to be 
+displayed. The windows handle is optional. If not specified the 
+current window in focus is used.}
 
-\item{\code{setWindowSize(width, height, winHand = "current")}}{Set the size of the browser window. The windows handle is optional. If not specified the current window in focus is used.}
+\item{\code{setWindowSize(width, height, winHand = "current")}}{Set the size of the browser window. The windows handle is 
+optional. If not specified the current window in focus is used.}
 
-\item{\code{switchToFrame(Id)}}{Change focus to another frame on the page. Id can be string|number|null|WebElement Object. If the Id is null, the server should switch to the page's default content.}
+\item{\code{switchToFrame(Id)}}{Change focus to another frame on the page. Id can be 
+string|number|null|WebElement Object. If the Id is null, the 
+server should switch to the page's default content.}
 
-\item{\code{switchToWindow(windowId)}}{Change focus to another window. The window to change focus to may be specified by its server assigned window handle, or by the value of its name attribute.}
+\item{\code{switchToWindow(windowId)}}{Change focus to another window. The window to change focus to may 
+be specified by its server assigned window handle, or by the value 
+of its name attribute.}
 }}
 \examples{
 \dontrun{
@@ -234,7 +378,8 @@ identical(contentPage, frontPage) # false we hope!!
 
 # Find the link for the search page on R homepage. Use xpath as default.
 webElem <- remDr$findElement(value = '//a[@href = "search.html"]')
-webElem$getElementAttribute('href') # "http://www.r-project.org/search.html"
+webElem$getElementAttribute('href') 
+# "http://www.r-project.org/search.html"
 
 # click the search link
 webElem$clickElement()
@@ -245,8 +390,11 @@ remDr$navigate("http://www.google.com")
 # show different methods of accessing DOM components
 
 webElem1 <- remDr$findElement(using = 'name', value = 'q')
-webElem2 <- remDr$findElement(using = 'id', value = webElem1$getElementAttribute('id')[[1]])
-webElem3 <- remDr$findElement(using = 'xpath', value = '//input[@name = "q"]')
+webElem2 <- remDr$findElement(
+  using = 'id', 
+  value = webElem1$getElementAttribute('id')[[1]])
+webElem3 <- remDr$findElement(using = 'xpath', 
+                              value = '//input[@name = "q"]')
 
 # Enter some text in the search box
 
@@ -265,14 +413,17 @@ linkHeading <- sapply(googLinkText, function(x) x$getElementText())
 googLinkDesc <- remDr$findElements(value = "//div[@class = 's']") 
 linkDescription <- sapply(googLinkDesc, function(x) x$getElementText())
 googLinkHref <- remDr$findElements(value = "//h3[@class = 'r']/a")
-linkHref <- sapply(googLinkHref, function(x) x$getElementAttribute('href'))
+linkHref <- sapply(googLinkHref, 
+                   function(x) x$getElementAttribute('href'))
 
-data.frame(heading = linkHeading, description = linkDescription, href = linkHref)
+data.frame(heading = linkHeading, 
+           description = linkDescription, href = linkHref)
 
 # Example of javascript call
 remDr$executeScript("return arguments[0] + arguments[1];", args = 1:2)
 # Example of javascript async call
-jsscript <- "arguments[arguments.length - 1](arguments[0] + arguments[1]);"
+jsscript <- 
+  "arguments[arguments.length - 1](arguments[0] + arguments[1]);"
 remDr$executeAsyncScript(jsscript, args = 1:2)
 
 # EXAMPLE INJECTING INTO PHANTOMJS using phantomExecute
@@ -281,15 +432,17 @@ pJS <- phantom()
 remDr <- remoteDriver(browserName = "phantomjs")
 remDr$open(silent = TRUE)
 remDr$navigate("http://ariya.github.com/js/random/")
-remDr$findElement("id", "numbers")$getElementText()[[1]] # returns a set of random numbers
+# returns a set of random numbers
+remDr$findElement("id", "numbers")$getElementText()[[1]] 
 result = remDr$phantomExecute("var page = this;
                                page.onInitialized = function () {
                                page.evaluate(function () {
-                               Math.random = function() { return 42 / 100 }
+                               Math.random = function() {return 42/100}
                                })
                                }", list());
 remDr$navigate("http://ariya.github.com/js/random/")
-remDr$findElement("id", "numbers")$getElementText()[[1]] # Math.random returns our custom function
+# Math.random returns our custom function
+remDr$findElement("id", "numbers")$getElementText()[[1]] 
 remDr$close()
 pJS$stop()
 }
