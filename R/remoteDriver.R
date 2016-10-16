@@ -428,7 +428,7 @@ remoteDriver <-
       closeall = function(){
         getSessions()
         serverDetails <- value
-        sapply(
+        lapply(
           seq_along(serverDetails),
           function(x){
             queryRD(paste0(serverURL,'/session/',serverDetails[[x]]$id),
@@ -441,7 +441,7 @@ remoteDriver <-
         "Delete the session & close open browsers."
         getSessions()
         serverDetails <- value
-        sapply(
+        lapply(
           seq_along(serverDetails$value),
           function(x){
             queryRD(paste0(serverURL,'/session/',

@@ -52,7 +52,7 @@ test_that("testShouldGetCookieByName", {
   remDr$executeScript("document.cookie = arguments[0] + '=set';", list(key))
   cookie <- remDr$getAllCookies()
   expect_equal(
-    cookie[sapply(cookie, "[[", "name") == key][[1]][["value"]], 
+    cookie[vapply(cookie, "[[", character(1), "name") == key][[1]][["value"]], 
     "set"
   )
   remDr$deleteAllCookies()
