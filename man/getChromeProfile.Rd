@@ -7,9 +7,11 @@
 getChromeProfile(dataDir, profileDir)
 }
 \arguments{
-\item{dataDir}{Specifies the user data directory, which is where the browser will look for all of its state.}
+\item{dataDir}{Specifies the user data directory, which is where the 
+browser will look for all of its state.}
 
-\item{profileDir}{Selects directory of profile to associate with the first browser launched.}
+\item{profileDir}{Selects directory of profile to associate with the 
+first browser launched.}
 }
 \description{
 \code{getChromeProfile}
@@ -32,7 +34,8 @@ Google Chrome: ~/Library/Application Support/Google/Chrome
 Google Chrome: ~/.config/google-chrome
 }
 }
-The profile directory is contained in the user directory and by default is named "Default"
+The profile directory is contained in the user directory and by default 
+is named "Default"
 }
 \examples{
 \dontrun{

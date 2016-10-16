@@ -9,61 +9,103 @@
 class to handle errors
 }
 \details{
-This class is an internal class used by remoteDriver and webElement. It describes how drivers may respond. With a wide range of browsers etc the response can be variable.
+This class is an internal class used by remoteDriver and webElement. It 
+   describes how drivers may respond. With a wide range of browsers etc 
+   the response can be variable.
 }
 \section{Fields}{
 
 \describe{
 \item{\code{statusCodes}}{A list with status codes and their descriptions.}
 
-\item{\code{status}}{A status code summarizing the result of the command. A non-zero value indicates that the command failed. A value of one is not a failure but may  indicate a problem.}
+\item{\code{status}}{A status code summarizing the result of the command. A 
+non-zero value indicates that the command failed. A value of one is 
+not a failure but may  indicate a problem.}
 
-\item{\code{statusclass}}{Class associated with the java library underlying the server. For Example: org.openqa.selenium.remote.Response}
+\item{\code{statusclass}}{Class associated with the java library underlying 
+the server. For Example: org.openqa.selenium.remote.Response}
 
-\item{\code{sessionid}}{An opaque handle used by the server to determine where to route session-specific commands. This ID should be included in all future session-commands in place of the :sessionId path segment variable.}
+\item{\code{sessionid}}{An opaque handle used by the server to determine where 
+to route session-specific commands. This ID should be included in 
+all future session-commands in place of the :sessionId path segment 
+variable.}
 
 \item{\code{hcode}}{}
 
-\item{\code{value}}{A list containing detailed information regarding possible errors:
+\item{\code{value}}{A list containing detailed information regarding possible 
+errors:
 \describe{
-\item{\code{message}:}{A descriptive message for the command failure.}
-\item{\code{screen}:}{string   (Optional) If included, a screenshot of the current page as a base64 encoded string.}
-\item{\code{class}:}{string   (Optional) If included, specifies the fully qualified class name for the exception that was thrown when the command failed.}
-\item{\code{stackTrace}:}{array   (Optional) If included, specifies an array of JSON objects describing the stack trace for the exception that was thrown when the command failed. The zeroeth element of the array represents the top of the stack.}
+  \item{\code{message}:}{A descriptive message for the command 
+    failure.}
+  \item{\code{screen}:}{string   (Optional) If included, a 
+    screenshot of the current page as a base64 encoded string.}
+  \item{\code{class}:}{string   (Optional) If included, specifies 
+    the fully qualified class name for the exception that was thrown 
+    when the command failed.}
+  \item{\code{stackTrace}:}{array   (Optional) If included, 
+    specifies an array of JSON objects describing the stack trace 
+    for the exception that was thrown when the command failed. The 
+    zeroeth element of the array represents the top of the stack.}
 }}
 
-\item{\code{responseheader}}{There are two levels of error handling specified by the wire protocol: invalid requests and failed commands.
-Invalid Requests will probably be indicted by a status of 1. 
+\item{\code{responseheader}}{There are two levels of error handling specified 
+   by the wire protocol: invalid requests and failed commands.
+   Invalid Requests will probably be indicted by a status of 1. 
 
-All invalid requests should result in the server returning a 4xx HTTP response. The response Content-Type should be set to text/plain and the message body should be a descriptive error message. The categories of invalid requests are as follows:
-     \describe{
+   All invalid requests should result in the server returning a 4xx HTTP 
+   response. The response Content-Type should be set to text/plain and 
+   the message body should be a descriptive error message. The 
+   categories of invalid requests are as follows:
+   \describe{
      \item{\code{Unknown Commands}:}{
-     If the server receives a command request whose path is not mapped to a resource in the REST service, it should respond with a 404 Not Found message.
+       If the server receives a command request whose path is not mapped 
+       to a resource in the REST service, it should respond with a 404 
+       Not Found message.
      }
      \item{\code{Unimplemented Commands}:}{
-     Every server implementing the WebDriver wire protocol must respond to every defined command. If an individual command has not been implemented on the server, the server should respond with a 501 Not Implemented error message. Note this is the only error in the Invalid Request category that does not return a 4xx status code.
+       Every server implementing the WebDriver wire protocol must 
+       respond to every defined command. If an individual command has 
+       not been implemented on the server, the server should respond 
+       with a 501 Not Implemented error message. Note this is the only 
+       error in the Invalid Request category that does not return a 4xx 
+       status code.
      }
      \item{\code{Variable Resource Not Found}:}{
-     If a request path maps to a variable resource, but that resource does not exist, then the server should respond with a 404 Not Found. For example, if ID my-session is not a valid session ID on the server, and a command is sent to GET /session/my-session HTTP/1.1, then the server should gracefully return a 404.
+       If a request path maps to a variable resource, but that resource 
+       does not exist, then the server should respond with a 404 Not 
+       Found. For example, if ID my-session is not a valid session ID 
+       on the server, and a command is sent to GET /session/my-session 
+       HTTP/1.1, then the server should gracefully return a 404.
      }
      \item{\code{Invalid Command Method}:}{
-     If a request path maps to a valid resource, but that resource does not respond to the request method, the server should respond with a 405 Method Not Allowed. The response must include an Allows header with a list of the allowed methods for the requested resource.
+       If a request path maps to a valid resource, but that resource 
+       does not respond to the request method, the server should 
+       respond with a 405 Method Not Allowed. The response must include 
+       an Allows header with a list of the allowed methods for the 
+       requested resource.
      }
      \item{\code{Missing Command Parameters}:}{
-     If a POST/PUT command maps to a resource that expects a set of JSON parameters, and the response body does not include one of those parameters, the server should respond with a 400 Bad Request. The response body should list the missing parameters. }
-     }}
+       If a POST/PUT command maps to a resource that expects a set of 
+       JSON parameters, and the response body does not include one of 
+       those parameters, the server should respond with a 400 Bad 
+       Request. The response body should list the missing parameters. 
+     }
+   }}
 
 \item{\code{debugheader}}{Not currently implemented}
 }}
 \section{Methods}{
 
 \describe{
-\item{\code{checkStatus()}}{An internal method to check the status returned by the server. If status indicates an error an appropriate error message is thrown.}
+\item{\code{checkStatus()}}{An internal method to check the status returned by the server. If 
+status indicates an error an appropriate error message is thrown.}
 
-\item{\code{errorDetails(type = "value")}}{Return error details. Type can one of c("value", "class", "status")}
+\item{\code{errorDetails(type = "value")}}{Return error details. Type can one of c("value", "class", 
+"status")}
 
 \item{\code{queryRD(ipAddr, method = "GET", httpheader = c(`Content-Type` =
   "application/json;charset=UTF-8"), qdata = NULL, json = FALSE,
-  header = TRUE, .mapUnicode = TRUE)}}{A method to communicate with the remote server implementing the JSON wire protocol.}
+  header = TRUE, .mapUnicode = TRUE)}}{A method to communicate with the remote server implementing the 
+JSON wire protocol.}
 }}
 
