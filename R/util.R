@@ -280,8 +280,7 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
 #' }
 getChromeProfile <- function(dataDir, profileDir){
   # see
-  # http://peter.sh/experiments/chromium-command-line-switches/#user-data-dir
-  # http://peter.sh/experiments/chromium-command-line-switches/#profile-directory
+  # http://peter.sh/experiments/chromium-command-line-switches/
   cprof <- list(chromeOptions = 
                   list(args = list(paste0('--user-data-dir=',dataDir), 
                                    paste0('--profile-directory=',profileDir))

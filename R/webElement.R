@@ -206,7 +206,8 @@ webElement <-
       
       getElementText = function(){
         "Get the innerText of the element."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',elementId,'/text'))
+        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
+                       elementId,'/text'))
         .self$value
       },
       
