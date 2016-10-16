@@ -98,7 +98,8 @@ errorHandler <-
       debugheader = "list"),
     methods  = list(
       initialize = function(){
-        statusCodes <<- statusCodes
+        # statCodes are status codes stored in sysdata.rda
+        statusCodes <<- statCodes
         status <<- 0L # initial status success
         encoding <<- NA_character_
         statusclass <<- NA_character_
@@ -133,21 +134,22 @@ errorHandler <-
               list(headerfunction = h$update, writefunction = w$update)
             )
         }
-        eMessage <- c(
+        eMessage <- list(
           "Invalid call to server. Please check you have opened a browser.",
           paste0("Couldnt connect to host on ", serverURL, 
                  ".\nPlease ensure a Selenium server is running."),
-          paste0("Undefined error in RCurl call. Rcurl output: ", 
-                 e$message)
+          function(x){
+            paste0("Undefined error in RCurl call. Rcurl output: ", x)
+          }
         )
         res <- tryCatch(
           {do.call(getURLContent, getUC.params)}, 
           error = function(e){
             err <- switch(
               e$message,
-              "<url> malformed" = eMessage[1],
-              "couldn't connect to host" = eMessage[2],
-              eMessage[3]
+              "<url> malformed" = eMessage[[1]],
+              "couldn't connect to host" = eMessage[[2]],
+              eMessage[[3]](e$message)
           )
           message(err)
           NA
