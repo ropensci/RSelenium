@@ -1,16 +1,20 @@
 context("api-example")
 # add build details for sauceLabs
-if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+if(exists('rsel.opt', where = parent.env(environment()) , 
+          inherits = FALSE)){
   pv <- packageVersion("RSelenium")
-  slFlags <- list(name = "RSelenium-test-suite"
-                  , build = sum(unlist(pv)*10^(3-seq_along(unlist(pv)))) # 1.2.1 for example 121
-                  , tags =  list("api-example")
-                  , "custom-data" = list(release = do.call(paste, list(pv, collapse = ".")))
-  )
+  slFlags <- 
+    list(name = "RSelenium-test-suite", 
+         build = sum(unlist(pv)*10^(3-seq_along(unlist(pv)))), 
+         tags =  list("api-example"), 
+         "custom-data" = list(release = 
+                                do.call(paste, list(pv, collapse = ".")))
+    )
   rsel.opt$extraCapabilities <- c(rsel.opt$extraCapabilities, slFlags)
 }
 
-source(file.path(find.package("RSelenium"), "tests", 'setup.r'), local = TRUE)
+source(file.path(find.package("RSelenium"), "tests", 'setup.r'), 
+       local = TRUE)
 on.exit(remDr$close())
 
 #1
@@ -111,10 +115,14 @@ test_that("FindElementByXpathInElementContextNotFound", {
 #13
 test_that("ShouldBeAbleToEnterDataIntoFormFields", {
   remDr$navigate(loadPage("xhtmlTest"))
-  elem <- remDr$findElement(using = "xpath", "//form[@name='someForm']/input[@id='username']")
+  elem <- 
+    remDr$findElement(using = "xpath", 
+                      "//form[@name='someForm']/input[@id='username']")
   elem$clearElement()
   elem$sendKeysToElement(list("some text"))
-  elem <- remDr$findElement(using = "xpath", "//form[@name='someForm']/input[@id='username']")
+  elem <- 
+    remDr$findElement(using = "xpath", 
+                      "//form[@name='someForm']/input[@id='username']")
   expect_equal("some text", elem$getElementAttribute("value")[[1]])
 }
 )
@@ -142,13 +150,12 @@ test_that("FindElementByTagNameWithinElement", {
 #17-18
 test_that("SwitchToWindow", {
   #if(rdBrowser == 'safari'){
-    # see https://code.google.com/p/selenium/issues/detail?id=3693
-    return()
+  # see https://code.google.com/p/selenium/issues/detail?id=3693
+  return()
   #} 
   title_1 <- "XHTML Test Page"
   title_2 <- "We Arrive Here"
-  #         switch_to_window_timeout = 5
-  #         wait = WebDriverWait(self.driver, switch_to_window_timeout, ignored_exceptions=[NoSuchWindowException])
+  
   remDr$navigate(loadPage("xhtmlTest"))
   remDr$findElement(using = "link text", "Open new window")$clickElement()
   expect_equal(title_1, remDr$getTitle()[[1]])
@@ -181,7 +188,8 @@ test_that("IsEnabled", {
 
 #21-24
 test_that("IsSelectedAndToggle", {
-  if(rdBrowser == 'chrome' && as.integer(sub("(.*?)\\..*", "\\1", remDr$sessionInfo$version)) < 16){
+  if(rdBrowser == 'chrome' && 
+     as.integer(sub("(.*?)\\..*", "\\1", remDr$sessionInfo$version)) < 16){
     return("deselecting preselected values only works on chrome >= 16")
   }
   return()
@@ -199,10 +207,9 @@ test_that("IsSelectedAndToggle", {
 
 #25-27
 test_that("Navigate", {
- # if(rdBrowser == 'safari'){
-    # see http://code.google.com/p/selenium/issues/detail?id=3771&can=1&q=browser%3DSafari%20component%3DWebDriver%20status%3ANew%2CAccepted%2CWorkingAsIntended%2CWontFix%2CNotFeasible&colspec=ID%20Stars%20Type%20Status%20Priority%20Owner%20Summary%20Browser%20Component
-    return()
- # } 
+  # if(rdBrowser == 'safari'){
+  #return()
+  # } 
   
   remDr$navigate(loadPage("formPage"))
   remDr$findElement(using = "id", "imageButton")$submitElement()
@@ -230,7 +237,8 @@ test_that("GetImplicitAttribute", {
   elems <- remDr$findElements(using = "xpath", "//option")
   expect_true(length(elems) >= 3)
   for(x in seq(4)){
-    expect_equal(x-1, as.integer(elems[[x]]$getElementAttribute("index")[[1]]))          
+    expect_equal(x-1, as.integer(elems[[x]]$
+                                   getElementAttribute("index")[[1]]))          
   }
 }
 )
@@ -254,7 +262,8 @@ test_that("ExecuteScriptAndReturnElement", {
 #36
 test_that("ExecuteScriptWithArgs", {
   remDr$navigate(loadPage("xhtmlTest"))
-  result <- remDr$executeScript("return arguments[0] == 'fish' ? 'fish' : 'not fish';", list("fish"))
+  jS <- "return arguments[0] == 'fish' ? 'fish' : 'not fish';"
+  result <- remDr$executeScript(jS, list("fish"))
   expect_equal("fish", result[[1]])
 }
 )
@@ -272,7 +281,9 @@ test_that("ExecuteScriptWithMultipleArgs", {
 test_that("ExecuteScriptWithElementArgs", {
   remDr$navigate(loadPage("javascriptPage"))
   button <- remDr$findElement(using = "id", "plainButton")
-  result <- remDr$executeScript("arguments[0]['flibble'] = arguments[0].getAttribute('id'); return arguments[0]['flibble'];", list(button))
+  jS <- "arguments[0]['flibble'] = arguments[0].getAttribute('id');
+  return arguments[0]['flibble'];"
+  result <- remDr$executeScript(jS, list(button))
   expect_equal("plainButton", result[[1]])
 }
 )
@@ -288,8 +299,10 @@ test_that("FindElementsByPartialLinkText", {
 #40-41
 test_that("IsElementDisplayed", {
   remDr$navigate(loadPage("javascriptPage"))
-  visible <- remDr$findElement(using = "id", "displayed")$isElementDisplayed()
-  not_visible <- remDr$findElement(using = "id", "hidden")$isElementDisplayed()
+  visible <- remDr$findElement(using = "id", "displayed")$
+    isElementDisplayed()
+  not_visible <- remDr$findElement(using = "id", "hidden")$
+    isElementDisplayed()
   expect_true(visible[[1]], "Should be visible")
   expect_false(not_visible[[1]], "Should not be visible")
 }
