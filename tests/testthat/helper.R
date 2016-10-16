@@ -2,8 +2,10 @@ initFun <- function(){
   
   remDr <- remoteDriver(browserName = "chrome")
   remDr$open()
-  remDr$setTimeout(milliseconds = 10000) # set page load timeout to 3 secs
-  remDr$setTimeout(type = "implicit", milliseconds = 5000) # wait 5 secs for elements to load
+  # set page load timeout to 3 secs
+  remDr$setTimeout(milliseconds = 10000) 
+  # wait 5 secs for elements to load
+  remDr$setTimeout(type = "implicit", milliseconds = 5000) 
   htmlSrc <- if(identical(Sys.getenv("TRAVIS"), "true")){
     "http-server:8080"
   }else{

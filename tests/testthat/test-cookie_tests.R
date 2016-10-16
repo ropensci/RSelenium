@@ -8,7 +8,7 @@ test_that("testAddCookie", {
   remDr$navigate(loadPage("simpleTest"))
   remDr$executeScript("return document.cookie;")
   remDr$addCookie(name=  "foo",
-                      value = "bar")
+                  value = "bar")
   cookie_returned <- remDr$executeScript("return document.cookie;")
   expect_true(grepl("foo=bar", cookie_returned[[1]]))
   remDr$deleteAllCookies()
@@ -18,8 +18,8 @@ test_that("testAddCookie", {
 test_that("testAddingACookieThatExpiredInThePast", {
   remDr$navigate(loadPage("simpleTest"))
   remDr$addCookie(name=  "foo",
-              value = "bar",
-              expiry = as.integer(Sys.time() -100))
+                  value = "bar",
+                  expiry = as.integer(Sys.time() -100))
   cookies <- remDr$getAllCookies()
   expect_equal(length(cookies), 0L)
   remDr$deleteAllCookies()
@@ -29,7 +29,7 @@ test_that("testAddingACookieThatExpiredInThePast", {
 test_that("testDeleteAllCookie", {
   remDr$navigate(loadPage("simpleTest"))
   remDr$addCookie(name=  "foo",
-              value = "bar")
+                  value = "bar")
   remDr$deleteAllCookies()
   expect_equal(0L, length(remDr$getAllCookies()))
   remDr$deleteAllCookies()
@@ -39,7 +39,7 @@ test_that("testDeleteAllCookie", {
 test_that("testDeleteCookie", {
   remDr$navigate(loadPage("simpleTest"))
   remDr$addCookie(name=  "foo",
-              value = "bar")
+                  value = "bar")
   remDr$deleteCookieNamed(name = "foo")
   expect_equal(0L, length(remDr$getAllCookies()))
   remDr$deleteAllCookies()
@@ -51,7 +51,10 @@ test_that("testShouldGetCookieByName", {
   remDr$navigate(loadPage("simpleTest"))
   remDr$executeScript("document.cookie = arguments[0] + '=set';", list(key))
   cookie <- remDr$getAllCookies()
-  expect_equal(cookie[sapply(cookie, "[[", "name") == key][[1]][["value"]], "set")
+  expect_equal(
+    cookie[sapply(cookie, "[[", "name") == key][[1]][["value"]], 
+    "set"
+  )
   remDr$deleteAllCookies()
 }
 )

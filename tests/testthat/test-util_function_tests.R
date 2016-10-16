@@ -58,8 +58,10 @@ test_that("canGetFirefoxProfile", {
 test_that("canGetChromeProfile", {
   cprof <- getChromeProfile("a", "b")
   expect_equal(length(cprof[["chromeOptions"]][["args"]]), 2L)
-  expect_identical(cprof[["chromeOptions"]][["args"]][[1]], "--user-data-dir=a")
-  expect_identical(cprof[["chromeOptions"]][["args"]][[2]], "--profile-directory=b")
+  expect_identical(cprof[["chromeOptions"]][["args"]][[1]], 
+                   "--user-data-dir=a")
+  expect_identical(cprof[["chromeOptions"]][["args"]][[2]], 
+                   "--profile-directory=b")
 }
 )
 

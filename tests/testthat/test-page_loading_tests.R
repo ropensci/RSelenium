@@ -44,7 +44,7 @@ test_that("testShouldBeAbleToNavigateBackInTheBrowserHistory", {
 }
 )
 
-test_that("testShouldBeAbleToNavigateBackInTheBrowserHistoryInPresenceOfIframes", {
+test_that("testShouldBeAbleToNavigateBackInPresenceOfIframes", {
   remDr$navigate(loadPage("xhtmlTest"))
   remDr$findElement("name", "sameWindow")$clickElement()
   expect_identical(remDr$getTitle()[[1]], "This page has iframes")
@@ -65,7 +65,7 @@ test_that("testShouldBeAbleToNavigateForwardsInTheBrowserHistory", {
 }
 )
 
-test_that("testShouldNotHangifDocumentOpenCallIsNeverFollowedByDocumentCloseCall", {
+test_that("testShouldNotHangifOpenCallIsNeverFollowedByCloseCall", {
   result <- remDr$navigate(loadPage("document_write_in_onload"))
   result <- remDr$findElement("xpath", "//body")
   expect_true(inherits(result, "webElement"))
