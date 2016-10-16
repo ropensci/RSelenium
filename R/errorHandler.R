@@ -101,7 +101,7 @@ errorHandler <-
         statusCodes <<- statusCodes
         status <<- 0L # initial status success
         encoding <<- NA_character_
-        statusclass <<- NA_character
+        statusclass <<- NA_character_
         sessionid <<- NA_character_
         hcode <<- NA_integer_
         value <<- list()
