@@ -35,8 +35,4 @@ if(exists('sauceTest', where = parent.env(environment()) , inherits = FALSE)){
   }
 }
 
-updateSauce <- function(result){
-  # update a sauceLabs test with result
-#  curl -H "Content-Type:text/json" -s -X PUT -d '{"passed": result}' http://<username>:<key>@saucelabs.com/rest/v1/<username>/jobs/<job-id>
-}
 

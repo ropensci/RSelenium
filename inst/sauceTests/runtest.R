@@ -31,10 +31,15 @@ out <- lapply(names(osBrowser), function(x){
     version <- y$version
     testsel <- test_env()
     testsel[['sauceTest']] <- TRUE
-    testsel[['rsel.opt']] <- list(remoteServerAddr = ip, port = port, browserName = rdBrowser
-                                  , version = version, platform = platform
-                                  , extraCapabilities = list(username = user, accessKey = pass, "selenium-version" = selVersion))
-    testRes <- test_dir(testDir, reporter = "Tap", filter = "api-example", env = testsel)
+    testsel[['rsel.opt']] <- 
+      list(remoteServerAddr = ip, port = port, browserName = rdBrowser, 
+           version = version, platform = platform, 
+           extraCapabilities = list(username = user, 
+                                    accessKey = pass, 
+                                    "selenium-version" = selVersion)
+      )
+    testRes <- test_dir(testDir, reporter = "Tap", filter = "api-example", 
+                        env = testsel)
     list(testsel[['rsel.opt']]$id, testRes)
   })
 }) 
@@ -47,9 +52,18 @@ lapply(out, function(x){
       # test passed rsel.opt should contain the jobid
       pv <- packageVersion("RSelenium")
       
-      ip <- paste0(user, ':', pass, "@saucelabs.com/rest/v1/", user, "/jobs/", testId)
-      qdata <- toJSON(list(passed = TRUE, "custom-data" = list(release = do.call(paste, list(pv, collapse = ".")), testresult = testRes)))
-      res <- getURLContent(ip, customrequest = "PUT", httpheader = "Content-Type:text/json", postfields = qdata, isHTTP = FALSE)
+      ip <- paste0(user, ':', pass, "@saucelabs.com/rest/v1/", user, 
+                   "/jobs/", testId)
+      qdata <- toJSON(
+        list(passed = TRUE, 
+             "custom-data" = list(
+               release = do.call(paste, list(pv, collapse = ".")), 
+               testresult = testRes)
+        )
+      )
+      res <- getURLContent(ip, customrequest = "PUT", 
+                           httpheader = "Content-Type:text/json", 
+                           postfields = qdata, isHTTP = FALSE)
       
     }
   })

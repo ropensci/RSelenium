@@ -3,7 +3,8 @@ context("controls")
 library(RSelenium)
 library(testthat)
 
-if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+if(exists('rsel.opt', where = parent.env(environment()) , 
+          inherits = FALSE)){
   # print(rsel.opt)
   remDr <- do.call(remoteDriver, rsel.opt)
 }else{
@@ -27,11 +28,8 @@ test_that("numericInput label correct", {
       webElem$clickElement()
     }
   }
-  webElem <- remDr$findElement("css selector", "#reqcontrols label[for = 'obs']")
-#   if(is.na(webElem$elementId)){
-#     Sys.sleep(1)
-#     webElem <- remDr$findElement("css selector", "#reqcontrols label[for = 'obs']")
-#   }
+  webElem <- remDr$findElement("css selector", 
+                               "#reqcontrols label[for = 'obs']")
   expect_output(webElem$getElementText()[[1]], "Observations:")
 }
 )
@@ -43,11 +41,12 @@ test_that("numericInput selection invokes change", {
   
   appMin <- as.integer(webElem$getElementAttribute("min")[[1]])
   appMax <- as.integer(webElem$getElementAttribute("max")[[1]])
-  randInt <- sample(appMin:appMax, 1) # should really exclude current value here. Left as an exercise 
+  randInt <- sample(appMin:appMax, 1) 
   webElem$clearElement()
   webElem$sendKeysToElement(list(as.character(randInt)))
   
-  outElem <- suppressWarnings(remDr$findElement("css selector", "#distPlot img"))
+  outElem <- suppressWarnings(remDr$findElement("css selector", 
+                                                "#distPlot img"))
 #   if(is.na(outElem$elementId)){
 #     Sys.sleep(1)
 #     outElem <- remDr$findElement("css selector", "#distPlot img")
@@ -62,7 +61,8 @@ test_that("numericInput input character error", {
   webElem <- remDr$findElement("css selector", "#reqcontrols #obs")
   webElem$clearElement()
   webElem$sendKeysToElement(list('test'))
-  outElem <- suppressWarnings(remDr$findElement("css selector", "#distPlot"))
+  outElem <- suppressWarnings(remDr$findElement("css selector", 
+                                                "#distPlot"))
 #   if(is.na(outElem$elementId)){
 #     Sys.sleep(1)
 #     outElem <- remDr$findElement("css selector", "#distPlot img")

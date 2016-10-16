@@ -118,8 +118,8 @@ errorHandler <-
                  .mapUnicode = TRUE){
           "A method to communicate with the remote server implementing the 
           JSON wire protocol."
-        h = basicHeaderGatherer()
-        w = basicTextGatherer(.mapUnicode = .mapUnicode)
+        h <- basicHeaderGatherer()
+        w <- basicTextGatherer(.mapUnicode = .mapUnicode)
         d <- debugGatherer()
         getUC.params <- if(is.null(qdata)){
           list(url = ipAddr, customrequest = method, 

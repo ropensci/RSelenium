@@ -224,8 +224,8 @@ getFirefoxProfile <- function(profDir, useBase = FALSE){
                       altNames = reqFiles)
   }else{
     currWd <- getwd()
-    on.exit(setwd(currWd))
     setwd(profDir)
+    on.exit(setwd(currWd))
     # break the zip into chunks as windows command line has limit of 8191 
     # characters
     # ignore .sqllite files

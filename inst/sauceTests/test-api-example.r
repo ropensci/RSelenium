@@ -123,7 +123,7 @@ test_that("ShouldBeAbleToEnterDataIntoFormFields", {
 test_that("FindElementByTagName", {
   remDr$navigate(loadPage("simpleTest"))
   elems <- remDr$findElements(using = "tag name", "div")
-  num_by_xpath = length(remDr$findElements(using = "xpath", "//div"))
+  num_by_xpath <- length(remDr$findElements(using = "xpath", "//div"))
   expect_equal(num_by_xpath, length(elems))
   elems <- remDr$findElements(using = "tag name", "iframe")
   expect_equal(0, length(elems))
@@ -134,7 +134,7 @@ test_that("FindElementByTagName", {
 test_that("FindElementByTagNameWithinElement", {
   remDr$navigate(loadPage("simpleTest"))
   div <- remDr$findElement(using = "id", "multiline")
-  elems = div$findChildElements(using = "tag name", "p")
+  elems <- div$findChildElements(using = "tag name", "p")
   expect_true(length(elems) == 1)
 }
 )
@@ -145,8 +145,8 @@ test_that("SwitchToWindow", {
     # see https://code.google.com/p/selenium/issues/detail?id=3693
     return()
   #} 
-  title_1 = "XHTML Test Page"
-  title_2 = "We Arrive Here"
+  title_1 <- "XHTML Test Page"
+  title_2 <- "We Arrive Here"
   #         switch_to_window_timeout = 5
   #         wait = WebDriverWait(self.driver, switch_to_window_timeout, ignored_exceptions=[NoSuchWindowException])
   remDr$navigate(loadPage("xhtmlTest"))
@@ -187,7 +187,7 @@ test_that("IsSelectedAndToggle", {
   return()
   remDr$navigate(loadPage("formPage"))
   elem <- remDr$findElement(using = "id", "multi")
-  option_elems = elem$findChildElements(using = "xpath", "option")
+  option_elems <- elem$findChildElements(using = "xpath", "option")
   expect_true(option_elems[[1]]$isElementSelected()[[1]])
   option_elems[[1]]$clickElement()
   expect_false(option_elems[[1]]$isElementSelected()[[1]])
@@ -216,7 +216,7 @@ test_that("Navigate", {
 
 #28
 test_that("GetAttribute", {
-  page = "xhtmlTest"
+  page <- "xhtmlTest"
   remDr$navigate(loadPage(page))
   elem <- remDr$findElement(using = "id", "id1")
   attr <- elem$getElementAttribute("href")[[1]]
@@ -246,7 +246,7 @@ test_that("ExecuteSimpleScript", {
 #35
 test_that("ExecuteScriptAndReturnElement", {
   remDr$navigate(loadPage("xhtmlTest"))
-  elem = remDr$executeScript("return document.getElementById('id1');")
+  elem <- remDr$executeScript("return document.getElementById('id1');")
   expect_true("webElement" == class(elem[[1]]))
 }
 )
@@ -306,8 +306,8 @@ test_that("MoveWindowPosition", {
   loc <- remDr$getWindowPosition()
   # note can't test 0,0 since some OS's dont allow that location
   # because of system toolbars
-  new_x = 50
-  new_y = 50
+  new_x <- 50
+  new_y <- 50
   if(loc[['x']] == new_x){
     new_x <- new_x + 10
   }
@@ -315,7 +315,7 @@ test_that("MoveWindowPosition", {
     new_y <- new_y + 10
   }
   remDr$setWindowPosition(new_x, new_y)
-  loc = remDr$getWindowPosition()
+  loc <- remDr$getWindowPosition()
   # change test to be within 10 pixels
   expect_less_than(abs(loc[['x']] - new_x), 10)
   expect_less_than(abs(loc[['y']] - new_y), 10)

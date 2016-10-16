@@ -36,7 +36,8 @@ test_that("selectInput dataSet correct", {
 })
 
 test_that("selectInput label correct", {
-  webElem <- remDr$findElement("css selector", "#reqcontrols label[for = 'dataset']")
+  webElem <- remDr$findElement("css selector", 
+                               "#reqcontrols label[for = 'dataset']")
   expect_output(webElem$getElementText()[[1]], "Choose a dataset:")
 }
 )

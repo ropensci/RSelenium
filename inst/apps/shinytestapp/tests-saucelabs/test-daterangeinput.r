@@ -3,7 +3,8 @@ context("controls")
 library(RSelenium)
 library(testthat)
 
-if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+if(exists('rsel.opt', where = parent.env(environment()) , 
+          inherits = FALSE)){
   # print(rsel.opt)
   remDr <- do.call(remoteDriver, rsel.opt)
 }else{
@@ -27,16 +28,19 @@ test_that("dateRangeInput label correct", {
       webElem$clickElement()
     }
   }
-  webElem <- remDr$findElement("css selector", "#reqcontrols label[for = 'daterange']")
+  webElem <- remDr$findElement("css selector", 
+                               "#reqcontrols label[for = 'daterange']")
   expect_output(webElem$getElementText()[[1]], "Date range:")
 }
 )
 
 test_that("dateRangeInput selection invokes change", {
-  webElems <- remDr$findElements("css selector", "#reqcontrols #daterange .input-small")
+  webElems <- remDr$findElements("css selector", 
+                                 "#reqcontrols #daterange .input-small")
   appMinDate <- webElems[[1]]$getElementAttribute("data-min-date")[[1]]
   appMaxDate <- webElems[[1]]$getElementAttribute("data-max-date")[[1]]
-  newDates <- sort(sample(seq(as.Date(appMinDate), as.Date(appMaxDate), 1), 2))
+  newDates <- sort(sample(seq(as.Date(appMinDate), 
+                              as.Date(appMaxDate), 1), 2))
   newDates <- as.character(format(newDates, "%m/%d/%Y"))
   outElem <- remDr$findElement("css selector", "#ggPlot img")
   initOutput <- outElem$getElementAttribute("src")[[1]]
@@ -48,7 +52,8 @@ test_that("dateRangeInput selection invokes change", {
   if(browser == "phantomjs"){
     Sys.sleep(1)
   }
-  outElem <- suppressWarnings(remDr$findElement("css selector", "#ggPlot img"))
+  outElem <- suppressWarnings(remDr$findElement("css selector", 
+                                                "#ggPlot img"))
   changeOutput <- outElem$getElementAttribute("src")[[1]]
   
   expect_false(initOutput == changeOutput)

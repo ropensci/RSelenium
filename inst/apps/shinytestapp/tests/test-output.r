@@ -2,7 +2,8 @@ context("outputs")
 
 library(RSelenium)
 library(testthat)
-if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+if(exists('rsel.opt', where = parent.env(environment()) , 
+          inherits = FALSE)){
   # print(rsel.opt)
   remDr <- do.call(remoteDriver, rsel.opt)
 }else{
@@ -28,17 +29,16 @@ test_that("output object alignment correct", {
     }
   })
   remDr$maxWindowSize()
-  # dttable is last element selected try to find it so remDr$setImplicitWaitTimeout(3000)
   # will be initiated if it is not loadedd yet.
   webElem <- remDr$findElement("css selector", "#reqplots #dttable")
   webElems <- remDr$findElements("css selector", "#reqplots .span5")
   out <- sapply(webElems, function(x){x$getElementLocation()})
   out <- out[c('x', 'y'),]
   #print(out)
-  expect_equal(as.integer(out['y', 1]) - as.integer(out['y', 2]), 0) # 1st row
-  expect_equal(as.integer(out['y', 3]) - as.integer(out['y', 4]), 0) # 2nd row
-  expect_equal(as.integer(out['x', 1]) - as.integer(out['x', 3]), 0) # 1st col
-  expect_equal(as.integer(out['x', 2]) - as.integer(out['x', 4]), 0) # 2nd col
+  expect_equal(as.integer(out['y', 1]) - as.integer(out['y', 2]), 0) 
+  expect_equal(as.integer(out['y', 3]) - as.integer(out['y', 4]), 0) 
+  expect_equal(as.integer(out['x', 1]) - as.integer(out['x', 3]), 0) 
+  expect_equal(as.integer(out['x', 2]) - as.integer(out['x', 4]), 0) 
 }
 )
 
@@ -46,8 +46,10 @@ test_that("output labels are correct", {
   
   webElems <- remDr$findElements("css selector", "#reqplots h6")
   appLabels <- unlist(sapply(webElems, function(x){x$getElementText()}))
-  checkLabels <- appLabels %in% c("selectInput Output", "numericInput Output", "dateRangeInput Output", 
-                   "sliderInput Output")
+  checkLabels <- appLabels %in% c("selectInput Output", 
+                                  "numericInput Output", 
+                                  "dateRangeInput Output",
+                                  "sliderInput Output")
   expect_true(all(checkLabels))
   
 }
@@ -55,7 +57,8 @@ test_that("output labels are correct", {
 
 test_that("output check images", {
   
-  webElems <- remDr$findElements("css selector", "#distPlot img, #ggPlot img")
+  webElems <- remDr$findElements("css selector", 
+                                 "#distPlot img, #ggPlot img")
   appImages <- sapply(webElems, function(x){x$getElementAttribute("src")})
   expect_true(all(grepl("image/png;base64",appImages)))
 }

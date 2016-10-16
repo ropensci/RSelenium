@@ -138,8 +138,8 @@ test_that("SwitchToWindow", {
   # see https://code.google.com/p/selenium/issues/detail?id=3693
   #return()
   #}
-  title_1 = "XHTML Test Page"
-  title_2 = "We Arrive Here"
+  title_1 <- "XHTML Test Page"
+  title_2 <- "We Arrive Here"
   
   remDr$navigate (loadPage("xhtmlTest"))
   elem <- remDr$findElement(using = "link text", "Open new window")
@@ -298,8 +298,8 @@ test_that("MoveWindowPosition", {
   loc <- remDr$getWindowPosition()
   # note can't test 0,0 since some OS's dont allow that location
   # because of system toolbars
-  new_x = 50
-  new_y = 50
+  new_x <- 50
+  new_y <- 50
   if(loc[['x']] == new_x){
     new_x <- new_x + 10
   }

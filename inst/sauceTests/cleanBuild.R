@@ -19,6 +19,8 @@ pass <- "49953c74-5c46-4ff9-b584-cf31a4c71809"
 for(x in removeIds){
   ip <- paste0(user, ':', pass, "@saucelabs.com/rest/v1/", user, "/jobs/", x)
   qdata <- toJSON(list(build = 0))
-  res <- getURLContent(ip, customrequest = "PUT", httpheader = "Content-Type:text/json", postfields = qdata, isHTTP = FALSE)
+  res <- getURLContent(ip, customrequest = "PUT", 
+                       httpheader = "Content-Type:text/json", 
+                       postfields = qdata, isHTTP = FALSE)
 }
 remDr$close()

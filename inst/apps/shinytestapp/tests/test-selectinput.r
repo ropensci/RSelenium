@@ -31,12 +31,14 @@ test_that("selectInput dataSet correct", {
   webElem <- remDr$findElement("css selector", "#reqcontrols #dataset")
   # check the available datasets
   childElems <- webElem$findChildElements("css selector", "[value]")
-  appDataSets <- sapply(childElems, function(x){x$getElementAttribute("value")})
+  appDataSets <- sapply(childElems, 
+                        function(x){x$getElementAttribute("value")})
   expect_true(all(c("rock", "pressure", "cars") %in% appDataSets))
 })
 
 test_that("selectInput label correct", {
-  webElem <- remDr$findElement("css selector", "#reqcontrols label[for = 'dataset']")
+  webElem <- remDr$findElement("css selector", 
+                               "#reqcontrols label[for = 'dataset']")
   expect_output(webElem$getElementText()[[1]], "Choose a dataset:")
 }
 )

@@ -2,7 +2,8 @@ context("controls")
 
 library(RSelenium)
 library(testthat)
-if(exists('rsel.opt', where = parent.env(environment()) , inherits = FALSE)){
+if(exists('rsel.opt', where = parent.env(environment()) , 
+          inherits = FALSE)){
   # print(rsel.opt)
   remDr <- do.call(remoteDriver, rsel.opt)
 }else{
@@ -27,8 +28,10 @@ test_that("sliderInput label correct", {
       webElem$clickElement()
     }
   }
-  webElem <- remDr$findElement("css selector", "#reqcontrols label[for = 'range']")
-  expect_output(webElem$getElementText()[[1]], "Select range of diamond prices:")
+  webElem <- remDr$findElement("css selector", 
+                               "#reqcontrols label[for = 'range']")
+  expect_output(webElem$getElementText()[[1]], 
+                "Select range of diamond prices:")
 }
 )
 
@@ -45,14 +48,17 @@ test_that("sliderInput selection invokes change", {
   initOutput <- outElem$getElementText()[[1]]
   
   # get the slider dimensions
-  webElem <- remDr$findElement("css selector", "#reqcontrols input#range + .jslider")
+  webElem <- remDr$findElement("css selector", 
+                               "#reqcontrols input#range + .jslider")
   sliderDim <- webElem$getElementSize()
   
   newValues <- seq(from = appMin, to = appMax, by = appStep)
   newValues <- sort(sample(newValues, 2))
   # use siblings to get the pointers
-  webElems <- remDr$findElements("css selector", "#reqcontrols input#range + .jslider .jslider-pointer")
-  pxToMoveSldr <- trunc(sliderDim$width * (newValues - appValue)/(appMax - appMin))
+  cSelect <- "#reqcontrols input#range + .jslider .jslider-pointer"
+  webElems <- remDr$findElements("css selector", cSelect)
+  pxToMoveSldr <- trunc(sliderDim$width * 
+                          (newValues - appValue)/(appMax - appMin))
   
   # move first slider
   moveOrder <- 1:2
@@ -60,7 +66,7 @@ test_that("sliderInput selection invokes change", {
   for(x in moveOrder){
     remDr$mouseMoveToLocation(webElement = webElems[[x]])
     remDr$buttondown()
-    remDr$mouseMoveToLocation(x = as.integer(pxToMoveSldr[x]), y = -1L)#, webElement = webElems[[x]])
+    remDr$mouseMoveToLocation(x = as.integer(pxToMoveSldr[x]), y = -1L)
     remDr$buttonup()
   }
   #webElem <- remDr$findElement("css selector", "#reqcontrols #range")
