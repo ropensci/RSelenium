@@ -1,8 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for Selenium WebDriver
-Version: 1.4.6
-Date: 2016-10-14
+Version: 1.4.7
 Author: John Harrison <johndharrison0@gmail.com>
 Maintainer: John Harrison <johndharrison0@gmail.com>
 Description: The RSelenium package provides a set of R bindings for the
@@ -14,9 +13,9 @@ URL: http://ropensci.github.io/RSelenium
 BugReports: http://github.com/ropensci/RSelenium/issues
 Additional_repositories: http://www.omegahat.net/R
 Depends:
-    R (>= 3.0.0),RCurl,XML
+    R (>= 3.0.0)
 Imports:
-    methods,caTools,tools,utils,rjson
+    RCurl,XML,methods,caTools,tools,utils,rjson
 Suggests:
     testthat,
     knitr,
@@ -24,7 +23,7 @@ Suggests:
     covr,
     rmarkdown
 VignetteBuilder: knitr
-LazyData: yes
+LazyData: true
 Collate:
     'errorHandler.R'
     'remoteDriver.R'
