@@ -99,7 +99,7 @@ errorHandler <-
     methods  = list(
       initialize = function(){
         statusCodes <<- statusCodes
-        status <<- 0 # initial status success
+        status <<- 0L # initial status success
         encoding <<- NA_character_
         statusclass <<- NA_character
         sessionid <<- NA_character_
@@ -115,21 +115,39 @@ errorHandler <-
                                   'application/json;charset=UTF-8'),
                  qdata = NULL, json = FALSE, header = TRUE,
                  .mapUnicode = TRUE){
-          "A method to communicate with the remote server implementing the JSON wire protocol."
+          "A method to communicate with the remote server implementing the 
+          JSON wire protocol."
         h = basicHeaderGatherer()
         w = basicTextGatherer(.mapUnicode = .mapUnicode)
         d <- debugGatherer()
-        if(is.null(qdata)){
-          getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, isHTTP = FALSE)
+        getUC.params <- if(is.null(qdata)){
+          list(url = ipAddr, customrequest = method, 
+               httpheader = httpheader, isHTTP = FALSE)
         }else{
-          getUC.params <- list(url = ipAddr, customrequest = method, httpheader = httpheader, postfields = qdata, isHTTP = FALSE)
+          list(url = ipAddr, customrequest = method,
+               httpheader = httpheader, postfields = qdata, isHTTP = FALSE)
         }
-        if(header){getUC.params <- c(getUC.params, list(headerfunction = h$update, writefunction = w$update))}
-        res <- tryCatch({do.call(getURLContent, getUC.params)}, error = function(e){
-          err <- switch(e$message, 
-                        "<url> malformed" = paste0("Invalid call to server. Please check you have opened a browser."),
-                        "couldn't connect to host" = paste0("Couldnt connect to host on ", serverURL, ".\nPlease ensure a Selenium server is running."),
-                        paste0("Undefined error in RCurl call. Rcurl output: ", e$message)
+        if(header){
+          getUC.params <- 
+            c(getUC.params, 
+              list(headerfunction = h$update, writefunction = w$update)
+            )
+        }
+        eMessage <- c(
+          "Invalid call to server. Please check you have opened a browser.",
+          paste0("Couldnt connect to host on ", serverURL, 
+                 ".\nPlease ensure a Selenium server is running."),
+          paste0("Undefined error in RCurl call. Rcurl output: ", 
+                 e$message)
+        )
+        res <- tryCatch(
+          {do.call(getURLContent, getUC.params)}, 
+          error = function(e){
+            err <- switch(
+              e$message,
+              "<url> malformed" = eMessage[1],
+              "couldn't connect to host" = eMessage[2],
+              eMessage[3]
           )
           message(err)
           NA
@@ -144,10 +162,13 @@ errorHandler <-
         res <- w$value()
         res <- ifelse(is.raw(res), rawToChar(res), res)
         res1 <- try(fromJSON(res), TRUE)
-        if(identical(class(res1), "try-error") && grepl("\"value\":", res)){
+        if(identical(class(res1), "try-error") && 
+           grepl("\"value\":", res)){
           # try manually parse JSON rjson wont handle
-          testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\1YYYYY\\3", res)
-          testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", "\\2", res)
+          testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", 
+                         "\\1YYYYY\\3", res)
+          testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", 
+                           "\\2", res)
           res1 <- fromJSON(testRes)
           res1$value <- gsub("\\\"", "\"", testValue)
         }
@@ -179,15 +200,19 @@ errorHandler <-
         checkStatus()
       }
       , checkStatus = function(){
-        "An internal method to check the status returned by the server. If status indicates an error an appropriate error message is thrown."
+        "An internal method to check the status returned by the server. If 
+        status indicates an error an appropriate error message is thrown."
         if(status > 1){
           errId <- which(statusCodes$Code == as.integer(status))
           if(length(errId) > 0){
             errMessage <- statusCodes[errId, c("Summary", "Detail")]
             errMessage$class <- value$class
-            errMessage <- paste("\t", paste(names(errMessage), errMessage, sep = ": "))
+            errMessage <- paste("\t", paste(names(errMessage), 
+                                            errMessage, sep = ": "))
             errMessage[-1] <- paste("\n", errMessage[-1])
-            errMessage <- c(errMessage, "\n\t Further Details: run errorDetails method")
+            errMessage <- 
+              c(errMessage,
+                "\n\t Further Details: run errorDetails method")
             if(!is.null(value$message)){
               message("\nSelenium message:", value$message, "\n")
             }
@@ -196,7 +221,8 @@ errorHandler <-
         }
       }
       , errorDetails = function(type = "value"){
-        "Return error details. Type can one of c(\"value\", \"class\", \"status\")"
+        "Return error details. Type can one of c(\"value\", \"class\", 
+        \"status\")"
         switch(type,
                value = value,
                class = statusClass,
