@@ -1,3 +1,6 @@
+# RSelenium 1.4.7
+* Code tidied up
+
 # RSelenium 1.4.6
 * Replace calls to cat with message when error
 
