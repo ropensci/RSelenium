@@ -5,12 +5,12 @@ remDr <- remoteDriver()
 remDr$open()
 remDr$navigate("https://saucelabs.com/u/rselenium0")
 slSource <- htmlParse(remDr$getPageSource()[[1]])
-slIds <- sapply(querySelectorAll(slSource, "#jobGrid .slick-row .r0 input")
-                , xmlGetAttr, name = "data-id")
-slBuild <- sapply(querySelectorAll(slSource, "#jobGrid .slick-row .r4")
-                  , xmlValue)
-slPass <- sapply(querySelectorAll(slSource, "#jobGrid .slick-row .r5")
-                 , xmlValue)
+slIds <- vapply(querySelectorAll(slSource, "#jobGrid .slick-row .r0 input")
+                , xmlGetAttr, character(1), name = "data-id")
+slBuild <- vapply(querySelectorAll(slSource, "#jobGrid .slick-row .r4")
+                  , xmlValue, character(1))
+slPass <- vapply(querySelectorAll(slSource, "#jobGrid .slick-row .r5")
+                 , xmlValue, character(1))
 
 removeIds <- slIds[slBuild == "132" & slPass != "Pass"]
 user <- "rselenium0"
