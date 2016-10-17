@@ -6,9 +6,10 @@
 #'    describes how drivers may respond. With a wide range of browsers etc 
 #'    the response can be variable.
 #'  
-#' @import RCurl
-#' @import methods
-#' @import rjson
+#' @importFrom RCurl basicHeaderGatherer basicTextGatherer debugGatherer
+#'    getURLContent
+#' @importFrom methods setRefClass new
+#' @importFrom rjson fromJSON
 #' @field statusCodes A list with status codes and their descriptions.
 #' @field status A status code summarizing the result of the command. A 
 #'    non-zero value indicates that the command failed. A value of one is 

@@ -10,7 +10,8 @@
 #'    "selenium-server-standalone.jar".
 #' @param beta A boolean indicating whether to include beta releases.
 #' @export
-#' @import XML
+#' @importFrom XML xmlParse xpathSApply xmlValue
+#' @importFrom utils download.file
 #' @section Detail: The downloads for the Selenium project can be found at 
 #'    http://selenium-release.storage.googleapis.com/index.html. This 
 #'    convience function downloads the standalone server and places it in 
@@ -84,6 +85,7 @@ vignette(\"RSelenium-docker\", package = \"RSelenium\")")
 #'    wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults 
 #'    wait = FALSE, invisible = TRUE. 
 #' @export
+#' @importFrom XML readHTMLTable htmlParse
 #' @section Detail: By default the binary is assumed to be in the 
 #'    RSelenium package /bin directory. The log argument is for convience. 
 #'    Setting it to FALSE and stipulating 
@@ -205,6 +207,7 @@ vignette(\"RSelenium-docker\", package = \"RSelenium\")")
 #' @param useBase Logical indicating whether to attempt to use zip from 
 #'    utils package. Maybe easier for Windows users.
 #' @export
+#' @importFrom utils head tail zip
 #' @section Detail: A firefox profile directory is zipped and base64 
 #'    encoded. It can then be passed to the selenium server as a required 
 #'    capability with key firefox_profile 
@@ -302,6 +305,7 @@ getChromeProfile <- function(dataDir, profileDir){
 #' @param ... Arguments to pass to \code{\link{system2}}
 #' @export
 #' @importFrom tools pskill
+#' @importFrom utils read.csv
 #' @section Detail: phantom() is used to start a phantomjs binary in 
 #'    webdriver mode. This can be used to drive a phantomjs binary on a 
 #'    machine without selenium server. Argument extras can be used to 
@@ -380,24 +384,19 @@ matchSelKeys <- function(x){
 }
 
 #' @export
-#' @import methods
-#' @import utils
+#' @importFrom utils .DollarNames
 #' 
 .DollarNames.remoteDriver <- function(x, pattern){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
 #' @export
-#' @import methods
-#' @import utils
 #' 
 .DollarNames.webElement <- function(x, pattern){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
 #' @export
-#' @import methods
-#' @import utils
 #' 
 .DollarNames.errorHandler <- function(x, pattern){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
@@ -440,6 +439,7 @@ makePrefjs <- function(opts) {
 #'    Installing rtools
 #' \url{https://CRAN.R-project.org/bin/windows/Rtools/index.html} is a 
 #'    straightforward way to gain this capability.
+#' @importFrom caTools base64encode
 #' @examples
 #' \dontrun{
 #' fprof <- makeFirefoxProfile(list(browser.download.dir = "D:/temp"))

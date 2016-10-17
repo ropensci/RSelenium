@@ -19,9 +19,8 @@
 #'      version(""), platform(ANY),
 #'      javascript(TRUE). See examples for more information on use.
 #'
-#' @import rjson
-#' @import caTools
-#' @import methods
+#' @importFrom RCurl base64Decode
+#' @importFrom rjson toJSON
 #' @field remoteServerAddr Object of class \code{"character"}, giving the 
 #'    ip of the remote server. Defaults to localhost
 #' @field port Object of class \code{"numeric"}, the port of the remote 
