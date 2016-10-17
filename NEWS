@@ -1,6 +1,7 @@
 # RSelenium 1.4.7
 * Code tidied up
 * statCodes added as an internal data.frame
+* tidy up imports. importFrom instead of import
 
 # RSelenium 1.4.6
 * Replace calls to cat with message when error
