@@ -467,3 +467,21 @@ makeFirefoxProfile <- function(opts){
   # output
   list("firefox_profile" = fireprof)
 }
+
+
+testWebElement <- function(x, remDr){
+  replaceWE <- function(x, remDr){
+    if(identical(names(x), "ELEMENT")){
+      webElement$new(as.character(x))$import(remDr)
+    }else{
+        x
+    }
+  }
+  if(is.null(x)||identical(length(x), 0L)) return(x)
+  listTest <- sum(vapply(x, inherits, logical(1), "list")) > 0
+  if(listTest){
+    lapply(x, testWebElement, remDr = remDr)
+  }else{
+    replaceWE(x, remDr = remDr)
+  }
+}

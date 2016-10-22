@@ -561,19 +561,7 @@ remoteDriver <-
           }
         }
         
-        if(any(lapply(.self$value, names) == "ELEMENT")){
-          wInd <- lapply(.self$value, names) == "ELEMENT"
-          out <- .self$value
-          out[[wInd]] <- unname(out[[wInd]])
-          out[[wInd]] <- lapply(
-            out[[wInd]], function(x){
-              webElement$new(as.character(x))$import(.self)
-            }
-          )
-          unlist(out)
-        }else{
-          .self$value
-        }
+        testWebElement(.self$value, .self)
       },
       
       executeScript = function(script,args = list()){
@@ -621,20 +609,7 @@ remoteDriver <-
             .self$value
           }
         }
-        
-        if(any(lapply(.self$value, names) == "ELEMENT")){
-          wInd <- lapply(.self$value, names) == "ELEMENT"
-          out <- .self$value
-          out[[wInd]] <- unname(out[[wInd]])
-          out[[wInd]] <- lapply(
-            out[[wInd]], function(x){
-              webElement$new(as.character(x))$import(.self)
-            }
-          )
-          unlist(out)
-        }else{
-          .self$value
-        }
+        testWebElement(.self$value, .self)
       },
       
       screenshot = function(display = FALSE, useViewer = TRUE, 
