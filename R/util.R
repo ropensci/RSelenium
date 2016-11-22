@@ -386,19 +386,19 @@ matchSelKeys <- function(x){
 #' @export
 #' @importFrom utils .DollarNames
 #' 
-.DollarNames.remoteDriver <- function(x, pattern){
+.DollarNames.remoteDriver <- function(x, pattern = ""){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
 #' @export
 #' 
-.DollarNames.webElement <- function(x, pattern){
+.DollarNames.webElement <- function(x, pattern = ""){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
 #' @export
 #' 
-.DollarNames.errorHandler <- function(x, pattern){
+.DollarNames.errorHandler <- function(x, pattern = ""){
   grep(pattern, getRefClass(class(x))$methods(), value=TRUE)
 }
 
