@@ -1,3 +1,6 @@
+# RSelenium 1.4.9
+* Fix .DollarNames to correct issues running under recent RStudio version.
+
 # RSelenium 1.4.8
 * Added tests for executeScript
 * Fixed issue in executeScript/executeAsyncScript with returning nested
