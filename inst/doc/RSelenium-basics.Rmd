@@ -454,7 +454,7 @@ In the context of a web browser, a frame is a part of a web page or browser wind
 
 ### Frames in Selenium
 
-We will demonstrate interacting with frames by way of example. The [R project](http://www.R-project.org/) conviently contains frames so we shall use `RSelenium` to interact with it. 
+We will demonstrate interacting with frames by way of example. The [R project](https://www.R-project.org/) conviently contains frames so we shall use `RSelenium` to interact with it. 
 Assume we have a remoteDriver opened.
 
 ```
