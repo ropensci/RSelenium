@@ -1,5 +1,12 @@
+---
+title: "RSelenium: Webinar"
+output:
+  html_document:
+    theme: cerulean
+    toc: yes
+---
 <!--
-%\VignetteEngine{knitr::knitr}
+%\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Orange County R Users Group (OC-RUG): RSelenium Webinar}
 -->
 

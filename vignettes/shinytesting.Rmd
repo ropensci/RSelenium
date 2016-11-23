@@ -1,10 +1,14 @@
+---
+title: "RSelenium: Testing Shiny Apps"
+output:
+  html_document:
+    theme: cerulean
+    toc: yes
+---
 <!--
-%\VignetteEngine{knitr::knitr}
+%\VignetteEngine{knitr::rmarkdown}
 %\VignetteIndexEntry{Shiny Testing}
 -->
-
-<xmp theme="cerulean" style="display:none;">
-
 ```{r, echo = FALSE, message = FALSE}
 library(knitr)
 library(RSelenium)
@@ -74,7 +78,7 @@ runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"), port = 6012)
 An image of the app using `RSelenium` on a windows 8.1 machine running firefox 26.0
 
 <h6 align = center>shinytestapp on win 8.1 firefox 26.0</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/shinytesting/shinytestapp.png"  title = "shinytestapp on win 8.1 firefox 26.0"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/shinytesting/shinytestapp.png"  title = "shinytestapp on win 8.1 firefox 26.0"  width = '100%'/>
 
 The image was generated using `RSelenium` and the following code.
 
@@ -110,7 +114,7 @@ extraCapabilities <- list(name = "shinytestapp screenshot", username = user
 ```
 <h6 align = center>shinytestapp on win 8.1 firefox 26.0 res 1280x1024</h6>
 
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/shinytesting/STA-highres.png" title = "shinytestapp on win 8.1 firefox 26.0 res 1280x1024"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/shinytesting/STA-highres.png" title = "shinytestapp on win 8.1 firefox 26.0 res 1280x1024"  width = '100%'/>
 
 We can see things look a bit better but the `data-table` search box is a bit compacted.
 
@@ -414,5 +418,4 @@ controls : [1] "Connecting to remote server"
 See the RBMproxy testing vignette.
 - Analysis current page load times. See the RBMproxy vignette
 
-</xmp>
-<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+

@@ -1,5 +1,5 @@
 ---
-title: "RSelenium basics"
+title: "RSelenium: Basics"
 output:
   html_document:
     theme: cerulean
@@ -495,12 +495,7 @@ remDr$screenshot(display = TRUE)
 
 ```
 <h6 align = center>RProject front page</h6>
-<<<<<<< HEAD
-<img src="RProject.png" title = "RProject front page on linux firefox 26.0" width = '100%'/>
-
-=======
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/basics/RProject.png"  title = "RProject front page on linux firefox 26.0"/>
->>>>>>> saucelabs
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/basics/RProject.png"  title = "RProject front page on linux firefox 26.0" width = '100%'/>
 
 To access the content we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class. 
 
