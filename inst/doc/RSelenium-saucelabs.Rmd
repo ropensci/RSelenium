@@ -1,3 +1,10 @@
+---
+title: "RSelenium: Driving OS/Browsers local and remote"
+output:
+  html_document:
+    theme: cerulean
+    toc: yes
+---
 <!--
 %\VignetteEngine{knitr::knitr}
 %\VignetteIndexEntry{RSelenium: Driving OS/Browsers local and remote}
@@ -315,7 +322,7 @@ remDr$screenshot(display = TRUE)
 
 ```
 <h6 align = center>RSelenium on win 8.1 driving phantomjs</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/tmpScreenShot.png"  title = "RSelenium on win 8.1 driving phantomjs" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/tmpScreenShot.png"  title = "RSelenium on win 8.1 driving phantomjs" style = "margin-left: auto;margin-right: auto; display: block;"  width = '100%'/>
 
 PhantomJS is excellent. It has only recently as of version 1.8 had Ghost Driver integration and hopefully its importance will increase further.
 
@@ -366,7 +373,7 @@ C:\Users\john\Desktop\adt-bundle-windows-x86_64-20131030\sdk
 After setting `ANDROID_HOME` `%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools` needs to be added to the system path also. Typing android in a command prompt should bring up the following:
 
 <h6 align = center>Android SDK on win 8.1</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidsdk.png"  title = "Android SDK on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidsdk.png"  title = "Android SDK on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"  width = '100%'/>
 
 From the tools make sure all are installed. From the latest android release Android 4.4.2 (API 19) in this case make sure all are installed. From the Extras folder, select the checkbox for the Android Support Library and make sure it is installed. You will also want to install the Intel Hardware Accelerated Execution Manager. Instructions on how to do so are [here](http://software.intel.com/en-us/android/articles/installation-instructions-for-intel-hardware-accelerated-execution-manager-windows). Basically checking the box Intel x86 Emulator Accelerator (HAXM) and "installing" will download it to `%ANDROID_HOME%/extras/intel`. In this folder is an exe `IntelHaxm.exe` which should be ran to finish the install.
 
@@ -375,17 +382,17 @@ From the tools make sure all are installed. From the latest android release Andr
 Next we need to emulate a phone. The alternative is to use a hardware phone running the Android OS. Refer to [here](http://selendroid.io/setup.html#androidDevices) if you are running a hardware phone but it should be as simple as connecting it to the machine running selendroid via usb.  We shall instead create an Android Virtual Device (Avd). The easiest way to do this is by typing `android avd` into a command console.
 
 <h6 align = center>Android AVD on win 8.1</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidavd.png"  title = "Android AVD on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidavd.png"  title = "Android AVD on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"  width = '100%'/>
 
 You can see I have created an avd already named "my_avd". You will need to create one by clicking new. The details for the "my_avd" are shown here
 
 <h6 align = center>Android AVD my_avd on win 8.1</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidmy_avd.png"  title = "Android AVD my_avd on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidmy_avd.png"  title = "Android AVD my_avd on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"  width = '100%'/>
 
 Click ok and an avd should have been created. You can start it using the panel. Click the newly created avd then click start. It will take a few moments but a panel containing a virtual phone will hopefully boot up and eventually get to the phone screen.
 
 <h6 align = center>Android AVD my_avd on win 8.1</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidrunavd.png"  title = "Android AVD my_avd on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidrunavd.png"  title = "Android AVD my_avd on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"  width = '100%'/>
 
 If you have got to this point it is most likely you will now be able to drive this phone with selendroid. Take a few moments to play with your virtual android phone ;).
 
@@ -413,7 +420,7 @@ remDr$navigate("http://www.google.com/ncr")
 ```
 
 <h6 align = center>Android with RSelenium on win 8.1</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidRSelenium.png"  title = "Android with RSelenium on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/androidRSelenium.png"  title = "Android with RSelenium on win 8.1" style = "margin-left: auto;margin-right: auto; display: block;"  width = '100%'/>
 
 ### <a id="id3b">iOS</a>
 
@@ -505,7 +512,7 @@ lapply(seq_along(osBrowser), function(x){
 
 To view the results you can goto the `RSelenium` project page on Sauce Labs [https://saucelabs.com/u/rselenium0](https://saucelabs.com/u/rselenium0). Listed here are all the tests ran on the `RSelenium` package. A partial search by name `Browsers vignette first example` will give the results of this test. There are a few repeats of the first Mavericks/ chrome 33 test where I tuned the script. 
 <h6 align = center>Sauce Labs results for simple test script</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/saucelabsOSBrowsers.png"  title = "Sauce Labs results for simple test script" style = "margin-left: auto;margin-right: auto; display: block;"/>
+<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/saucelabs/saucelabsOSBrowsers.png"  title = "Sauce Labs results for simple test script" style = "margin-left: auto;margin-right: auto; display: block;"  width = '100%'/>
 
 ## <a id="id5">RSelenium with remote browsers and local sites.</a>
 

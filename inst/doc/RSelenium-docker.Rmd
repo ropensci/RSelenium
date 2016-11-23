@@ -1,5 +1,5 @@
 ---
-title: "RSelenium Docker"
+title: "RSelenium: Docker"
 output:
   html_document:
     theme: cerulean
