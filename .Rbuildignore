@@ -3,3 +3,4 @@
 inst/www
 ^\.travis\.yml$
 ^web$
+docs
