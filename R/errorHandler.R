@@ -228,7 +228,7 @@ errorHandler <-
         \"status\")"
         switch(type,
                value = value,
-               class = statusClass,
+               class = statusclass,
                status = status
         )
       }
