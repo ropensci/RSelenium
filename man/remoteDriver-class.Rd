@@ -39,6 +39,9 @@ server on which to connect}
 browser being used; should be one of {chrome|firefox|htmlunit|
 internet explorer|iphone}.}
 
+\item{\code{path}}{base URL path prefix for commands on the remote server. 
+Defaults to "/wd/hub"}
+
 \item{\code{version}}{Object of class \code{"character"}. The browser version, 
 or the empty string if unknown.}
 

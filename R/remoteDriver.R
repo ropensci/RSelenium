@@ -28,6 +28,8 @@
 #' @field browserName Object of class \code{"character"}. The name of the 
 #'    browser being used; should be one of {chrome|firefox|htmlunit|
 #'    internet explorer|iphone}.
+#' @field path base URL path prefix for commands on the remote server. 
+#'    Defaults to "/wd/hub"
 #' @field version Object of class \code{"character"}. The browser version, 
 #'    or the empty string if unknown.
 #' @field platform Object of class \code{"character"}. A key specifying 
@@ -173,6 +175,7 @@ remoteDriver <-
       remoteServerAddr = "character",
       port             = "numeric",
       browserName      = "character",
+      path             = "character",
       version          = "character",
       platform         = "character",
       javascript       = "logical",
@@ -187,6 +190,7 @@ remoteDriver <-
         function(remoteServerAddr = "localhost", 
                  port             = 4444,
                  browserName      = "firefox",
+                 path             = "/wd/hub",
                  version          = "",
                  platform         = "ANY",
                  javascript       = TRUE,
@@ -234,7 +238,7 @@ remoteDriver <-
       open = function(silent = FALSE){
         "Send a request to the remote server to instantiate the browser."
         if(!silent){print("Connecting to remote server")}
-        serverURL <<- paste0("http://",remoteServerAddr,":",port,"/wd/hub")
+        serverURL <<- paste0("http://",remoteServerAddr,":",port,path)
         serverOpts <- list(desiredCapabilities = 
                              list(
                                browserName = browserName,
