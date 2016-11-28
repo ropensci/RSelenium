@@ -202,6 +202,7 @@ remoteDriver <-
           remoteServerAddr <<- remoteServerAddr
           port <<- port
           browserName <<- browserName
+          path <<- path
           version <<- version
           platform <<- platform
           javascript <<- javascript
