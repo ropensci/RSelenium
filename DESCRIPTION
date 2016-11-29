@@ -1,7 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for Selenium WebDriver
-Version: 1.5.0
+Version: 1.5.1
 Authors@R: person("John", "Harrison", , "johndharrison0@gmail.com", 
     role = c("aut", "cre"), comment = "R package RSelenium")
 Description: The RSelenium package provides a set of R bindings for the

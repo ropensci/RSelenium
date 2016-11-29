@@ -1,3 +1,6 @@
+# RSelenium 1.5.1
+* Added a path argument to the remoteDriver class.
+
 # RSelenium 1.4.9
 * Fix .DollarNames to correct issues running under recent RStudio version.
 
