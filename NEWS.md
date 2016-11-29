@@ -1,3 +1,8 @@
+# RSelenium 1.6.0
+* Moved http package from RCurl to httr see #106.
+* Removed dependence on rjson. httr incorporates jsonlite.
+* Import base64_decode from openssl.
+
 # RSelenium 1.5.1
 * Added a path argument to the remoteDriver class.
 

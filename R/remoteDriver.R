@@ -20,7 +20,6 @@
 #'      javascript(TRUE). See examples for more information on use.
 #'
 #' @importFrom openssl base64_decode
-#' @importFrom rjson toJSON
 #' @field remoteServerAddr Object of class \code{"character"}, giving the 
 #'    ip of the remote server. Defaults to localhost
 #' @field port Object of class \code{"numeric"}, the port of the remote 
