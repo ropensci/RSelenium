@@ -256,7 +256,7 @@ remoteDriver <-
           }
         queryRD(paste0(serverURL,'/session'),
                 "POST",
-                qdata = toJSON(serverOpts)
+                qdata = serverOpts
         )
         # fudge for sauceLabs not having /sessions
         sessionInfo <<- value
@@ -310,7 +310,7 @@ remoteDriver <-
         Plain text is enter as an unnamed element of the list. Keyboard 
         entries are defined in `selKeys` and should be listed with name 
         `key`. See the examples. '
-        sendKeys<-toJSON(list(value = matchSelKeys(sendKeys)))
+        sendKeys<-list(value = matchSelKeys(sendKeys))
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/keys'),
                 "POST",qdata = sendKeys)
       },
@@ -320,9 +320,9 @@ remoteDriver <-
         The key strokes are sent as a list. Plain text is enter as an 
         unnamed element of the list. Keyboard entries are defined in 
         `selKeys` and should be listed with name `key`. See the examples.'
-        sendKeys<-toJSON(list(
+        sendKeys<-list(
           text = paste(matchSelKeys(sendKeys),collapse = "")
-        ))
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/alert_text'),
                 "POST",qdata = sendKeys)
       },
@@ -370,7 +370,6 @@ remoteDriver <-
         }else{
           sendLoc <- c(sendLoc, list(yoffset = as.integer(y)))
         }
-        sendLoc<-toJSON(sendLoc)
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/moveto'),
                 "POST",qdata = sendLoc)
       },
@@ -382,7 +381,7 @@ remoteDriver <-
         client."
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                        '/timeouts/async_script'),
-                "POST",qdata=toJSON(list(ms = milliseconds)))
+                "POST",qdata = list(ms = milliseconds))
       },
       
       setImplicitWaitTimeout = function(milliseconds = 10000){
@@ -396,7 +395,7 @@ remoteDriver <-
         implicit wait of 0ms."
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                        '/timeouts/implicit_wait'),
-                "POST",qdata=toJSON(list(ms = milliseconds)))
+                "POST", qdata = list(ms = milliseconds))
       },
       
       setTimeout = function(type = "page load", milliseconds = 10000){
@@ -414,7 +413,7 @@ remoteDriver <-
             Defaults to 10000 milliseconds. }
         }"
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/timeouts'),
-                "POST",qdata=toJSON(list(type = type, ms = milliseconds)))
+                "POST", qdata = list(type = type, ms = milliseconds))
       },
       
       closeWindow = function(){
@@ -498,7 +497,7 @@ remoteDriver <-
       navigate = function(url){
         "Navigate to a given url."
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/url'),
-                "POST",qdata=toJSON(list(url = url)))
+                "POST", qdata = list(url = url))
       },
       
       getTitle = function(url){
@@ -550,7 +549,7 @@ remoteDriver <-
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                          '/execute_async'),
                   "POST",
-                  qdata = toJSON(list(script = script,args = args)), 
+                  qdata = list(script = script,args = args), 
                   json = TRUE
           )
         }else{
@@ -598,7 +597,7 @@ remoteDriver <-
         if(.self$javascript){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/execute'),
                   "POST",
-                  qdata = toJSON(list(script = script,args = args)), 
+                  qdata = list(script = script,args = args), 
                   json = TRUE)
         }else{
           "Javascript is not enabled"
@@ -653,7 +652,7 @@ remoteDriver <-
           Id <- setNames(as.character(Id$elementId), "ELEMENT")
         }
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/frame'),
-                "POST",qdata=toJSON(list(id = Id)))
+                "POST",qdata = list(id = Id))
       },
       
       switchToWindow = function(windowId){
@@ -661,7 +660,7 @@ remoteDriver <-
         be specified by its server assigned window handle, or by the value 
         of its name attribute."
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window'),
-                "POST",qdata = toJSON(list(name = windowId)))
+                "POST",qdata = list(name = windowId))
       },
       
       setWindowPosition = function(x,y,winHand = 'current'){
@@ -670,7 +669,7 @@ remoteDriver <-
         current window in focus is used."
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',
                        winHand,'/position'),
-                "POST",qdata=toJSON(list(x = x,y = y))
+                "POST",qdata = list(x = x,y = y)
         )
       },
       
@@ -679,7 +678,7 @@ remoteDriver <-
         optional. If not specified the current window in focus is used."
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/',
                        winHand,'/size'),
-                "POST",qdata = toJSON(list(width = width,height = height))
+                "POST",qdata = list(width = width,height = height)
         )
       },
       
@@ -714,7 +713,7 @@ remoteDriver <-
                      domain = domain, httpOnly = httpOnly, 
                      expiry = expiry,secure = secure)
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/cookie'),
-                "POST",qdata=toJSON(list(cookie = cookie)))
+                "POST", qdata = list(cookie = cookie))
       },
       
       deleteAllCookies = function(){
@@ -774,7 +773,7 @@ remoteDriver <-
         }"
         using <- match.arg(using)
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element'),
-                "POST",qdata = toJSON(list(using = using,value = value)),
+                "POST",qdata = list(using = using,value = value),
                 json = TRUE)
         # using value as an argument refer to self
         elemDetails <- .self$value[[1]]
@@ -798,7 +797,7 @@ remoteDriver <-
         }"
         using <- match.arg(using)
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/elements'),
-                "POST",qdata = toJSON(list(using = using,value = value)),
+                "POST",qdata = list(using = using,value = value),
                 json = TRUE)
         elemDetails <- .self$value
         lapply(elemDetails, 
@@ -820,7 +819,7 @@ remoteDriver <-
         mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 
         'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'"
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/click'),
-                "POST",qdata = toJSON(list(button = buttonId)))
+                "POST",qdata = list(button = buttonId))
       },
       
       doubleclick = function(buttonId = 0){
@@ -829,7 +828,7 @@ remoteDriver <-
         'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'"
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                        '/doubleclick'),
-                "POST",qdata = toJSON(list(button = buttonId)))
+                "POST",qdata = list(button = buttonId))
       },
       
       buttondown = function(buttonId = 0){
@@ -840,7 +839,7 @@ remoteDriver <-
         behaviour. buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. 
         Defaults to 'LEFT'"
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/buttondown'),
-                "POST",qdata = toJSON(list(button = buttonId)))
+                "POST", qdata = list(button = buttonId))
       },
       
       buttonup = function(buttonId = 0){
@@ -850,7 +849,7 @@ remoteDriver <-
         out-of-order commands. buttonId - any one of 'LEFT'/0 'MIDDLE'/1 
         'RIGHT'/2. Defaults to 'LEFT'"
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/buttonup'),
-                "POST",qdata = toJSON(list(button = buttonId)))
+                "POST", qdata = list(button = buttonId))
       },
       
       getLogTypes = function(){
@@ -875,7 +874,7 @@ remoteDriver <-
         }
         "
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/log'),
-                "POST",qdata = toJSON(list(type = type)))
+                "POST", qdata = list(type = type))
         .self$value
       },
       
@@ -890,7 +889,7 @@ remoteDriver <-
         \\code{\\link{phantom}}"
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                        '/phantom/execute'),
-                "POST",qdata = toJSON(list(script = script, args = args))
+                "POST", qdata = list(script = script, args = args)
         )
         .self$value
       },
