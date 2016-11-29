@@ -19,7 +19,7 @@
 #'      version(""), platform(ANY),
 #'      javascript(TRUE). See examples for more information on use.
 #'
-#' @importFrom RCurl base64Decode
+#' @importFrom openssl base64_decode
 #' @importFrom rjson toJSON
 #' @field remoteServerAddr Object of class \code{"character"}, giving the 
 #'    ip of the remote server. Defaults to localhost
@@ -628,7 +628,7 @@ remoteDriver <-
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/screenshot'))
         if(display){
           tmp <- paste0(tempdir(), '/tmpScreenShot.png')
-          writeBin(base64Decode(.self$value[[1]], "raw"), tmp)
+          writeBin(base64_decode(.self$value[[1]]), tmp)
           viewer <- getOption("viewer")
           if (!is.null(viewer) && useViewer){
             viewer(tmp)
@@ -639,7 +639,7 @@ remoteDriver <-
           if(is.null(file)){
             .self$value
           }else{
-            writeBin(base64Decode(.self$value[[1]], "raw"), file)
+            writeBin(base64_decode(.self$value[[1]]), file)
           }
         }
         
