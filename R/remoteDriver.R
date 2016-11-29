@@ -539,7 +539,7 @@ remoteDriver <-
           wInd <- lapply(args, class) == 'webElement'
           args <- lapply(args, function(x){
             if(class(x) == 'webElement'){
-              setNames(as.character(x$elementId), "ELEMENT")
+              list(ELEMENT = x[["elementId"]])
             }else{
               x
             }
@@ -588,7 +588,7 @@ remoteDriver <-
           wInd <- lapply(args, class) == 'webElement'
           args <- lapply(args, function(x){
             if(class(x) == 'webElement'){
-              setNames(as.character(x$elementId), "ELEMENT")
+              list(ELEMENT = x[["elementId"]])
             }else{
               x
             }
@@ -712,6 +712,7 @@ remoteDriver <-
         cookie<-list(name = name,value = value,path = path,
                      domain = domain, httpOnly = httpOnly, 
                      expiry = expiry,secure = secure)
+        cookie <- cookie[!vapply(cookie, is.null, logical(1))]
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/cookie'),
                 "POST", qdata = list(cookie = cookie))
       },
@@ -731,10 +732,9 @@ remoteDriver <-
         )
       },
       
-      getPageSource = function(header = TRUE, .mapUnicode = FALSE){
+      getPageSource = function(...){
         "Get the current page source."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/source'), 
-                header = header, .mapUnicode = .mapUnicode)
+        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/source'))
         .self$value
       },
       
