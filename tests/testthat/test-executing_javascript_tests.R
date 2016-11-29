@@ -17,8 +17,8 @@ test_that("testShouldBeAbleToExecuteSimpleJavascriptAndReturnAnInteger", {
   remDr$navigate(loadPage("nestedElements"))
   result <- remDr$
     executeScript("return document.getElementsByName('checky').length")
-  expect_true(inherits(result[[1]], "numeric"))
-  expect_gt(result[[1]], 1)
+  expect_true(inherits(result[[1]], "integer"))
+  expect_gt(result[[1]], 1L)
 }
 )
 
@@ -44,8 +44,8 @@ test_that("testShouldBeAbleToExecuteSimpleJavascriptAndAStringsArray", {
   skip_on_cran()
   remDr$navigate(loadPage("javascriptPage"))
   result <- remDr$executeScript("return ['zero', 'one', 'two']")
-  expectedResult <- c('zero', 'one', 'two')
-  expect_identical(result[[1]], expectedResult)
+  expectedResult <- list('zero', 'one', 'two')
+  expect_identical(result, expectedResult)
 }
 )
 
@@ -53,7 +53,7 @@ test_that("testShouldBeAbleToExecuteSimpleJavascriptAndReturnAnArray", {
   skip_on_cran()
   remDr$navigate(loadPage("javascriptPage"))
   result <- remDr$executeScript("return ['zero', [true, false]]")
-  expectedResult <- list('zero', c(TRUE, FALSE))
+  expectedResult <- list('zero', list(TRUE, FALSE))
   expect_identical(result, expectedResult)
 }
 )
@@ -64,7 +64,7 @@ test_that("testPassingAndReturningAnIntShouldReturnAWholeNumber", {
   remDr$navigate(loadPage("javascriptPage"))
   result <- remDr$executeScript("return arguments[0]", 
                                 list(expectedResult))
-  expect_true(inherits(result[[1]], "numeric"))
+  expect_true(inherits(result[[1]], "integer"))
   expect_equal(result[[1]], expectedResult)
 }
 )
@@ -181,7 +181,7 @@ test_that("testShouldBeAbleToCreateAPersistentValue", {
 test_that("testCanPassANone", {
   skip_on_cran()
   remDr$navigate(loadPage("simpleTest"))
-  res <- remDr$executeScript("return arguments[0] === null", list(NULL))
+  res <- remDr$executeScript("return arguments[0] === null", list(NA))
   expect_true(res[[1]])
 }
 )

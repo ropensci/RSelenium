@@ -212,7 +212,7 @@ available. phantomjs for example returns a har log type which is a
 single-entry log, with the HAR (HTTP Archive) of the current 
 webpage, since the first load (it's cleared at every unload event)}
 
-\item{\code{getPageSource(header = TRUE, .mapUnicode = FALSE)}}{Get the current page source.}
+\item{\code{getPageSource(...)}}{Get the current page source.}
 
 \item{\code{getSessions()}}{Returns a list of the currently active sessions. Each session 
 will be returned as a list containing amongst other items:
