@@ -6,10 +6,7 @@
 #'    describes how drivers may respond. With a wide range of browsers etc 
 #'    the response can be variable.
 #'  
-#' @importFrom RCurl basicHeaderGatherer basicTextGatherer debugGatherer
-#'    getURLContent
 #' @importFrom methods setRefClass new
-#' @importFrom rjson fromJSON
 #' @field statusCodes A list with status codes and their descriptions.
 #' @field status A status code summarizing the result of the command. A 
 #'    non-zero value indicates that the command failed. A value of one is 
@@ -115,26 +112,11 @@ errorHandler <-
         function(ipAddr, method = "GET",
                  httpheader = c('Content-Type' = 
                                   'application/json;charset=UTF-8'),
-                 qdata = NULL, json = FALSE, header = TRUE,
-                 .mapUnicode = TRUE){
+                 qdata = NULL, json = FALSE){
           "A method to communicate with the remote server implementing the 
           JSON wire protocol."
-        h <- basicHeaderGatherer()
-        w <- basicTextGatherer(.mapUnicode = .mapUnicode)
-        d <- debugGatherer()
-        getUC.params <- if(is.null(qdata)){
-          list(url = ipAddr, customrequest = method, 
-               httpheader = httpheader, isHTTP = FALSE)
-        }else{
-          list(url = ipAddr, customrequest = method,
-               httpheader = httpheader, postfields = qdata, isHTTP = FALSE)
-        }
-        if(header){
-          getUC.params <- 
-            c(getUC.params, 
-              list(headerfunction = h$update, writefunction = w$update)
-            )
-        }
+        getUC.params <- 
+          list(url = ipAddr, verb = method, body = qdata, encode = "json")
         eMessage <- list(
           "Invalid call to server. Please check you have opened a browser.",
           paste0("Couldnt connect to host on ", serverURL, 
@@ -144,7 +126,7 @@ errorHandler <-
           }
         )
         res <- tryCatch(
-          {do.call(getURLContent, getUC.params)}, 
+          {do.call(httr::VERB, getUC.params)}, 
           error = function(e){
             err <- switch(
               e$message,
@@ -152,74 +134,55 @@ errorHandler <-
               "couldn't connect to host" = eMessage[[2]],
               eMessage[[3]](e$message)
           )
-          message(err)
-          NA
+          e
         }
         )
-        if(is.na(res)){stop()}
-        
-        if(header){
-          responseheader <<- as.list(h$value())
-        }
-        debugheader <<- as.list(d$value())
-        res <- w$value()
-        res <- ifelse(is.raw(res), rawToChar(res), res)
-        res1 <- try(fromJSON(res), TRUE)
-        if(identical(class(res1), "try-error") && 
-           grepl("\"value\":", res)){
-          # try manually parse JSON rjson wont handle
-          testRes <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", 
-                         "\\1YYYYY\\3", res)
-          testValue <- sub("(.*?\"value\":\")(.*)(\",\"state\":.*)", 
-                           "\\2", res)
-          res1 <- fromJSON(testRes)
-          res1$value <- gsub("\\\"", "\"", testValue)
-        }
-        if( !identical(class(res1), "try-error")){
-          if(!is.null(res1$status)){status <<- res1$status}
-          if(!is.null(res1$class)){statusclass <<- res1$class}
-          if(!is.null(res1$sessionId)){sessionid <<- res1$sessionId}
-          if(!is.null(res1$hCode)){hcode <<- res1$hCode}
-          if(!is.null(res1$value)){
-            if(length(res1$value) > 0){
-              if(is.list(res1$value)){
-                value <<- res1$value
-              }else{
-                value <<- list(res1$value)                                      
-              }
-            }else{
-              value <<- list()
-            }
-          }
-        }else{
-          # try JSON
-          status <<- 1L # user check for error
-          statusclass <<- NA_character_
-          sessionid <<- NA_character_
-          hcode <<- NA_integer_
-          value <<- list(res)
-          
-        }
-        checkStatus()
+        resContent <- httr::content(res, simplifyVector = FALSE)
+        checkStatus(resContent)
       }
-      , checkStatus = function(){
+      , checkStatus = function(res){
         "An internal method to check the status returned by the server. If 
         status indicates an error an appropriate error message is thrown."
-        if(status > 1){
-          errId <- which(statusCodes$Code == as.integer(status))
-          if(length(errId) > 0){
+        if(!is.null(res[["status"]])){
+          errId <- which(
+            statusCodes[["Code"]] == as.integer(res[["status"]])
+          )
+          if(length(errId) > 0 && res[["status"]] > 1L){
             errMessage <- statusCodes[errId, c("Summary", "Detail")]
-            errMessage$class <- value$class
+            errMessage[["class"]] <- value[["class"]]
             errMessage <- paste("\t", paste(names(errMessage), 
                                             errMessage, sep = ": "))
             errMessage[-1] <- paste("\n", errMessage[-1])
             errMessage <- 
               c(errMessage,
                 "\n\t Further Details: run errorDetails method")
-            if(!is.null(value$message)){
-              message("\nSelenium message:", value$message, "\n")
+            if(!is.null(value[["message"]])){
+              message("\nSelenium message:", value[["message"]], "\n")
             }
             stop(errMessage, call. = FALSE)
+          }
+          status <<- res[["status"]]
+          statusclass <<- if(!is.null(res[["class"]])){
+            res[["class"]]
+          }else{
+            NA_character_
+          }
+          if(!is.null(res[["sessionId"]])){
+            sessionid <<- res[["sessionId"]]
+          }
+          hcode <<- if(!is.null(res[["hCode"]])){
+            as.integer(res[["hCode"]])
+          }else{
+            NA_integer_
+          }
+          value <<- if(!is.null(res[["value"]])){
+            if(is.list(res[["value"]])){
+              res[["value"]]
+            }else{
+              list(res[["value"]])
+            }
+          }else{
+            list()
           }
         }
       }
