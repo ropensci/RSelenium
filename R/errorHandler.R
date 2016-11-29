@@ -144,23 +144,6 @@ errorHandler <-
         "An internal method to check the status returned by the server. If 
         status indicates an error an appropriate error message is thrown."
         if(!is.null(res[["status"]])){
-          errId <- which(
-            statusCodes[["Code"]] == as.integer(res[["status"]])
-          )
-          if(length(errId) > 0 && res[["status"]] > 1L){
-            errMessage <- statusCodes[errId, c("Summary", "Detail")]
-            errMessage[["class"]] <- value[["class"]]
-            errMessage <- paste("\t", paste(names(errMessage), 
-                                            errMessage, sep = ": "))
-            errMessage[-1] <- paste("\n", errMessage[-1])
-            errMessage <- 
-              c(errMessage,
-                "\n\t Further Details: run errorDetails method")
-            if(!is.null(value[["message"]])){
-              message("\nSelenium message:", value[["message"]], "\n")
-            }
-            stop(errMessage, call. = FALSE)
-          }
           status <<- res[["status"]]
           statusclass <<- if(!is.null(res[["class"]])){
             res[["class"]]
@@ -183,6 +166,23 @@ errorHandler <-
             }
           }else{
             list()
+          }
+          errId <- which(
+            statusCodes[["Code"]] == as.integer(status)
+          )
+          if(length(errId) > 0 && status > 1L){
+            errMessage <- statusCodes[errId, c("Summary", "Detail")]
+            errMessage[["class"]] <- value[["class"]]
+            errMessage <- paste("\t", paste(names(errMessage), 
+                                            errMessage, sep = ": "))
+            errMessage[-1] <- paste("\n", errMessage[-1])
+            errMessage <- 
+              c(errMessage,
+                "\n\t Further Details: run errorDetails method")
+            if(!is.null(value[["message"]])){
+              message("\nSelenium message:", value[["message"]], "\n")
+            }
+            stop(errMessage, call. = FALSE)
           }
         }
       }
