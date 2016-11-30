@@ -1005,11 +1005,12 @@ remoteDriver <-
         "Closes the server in practice terminating the process. This is 
         useful for linux systems. On windows the java binary operates as a 
         seperate shell which the user can terminate."
-        qpath <- sprintf(
-          "%s/selenium-server/driver/?cmd=shutDownSeleniumServer", 
-          serverURL
+        servURL <- httr::parse_url(serverURL)
+        servURL[["path"]] <- 
+          "/selenium-server/driver/?cmd=shutDownSeleniumServer"
+        httr::content(
+          httr::GET(httr::build_url(servURL)), encoding = "UTF-8"
         )
-        queryRD(qpath)
       }
     )
   )
