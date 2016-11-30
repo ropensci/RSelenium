@@ -104,7 +104,7 @@ status indicates an error an appropriate error message is thrown.}
 "status")}
 
 \item{\code{queryRD(ipAddr, method = "GET", httpheader = c(`Content-Type` =
-  "application/json;charset=UTF-8"), qdata = NULL, json = FALSE)}}{A method to communicate with the remote server implementing the 
+  "application/json;charset=UTF-8"), qdata = NULL)}}{A method to communicate with the remote server implementing the 
 JSON wire protocol.}
 }}
 

@@ -106,7 +106,7 @@ errorHandler <-
         function(ipAddr, method = "GET",
                  httpheader = c('Content-Type' = 
                                   'application/json;charset=UTF-8'),
-                 qdata = NULL, json = FALSE){
+                 qdata = NULL){
           "A method to communicate with the remote server implementing the 
           JSON wire protocol."
         getUC.params <- 
@@ -121,15 +121,7 @@ errorHandler <-
         )
         res <- tryCatch(
           {do.call(httr::VERB, getUC.params)}, 
-          error = function(e){
-            err <- switch(
-              e$message,
-              "<url> malformed" = eMessage[[1]],
-              "couldn't connect to host" = eMessage[[2]],
-              eMessage[[3]](e$message)
-          )
-          e
-        }
+          error = function(e){e}
         )
         resContent <- httr::content(res, simplifyVector = FALSE)
         checkStatus(resContent)

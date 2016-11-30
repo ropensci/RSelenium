@@ -178,7 +178,6 @@ remoteDriver <-
       version          = "character",
       platform         = "character",
       javascript       = "logical",
-      autoClose        = "logical",
       nativeEvents     = "logical",
       extraCapabilities = "list",
       serverURL        = "character",
@@ -193,7 +192,6 @@ remoteDriver <-
                  version          = "",
                  platform         = "ANY",
                  javascript       = TRUE,
-                 autoClose        = FALSE,
                  nativeEvents     = TRUE,
                  extraCapabilities = list(),
                  ...
@@ -205,7 +203,6 @@ remoteDriver <-
           version <<- version
           platform <<- platform
           javascript <<- javascript
-          autoClose <<- autoClose
           nativeEvents <<- nativeEvents
           extraCapabilities <<- extraCapabilities
           callSuper(...)
@@ -450,7 +447,6 @@ remoteDriver <-
                            serverDetails$value[[x]]$id),"DELETE")
           }
         )
-        autoClose <<- FALSE
       },
       
       getCurrentWindowHandle = function(){
