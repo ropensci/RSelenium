@@ -253,15 +253,15 @@ remoteDriver <-
         queryRD(qpath, "POST", qdata = serverOpts)
         # fudge for sauceLabs not having /sessions
         sessionInfo <<- value
-        if(is.na(sessionid)){
-          # fix for problem with sauceLab when calling internet explorer
-          sessionInfo$id <<- sub(".*hub/session/(.*)", 
-                                 "\\1", responseheader$Location)
-          sessionInfo <<- getSession()
-          sessionInfo$id <<- sessionid
-        }else{
-          sessionInfo$id <<- sessionid
-        }
+        # if(is.na(sessionid)){
+        #   # fix for problem with sauceLab when calling internet explorer
+        #   sessionInfo$id <<- sub(".*hub/session/(.*)", 
+        #                          "\\1", responseheader$Location)
+        #   sessionInfo <<- getSession()
+        #   sessionInfo$id <<- sessionid
+        # }else{
+        sessionInfo$id <<- sessionid
+        # }
         if(!silent){print(sessionInfo)}
         #                                
       },

@@ -97,7 +97,7 @@ errors:
 \section{Methods}{
 
 \describe{
-\item{\code{checkStatus(res)}}{An internal method to check the status returned by the server. If 
+\item{\code{checkStatus(resContent)}}{An internal method to check the status returned by the server. If 
 status indicates an error an appropriate error message is thrown.}
 
 \item{\code{errorDetails(type = "value")}}{Return error details. Type can one of c("value", "class", 
