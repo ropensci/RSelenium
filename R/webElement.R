@@ -59,8 +59,7 @@ webElement <-
         qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',
                         elementId,'/element')
         queryRD(qpath, "POST", 
-                qdata = list(using = using,value = value), 
-                json = TRUE)
+                qdata = list(using = using,value = value))
         elemDetails <- .self$value[[1]]
         webElement$new(as.character(elemDetails))$
           import(.self$export("remoteDriver"))
@@ -87,8 +86,7 @@ webElement <-
         qpath <- paste0(serverURL,'/session/',sessionInfo$id,
                         '/element/',elementId,'/elements')
         queryRD(qpath, "POST", 
-                qdata = list(using = using,value = value), 
-                json = TRUE)
+                qdata = list(using = using,value = value))
         elemDetails <- .self$value
         lapply(elemDetails, 
                function(x){

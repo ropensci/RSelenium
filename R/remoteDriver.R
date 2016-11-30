@@ -216,7 +216,6 @@ remoteDriver <-
             version = version,
             platform = platform,
             javascript = javascript,
-            autoClose = autoClose,
             nativeEvents = nativeEvents,
             extraCapabilities = extraCapabilities
           )
@@ -461,12 +460,9 @@ remoteDriver <-
         getSessions()
         serverDetails <- value
         lapply(
-          seq_along(serverDetails),
+          serverDetails,
           function(x){
-            qpath <- sprintf(
-              "%s/session/%s", 
-              serverURL, serverDetails[[c(x, "id")]]
-            )
+            qpath <- sprintf("%s/session/%s", serverURL, x[["id"]])
             queryRD(qpath, "DELETE")
           }
         )
@@ -612,8 +608,7 @@ remoteDriver <-
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                          '/execute_async'),
                   "POST",
-                  qdata = list(script = script,args = args), 
-                  json = TRUE
+                  qdata = list(script = script,args = args)
           )
         }else{
           "Javascript is not enabled"
@@ -660,8 +655,7 @@ remoteDriver <-
         if(.self$javascript){
           queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/execute'),
                   "POST",
-                  qdata = list(script = script,args = args), 
-                  json = TRUE)
+                  qdata = list(script = script,args = args))
         }else{
           "Javascript is not enabled"
         }
@@ -836,8 +830,7 @@ remoteDriver <-
         }"
         using <- match.arg(using)
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element'),
-                "POST",qdata = list(using = using,value = value),
-                json = TRUE)
+                "POST",qdata = list(using = using,value = value))
         # using value as an argument refer to self
         elemDetails <- .self$value[[1]]
         webElement$new(as.character(elemDetails))$import(.self)
@@ -860,8 +853,7 @@ remoteDriver <-
         }"
         using <- match.arg(using)
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/elements'),
-                "POST",qdata = list(using = using,value = value),
-                json = TRUE)
+                "POST",qdata = list(using = using,value = value))
         elemDetails <- .self$value
         lapply(elemDetails, 
                function(x){webElement$new(as.character(x))$import(.self)}

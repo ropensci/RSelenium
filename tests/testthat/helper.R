@@ -1,7 +1,7 @@
 initFun <- function(){
   
   remDr <- remoteDriver(browserName = "chrome")
-  remDr$open()
+  remDr$open(silent = TRUE)
   # set page load timeout to 3 secs
   remDr$setTimeout(milliseconds = 10000) 
   # wait 5 secs for elements to load
