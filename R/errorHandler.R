@@ -87,25 +87,19 @@ errorHandler <-
     fields   = list(
       statusCodes = "data.frame", 
       status = "numeric", 
-      encoding = "character", 
       statusclass = "character", 
       sessionid = "character", 
       hcode = "numeric", 
-      value = "list", 
-      responseheader = "list", 
-      debugheader = "list"),
+      value = "list"),
     methods  = list(
       initialize = function(){
         # statCodes are status codes stored in sysdata.rda
         statusCodes <<- statCodes
         status <<- 0L # initial status success
-        encoding <<- NA_character_
         statusclass <<- NA_character_
         sessionid <<- NA_character_
         hcode <<- NA_integer_
         value <<- list()
-        responseheader <<- list()
-        debugheader <<- list()
         },
       
       queryRD = 
