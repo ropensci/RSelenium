@@ -103,10 +103,7 @@ errorHandler <-
         },
       
       queryRD = 
-        function(ipAddr, method = "GET",
-                 httpheader = c('Content-Type' = 
-                                  'application/json;charset=UTF-8'),
-                 qdata = NULL){
+        function(ipAddr, method = "GET", qdata = NULL){
           "A method to communicate with the remote server implementing the 
           JSON wire protocol."
         getUC.params <- 

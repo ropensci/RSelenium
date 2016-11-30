@@ -249,11 +249,9 @@ remoteDriver <-
           serverOpts$desiredCapabilities <- 
             c(serverOpts$desiredCapabilities, 
               extraCapabilities)
-          }
-        queryRD(paste0(serverURL,'/session'),
-                "POST",
-                qdata = serverOpts
-        )
+        }
+        qpath <- sprintf("%s/session", serverURL)
+        queryRD(qpath, "POST", qdata = serverOpts)
         # fudge for sauceLabs not having /sessions
         sessionInfo <<- value
         if(is.na(sessionid)){
@@ -276,24 +274,31 @@ remoteDriver <-
           \\item{\\code{capabilities}:}{An object describing session\'s 
             capabilities}
         }'
-        queryRD(paste0(serverURL,'/sessions'))
+        qpath <- sprintf("%s/sessions", serverURL)
+        queryRD(qpath)
         .self$value
       },
       getSession = function(){
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id))
+        qpath <- sprintf("%s/session/%s", serverURL,sessionInfo[["id"]])
+        queryRD(qpath)
         .self$value
       },
       getStatus = function(){
         'Query the server\'s current status. All server implementations 
         should return two basic objects describing the server\'s current 
         platform and when the server was built.'
-        queryRD(paste0(serverURL,'/status'))
+        qpath <- sprintf("%s/status", serverURL)
+        queryRD(qpath)
         .self$value
       },
       getAlertText = function(){
         'Gets the text of the currently displayed JavaScript alert(), 
         confirm() or prompt() dialog.'
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/alert_text'))
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath)
         .self$value
       },
       sendKeysToActiveElement = function(sendKeys){
@@ -307,8 +312,11 @@ remoteDriver <-
         entries are defined in `selKeys` and should be listed with name 
         `key`. See the examples. '
         sendKeys<-list(value = matchSelKeys(sendKeys))
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/keys'),
-                "POST",qdata = sendKeys)
+        qpath <- sprintf(
+          "%s/session/%s/keys", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "POST", qdata = sendKeys)
       },
       
       sendKeysToAlert = function(sendKeys){
@@ -319,16 +327,21 @@ remoteDriver <-
         sendKeys<-list(
           text = paste(matchSelKeys(sendKeys),collapse = "")
         )
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/alert_text'),
-                "POST",qdata = sendKeys)
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "POST", qdata = sendKeys)
       },
       
       acceptAlert = function(){
         "Accepts the currently displayed alert dialog.  Usually, this is 
         equivalent to clicking the 'OK' button in the dialog."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,
-                       '/accept_alert'),
-                "POST")
+        qpath <- sprintf(
+          "%s/session/%s/accept_alert", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "POST")
       },
       
       dismissAlert = function(){
@@ -336,9 +349,11 @@ remoteDriver <-
         prompt() dialogs, this is equivalent to clicking the 'Cancel' 
         button. For alert() dialogs, this is equivalent to clicking the 
         'OK' button."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,
-                       '/dismiss_alert'),
-                "POST")
+        qpath <- sprintf(
+          "%s/session/%s/dismiss_alert", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "POST")
       },
       
       mouseMoveToLocation = function(x = NA_integer_, y = NA_integer_, 
@@ -366,8 +381,11 @@ remoteDriver <-
         }else{
           sendLoc <- c(sendLoc, list(yoffset = as.integer(y)))
         }
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/moveto'),
-                "POST",qdata = sendLoc)
+        qpath <- sprintf(
+          "%s/session/%s/moveto", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "POST", qdata = sendLoc)
       },
       
       setAsyncScriptTimeout = function(milliseconds = 10000){
@@ -375,9 +393,11 @@ remoteDriver <-
         scripts executed by execute_async_script() are permitted to run 
         before they are aborted and a |Timeout| error is returned to the 
         client."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,
-                       '/timeouts/async_script'),
-                "POST",qdata = list(ms = milliseconds))
+        qpath <- sprintf(
+          "%s/session/%s/timeouts/async_script", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "POST", qdata = list(ms = milliseconds))
       },
       
       setImplicitWaitTimeout = function(milliseconds = 10000){
@@ -389,9 +409,11 @@ remoteDriver <-
         the timeout expires, at which point it will return an empty list. 
         If this method is never called, the driver will default to an 
         implicit wait of 0ms."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,
-                       '/timeouts/implicit_wait'),
-                "POST", qdata = list(ms = milliseconds))
+        qpath <- sprintf(
+          "%s/session/%s/timeouts/implicit_wait", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "POST", qdata = list(ms = milliseconds))
       },
       
       setTimeout = function(type = "page load", milliseconds = 10000){
@@ -408,20 +430,31 @@ remoteDriver <-
             milliseconds, that time-limited commands are permitted to run. 
             Defaults to 10000 milliseconds. }
         }"
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/timeouts'),
-                "POST", qdata = list(type = type, ms = milliseconds))
+        qpath <- sprintf(
+          "%s/session/%s/timeouts", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(
+          qpath, "POST", qdata = list(type = type, ms = milliseconds)
+        )
       },
       
       closeWindow = function(){
         "Close the current window."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window'),
-                "DELETE")
+        qpath <- sprintf(
+          "%s/session/%s/window", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "DELETE")
       },
       
       close = function(){
         "Close the current session."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id),
-                "DELETE")
+        qpath <- sprintf(
+          "%s/session/%s", 
+          serverURL, sessionInfo[["id"]]
+        )
+        queryRD(qpath, "DELETE")
       },
       
       closeall = function(){
@@ -430,27 +463,26 @@ remoteDriver <-
         lapply(
           seq_along(serverDetails),
           function(x){
-            queryRD(paste0(serverURL,'/session/',serverDetails[[x]]$id),
-                    "DELETE")
+            qpath <- sprintf(
+              "%s/session/%s", 
+              serverURL, serverDetails[[c(x, "id")]]
+            )
+            queryRD(qpath, "DELETE")
           }
         )
       },
       
       quit = function(){
         "Delete the session & close open browsers."
-        getSessions()
-        serverDetails <- value
-        lapply(
-          seq_along(serverDetails$value),
-          function(x){
-            queryRD(paste0(serverURL,'/session/',
-                           serverDetails$value[[x]]$id),"DELETE")
-          }
-        )
+        closeall()
       },
       
       getCurrentWindowHandle = function(){
         "Retrieve the current window handle."
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                        '/window_handle')
         )
@@ -459,6 +491,10 @@ remoteDriver <-
       
       getWindowHandles = function(){
         "Retrieve the list of window handles used in the session."
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                        '/window_handles')
         )
@@ -468,6 +504,10 @@ remoteDriver <-
       getWindowSize = function(windowId = "current"){
         "Retrieve the window size. `windowid` is optional (default is 
         'current' window). Can pass an appropriate `handle`"
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                        '/window/',windowId,'/size')
         )
@@ -477,6 +517,10 @@ remoteDriver <-
       getWindowPosition = function(windowId = "current"){
         "Retrieve the window position. `windowid` is optional (default is 
         'current' window). Can pass an appropriate `handle`"
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/window/'
                        ,windowId,'/position')
         )
@@ -485,36 +529,60 @@ remoteDriver <-
       
       getCurrentUrl = function(){
         "Retrieve the url of the current page."
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/url'))
         .self$value
       },
       
       navigate = function(url){
         "Navigate to a given url."
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/url'),
                 "POST", qdata = list(url = url))
       },
       
       getTitle = function(url){
         "Get the current page title."
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/title'))
         .self$value
       },
       
       goForward = function(){
         "Equivalent to hitting the forward button on the browser."
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/forward'),
                 "POST")
       },
       
       goBack = function(){
         "Equivalent to hitting the back button on the browser."
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/back'),
                 "POST")
       },
       
       refresh = function(){
         "Reload the current page."
+        qpath <- sprintf(
+          "%s/session/%s/alert_text", 
+          serverURL,sessionInfo[["id"]]
+        )
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/refresh'),
                 "POST")
       },
