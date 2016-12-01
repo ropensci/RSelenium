@@ -701,9 +701,9 @@ remoteDriver <-
         "Change focus to another frame on the page. Id can be 
         string|number|null|WebElement Object. If the Id is null, the 
         server should switch to the page's default content."
-        if(class(Id) == "webElement"){
+        if(inherits(Id, "webElement")){
           # pass the webElement as Json to SS
-          Id <- setNames(as.character(Id$elementId), "ELEMENT")
+          Id <- list("ELEMENT" = as.character(Id$elementId))
         }
         qpath <- sprintf(
           "%s/session/%s/frame", 
