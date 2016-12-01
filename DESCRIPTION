@@ -1,7 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for Selenium WebDriver
-Version: 1.5.1
+Version: 1.6.0
 Authors@R: person("John", "Harrison", , "johndharrison0@gmail.com", 
     role = c("aut", "cre"), comment = "R package RSelenium")
 Description: The RSelenium package provides a set of R bindings for the
@@ -21,7 +21,7 @@ Additional_repositories: http://www.omegahat.net/R
 Depends:
     R (>= 3.0.0)
 Imports:
-    RCurl,XML,methods,caTools,tools,utils,rjson
+    XML,methods,caTools,tools,utils, openssl, httr
 Suggests:
     testthat,
     knitr,

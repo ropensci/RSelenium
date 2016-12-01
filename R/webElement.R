@@ -59,7 +59,7 @@ webElement <-
         qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',
                         elementId,'/element')
         queryRD(qpath, "POST", 
-                qdata = toJSON(list(using = using,value = value)), 
+                qdata = list(using = using,value = value), 
                 json = TRUE)
         elemDetails <- .self$value[[1]]
         webElement$new(as.character(elemDetails))$
@@ -87,7 +87,7 @@ webElement <-
         qpath <- paste0(serverURL,'/session/',sessionInfo$id,
                         '/element/',elementId,'/elements')
         queryRD(qpath, "POST", 
-                qdata = toJSON(list(using = using,value = value)), 
+                qdata = list(using = using,value = value), 
                 json = TRUE)
         elemDetails <- .self$value
         lapply(elemDetails, 
@@ -125,10 +125,10 @@ webElement <-
         sent as a list. Plain text is enter as an unnamed element of the 
         list. Keyboard entries are defined in `selKeys` and should be 
         listed with name `key`. See the examples."
-        sendKeys<-toJSON(list(value = matchSelKeys(sendKeys)))
+        sendKeys <- list(value = matchSelKeys(sendKeys))
         queryRD(paste0(serverURL,'/session/',sessionInfo$id,
                        '/element/',elementId,'/value'),
-                "POST",qdata = sendKeys)
+                "POST", qdata = sendKeys)
       },
       
       isElementSelected = function(){
