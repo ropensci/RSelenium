@@ -276,7 +276,7 @@ webElement <-
         "Utility function to set an elements atrributes."
         if(.self$javascript){
           jS <- "arguments[0].setAttribute(arguments[1], arguments[2]);"
-          executeScript(jS, list(.self, attributeName, value))
+          invisible(executeScript(jS, list(.self, attributeName, value)))
         }else{
           "Javascript is not enabled"
         }
@@ -300,8 +300,28 @@ webElement <-
           "Javascript is not enabled"
         }
         
-      }
+      },
       
+      selectTag = function(){
+        "Utility function to return options from a select DOM node. The 
+        option nodes are returned as webElements. The option text and the 
+        value of the option attribute 'value' are returned also. If this
+        method is called on a webElement that is not a select DOM node an 
+        error will result."
+        if(!identical(getElementTagName()[[1]], "select")){
+          stop(
+            paste("element does not appear to point"
+                     ,"to a select element in DOM.")
+          )
+        }
+        options <- findChildElements("css", "option")
+        script <- "var shtml = arguments[0]; return shtml.outerHTML;"
+        selectHTML <- executeScript(script, list(.self))
+        shXML <- XML::htmlParse(selectHTML[[1]])
+        optiontext <- unlist(shXML["//option", fun = XML::xmlValue])
+        vfun <- function(node){ XML::xmlGetAttr(node, "value")}
+        optionvalues<- unlist(shXML["//option", fun = vfun])
+        list(elements = options, text = optiontext, value = optionvalues)}
     )
   )
 
