@@ -1,7 +1,7 @@
 context("alerts_tests")
 init <- initFun()
 remDr <- init$remDr; rdBrowser <- init$rdBrowser; loadPage <- init$loadPage
-on.exit(remDr$deleteSession())
+on.exit(remDr$closeall())
 
 #1
 test_that("testShouldBeAbleToOverrideTheWindowAlertMethod", {
