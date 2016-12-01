@@ -14,5 +14,5 @@ test_that("canCheckErrorDetails", {
   dumRD <- remoteDriver(port = 9999L)
   expect_identical(dumRD$errorDetails(), list())
   expect_identical(dumRD$errorDetails("class"), NA_character_)
-  expect_identical(dumRD$errorDetails("status"), 13L)
+  expect_identical(dumRD$errorDetails("status"), 0L)
 })
