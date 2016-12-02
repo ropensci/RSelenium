@@ -26,3 +26,14 @@ test_that("canSelectTagOptions", {
   expect_identical(options[["text"]], exT)
 })
 
+test_that("errorWhenSelectTagNonSelectElement", {
+  remDr$navigate(loadPage("nestedElements"))
+  elem <- remDr$findElement("id", "test_id")
+  expect_error(elem$selectTag())
+})
+
+test_that("canPrintWebElement", {
+  remDr$navigate(loadPage("nestedElements"))
+  elem <- remDr$findElement("id", "test_id")
+  expect_output(print(elem), "webElement fields")
+})

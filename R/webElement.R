@@ -310,7 +310,7 @@ webElement <-
         error will result."
         if(!identical(getElementTagName()[[1]], "select")){
           stop(
-            paste("element does not appear to point"
+            paste("webElement does not appear to point"
                      ,"to a select element in DOM.")
           )
         }
