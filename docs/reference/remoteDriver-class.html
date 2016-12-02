@@ -110,6 +110,8 @@ server on which to connect</dd></p>
     <p><dt><code>browserName</code></dt><dd>Object of class <code>&quot;character&quot;</code>. The name of the 
 browser being used; should be one of chrome|firefox|htmlunit|
 internet explorer|iphone.</dd></p>
+    <p><dt><code>path</code></dt><dd>base URL path prefix for commands on the remote server. 
+Defaults to &quot;/wd/hub&quot;</dd></p>
     <p><dt><code>version</code></dt><dd>Object of class <code>&quot;character&quot;</code>. The browser version, 
 or the empty string if unknown.</dd></p>
     <p><dt><code>platform</code></dt><dd>Object of class <code>&quot;character&quot;</code>. A key specifying 
@@ -258,7 +260,7 @@ types, for instance, for performance logging may also be
 available. phantomjs for example returns a har log type which is a 
 single-entry log, with the HAR (HTTP Archive) of the current 
 webpage, since the first load (it&#39;s cleared at every unload event)</dd></p>
-    <p><dt><code>getPageSource(header = TRUE, .mapUnicode = FALSE)</code></dt><dd>Get the current page source.</dd></p>
+    <p><dt><code>getPageSource(...)</code></dt><dd>Get the current page source.</dd></p>
     <p><dt><code>getSessions()</code></dt><dd>Returns a list of the currently active sessions. Each session 
 will be returned as a list containing amongst other items:
 <dl class='dl-horizontal'>

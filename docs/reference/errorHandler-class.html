@@ -167,13 +167,11 @@ errors:
 
     <p></p>
     <p><dl class='dl-horizontal'>
-<dt><code>checkStatus()</code></dt><dd>An internal method to check the status returned by the server. If 
+<dt><code>checkStatus(resContent)</code></dt><dd>An internal method to check the status returned by the server. If 
 status indicates an error an appropriate error message is thrown.</dd></p>
     <p><dt><code>errorDetails(type = &quot;value&quot;)</code></dt><dd>Return error details. Type can one of c(&quot;value&quot;, &quot;class&quot;, 
 &quot;status&quot;)</dd></p>
-    <p><dt><code>queryRD(ipAddr, method = &quot;GET&quot;, httpheader = c(`Content-Type` =
-  &quot;application/json;charset=UTF-8&quot;), qdata = NULL, json = FALSE,
-  header = TRUE, .mapUnicode = TRUE)</code></dt><dd>A method to communicate with the remote server implementing the 
+    <p><dt><code>queryRD(ipAddr, method = &quot;GET&quot;, qdata = NULL)</code></dt><dd>A method to communicate with the remote server implementing the 
 JSON wire protocol.</dd>
 </dl></p>
     

@@ -61,43 +61,63 @@
 </div>
 <div id="how-do-i-get-the-selenium-server-stand-alone-binary" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#how-do-i-get-the-selenium-server-stand-alone-binary" class="anchor"> </a></body></html>How do I get the Selenium Server stand-alone binary?</h3>
-<p>RSelenium has a built-in function that will download the stand-alone java binary and place it in the RSelenium package location in the <code>/bin/</code> directory. If you would like to install elsewhere the function takes a <code>dir</code> argument and can also update an existing binary.</p>
-<pre><code>RSelenium::checkForServer()</code></pre>
-<p>If you would like to download the binary manually it is currently found <a href="http://selenium-release.storage.googleapis.com/index.html">here</a>. Look for <code>selenium-server-standalone-x.xx.x.jar</code>.</p>
+<p>You can download the latest Selenium Server binary manually it is currently found <a href="http://selenium-release.storage.googleapis.com/index.html">here</a>. Look for <code>selenium-server-standalone-x.xx.x.jar</code>.</p>
 </div>
 <div id="how-do-i-run-the-selenium-server" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#how-do-i-run-the-selenium-server" class="anchor"> </a></body></html>How do I run the Selenium Server?</h3>
-<p>There is a utility function included in <code>RSelenium</code> to run an existing stand-alone Selenium Server binary.</p>
-<pre><code>RSelenium::startServer()</code></pre>
-<p>By default it looks in the <code>RSelenium</code> package <code>/bin/</code> directory. It has an optional <code>dir</code> argument if your binary is elsewhere. Alternatively you can run the binary manually. Open a console in your OS and navigate to where the binary is located and run:</p>
+<p>The recommended way to run a Selenium Server is by running a Docker container. There is a seperate vignette which covers the using <code>RSelenium</code> with Docker see <code><a href="../articles/RSelenium-docker.html">vignette("RSelenium-docker", package = "RSelenium")</a></code>.</p>
+<p>Alternatively you can run the binary manually. Open a console in your OS and navigate to where the binary is located and run:</p>
 <pre><code>java -jar selenium-server-standalone-x.xx.x.jar</code></pre>
 <p>By default the <code>Selenium Server</code> listens for connections on port 4444.</p>
+<p><strong>Note for Mac OSX: The default port 4444 is sometimes used by other programs such as kerberos. In our examples we use port 4445 in respect of this and for cdonsistency with the Docker vignette.</strong></p>
 </div>
 <div id="how-do-i-connect-to-a-running-server" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#how-do-i-connect-to-a-running-server" class="anchor"> </a></body></html>How do I connect to a running server?</h3>
 <p><code>RSelenium</code> has a main reference class named <code>remoteDriver</code>. To connect to a server you need to instantiate a new <code>remoteDriver</code> with appropriate options.</p>
-<pre><code># RSelenium::startServer() if required
+<pre><code># Run a server for example using Docker
+# docker run -d -p 4445:4444 selenium/standalone-firefox:2.53.1
+# Use a debug image with a VNC viewer if you wish to view the browser
+# docker run -d -p 5901:5900 -p 127.0.0.1:4445:4444 --link http-server selenium/standalone-firefox-debug:2.53.1
+# See Docker vignette for more detail or run a Selenium Server manually.
+
 require(RSelenium)
 remDr &lt;- remoteDriver(remoteServerAddr = "localhost" 
-                      , port = 4444
+                      , port = 4445L
                       , browserName = "firefox"
                       )</code></pre>
-<p>It would have been sufficient to call <code>remDr &lt;- remoteDriver()</code> but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on the <code>sauceLabs</code> vignette. To connect to the server use the <code>open</code> method.</p>
+<p><strong>Note for Windows: If you are using Docker toolbox your remote server address will not be localhost. You need to use the ip address of the VM that is running docker for example</strong></p>
+<pre><code>$ docker-machine ip
+192.168.99.100</code></pre>
+<p><strong>See the Docker vignette for further details. The newer Docker for windows however should be accessible on the localhost.</strong></p>
+<p>It would have been sufficient to call <code>remDr &lt;- remoteDriver(port = 4445L)</code> but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on the <code>sauceLabs</code> vignette. To connect to the server use the <code>open</code> method.</p>
 <pre><code>remDr$open()</code></pre>
 <p>RSelenium should now have a connection to the Selenium Server. You can query the status of the remote Server using the <code>status</code> method.</p>
 <pre><code>&gt; remDr$getStatus()
+$build
+$build$version
+[1] "2.53.1"
+
+$build$revision
+[1] "a36b8b1"
+
+$build$time
+[1] "2016-06-30 17:37:03"
+
+
 $os
-              arch               name            version 
-           "amd64"            "Linux" "3.8.0-35-generic" 
+$os$name
+[1] "Linux"
+
+$os$arch
+[1] "amd64"
+
+$os$version
+[1] "4.4.0-47-generic"
+
 
 $java
-   version 
-"1.6.0_27" 
-
-$build
-             revision                  time               version 
-            "ff23eac" "2013-12-16 16:11:15"              "2.39.0" 
-</code></pre>
+$java$version
+[1] "1.8.0_91"</code></pre>
 </div>
 </div>
 <div id="navigating-using-rselenium-" class="section level2">
@@ -105,7 +125,7 @@ $build
 <div id="basic-navigation" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#basic-navigation" class="anchor"> </a></body></html>Basic Navigation</h3>
 <p>To start with we navigate to a url.</p>
-<pre><code>remDr$navigate("http://www.google.com")</code></pre>
+<pre><code>remDr$navigate("http://www.google.com/ncr")</code></pre>
 <p>Then we navigate to a second page.</p>
 <pre><code>remDr$navigate("http://www.bbc.co.uk")
 
@@ -145,69 +165,89 @@ remDr$goForward()
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p>The query box on the front page of <code>http://www.google.com</code> has html code <code>input id="gbqfq" class="gbqfif"</code> associated with it. The full html associated with the input tag is:</p>
-<pre><code>&lt;input type="text" value="" autocomplete="off" name="q" class="gbqfif" id="gbqfq" style="border: medium none; padding: 0px; margin: 0px; height: auto; width: 100%; background: url(&amp;quot;data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw%3D%3D&amp;quot;) repeat scroll 0% 0% transparent; position: absolute; z-index: 6; left: 0px; outline: medium none;" dir="ltr" spellcheck="false"&gt;
-</code></pre>
-<div id="search-by-id-" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#search-by-id-" class="anchor"> </a></body></html>Search by id.</h3>
-<p>To find this element in the DOM a number of methods can be used. We can search by the id.</p>
+<p>The query box on the front page of <code>http://www.google.com</code> has html code <code>&lt;input id=..... name="q" ...&lt;/input&gt;</code> associated with it. The full html associated with the input tag is:</p>
+<pre><code>&lt;input spellcheck="false" dir="ltr" style="border: medium none; padding: 0px; margin: 0px; height: auto; width: 100%; background: transparent url(&amp;quot;data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw%3D%3D&amp;quot;) repeat scroll 0% 0%; position: absolute; z-index: 6; left: 0px; outline: medium none;" aria-autocomplete="both" role="combobox" aria-haspopup="false" class="gsfi" id="lst-ib" maxlength="2048" name="q" autocomplete="off" title="Search" value="" aria-label="Search" type="text"&gt;</code></pre>
+<p><strong>NOTE: The above HTML is very liable to change however the input node has had an attribute name = q for sometime so we can mostly rely on this.</strong></p>
+<div id="search-by-name-" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#search-by-name-" class="anchor"> </a></body></html>Search by name.</h3>
+<p>To find this element in the DOM a number of methods can be used. We can search by the name.</p>
 <pre><code>remDr$navigate("http://www.google.com/ncr")
-webElem &lt;- remDr$findElement(using = 'id', value = "gbqfq")
+webElem &lt;- remDr$findElement(using = 'name', value = "q")
 
-&gt; webElem$getElementAttribute("id")
+&gt; webElem$getElementAttribute("name")
 [[1]]
-[1] "gbqfq"
+[1] "q"
 
 &gt; webElem$getElementAttribute("class")
 [[1]]
-[1] "gbqfif"
+[1] "gsfi lst-d-f"
+
+&gt; webElem$getElementAttribute("id")
+[[1]]
+[1] "lst-ib"
 </code></pre>
+</div>
+<div id="search-by-id" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#search-by-id" class="anchor"> </a></body></html>Search by id</h3>
+<p>In HTML the id of a DOM element should be unique so this is usually a good locator to use. As noted above the google id of the query box may change (the one we see is &ldquo;lst-ib&rdquo; so we use that). You may see an alternative &ldquo;id&rdquo;.</p>
+<pre><code>remDr$navigate("http://www.google.com/ncr")
+webElem &lt;- remDr$findElement(using = 'id', value = "lst-ib")
+</code></pre>
+<div id="highlight-an-element" class="section level4">
+<h4 class="hasAnchor"><html><body><a href="#highlight-an-element" class="anchor"> </a></body></html>Highlight an element</h4>
+<p>An element that is visible in the DOM can usually be highlighted. Using our <code>webElem</code> which is an object of class <code>"webElement"</code> we can use the associated <code>highlight</code> method to visually indicate to us we have the correct element. Try it:</p>
+<pre><code>webElem$highlightElement()</code></pre>
+<p>You should see the query box flashing black and yellow to indicate visually the DOM element you have selected.</p>
+</div>
 </div>
 <div id="search-by-class-" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#search-by-class-" class="anchor"> </a></body></html>Search by class.</h3>
 <p>We can also search by class name.</p>
-<pre><code>webElem &lt;- remDr$findElement(using = 'class name', "gbqfif")
+<pre><code>remDr$navigate("http://www.google.com/ncr")
+webElem &lt;- remDr$findElement(using = 'class', "gsfi")
 
 &gt; webElem$getElementAttribute("class")
 [[1]]
-[1] "gbqfif"
+[1] "gsfi lst-d-f"
 
 &gt; webElem$getElementAttribute("type")
 [[1]]
 [1] "text"
 </code></pre>
+<p><strong>NOTE the clas is listed as &ldquo;gsfi lst-d-f&rdquo; and we searched using &ldquo;gsfi&rdquo;? This is an example of a compound class. The class name selector can only be used for elements with a single class (&ldquo;gsfi lst-d-f&rdquo; indicates two classes &ldquo;gsfi&rdquo; and &ldquo;lst-d-f&rdquo;). For more complicated select queries we therefore use CSS or xpath instead.</strong></p>
 </div>
 <div id="search-using-css-selectors" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#search-using-css-selectors" class="anchor"> </a></body></html>Search using css-selectors</h3>
-<p>The class is denoted by <code>.</code> when using css selectors. To search on class using css selectors we would use</p>
-<pre><code>webElem &lt;- remDr$findElement(using = 'css selector', "input.gbqfif")
+<p>To replicate our name search using css selectors we could use</p>
+<pre><code>webElem &lt;- remDr$findElement(using = 'css', "input[name='q']")
+
+# OR
+
+webElem2 &lt;- remDr$findElement(using = 'css', "[name='q']")
 </code></pre>
-<p>and to search on id using css-selectors</p>
-<pre><code>webElem &lt;- remDr$findElement(using = 'css selector', "input#gbqfq")
-</code></pre>
-<p>A good example of searching using css-selectors is given <a href="http://saucelabs.com/resources/selenium/css-selectors">here</a>.</p>
-</div>
-<div id="search-by-name" class="section level3">
-<h3 class="hasAnchor"><html><body><a href="#search-by-name" class="anchor"> </a></body></html>Search by name</h3>
-<p>To search using the <code>name</code> if given of the element. Note that ids are unique in a given html page. Names are not necessarily unique.</p>
-<pre><code>webElem &lt;- remDr$findElement(using = 'name', "q")
- 
+<p>We can see we get the same element (using the compareElements method of the <code>"webElement"</code> class):</p>
+<pre><code>&gt; webElem$compareElements(webElem2)
+[[1]]
+[1] TRUE</code></pre>
+<p>and to search on id using css-selectors (again not the id you see maybe different)</p>
+<pre><code>webElem &lt;- remDr$findElement(using = 'css', "input#lst-ib")
 &gt; webElem$getElementAttribute("name")
 [[1]]
 [1] "q"
-
-&gt; webElem$getElementAttribute("id")
-[[1]]
-[1] "gbqfq"
 </code></pre>
+<p>and class</p>
+<pre><code>webElem &lt;- remDr$findElement('css', "[class = 'gsfi lst-d-f']")</code></pre>
+<p><strong>NOTE no issue with compound class names with CSS</strong></p>
+<p>A good example of searching using css-selectors is given <a href="http://saucelabs.com/resources/selenium/css-selectors">here</a>.</p>
 </div>
 <div id="search-using-xpath" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#search-using-xpath" class="anchor"> </a></body></html>Search using xpath</h3>
-<p>The final option is to search using xpath. Normally one would use xpath by default when searching.</p>
+<p>The final option is to search using xpath. Normally one would use xpath by default when searching or CSS. Both are the go-to options.</p>
 <p>Xpath using id.</p>
-<pre><code>webElem &lt;- remDr$findElement(using = 'xpath', "//*/input[@id = 'gbqfq']")</code></pre>
+<pre><code>webElem &lt;- remDr$findElement('xpath', "//input[@id = 'lst-ib']")</code></pre>
 <p>Xpath using class.</p>
-<pre><code>webElem &lt;- remDr$findElement(using = 'xpath', "//*/input[@class = 'gbqfif']")</code></pre>
+<pre><code>webElem &lt;- remDr$findElement('xpath', "//input[@class = 'gsfi lst-d-f']")</code></pre>
+<p><strong>NOTE with xpath we have no issues using a compound class name.</strong></p>
 </div>
 </div>
 <div id="sending-events-to-elements-" class="section level2">
@@ -217,21 +257,21 @@ webElem &lt;- remDr$findElement(using = 'id', value = "gbqfq")
 <h3 class="hasAnchor"><html><body><a href="#sending-text-to-elements" class="anchor"> </a></body></html>Sending text to elements</h3>
 <p>Suppose we would like to search for <code>R cran</code> on google. We would need to find the element for the query box and send the appropriate text to it. We can do this using the <code>sendKeysToElement</code> method for the <code>webElement</code> class.</p>
 <pre><code>remDr$navigate("http://www.google.com/ncr")
-webElem &lt;- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
+webElem &lt;- remDr$findElement(using = "css", "[name = 'q']")
 webElem$sendKeysToElement(list("R Cran"))
 </code></pre>
 </div>
 <div id="sending-key-presses-to-elements" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#sending-key-presses-to-elements" class="anchor"> </a></body></html>Sending key presses to elements</h3>
-<p>We should see that the text <code>R Cran</code> has now been entered into the query box. How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as <code>"\uE007"</code>. So we could use:</p>
+<p>We should see that the text <code>R Cran</code> has now been entered into the query box. How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as <code>"\uE007"</code>(its UTF-8 code) . So we could use:</p>
 <pre><code>remDr$navigate("http://www.google.com/ncr")
-webElem &lt;- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
+webElem &lt;- remDr$findElement(using = "css", "[name = 'q']")
 webElem$sendKeysToElement(list("R Cran", "\uE007"))
 </code></pre>
-<p>It is not very easy to remember utf8 codes for appropriate keys so a mapping has been provided in <code>RSelenium</code>. `?selkeys&rsquo; will bring up a help page explaining the mapping. The utf codes given <a href="http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value">here</a> have been mapped to easy to remember names.</p>
+<p>It is not very easy to remember UTF-8 codes for appropriate keys so a mapping has been provided in <code>RSelenium</code>. `?selkeys&rsquo; will bring up a help page explaining the mapping. The UTF-8 codes have been mapped to easy to remember names.</p>
 <p>To use <code>selkeys</code> we would send the following</p>
 <pre><code>remDr$navigate("http://www.google.com/ncr")
-webElem &lt;- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
+webElem &lt;- remDr$findElement(using = "css", "[name = 'q']")
 webElem$sendKeysToElement(list("R Cran", key = "enter"))
 </code></pre>
 <p>Typing <code>selKeys</code> into the console will bring up the list of mappings.</p>
@@ -240,28 +280,25 @@ webElem$sendKeysToElement(list("R Cran", key = "enter"))
 <h3 class="hasAnchor"><html><body><a href="#sending-mouse-events-to-elements" class="anchor"> </a></body></html>Sending mouse events to elements</h3>
 <p>For this example we will go back to the google frontpage and search for <code>R Cran</code> then we will click the link for the <code>The Comprehensive R Archive Network</code>.</p>
 <pre><code>remDr$navigate("http://www.google.com/ncr")
-webElem &lt;- remDr$findElement(using = "xpath", "//*/input[@id = 'gbqfq']")
+webElem &lt;- remDr$findElement(using = "css", "[name = 'q']")
 webElem$sendKeysToElement(list("R Cran", key = "enter"))
 </code></pre>
-<p><code>&lt;li class="g"&gt;</code> contains the search results we can find all the search entries on the first page using the <code>findElements</code> method. The header for each link is contained further in with a <code>&lt;h3 class = "r"&gt;</code> tag. We will access the <code>h3</code> headers first. It will be succinct to find these elements using <code>css selectors</code>.</p>
-<pre><code>webElems &lt;- remDr$findElements(using = 'css selector', "li.g h3.r")
+<p>The header for each link is contained in a <code>&lt;h3 class = "r"&gt;</code> tag. We will access the <code>h3</code> headers first. It will be succinct to find these elements using <code>css selectors</code>.</p>
+<pre><code>webElems &lt;- remDr$findElements(using = 'css selector', "h3.r")
 resHeaders &lt;- unlist(lapply(webElems, function(x){x$getElementText()}))
 &gt; resHeaders
- [1] "The Comprehensive R Archive Network"                        
- [2] "Comprehensive R Archive"                                    
- [3] "Mirrors"                                                    
- [4] "Contributed Packages"                                       
- [5] "R for Mac OS X"                                             
- [6] "Download R 3.0.2"                                           
- [7] "CRAN Repository Policy"                                     
- [8] "The R Project for Statistical Computing"                    
- [9] "Cran - Wikipedia, the free encyclopedia"                    
-[10] "Comprehensive R Archive Network (CRAN) - StatLib - Carnegie"
-[11] "CRAN - Package R.methodsS3"                                 
-[12] "CRAN - Package R.cache"                                     
-[13] "Ubuntu - Details of package r-cran-sp in lucid"
+ [1] "The Comprehensive R Archive Network"                                   
+ [2] "Download R-3.3.2 for Windows. The R-project for statistical ... - CRAN"
+ [3] "About Microsoft R Open: The Enhanced R Distribution . MRAN"            
+ [4] "R (programming language) - Wikipedia"                                  
+ [5] "R-Cran - StatLib - Carnegie Mellon University"                         
+ [6] "Submitting your first package to CRAN, my experience | R-bloggers"     
+ [7] "Debian -- Package Search Results -- r-cran"                            
+ [8] "It's crantastic!"                                                      
+ [9] "METACRAN"                                                              
+[10] "CRAN - Package PopGenReport"   
 </code></pre>
-<p>We can see that the first link is the one we want but in case googles search results change we refer to it as</p>
+<p><strong>NOTE this is how the headers were presented at time of writing. Class names etc. are liable to change.</strong> We can see that the first link is the one we want but in case googles search results change we refer to it as</p>
 <pre><code>webElem &lt;- webElems[[which(resHeaders == "The Comprehensive R Archive Network")]]
 </code></pre>
 <p>How do we click the link. We can use the <code>clickElement</code> method:</p>
@@ -269,7 +306,7 @@ resHeaders &lt;- unlist(lapply(webElems, function(x){x$getElementText()}))
 
 &gt; remDr$getCurrentUrl()
 [[1]]
-[1] "http://cran.r-project.org/"
+[1] "https://cran.r-project.org/"
 
 &gt; remDr$getTitle()
 [[1]]
@@ -283,27 +320,30 @@ resHeaders &lt;- unlist(lapply(webElems, function(x){x$getElementText()}))
 <h3 class="hasAnchor"><html><body><a href="#injecting-javascript-synchronously" class="anchor"> </a></body></html>Injecting JavaScript synchronously</h3>
 <p>Returning to the google homepage we can find the element for the <code>google</code> image. The image has <code>id = "hplogo"</code> and we can use this in an xpath or search by id etc to select the element. In this case we use <code>css selectors</code>:</p>
 <pre><code>remDr$navigate("http://www.google.com/ncr")
-webElem &lt;- remDr$findElement("css selector", "img#hplogo")
+webElem &lt;- remDr$findElement("css", "img#hplogo")
 </code></pre>
 <p>Is the image visible? Clearly it is but we can check using javascript.</p>
-<pre><code>&gt; remDr$executeScript("return document.getElementById('hplogo').hidden;", args = list())
+<pre><code>&gt; script &lt;- "return document.getElementById('hplogo').hidden;"
+&gt; remDr$executeScript(script, args = list())
 [[1]]
 [1] FALSE
 </code></pre>
 <p>Great so the image is not hidden indicated by the <code>FALSE</code>. We can hide it executing some simple JavaScript.</p>
-<pre><code>remDr$executeScript("document.getElementById('hplogo').hidden = true;", args = list())
-
-&gt; remDr$executeScript("return document.getElementById('hplogo').hidden;", args = list())
+<pre><code>&gt; script &lt;- "document.getElementById('hplogo').hidden = true; 
+             return document.getElementById('hplogo').hidden;"
+&gt; remDr$executeScript(script, args = list())
 [[1]]
 [1] TRUE
 </code></pre>
 <p>So now the image is hidden. We used an element here given by <code>id = "hplogo"</code>. We had to use the JavaScript function <code>getElementById</code> to access it. It would be nicer if we could have used <code>webElem</code> which we had specified earlier. If we pass a webElement object as an argument to either <code>executeScript</code> or <code>executeAsyncScript</code> <code>RSelenium</code> will pass it in an appropriate fashion.</p>
-<pre><code>&gt; remDr$executeScript(script = "return arguments[0].hidden = false;", args = list(webElem))
+<pre><code>&gt; script &lt;-"arguments[0].hidden = false; return arguments[0].hidden;"
+&gt; remDr$executeScript(script, args = list(webElem))
 [[1]]
 [1] FALSE
 </code></pre>
 <p>Notive how we passed the web element to the method <code>executeScript</code>. The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided args. If the function returns an element then this will be returned as an object of class webElement:</p>
-<pre><code>test &lt;- remDr$executeScript("return document.getElementById('gbqfq');", args = list())
+<pre><code>script &lt;- "return document.getElementsByName('q');"
+test &lt;- remDr$executeScript(script, args = list())
 
 &gt; test[[1]]
 [1] "remoteDriver fields"
@@ -311,7 +351,7 @@ $remoteServerAddr
 [1] "localhost"
 
 $port
-[1] 4444
+[1] 4445
 
 $browserName
 [1] "firefox"
@@ -325,9 +365,6 @@ $platform
 $javascript
 [1] TRUE
 
-$autoClose
-[1] FALSE
-
 $nativeEvents
 [1] TRUE
 
@@ -336,32 +373,41 @@ list()
 
 [1] "webElement fields"
 $elementId
-[1] 1
+[1] "21"
 
 &gt; class(test[[1]])
 [1] "webElement"
 attr(,"package")
 [1] "RSelenium"
 </code></pre>
+<p>Try to highlight the element as before:</p>
+<pre><code>test[[1]]$highlightElement()</code></pre>
 </div>
 <div id="injecting-javascript-asynchronously" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#injecting-javascript-asynchronously" class="anchor"> </a></body></html>Injecting JavaScript asynchronously</h3>
-<p>I will briefly touch on asynch versus sync calls here. With the current firefox and selenium server combination (firefox 26.0 sel server 2.39.0) I had issues with async javascript calls when <code>nativeEvents = TRUE</code> (the default) was used.</p>
-<p>For the example below I switched to <code>nativeEvents = FALSE</code></p>
-<pre><code>
-remDr &lt;- remoteDriver(nativeEvents = FALSE)
-remDr$open()
-remDr$navigate("http://www.google.com/ncr")
+<p>I will briefly touch on asynch versus sync calls here. We need to set an appropriate asynchronous timeout firstly (that is longer than the async operation we are likely to carryout but it will ensure we will eventually error out in case of an issue)</p>
+<pre><code>remDr$navigate("http://www.google.com/ncr")
 remDr$setAsyncScriptTimeout(10000)
 </code></pre>
 <p>Observe:</p>
-<pre><code>remDr$executeAsyncScript("setTimeout(function(){ alert('Hello'); arguments[arguments.length -1]('DONE');},5000); ", args = list())
-
+<pre><code>webElem &lt;- remDr$findElement("css", "img#hplogo")
+script &lt;- "
+cb = arguments[arguments.length -1];
+webElem = arguments[0];
+setTimeout(function(){webElem.hidden = true; cb('DONE');},5000);"
+remDr$executeAsyncScript(script, args = list(webElem))
 </code></pre>
 <p>versus</p>
-<pre><code>remDr$executeScript("setTimeout(function(){ alert('Hello');},5000); return 'DONE';", args = list())
+<pre><code>remDr$navigate("http://www.google.com/ncr")
+webElem &lt;- remDr$findElement("css", "img#hplogo")
+script &lt;- "
+webElem = arguments[0];
+setTimeout(function(){webElem.hidden = true;},5000);
+return 'DONE';
+"
+remDr$executeScript(script, args = list(webElem))
 </code></pre>
-<p>The async version waits until the callback (defined as the last argument) is called.</p>
+<p>The async version waits until the callback (defined as the last argument <code>arguments[arguments.length -1]</code> as JavaScript is zero-indexed) is called whereas the sync version returns straight away. In both cases the google logo disappears after five seconds.</p>
 </div>
 </div>
 <div id="frames-and-windows-" class="section level2">
@@ -369,35 +415,35 @@ remDr$setAsyncScriptTimeout(10000)
 <p>In the context of a web browser, a frame is a part of a web page or browser window which displays content independent of its container, with the ability to load content independently.</p>
 <div id="frames-in-selenium" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#frames-in-selenium" class="anchor"> </a></body></html>Frames in Selenium</h3>
-<p>We will demonstrate interacting with frames by way of example. The <a href="https://www.R-project.org/">R project</a> conviently contains frames so we shall use <code>RSelenium</code> to interact with it. Assume we have a remoteDriver opened.</p>
-<pre><code>remDr$navigate("http://www.r-project.org/")
+<p>We will demonstrate interacting with frames by way of example. The <a href="https://CRAN.R-project.org/">The Comprehensive R Archive Network</a> conveniently contains frames so we shall use <code>RSelenium</code> to interact with it. Assume we have a remoteDriver opened.</p>
+<pre><code>remDr$navigate("https://CRAN.r-project.org/")
 
-&gt; htmlParse(remDr$getPageSource()[[1]])
-&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+&gt; XML::htmlParse(remDr$getPageSource()[[1]])
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd"&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
 &lt;head&gt;
-&lt;title&gt;The R Project for Statistical Computing&lt;/title&gt;
+&lt;title&gt;The Comprehensive R Archive Network&lt;/title&gt;
+&lt;meta content="text/html; charset=utf-8" http-equiv="content-type"&gt;
 &lt;link type="image/x-icon" href="favicon.ico" rel="icon"&gt;
 &lt;link type="image/x-icon" href="favicon.ico" rel="shortcut icon"&gt;
 &lt;link href="R.css" type="text/css" rel="stylesheet"&gt;
 &lt;/head&gt;
-&lt;frameset border="0" cols="1*, 4*"&gt;
+&lt;frameset style="border: none;" cols="1*, 4*"&gt;
 &lt;frameset rows="120, 1*"&gt;
 &lt;frame frameborder="0" name="logo" src="logo.html"&gt;
 &lt;frame frameborder="0" name="contents" src="navbar.html"&gt;
 &lt;/frameset&gt;
-&lt;frame frameborder="0" name="banner" src="main.shtml"&gt;
+&lt;frame frameborder="0" name="banner" src="banner.shtml"&gt;
 &lt;noframes&gt;
-&amp;lt;h1&amp;gt;The R Project for Statistical Computing&amp;lt;/h1&amp;gt;
+&amp;lt;h1&amp;gt;The Comprehensive R Archive Network&amp;lt;/h1&amp;gt;
 
 Your browser seems not to support frames,
-here is the &amp;lt;A href="navbar.html"&amp;gt;contents page&amp;lt;/A&amp;gt; of the R Project's
-website.
+here is the &amp;lt;A href="navbar.html"&amp;gt;contents page&amp;lt;/A&amp;gt; of CRAN.
 &lt;/noframes&gt;
 &lt;/frameset&gt;
 &lt;/html&gt;
 </code></pre>
-<p>We can see the content is contained in three frames and we dont appear to have access to the content within a frame. Put in the browser we see all the content:</p>
+<p>We can see the content is contained in three frames and we dont appear to have access to the content within a frame. But in the browser we see all the content:</p>
 <pre><code>remDr$maxWindowSize()
 remDr$screenshot(display = TRUE)
 </code></pre>
@@ -407,266 +453,223 @@ RProject front page
 <p><img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/basics/RProject.png" title="RProject front page on linux firefox 26.0" width="100%"></p>
 <p>To access the content we have to switch to a frame using the <code>switchToFrame</code> method of the <code>remoteDriver</code> class.</p>
 <pre><code>webElems &lt;- remDr$findElements(using = "tag name", "frame")
-# webElems &lt;- remDr$findElements("//frame") # using xpath
+# webElems &lt;- remDr$findElements(value = "//frame") # using xpath
+# webElems &lt;- remDr$findElements("css", value = "frame") # using css
 
 &gt; sapply(webElems, function(x){x$getElementAttribute("src")})
 [[1]]
-[1] "http://www.r-project.org/logo.html"
+[1] "https://cran.r-project.org/logo.html"
 
 [[2]]
-[1] "http://www.r-project.org/navbar.html"
+[1] "https://cran.r-project.org/navbar.html"
 
 [[3]]
-[1] "http://www.r-project.org/main.shtml"
+[1] "https://cran.r-project.org/banner.shtml"
+
 
 remDr$switchToFrame(webElems[[2]])  
 
-&gt; htmlParse(remDr$getPageSource()[[1]])
-&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+&gt; XML::htmlParse(remDr$getPageSource()[[1]])
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
 &lt;head&gt;
 &lt;title&gt;R Contents&lt;/title&gt;
+&lt;meta content="text/html; charset=utf-8" http-equiv="content-type"&gt;
 &lt;link href="R.css" type="text/css" rel="stylesheet"&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
-&lt;em class="navigation"&gt;About R&lt;/em&gt;&lt;br&gt;&lt;a target="banner" href="about.html"&gt;What is R?&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="contributors.html"&gt;Contributors&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="screenshots/screenshots.html"&gt;Screenshots&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="news.html"&gt;What's new?&lt;/a&gt;&lt;br&gt;&lt;p&gt;
-&lt;em class="navigation"&gt;Download, Packages&lt;/em&gt;&lt;br&gt;&lt;a target="banner" href="http://cran.r-project.org/mirrors.html"&gt;CRAN&lt;/a&gt;
+&lt;em class="navigation"&gt;CRAN&lt;/em&gt;&lt;br&gt;&lt;a target="banner" href="mirrors.html"&gt;Mirrors&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="//www.R-project.org/news.html"&gt;What's new?&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="web/views/"&gt;Task Views&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="search.html"&gt;Search&lt;/a&gt;&lt;br&gt;&lt;!--&lt;a href="pkg_submit.html" target="_top"&gt;Submit&lt;/a&gt;&lt;BR&gt;--&gt;&lt;p&gt;
+&lt;em class="navigation"&gt;About R&lt;/em&gt;&lt;br&gt;&lt;a target="_top" href="//www.R-project.org/"&gt;R Homepage&lt;/a&gt;&lt;br&gt;&lt;a target="_top" href="http://journal.R-project.org/"&gt;The R Journal&lt;/a&gt;
 
 &lt;/p&gt;
 &lt;p&gt;
-&lt;em class="navigation"&gt;R Project&lt;/em&gt;&lt;br&gt;&lt;a target="banner" href="foundation/main.html"&gt;Foundation&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="foundation/memberlist.html"&gt;Members &amp;amp; Donors&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="mail.html"&gt;Mailing Lists&lt;/a&gt;&lt;br&gt;&lt;a target="_top" href="http://bugs.R-project.org"&gt;Bug Tracking&lt;/a&gt;&lt;br&gt;&lt;a target="_top" href="http://developer.R-project.org"&gt;Developer Page&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="conferences.html"&gt;Conferences&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="search.html"&gt;Search&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
+&lt;em class="navigation"&gt;Software&lt;/em&gt;&lt;br&gt;&lt;a target="banner" href="sources.html"&gt;R Sources&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="bin/"&gt;R Binaries&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="web/packages/"&gt;Packages&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="other-software.html"&gt;Other&lt;/a&gt;
+
+&lt;/p&gt;
 &lt;p&gt;
-&lt;em class="navigation"&gt;Documentation&lt;/em&gt;&lt;br&gt;&lt;a target="banner" href="http://cran.r-project.org/manuals.html"&gt;Manuals&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="http://cran.r-project.org/faqs.html"&gt;FAQs&lt;/a&gt;&lt;br&gt;&lt;a target="_top" href="http://journal.r-project.org"&gt;The R Journal&lt;/a&gt;&lt;br&gt;&lt;!--
-&lt;a href="doc/Rnews/index.html" target="banner"&gt;Newsletter&lt;/a&gt;&lt;br&gt;
---&gt;&lt;a target="_top" href="http://wiki.r-project.org"&gt;Wiki&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="doc/bib/R-books.html"&gt;Books&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="certification.html"&gt;Certification&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="other-docs.html"&gt;Other&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;
-&lt;em class="navigation"&gt;Misc&lt;/em&gt;&lt;br&gt;&lt;a target="_top" href="http://www.bioconductor.org"&gt;Bioconductor&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="other-projects.html"&gt;Related Projects&lt;/a&gt;&lt;br&gt;&lt;a target="_top" href="http://rwiki.sciviews.org/doku.php?id=rugs:r_user_groups"&gt;User Groups&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="links.html"&gt;Links&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
+&lt;em class="navigation"&gt;Documentation&lt;/em&gt;&lt;br&gt;&lt;a target="banner" href="manuals.html"&gt;Manuals&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="faqs.html"&gt;FAQs&lt;/a&gt;&lt;br&gt;&lt;a target="banner" href="other-docs.html"&gt;Contributed&lt;/a&gt;&lt;br&gt;&lt;/p&gt;
 &lt;/body&gt;
 &lt;/html&gt;
  </code></pre>
 <p>Now we see the source code of the navigation sidePanel. Notice how we used a webElement in the method <code>switchToFrame</code>. To further demonstrate we are now &ldquo;in&rdquo; this frame lets get all the <code>href</code> attributes:</p>
-<pre><code>webElems &lt;- remDr$findElements("css selector", "[href]")
-sapply(webElems, function(x){x$getElementAttributes("href")})
+<pre><code>webElems &lt;- remDr$findElements("css", "[href]")
+sapply(webElems, function(x){x$getElementAttribute("href")})
 
 &gt; unlist(sapply(webElems, function(x){x$getElementAttribute("href")}))
- [1] "http://www.r-project.org/R.css"                          
- [2] "http://www.r-project.org/about.html"                     
- [3] "http://www.r-project.org/contributors.html"              
- [4] "http://www.r-project.org/screenshots/screenshots.html"   
- [5] "http://www.r-project.org/news.html"                      
- [6] "http://cran.r-project.org/mirrors.html"                  
- [7] "http://www.r-project.org/foundation/main.html"           
- [8] "http://www.r-project.org/foundation/memberlist.html"     
- [9] "http://www.r-project.org/mail.html"                      
-[10] "http://bugs.r-project.org/"                              
-[11] "http://developer.r-project.org/"                         
-[12] "http://www.r-project.org/conferences.html"               
-[13] "http://www.r-project.org/search.html"                    
-[14] "http://cran.r-project.org/manuals.html"                  
-[15] "http://cran.r-project.org/faqs.html"                     
-[16] "http://journal.r-project.org/"                           
-[17] "http://wiki.r-project.org/"                              
-[18] "http://www.r-project.org/doc/bib/R-books.html"           
-[19] "http://www.r-project.org/certification.html"             
-[20] "http://www.r-project.org/other-docs.html"                
-[21] "http://www.bioconductor.org/"                            
-[22] "http://www.r-project.org/other-projects.html"            
-[23] "http://rwiki.sciviews.org/doku.php?id=rugs:r_user_groups"
-[24] "http://www.r-project.org/links.html" 
-</code></pre>
+[1] "https://cran.r-project.org/R.css"              
+ [2] "https://cran.r-project.org/mirrors.html"       
+ [3] "https://www.r-project.org/news.html"           
+ [4] "https://cran.r-project.org/web/views/"         
+ [5] "https://cran.r-project.org/search.html"        
+ [6] "https://www.r-project.org/"                    
+ [7] "http://journal.r-project.org/"                 
+ [8] "https://cran.r-project.org/sources.html"       
+ [9] "https://cran.r-project.org/bin/"               
+[10] "https://cran.r-project.org/web/packages/"      
+[11] "https://cran.r-project.org/other-software.html"
+[12] "https://cran.r-project.org/manuals.html"       
+[13] "https://cran.r-project.org/faqs.html"          
+[14] "https://cran.r-project.org/other-docs.html"    </code></pre>
 <p>Notice if we pass a <code>NULL</code> value to the method <code>switchToFrame</code> we move back to the default view.</p>
 <pre><code>remDr$switchToFrame(NULL)
 
-&gt; htmlParse(remDr$getPageSource()[[1]])
-&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+&gt; XML::htmlParse(remDr$getPageSource()[[1]])
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd"&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
 &lt;head&gt;
-&lt;title&gt;The R Project for Statistical Computing&lt;/title&gt;
+&lt;title&gt;The Comprehensive R Archive Network&lt;/title&gt;
+&lt;meta content="text/html; charset=utf-8" http-equiv="content-type"&gt;
 &lt;link type="image/x-icon" href="favicon.ico" rel="icon"&gt;
 &lt;link type="image/x-icon" href="favicon.ico" rel="shortcut icon"&gt;
 &lt;link href="R.css" type="text/css" rel="stylesheet"&gt;
 &lt;/head&gt;
-&lt;frameset border="0" cols="1*, 4*"&gt;
+&lt;frameset style="border: none;" cols="1*, 4*"&gt;
 &lt;frameset rows="120, 1*"&gt;
 &lt;frame frameborder="0" name="logo" src="logo.html"&gt;
 &lt;frame frameborder="0" name="contents" src="navbar.html"&gt;
 &lt;/frameset&gt;
-&lt;frame frameborder="0" name="banner" src="main.shtml"&gt;
+&lt;frame frameborder="0" name="banner" src="banner.shtml"&gt;
 &lt;noframes&gt;
-&amp;lt;h1&amp;gt;The R Project for Statistical Computing&amp;lt;/h1&amp;gt;
+&amp;lt;h1&amp;gt;The Comprehensive R Archive Network&amp;lt;/h1&amp;gt;
 
 Your browser seems not to support frames,
-here is the &amp;lt;A href="navbar.html"&amp;gt;contents page&amp;lt;/A&amp;gt; of the R Project's
-website.
+here is the &amp;lt;A href="navbar.html"&amp;gt;contents page&amp;lt;/A&amp;gt; of CRAN.
 &lt;/noframes&gt;
 &lt;/frameset&gt;
+&lt;body&gt;&lt;canvas id="fxdriver-screenshot-canvas" style="display: none;" width="1360" height="559"&gt;&lt;/canvas&gt;&lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 <p>Finally we can switch to the main panel using a name</p>
 <pre><code>remDr$switchToFrame("banner")
 
-&gt; htmlParse(remDr$getPageSource()[[1]])
-&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"&gt;
+&gt; XML::htmlParse(remDr$getPageSource()[[1]])
+&lt;!DOCTYPE html PUBLIC "-//IETF//DTD HTML//EN"&gt;
 &lt;html xmlns="http://www.w3.org/1999/xhtml"&gt;
 &lt;head&gt;
-&lt;title&gt;The R Project for Statistical Computing&lt;/title&gt;
+&lt;title&gt;The Comprehensive R Archive Network&lt;/title&gt;
 &lt;link href="R.css" type="text/css" rel="stylesheet"&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
-&lt;h1 align="left"&gt;The R Project for Statistical Computing&lt;/h1&gt;
+&lt;h1&gt;The Comprehensive R Archive Network&lt;/h1&gt;
 
-&lt;p&gt;
-&lt;/p&gt;
-&lt;center&gt;
-&lt;a href="misc/acpclust.R"&gt;&lt;img border="0" alt="R Graphics Demo" src="hpgraphic.png"&gt;&lt;/a&gt;
-&lt;/center&gt;
-
-&lt;p&gt;
-&lt;/p&gt;
-&lt;table width="100%" border="1"&gt;&lt;tbody&gt;
-&lt;tr&gt;&lt;td&gt;
-    &lt;h2&gt;Getting Started:&lt;/h2&gt;
+&lt;div align="center"&gt;
+&lt;table border="1" width="80%"&gt;&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;h3&gt;Download and Install R&lt;/h3&gt;
+      Precompiled binary distributions of the base system and
+      contributed packages, &lt;strong&gt;Windows and
+      Mac&lt;/strong&gt; users most likely want one of these versions of R:
     &lt;ul&gt;
-&lt;li&gt;R is a free software environment for statistical
-      computing and graphics. It compiles and runs on a wide variety
-      of UNIX platforms, Windows and MacOS. To &lt;strong&gt;&lt;a href="http://cran.r-project.org/mirrors.html"&gt;download R&lt;/a&gt;&lt;/strong&gt;, please
-      choose your preferred &lt;a href="http://cran.r-project.org/mirrors.html"&gt;CRAN mirror&lt;/a&gt;.
-      &lt;/li&gt;
+&lt;li&gt;&lt;a href="bin/linux/"&gt;Download R for Linux&lt;/a&gt;&lt;/li&gt;
       &lt;li&gt;
+&lt;a href="bin/macosx/"&gt;Download R for (Mac) OS X&lt;/a&gt;
+      &lt;/li&gt;
+&lt;li&gt;&lt;a href="bin/windows/"&gt;Download R for Windows&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+    R is part of many Linux distributions, you should check with your Linux package management system in addition to the link above.
+    &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+................
+................
+................
+&lt;h3&gt;Questions About R&lt;/h3&gt;
+      &lt;ul&gt;&lt;li&gt;
       If you have questions about R like how to download and install
       the software, or what the license terms are,
-      please read our &lt;a href="http://cran.R-project.org/faqs.html"&gt;answers to frequently asked questions&lt;/a&gt; before you send an email.
-      &lt;/li&gt;
-    &lt;p&gt;
-  &lt;/p&gt;
-&lt;/ul&gt;
-&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;
-    &lt;h2&gt;News:&lt;/h2&gt;
-    
-    &lt;ul&gt;
-&lt;li&gt;
-&lt;strong&gt;R version 3.0.2&lt;/strong&gt; (Frisbee Sailing) has been
-      released on 2013-09-25.&lt;/li&gt;
- 
-      &lt;li&gt;
-      &lt;strong&gt;&lt;a href="http://www.r-project.org/useR-2013" target="_top"&gt;
-      useR! 2013&lt;/a&gt;&lt;/strong&gt;, 
-      took place at the University of Castilla-La Mancha,
-      Albacete, Spain, July 10-12 2013.
-      
-
-
-      &lt;/li&gt;
-&lt;li&gt;
-  &lt;a target="_top" href="http://journal.r-project.org/current.html"&gt;
-      &lt;strong&gt;The R Journal Vol.5/1&lt;/strong&gt;&lt;/a&gt;
-    is available.
-      &lt;/li&gt;
-
-     
-      &lt;li&gt;
-&lt;strong&gt;R version 2.15.3&lt;/strong&gt; (Security Blanket) has been
-      released on 2013-03-01.&lt;/li&gt;
-
-
-
-
-&lt;!-- Dead stuff, for later reuse:
-
-            &lt;li&gt;
-      &lt;strong&gt;&lt;a href="http://cran.R-project.org/src/base-prerelease"&gt;
-      R 3.0.2 (Frisbee Sailing) prerelease versions&lt;/a&gt;&lt;/strong&gt; will
-      appear starting 
-      September 15.
-      Final release is scheduled for September 25, 2013.&lt;br&gt;
-      Thanks to Erin Hodgess for the idea leading to the name.
-      &lt;/li&gt;
-
-      &lt;li&gt;
-      &lt;strong&gt;&lt;a href="http://cran.R-project.org/src/base-prerelease"&gt;
-      R 3.0.1 prerelease versions&lt;/a&gt;&lt;/strong&gt; will appear starting
-      May 6.
-      Final release is scheduled for May 16, 2013.&lt;br&gt;
-      &lt;/li&gt;
- 
-      &lt;li&gt;
-      The R Foundation as been awarded &lt;a
-      href="soc11/index.html"&gt;
-      fifteen slots for R projects&lt;/a&gt; in the &lt;a
-      href="http://code.google.com/soc/" target="_top"&gt;Google Summer of Code 2011&lt;/a&gt;.
-
-     &lt;li&gt;
-      &lt;strong&gt;&lt;a target="_top"
-      href="http://www.r-project.org/dsc-2009"&gt; DSC 2009&lt;/a&gt;&lt;/strong&gt;,
-      The 6th workshop on Directions in Statistical Computing, has been
-      held at the Center for Health and Society, University of
-      Copenhagen, Denmark, July 13-14, 2009. &lt;/li&gt;
-
-
-      &lt;li&gt;
-      &lt;strong&gt;&lt;a target="_top" href="http://www.agrocampus-rennes.fr/math/useR-2009/"&gt;
-      useR! 2009&lt;/a&gt;&lt;/strong&gt;, the R user conference,
-      has been be held at Agrocampus Rennes, France, July 8-10, 2009.
-
-      &lt;li&gt;
-      The R Foundation as been awarded &lt;a
-      href="soc09/index.html"&gt;
-      four slots for R projects&lt;/a&gt; in the &lt;a
-      href="http://socghop.appspot.com/org/home/google/gsoc2009/rf" target="_top"&gt;Google Summer of Code 2009&lt;/a&gt;.
-
-
-      &lt;li&gt;We have started to collect ideas for the &lt;a
-      href="http://www.r-project.org/soc09"&gt;Google Summer of Code 2009&lt;/a&gt;.
-
-      &lt;/li&gt;
---&gt;
-
-
-    &lt;/ul&gt;
-&lt;p&gt;
-  &lt;/p&gt;
-&lt;/td&gt;&lt;/tr&gt;
+      please read our &lt;a href="faqs.html"&gt;answers to frequently asked
+      questions&lt;/a&gt; before you send an email.
+    &lt;/li&gt;&lt;/ul&gt;
+&lt;/td&gt;
+  &lt;/tr&gt;
 &lt;/tbody&gt;&lt;/table&gt;
-&lt;p&gt;
+&lt;/div&gt;
 
-  This server is hosted by the &lt;a target="_top" href="http://statmath.wu.ac.at"&gt;Institute for Statistics and Mathematics&lt;/a&gt; of &lt;a target="_top" href="http://www.wu.ac.at"&gt;WU (Wirtschaftsuniversien)&lt;/a&gt;.
+&lt;h2&gt;What are R and CRAN?&lt;/h2&gt;
 
-
-
-
-
+&lt;p&gt; R is GNU, a freely available language and environment for
+statistical computing and graphics which provides a wide variety of
+statistical and graphical techniques: linear and nonlinear modelling,
+statistical tests, time series analysis, classification, clustering,
+etc. Please consult the &lt;a target="_top" href="https://www.R-project.org/"&gt;R project homepage&lt;/a&gt; for further information.
 &lt;/p&gt;
+
+&lt;p&gt; CRAN is a network of ftp and web servers around the world that
+store identical, up-to-date, versions of code and documentation for
+R. Please use the CRAN &lt;a href="mirrors.html"&gt;mirror&lt;/a&gt; nearest to you to minimize network
+load.
+&lt;/p&gt;
+
+&lt;h2 id="submitting"&gt;Submitting to CRAN &lt;/h2&gt;
+
+&lt;p&gt;
+To submit a package to CRAN,
+check that your submission meets the
+&lt;a href="https://CRAN.R-project.org/web/packages/policies.html"&gt;CRAN
+  Repository Policy&lt;/a&gt; and then use the
+&lt;a href="https://xmpalantir.wu.ac.at/cransubmit/"&gt;web form&lt;/a&gt;.
+&lt;/p&gt;
+
+&lt;p&gt;
+If this fails, upload to
+&lt;a target="_blank" href="ftp://CRAN.R-project.org/incoming/"&gt;ftp://CRAN.R-project.org/incoming/&lt;/a&gt;
+and send an email to
+&lt;a href="mailto:CRAN@R-project.org"&gt;CRAN@R-project.org&lt;/a&gt; following the policy.
+Please do not attach submissions to emails, because this will clutter up
+the mailboxes of half a dozen people.
+&lt;/p&gt;
+
+&lt;p&gt;
+Note that we generally do not accept submissions of precompiled
+binaries due to security reasons. All binary distribution listed above
+are compiled by selected maintainers, who are in charge for all
+binaries of their platform, respectively.
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;/p&gt;
+&lt;hr&gt;
+&lt;!--#if expr="$CRAN_HOST" --&gt;&lt;!--#echo  encoding="none" var="CRAN_HOST"--&gt;&lt;br&gt;&lt;!--#endif --&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
 </div>
 <div id="windows-in-selenium" class="section level3">
 <h3 class="hasAnchor"><html><body><a href="#windows-in-selenium" class="anchor"> </a></body></html>Windows in Selenium</h3>
-<p>The easiest way to illustrate Windows in RSelenium is again by way of example. We will use the R project website. First we select the <code>download R</code> element in the main frame.</p>
-<pre><code>remDr$navigate("http://www.r-project.org")
+<p>The easiest way to illustrate Windows in RSelenium is again by way of example. We will use the &ldquo;CRAN&rdquo; website. First we select the <code>download R</code> element in the main frame.</p>
+<pre><code>remDr$navigate("https://cran.r-project.org/")
 remDr$switchToFrame("banner")
-webElem &lt;- remDr$findElement("partial link text", "download R")
+webElems &lt;- remDr$findElements("partial link text", "Download R")
 
-&gt; webElem$getElementText()
+sapply(webElems, function(x) x$getElementText())
 [[1]]
-[1] "download R"
+[1] "Download R for Linux"
+
+[[2]]
+[1] "Download R for (Mac) OS X"
+
+[[3]]
+[1] "Download R for Windows"
 </code></pre>
-<p>We now send a selection of key presses to this element to open the link it points to in a new window. If you did it manually you would move the mouse to the element right click on the link press the down arrow key twice then press enter. We will do the same</p>
-<pre><code>loc &lt;- webElem$getElementLocation()
+<p>We now send a selection of key presses to the first element to open the link it points to in a new window. If you did it manually you would move the mouse to the element right click on the link press the down arrow key twice then press enter. We will do the same</p>
+<pre><code>loc &lt;- webElems[[1]]$getElementLocation()
 
 &gt; loc[c('x','y')]
 $x
-[1] 347
+[1] 158
 
 $y
-[1] 519
+[1] 132
 
-remDr$mouseMoveToLocation(webElement = webElem) # move mouse to the element we selected
+remDr$mouseMoveToLocation(webElement = webElems[[1]]) # move mouse to the element we selected
 remDr$click(2) # 2 indicates click the right mouse button
-remDr$sendKeysToActiveElement(list(key = 'down_arrow', key = 'down_arrow', key = 'enter'))
+remDr$sendKeysToActiveElement(
+  list(key = 'down_arrow', key = 'down_arrow', key = 'enter')
+)
 </code></pre>
 <p>Notice now that a new windows has opened on the remote browser.</p>
 <pre><code>&gt; remDr$getCurrentWindowHandle()
@@ -675,19 +678,34 @@ remDr$sendKeysToActiveElement(list(key = 'down_arrow', key = 'down_arrow', key =
 
 &gt; remDr$getWindowHandles()
 [[1]]
-[1] "{573d17e5-b95a-41b9-a65f-04092b6a804b}" "{3336c9b3-4c46-4a95-853e-2786a529ba29}"
+[1] "{4896393a-c215-4976-b4ca-030d6b75b67d}"
+
+[[2]]
+[1] "{69c00f18-d3a7-44d7-a236-c6b5e6c264ff}"
 
 &gt; remDr$getTitle()
 [[1]]
-[1] "The R Project for Statistical Computing"
+[1] "The Comprehensive R Archive Network"
 
-&gt; 
-&gt; remDr$switchToWindow("{3336c9b3-4c46-4a95-853e-2786a529ba29}")
+&gt; currWin &lt;- remDr$getCurrentWindowHandle()
+&gt; allWins &lt;- unlist(remDr$getWindowHandles())
+&gt; otherWindow &lt;- allWins[!allWins %in% currWin[[1]]]
+&gt; remDr$switchToWindow(otherWindow)
 &gt; remDr$getTitle()
 [[1]]
-[1] "CRAN - Mirrors"
+[1] "Index of /bin/linux"
 </code></pre>
 <p>So using the code above one can observe how to switch between different windows on the remote browser.</p>
+</div>
+</div>
+<div id="appendix" class="section level2">
+<h2 class="hasAnchor"><html><body><a href="#appendix" class="anchor"> </a></body></html>Appendix</h2>
+<div id="server-functions" class="section level3">
+<h3 class="hasAnchor"><html><body><a href="#server-functions" class="anchor"> </a></body></html>Server functions</h3>
+<p>In previous versions of <code>RSelenium</code> there were two functions <code>checkForServer</code> and <code>startServer</code> which were used to download and start a Selenium binary. These functions are Deprecated/Defunct as users had issue with using them cross-platform. They are still in the RSelenium package and can be accessed in the serverUtils directory <code>file.path(find.package("RSelenium"), "example/serverUtils")</code></p>
+<pre><code>&gt; file.path(find.package("RSelenium"), "example/serverUtils")
+[1] "/home/john/R/x86_64-pc-linux-gnu-library/3.3/RSelenium/example/serverUtils"</code></pre>
+<p>They may work for you depending on your platform and setup but are not supported.</p>
 </div>
 </div>
 </div>
@@ -703,6 +721,7 @@ remDr$sendKeysToActiveElement(list(key = 'down_arrow', key = 'down_arrow', key =
       <li><a href="#sending-events-to-elements."></a><a id="id4">Sending events to elements.</a></li>
       <li><a href="#injecting-javascript"></a><a id="id5">Injecting JavaScript</a></li>
       <li><a href="#frames-and-windows."></a><a id="id6">Frames and Windows.</a></li>
+      <li><a href="#appendix">Appendix</a></li>
       </ul></div>
       </div>
 
