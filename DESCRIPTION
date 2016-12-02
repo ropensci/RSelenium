@@ -1,11 +1,11 @@
 Package: RSelenium
 Type: Package
-Title: Provides a Set of R Bindings for the Selenium Webdriver
+Title: R Bindings for 'Selenium WebDriver'
 Version: 1.6.2
 Authors@R: person("John", "Harrison", , "johndharrison0@gmail.com", 
     role = c("aut", "cre"), comment = "R package RSelenium")
-Description: The RSelenium package provides a set of R bindings for the
-    'Selenium 2.0 WebDriver' (see <https://seleniumhq.github.io/docs/wd.html>
+Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver' 
+    (see <https://seleniumhq.github.io/docs/wd.html>
     for more information) using the 'JsonWireProtocol' (see
     <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for more
     information). 'Selenium 2.0 WebDriver' allows driving a web browser
