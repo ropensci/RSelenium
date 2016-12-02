@@ -30,12 +30,12 @@ vignette('RSelenium-basics')
 
 ```
 
-or the basic vignette can be viewed on [Rpubs](http://rpubs.com/johndharrison/12843).
+or the basic vignette can be viewed on [Rpubs](http://rpubs.com/johndharrison/RSelenium-Basics).
 
 There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at [RSelenium: Driving OS/Browsers local and remote](http://rpubs.com/johndharrison/13885). Finally you can read all about running a headless browser or running a normal browser on a headless server [RSelenium: Headless browsing.](http://rpubs.com/johndharrison/RSelenium-headless).
 
 #### Summary of vignettes
-1.  [RSelenium: basics](http://rpubs.com/johndharrison/12843)
+1.  [RSelenium: Basics](http://rpubs.com/johndharrison/RSelenium-Basics)
 2.  [RSelenium: Driving OS/Browsers local and remote](http://rpubs.com/johndharrison/13885)
 3.  [RSelenium: Testing Shiny Apps](http://rpubs.com/johndharrison/13408)
 4.  [Orange County R Users Group (OC-RUG): RSelenium Webinar](http://johndharrison.blogspot.com/2014/05/orange-county-r-users-group-oc-rug.html)

@@ -1,5 +1,6 @@
 # RSelenium 1.6.1
 * Added a selectTag method to the webElement class see #108.
+* RSelenium Basics vignette was updated/revised.
 
 # RSelenium 1.6.0
 * Moved http package from RCurl to httr see #106.
