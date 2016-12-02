@@ -56,11 +56,11 @@ webElement <-
           \\item{\\code{value}:}{The search target. See examples.}
         }"
         using <- match.arg(using)
-        qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                        elementId,'/element')
-        queryRD(qpath, "POST", 
-                qdata = list(using = using,value = value), 
-                json = TRUE)
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/element", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath, "POST", qdata = list(using = using,value = value))
         elemDetails <- .self$value[[1]]
         webElement$new(as.character(elemDetails))$
           import(.self$export("remoteDriver"))
@@ -84,11 +84,11 @@ webElement <-
           \\item{\\code{value}:}{The search target. See examples.}
         }"
         using <- match.arg(using)
-        qpath <- paste0(serverURL,'/session/',sessionInfo$id,
-                        '/element/',elementId,'/elements')
-        queryRD(qpath, "POST", 
-                qdata = list(using = using,value = value), 
-                json = TRUE)
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/elements", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath, "POST", qdata = list(using = using,value = value))
         elemDetails <- .self$value
         lapply(elemDetails, 
                function(x){
@@ -101,23 +101,32 @@ webElement <-
       compareElements = function(otherElem){
         "Test if the current webElement and an other web element refer to 
         the same DOM element."
-        qpath <- paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                        elementId,'/equals/',otherElem$elementId)
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/equals/%s", 
+          serverURL, sessionInfo[["id"]], 
+          elementId, otherElem[["elementId"]]
+        )
         queryRD(qpath)
         .self$value
       },
       
       clickElement = function(){
         "Click the element."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/click'), "POST")
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/click", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath, "POST")
       },
       
       submitElement = function(){
         "Submit a FORM element. The submit command may also be applied to 
         any element that is a descendant of a FORM element."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/submit'), "POST")
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/submit", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath, "POST")
       },
       
       sendKeysToElement = function(sendKeys){
@@ -126,32 +135,43 @@ webElement <-
         list. Keyboard entries are defined in `selKeys` and should be 
         listed with name `key`. See the examples."
         sendKeys <- list(value = matchSelKeys(sendKeys))
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,
-                       '/element/',elementId,'/value'),
-                "POST", qdata = sendKeys)
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/value", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath, "POST", qdata = sendKeys)
       },
       
       isElementSelected = function(){
         "Determine if an OPTION element, or an INPUT element of type 
         checkbox or radiobutton is currently selected."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/selected'))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/selected", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
       isElementEnabled = function(){
         "Determine if an element is currently enabled. Obviously to enable 
         an element just preform a click on it."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/enabled'))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/enabled", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
       getElementLocation = function(){
         "Determine an element's location on the page. The point (0, 0) 
         refers to the upper-left corner of the page."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/location'))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/location", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
@@ -161,51 +181,71 @@ webElement <-
         Note: This is considered an internal command and should only be 
         used to determine an element's location for correctly generating 
         native events."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/location_in_view'))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/location_in_view", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
       getElementTagName = function(){
         "Query for an element's tag name."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/name'))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/name", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
       clearElement = function(){
         "Clear a TEXTAREA or text INPUT element's value."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/clear'),
-                "POST")
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/clear", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath, "POST")
       },
       
       getElementAttribute = function(attrName){
         "Get the value of an element's attribute. See examples."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/attribute/',attrName))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/attribute/%s", 
+          serverURL, sessionInfo[["id"]], elementId, attrName
+        )
+        queryRD(qpath)
         .self$value
       },
       
       isElementDisplayed = function(){
         "Determine if an element is currently displayed."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/displayed'))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/displayed", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
       getElementSize = function(){
         "Determine an element's size in pixels. The size will be returned 
         with width and height properties."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/size'))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/size", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
       getElementText = function(){
         "Get the innerText of the element."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/text'))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/text", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
@@ -214,15 +254,21 @@ webElement <-
         property to query should be specified using the CSS property name, 
         not the JavaScript property name (e.g. background-color instead of 
         backgroundColor)."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId,'/css/',propName))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s/css/%s", 
+          serverURL, sessionInfo[["id"]], elementId, propName
+        )
+        queryRD(qpath)
         .self$value
       },
       
       describeElement = function(){
         "Describe the identified element."
-        queryRD(paste0(serverURL,'/session/',sessionInfo$id,'/element/',
-                       elementId))
+        qpath <- sprintf(
+          "%s/session/%s/element/%s", 
+          serverURL, sessionInfo[["id"]], elementId
+        )
+        queryRD(qpath)
         .self$value
       },
       
@@ -230,7 +276,7 @@ webElement <-
         "Utility function to set an elements atrributes."
         if(.self$javascript){
           jS <- "arguments[0].setAttribute(arguments[1], arguments[2]);"
-          executeScript(jS, list(.self, attributeName, value))
+          invisible(executeScript(jS, list(.self, attributeName, value)))
         }else{
           "Javascript is not enabled"
         }
@@ -254,8 +300,28 @@ webElement <-
           "Javascript is not enabled"
         }
         
-      }
+      },
       
+      selectTag = function(){
+        "Utility function to return options from a select DOM node. The 
+        option nodes are returned as webElements. The option text and the 
+        value of the option attribute 'value' are returned also. If this
+        method is called on a webElement that is not a select DOM node an 
+        error will result."
+        if(!identical(getElementTagName()[[1]], "select")){
+          stop(
+            paste("webElement does not appear to point"
+                     ,"to a select element in DOM.")
+          )
+        }
+        options <- findChildElements("css", "option")
+        script <- "var shtml = arguments[0]; return shtml.outerHTML;"
+        selectHTML <- executeScript(script, list(.self))
+        shXML <- XML::htmlParse(selectHTML[[1]])
+        optiontext <- unlist(shXML["//option", fun = XML::xmlValue])
+        vfun <- function(node){ XML::xmlGetAttr(node, "value")}
+        optionvalues<- unlist(shXML["//option", fun = vfun])
+        list(elements = options, text = optiontext, value = optionvalues)}
     )
   )
 

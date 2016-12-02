@@ -87,82 +87,62 @@ errorHandler <-
     fields   = list(
       statusCodes = "data.frame", 
       status = "numeric", 
-      encoding = "character", 
       statusclass = "character", 
       sessionid = "character", 
       hcode = "numeric", 
-      value = "list", 
-      responseheader = "list", 
-      debugheader = "list"),
+      value = "list"),
     methods  = list(
       initialize = function(){
         # statCodes are status codes stored in sysdata.rda
         statusCodes <<- statCodes
         status <<- 0L # initial status success
-        encoding <<- NA_character_
         statusclass <<- NA_character_
         sessionid <<- NA_character_
         hcode <<- NA_integer_
         value <<- list()
-        responseheader <<- list()
-        debugheader <<- list()
         },
       
       queryRD = 
-        function(ipAddr, method = "GET",
-                 httpheader = c('Content-Type' = 
-                                  'application/json;charset=UTF-8'),
-                 qdata = NULL, json = FALSE){
+        function(ipAddr, method = "GET", qdata = NULL){
           "A method to communicate with the remote server implementing the 
           JSON wire protocol."
         getUC.params <- 
           list(url = ipAddr, verb = method, body = qdata, encode = "json")
-        eMessage <- list(
-          "Invalid call to server. Please check you have opened a browser.",
-          paste0("Couldnt connect to host on ", serverURL, 
-                 ".\nPlease ensure a Selenium server is running."),
-          function(x){
-            paste0("Undefined error in RCurl call. Rcurl output: ", x)
-          }
-        )
         res <- tryCatch(
           {do.call(httr::VERB, getUC.params)}, 
-          error = function(e){
-            err <- switch(
-              e$message,
-              "<url> malformed" = eMessage[[1]],
-              "couldn't connect to host" = eMessage[[2]],
-              eMessage[[3]](e$message)
-          )
-          e
-        }
+          error = function(e){e}
         )
-        resContent <- httr::content(res, simplifyVector = FALSE)
-        checkStatus(resContent)
-      }
-      , checkStatus = function(res){
+        if(inherits(res, "response")){
+          resContent <- httr::content(res, simplifyVector = FALSE)
+          checkStatus(resContent)
+        }else{
+          checkError(res)
+        }
+      },
+      
+      checkStatus = function(resContent){
         "An internal method to check the status returned by the server. If 
         status indicates an error an appropriate error message is thrown."
-        if(!is.null(res[["status"]])){
-          status <<- res[["status"]]
-          statusclass <<- if(!is.null(res[["class"]])){
-            res[["class"]]
+        if(!is.null(resContent[["status"]])){
+          status <<- resContent[["status"]]
+          statusclass <<- if(!is.null(resContent[["class"]])){
+            resContent[["class"]]
           }else{
             NA_character_
           }
-          if(!is.null(res[["sessionId"]])){
-            sessionid <<- res[["sessionId"]]
+          if(!is.null(resContent[["sessionId"]])){
+            sessionid <<- resContent[["sessionId"]]
           }
-          hcode <<- if(!is.null(res[["hCode"]])){
-            as.integer(res[["hCode"]])
+          hcode <<- if(!is.null(resContent[["hCode"]])){
+            as.integer(resContent[["hCode"]])
           }else{
             NA_integer_
           }
-          value <<- if(!is.null(res[["value"]])){
-            if(is.list(res[["value"]])){
-              res[["value"]]
+          value <<- if(!is.null(resContent[["value"]])){
+            if(is.list(resContent[["value"]])){
+              resContent[["value"]]
             }else{
-              list(res[["value"]])
+              list(resContent[["value"]])
             }
           }else{
             list()
@@ -184,9 +164,33 @@ errorHandler <-
             }
             stop(errMessage, call. = FALSE)
           }
+        }else{
+          
         }
-      }
-      , errorDetails = function(type = "value"){
+      },
+      
+      checkError = function(res){
+        status <<- 13L
+        statusclass <<- NA_character_
+        hcode <<- NA_integer_
+        value <<- list()
+        eMessage <- list(
+          "Invalid call to server. Please check you have opened a browser.",
+          paste0("Couldnt connect to host on ", serverURL, 
+                 ".\n  Please ensure a Selenium server is running."),
+          function(x){
+            paste0("Undefined error in httr call. httr output: ", x)
+          }
+        )
+        err <- switch(
+          res[["message"]], 
+          "Couldn't connect to server" = eMessage[[2]],
+          eMessage[[3]](res[["message"]])
+        )
+        stop(err)
+      },
+      
+      errorDetails = function(type = "value"){
         "Return error details. Type can one of c(\"value\", \"class\", 
         \"status\")"
         switch(type,

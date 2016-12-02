@@ -98,6 +98,12 @@ an element just preform a click on it.}
 \item{\code{isElementSelected()}}{Determine if an OPTION element, or an INPUT element of type 
 checkbox or radiobutton is currently selected.}
 
+\item{\code{selectTag()}}{Utility function to return options from a select DOM node. The 
+option nodes are returned as webElements. The option text and the 
+value of the option attribute 'value' are returned also. If this
+method is called on a webElement that is not a select DOM node an 
+error will result.}
+
 \item{\code{sendKeysToElement(sendKeys)}}{Send a sequence of key strokes to an element. The key strokes are 
 sent as a list. Plain text is enter as an unnamed element of the 
 list. Keyboard entries are defined in `selKeys` and should be 

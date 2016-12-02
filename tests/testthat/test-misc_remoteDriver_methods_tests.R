@@ -52,3 +52,13 @@ test_that("canGetPageSource", {
   source <- remDr$getPageSource()
   expect_true(grepl("html", source[[1]]))
 })
+
+test_that("canSetExtraCaps", {
+  prefs = list("profile.managed_default_content_settings.images" = 2L)
+  cprof <- list(chromeOptions = list(prefs = prefs)) 
+  expect_output(
+    init2 <- initFun(silent = FALSE, extraCapabilities = cprof)
+  )
+  on.exit(init2$remDr$close())
+  expect_identical(init2$remDr$extraCapabilities, cprof)
+})

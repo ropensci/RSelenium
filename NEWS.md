@@ -1,7 +1,11 @@
+# RSelenium 1.6.1
+* Added a selectTag method to the webElement class see #108.
+
 # RSelenium 1.6.0
 * Moved http package from RCurl to httr see #106.
 * Removed dependence on rjson. httr incorporates jsonlite.
 * Import base64_decode from openssl.
+* Fixed issue with attributes.Selenium not firing error see #109
 
 # RSelenium 1.5.1
 * Added a path argument to the remoteDriver class.
