@@ -1,10 +1,10 @@
 ### Operating System
 
-### Selenium Server version
+### Selenium Server version (selenium-server-standalone-3.0.1.jar etc.)
 
-### Browser version (firefox, chrome etc.)
+### Browser version (firefox 50.1.0, chrome 54.0.2840.100 (64-bit) etc.)
 
-### Other driver version (chromedriver, geckodriver, iedriver, PhantomJS etc.)
+### Other driver version (chromedriver 2.27, geckodriver v0.11.1, iedriver x64_3.0.0, PhantomJS 2.1.1 etc.)
 
 ### Expected behaviour
 
