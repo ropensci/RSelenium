@@ -1,3 +1,19 @@
+Since Firefox version 48, Mozilla requires all add-ons to be signed. Until
+recently, Firefox support in Selenium was exclusively provided by an add-on.
+As this add-on is not currently signed, this solution does not work with the
+latest Firefox releases. As an alternative, Mozilla are working on a WebDriver
+specification compliant implementation named GeckoDriver. Please note that the specification is not complete, and that Selenium itself does not comply with
+the specification at this time. This means that features previously available
+through Selenium will not be available using GeckoDriver.
+
+Currently we would advise against using the latest firefox/geckodriver with selenium untill the w3c webdriver specification
+is complete. If you wish to use firefox we would advise using an older version via a Docker image. See the RSelenium
+Docker vignette for more detail:
+
+http://rpubs.com/johndharrison/RSelenium-Docker
+
+If your issue is not with geckodriver/firefox please fill out the template
+
 ### Operating System
 
 ### Selenium Server version (selenium-server-standalone-3.0.1.jar etc.)
