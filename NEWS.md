@@ -1,3 +1,6 @@
+# RSelenium 1.6.3
+* Return a selected value with the selectTag method.
+
 # RSelenium 1.6.1
 * Added a selectTag method to the webElement class see #108.
 * RSelenium Basics vignette was updated/revised.

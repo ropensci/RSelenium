@@ -317,11 +317,22 @@ webElement <-
         options <- findChildElements("css", "option")
         script <- "var shtml = arguments[0]; return shtml.outerHTML;"
         selectHTML <- executeScript(script, list(.self))
+        script2 <- 
+         "function getSelectBool(select) {
+        var result = [];
+        var options = select && select.options;
+        for (var i=0, iLen=options.length; i<iLen; i++) {
+        result.push(options[i].selected);
+        }
+        return result;
+        }; var sEl = arguments[0]; return getSelectBool(sEl);"
+        selected <- unlist(executeScript(script2, list(.self)))
         shXML <- XML::htmlParse(selectHTML[[1]])
         optiontext <- unlist(shXML["//option", fun = XML::xmlValue])
         vfun <- function(node){ XML::xmlGetAttr(node, "value")}
         optionvalues<- unlist(shXML["//option", fun = vfun])
-        list(elements = options, text = optiontext, value = optionvalues)}
+        list(elements = options, text = optiontext, 
+             value = optionvalues, selected = selected)}
     )
   )
 
