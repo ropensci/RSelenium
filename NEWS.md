@@ -1,3 +1,11 @@
+# RSelenium 1.6.5
+* checkForServer and startServer are now defunct. rsDriver is marked as a
+  dual replacement. Docker is recommended to run a selenium server/browser.
+
+# RSelenium 1.6.4
+* Add a rsDriver function to return a Selenium/webdriver server and a 
+  browser client.
+
 # RSelenium 1.6.3
 * Return a selected value with the selectTag method.
 
