@@ -51,7 +51,7 @@ on.exit(remDr$close())
 
 test_that("canGetFirefoxProfile", {
   if(Sys.info()[["sysname"]] != "Linux") return()
-  out <- getFirefoxProfile(dirname(selFILE), useBase = TRUE)
+  out <- getFirefoxProfile(tempdir(), useBase = TRUE)
   expect_identical(names(out), "firefox_profile")
 })
 
