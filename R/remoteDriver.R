@@ -605,10 +605,16 @@ remoteDriver <-
         if(length(.self$value) == 1){
           if(any(names(.self$value) == "ELEMENT")){
             return(
-              list(webElement$new(as.character(.self$value))$import(.self))
+              if(inherits(.self, "webElement")){
+                list(webElement$new(as.character(.self$value))$
+                       import(.self$export("remoteDriver")))
+              }else{
+                list(webElement$new(as.character(.self$value))$
+                       import(.self))
+              }
             )
           }else{
-            .self$value
+            return(.self$value)
           }
         }
         
@@ -656,10 +662,16 @@ remoteDriver <-
         if(length(.self$value) == 1){
           if(any(names(.self$value) == "ELEMENT")){
             return(
-              list(webElement$new(as.character(.self$value))$import(.self))
+              if(inherits(.self, "webElement")){
+                list(webElement$new(as.character(.self$value))$
+                       import(.self$export("remoteDriver")))
+              }else{
+                list(webElement$new(as.character(.self$value))$
+                       import(.self))
+              }
             )
           }else{
-            .self$value
+            return(.self$value)
           }
         }
         testWebElement(.self$value, .self)
