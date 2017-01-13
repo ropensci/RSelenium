@@ -1,10 +1,10 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.6.2
+Version: 1.6.4
 Authors@R: person("John", "Harrison", , "johndharrison0@gmail.com", 
     role = c("aut", "cre"), comment = "R package RSelenium")
-Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver' 
+Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
     (see <https://seleniumhq.github.io/docs/wd.html>
     for more information) using the 'JsonWireProtocol' (see
     <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for more
@@ -21,18 +21,24 @@ Additional_repositories: http://www.omegahat.net/R
 Depends:
     R (>= 3.0.0)
 Imports:
-    XML,methods,caTools,tools,utils, openssl, httr, wdman
+    XML,methods,caTools,tools,utils,
+    openssl,
+    httr,
+    wdman
 Suggests:
     testthat,
     knitr,
     Rcompression,
     covr,
     rmarkdown
+Remotes:
+    johndharrison/wdman
 VignetteBuilder: knitr
 LazyData: true
 Collate:
     'errorHandler.R'
     'remoteDriver.R'
+    'rsDriver.R'
     'selKeys-data.R'
     'util.R'
     'webElement.R'
