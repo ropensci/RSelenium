@@ -24,7 +24,8 @@ Imports:
     XML,methods,caTools,tools,utils,
     openssl,
     httr,
-    wdman
+    wdman,
+    binman
 Suggests:
     testthat,
     knitr,
