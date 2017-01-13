@@ -27,6 +27,9 @@ Returns a list containing two functions. The 'getpid' function
    function stops the started Selenium server using the process id.
 }
 \description{
+#' Defunct. Please use \code{\link{rsDriver}}
+}
+\details{
 \code{startServer}
 A utility function to start the standalone server. Return two functions 
    see values.

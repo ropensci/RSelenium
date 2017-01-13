@@ -18,6 +18,9 @@ is present.}
 \item{beta}{A boolean indicating whether to include beta releases.}
 }
 \description{
+Defunct. Please use \code{\link{rsDriver}}
+}
+\details{
 \code{checkForServer}
 A utility function to check if the Selenium Server stanalone binary is 
    present.
