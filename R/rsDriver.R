@@ -32,13 +32,20 @@
 #'     It provides a "shim" for the current issue running firefox on 
 #'     Windows. For a more detailed set of functions for running binaries
 #'     relating to the Selenium/webdriver project see the 
-#'     \code{\link[wdman]{wdman}} package.
+#'     \code{\link[wdman]{wdman}} package. Both the client and server
+#'     are closed using a registered finalizer. 
 #' @export
 #' @importFrom wdman selenium
 #'
 #' @examples
+#' \dontrun{
 #' # start a chrome browser
 #' rD <- rsDriver()
+#' rD$client$navigate("http://www.google.com/ncr")
+#' rD$client$navigate("http://www.bbc.com")
+#' rm(rD)
+#' gc(rD) # should clean up
+#' }
 
 rsDriver <- function(port = 4567L,
                      browser = c("chrome", "firefox", "phantomjs", 
@@ -92,5 +99,14 @@ rsDriver <- function(port = 4567L,
     remDr <- remoteDriver(browserName = browser, port = port)
     remDr$open(silent = !verbose)
   }
-  list(server = selServ, client = remDr)
+  csEnv <- new.env()
+  csEnv[["server"]] <- selServ
+  csEnv[["client"]] <- remDr
+  clean <- function(e){
+    e[["client"]]$close()
+    e[["server"]]$stop()
+  }
+  reg.finalizer(csEnv, clean)
+  class(csEnv) <- c("rsClientServer",class(csEnv))
+  return(csEnv)
 }

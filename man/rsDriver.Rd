@@ -56,10 +56,17 @@ This function is a wrapper around \code{\link[wdman]{selenium}}.
     It provides a "shim" for the current issue running firefox on 
     Windows. For a more detailed set of functions for running binaries
     relating to the Selenium/webdriver project see the 
-    \code{\link[wdman]{wdman}} package.
+    \code{\link[wdman]{wdman}} package. Both the client and server
+    are closed using a registered finalizer.
 }
 \examples{
+\dontrun{
 # start a chrome browser
 rD <- rsDriver()
+rD$client$navigate("http://www.google.com/ncr")
+rD$client$navigate("http://www.bbc.com")
+rm(rD)
+gc(rD) # should clean up
+}
 }
 
