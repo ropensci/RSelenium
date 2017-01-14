@@ -100,7 +100,8 @@ checkbox or radiobutton is currently selected.}
 
 \item{\code{selectTag()}}{Utility function to return options from a select DOM node. The 
 option nodes are returned as webElements. The option text and the 
-value of the option attribute 'value' are returned also. If this
+value of the option attribute 'value' and whether the option is 
+selected are returned also. If this
 method is called on a webElement that is not a select DOM node an 
 error will result.}
 

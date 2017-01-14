@@ -301,38 +301,39 @@ webElement <-
         }
         
       },
-      
+
       selectTag = function(){
         "Utility function to return options from a select DOM node. The 
         option nodes are returned as webElements. The option text and the 
-        value of the option attribute 'value' are returned also. If this
+        value of the option attribute 'value' and whether the option is 
+        selected are returned also. If this
         method is called on a webElement that is not a select DOM node an 
         error will result."
         if(!identical(getElementTagName()[[1]], "select")){
           stop(
             paste("webElement does not appear to point"
-                     ,"to a select element in DOM.")
+                  ,"to a select element in DOM.")
           )
         }
-        options <- findChildElements("css", "option")
-        script <- "var shtml = arguments[0]; return shtml.outerHTML;"
-        selectHTML <- executeScript(script, list(.self))
-        script2 <- 
-         "function getSelectBool(select) {
-        var result = [];
-        var options = select && select.options;
-        for (var i=0, iLen=options.length; i<iLen; i++) {
-        result.push(options[i].selected);
-        }
-        return result;
-        }; var sEl = arguments[0]; return getSelectBool(sEl);"
-        selected <- unlist(executeScript(script2, list(.self)))
-        shXML <- XML::htmlParse(selectHTML[[1]])
-        optiontext <- unlist(shXML["//option", fun = XML::xmlValue])
-        vfun <- function(node){ XML::xmlGetAttr(node, "value")}
-        optionvalues<- unlist(shXML["//option", fun = vfun])
-        list(elements = options, text = optiontext, 
-             value = optionvalues, selected = selected)}
+        script <- 
+          "function getSelect(select) {
+            var resEl = []; 
+            var resVal = []; var resTxt = []; var resSel = []; 
+            var options = select && select.options;
+            for (var i=0, iLen=options.length; i<iLen; i++) {
+             resEl.push(options[i]);
+             resVal.push(options[i].getAttribute('value'));
+             resTxt.push(options[i].text);
+             resSel.push(options[i].selected);
+            }
+            return {elements:resEl, text:resTxt, value:resVal, 
+                    selected:resSel};
+           }; var sEl = arguments[0]; return getSelect(sEl);"
+        res <- executeScript(script, list(.self))
+        res[c("text", "value", "selected")] <- 
+          lapply(res[c("text", "value", "selected")], unlist)
+        res
+      }
     )
   )
 
