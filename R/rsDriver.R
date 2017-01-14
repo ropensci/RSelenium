@@ -56,7 +56,12 @@ rsDriver <- function(port = 4567L,
                      iedrver = NULL,
                      phantomver = "latest", 
                      verbose = TRUE, ...){
-  selServ <- wdman::selenium(port = port, verbose = verbose)
+  selServ <- wdman::selenium(port = port, verbose = verbose, 
+                             version = version,
+                             chromever = chromever,
+                             geckover = geckover,
+                             iedrver = iedrver,
+                             phantomver = phantomver)
   browser <- match.arg(browser)
   remDr <- remoteDriver(browserName = browser, port = port, ...)
   # shim for blocking pipe issue on windows and firefox
