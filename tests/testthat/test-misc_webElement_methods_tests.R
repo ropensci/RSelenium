@@ -22,6 +22,7 @@ test_that("canSelectTagOptions", {
   expect_identical(elem$getElementTagName()[[1]], "select")
   options <- elem$selectTag()
   expect_identical(options[["value"]], NULL)
+  expect_identical(options[["selected"]], c(TRUE, FALSE, FALSE, FALSE))
   exT <- c("One", "Two", "Four", "Still learning how to count, apparently")
   expect_identical(options[["text"]], exT)
 })
