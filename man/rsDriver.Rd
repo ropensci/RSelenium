@@ -6,7 +6,7 @@
 \usage{
 rsDriver(port = 4567L, browser = c("chrome", "firefox", "phantomjs",
   "internet explorer"), version = "latest", chromever = "latest",
-  geckover = "latest", iedrver = NULL, phantomver = "latest",
+  geckover = "latest", iedrver = NULL, phantomver = "2.1.1",
   verbose = TRUE, check = TRUE, ...)
 }
 \arguments{
@@ -34,8 +34,8 @@ sourced run binman::list_versions("iedriverserver"), A value of NULL
 excludes adding the internet explorer browser to Selenium Server.
 NOTE this functionality is Windows OS only.}
 
-\item{phantomver}{what version of PhantomJS to run. Default = "latest"
-which runs the most recent version. To see other version currently
+\item{phantomver}{what version of PhantomJS to run. Default = "2.1.1"
+which runs the most recent stable version. To see other version currently
 sourced run binman::list_versions("phantomjs"), A value of NULL
 excludes adding the PhantomJS headless browser to Selenium Server.}
 
