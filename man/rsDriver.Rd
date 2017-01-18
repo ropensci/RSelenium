@@ -67,10 +67,17 @@ This function is a wrapper around \code{\link[wdman]{selenium}}.
 \dontrun{
 # start a chrome browser
 rD <- rsDriver()
-rD$client$navigate("http://www.google.com/ncr")
-rD$client$navigate("http://www.bbc.com")
+remDr <- rD[["client"]]
+remDr$navigate("http://www.google.com/ncr")
+remDr$navigate("http://www.bbc.com")
+remDr$close()
+# stop the selenium server
+rD[["server"]]$stop() 
+
+# if user forgets to stop server it will be garbage collected.
+rD <- rsDriver()
 rm(rD)
-gc(rD) # should clean up
+gc(rD)
 }
 }
 
