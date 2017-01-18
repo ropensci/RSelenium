@@ -378,3 +378,11 @@ testWebElement <- function(x, remDr){
     replaceWE(x, remDr = remDr)
   }
 }
+
+#' @export
+print.rsClientServer <- function(x, ...){
+  cat("$client\n")
+  print(as.data.frame(rD$client$sessionInfo)[c("browserName", "id")], ...)
+  cat("\n$server\n")
+  print(x[["server"]][["process"]], ...)
+}

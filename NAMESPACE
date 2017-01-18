@@ -3,6 +3,7 @@
 S3method(.DollarNames,errorHandler)
 S3method(.DollarNames,remoteDriver)
 S3method(.DollarNames,webElement)
+S3method(print,rsClientServer)
 export(checkForServer)
 export(errorHandler)
 export(getChromeProfile)
