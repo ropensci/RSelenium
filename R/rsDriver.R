@@ -23,6 +23,9 @@
 #'     excludes adding the internet explorer browser to Selenium Server.
 #'     NOTE this functionality is Windows OS only.
 #' @param verbose If TRUE, include status messages (if any)
+#' @param check If TRUE check the versions of selenium available and the
+#'    versions of associated drivers (chromever, geckover, phantomver,
+#'    iedrver). If new versions are available they will be downloaded.
 #' @param ... Additional arguments to pass to \code{\link{remoteDriver}}
 #'
 #' @return A list containing a server and a client. The server is the object
@@ -55,13 +58,15 @@ rsDriver <- function(port = 4567L,
                      geckover = "latest",
                      iedrver = NULL,
                      phantomver = "latest", 
-                     verbose = TRUE, ...){
+                     verbose = TRUE,
+                     check = TRUE, ...){
   selServ <- wdman::selenium(port = port, verbose = verbose, 
                              version = version,
                              chromever = chromever,
                              geckover = geckover,
                              iedrver = iedrver,
-                             phantomver = phantomver)
+                             phantomver = phantomver, 
+                             check = TRUE)
   browser <- match.arg(browser)
   remDr <- remoteDriver(browserName = browser, port = port, ...)
   # shim for blocking pipe issue on windows and firefox

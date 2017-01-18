@@ -7,7 +7,7 @@
 rsDriver(port = 4567L, browser = c("chrome", "firefox", "phantomjs",
   "internet explorer"), version = "latest", chromever = "latest",
   geckover = "latest", iedrver = NULL, phantomver = "latest",
-  verbose = TRUE, ...)
+  verbose = TRUE, check = TRUE, ...)
 }
 \arguments{
 \item{port}{Port to run on}
@@ -40,6 +40,10 @@ sourced run binman::list_versions("phantomjs"), A value of NULL
 excludes adding the PhantomJS headless browser to Selenium Server.}
 
 \item{verbose}{If TRUE, include status messages (if any)}
+
+\item{check}{If TRUE check the versions of selenium available and the
+versions of associated drivers (chromever, geckover, phantomver,
+iedrver). If new versions are available they will be downloaded.}
 
 \item{...}{Additional arguments to pass to \code{\link{remoteDriver}}}
 }
