@@ -1,3 +1,9 @@
+# RSelenium 1.7.0
+* Basic vignette update with appendix on using rsDriver
+* Print method added for environment returned by rsDriver
+* Default PhantomJS version switched to 2.1.1 (2.5.0-beta has old
+  version of ghostdriver)
+
 # RSelenium 1.6.6
 * phantom is marked as deprecated. To drive PhantomJS via selenium use the
   rsDriver function. To drive directly use wdman::phantomjs
