@@ -70,10 +70,10 @@ rsDriver <- function(port = 4567L,
   browser <- match.arg(browser)
   remDr <- remoteDriver(browserName = browser, port = port, ...)
   # shim for blocking pipe issue on windows and firefox
-  if(identical(binman:::get_os(), "win")){
+  if(identical(binman:::get_os(), "win") && identical(browser, "firefox")){
     res <- tryCatch(
       httr::with_config(
-        httr::timeout(3), 
+        httr::timeout(4), 
         remDr$open(silent = !verbose)
       ),
       error = function(e){e}
