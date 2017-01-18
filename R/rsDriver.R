@@ -113,7 +113,9 @@ rsDriver <- function(port = 4567L,
   csEnv[["server"]] <- selServ
   csEnv[["client"]] <- remDr
   clean <- function(e){
-    e[["client"]]$close()
+    chk <- suppressMessages(
+      tryCatch({e[["client"]]$close()}, error = function(e)e)
+    )
     e[["server"]]$stop()
   }
   reg.finalizer(csEnv, clean)
