@@ -77,143 +77,224 @@
     </div>
 
     <div class="contents">
+    <div id="rselenium-1-7-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rselenium-1-7-0" class="anchor"> </a>RSelenium 1.7.0</h1>
+<ul>
+<li>Basic vignette update with appendix on using rsDriver</li>
+<li>Print method added for environment returned by rsDriver</li>
+<li>Default PhantomJS version switched to 2.1.1 (2.5.0-beta has old version of ghostdriver)</li>
+</ul>
+</div>
+    <div id="rselenium-1-6-6" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rselenium-1-6-6" class="anchor"> </a>RSelenium 1.6.6</h1>
+<ul>
+<li>phantom is marked as deprecated. To drive PhantomJS via selenium use the rsDriver function. To drive directly use wdman::phantomjs</li>
+</ul>
+</div>
+    <div id="rselenium-1-6-5" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rselenium-1-6-5" class="anchor"> </a>RSelenium 1.6.5</h1>
+<ul>
+<li>checkForServer and startServer are now defunct. rsDriver is marked as a dual replacement. Docker is recommended to run a selenium server/browser.</li>
+</ul>
+</div>
+    <div id="rselenium-1-6-4" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rselenium-1-6-4" class="anchor"> </a>RSelenium 1.6.4</h1>
+<ul>
+<li>Add a rsDriver function to return a Selenium/webdriver server and a browser client.</li>
+</ul>
+</div>
+    <div id="rselenium-1-6-3" class="section level1">
+<h1 class="hasAnchor">
+<a href="#rselenium-1-6-3" class="anchor"> </a>RSelenium 1.6.3</h1>
+<ul>
+<li>Return a selected value with the selectTag method.</li>
+</ul>
+</div>
     <div id="rselenium-1-6-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-6-1" class="anchor"> </a>RSelenium 1.6.1</h1>
-<ul><li>Added a selectTag method to the webElement class see #108.</li>
+<ul>
+<li>Added a selectTag method to the webElement class see #108.</li>
 <li>RSelenium Basics vignette was updated/revised.</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-6-0" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-6-0" class="anchor"> </a>RSelenium 1.6.0</h1>
-<ul><li>Moved http package from RCurl to httr see #106.</li>
+<ul>
+<li>Moved http package from RCurl to httr see #106.</li>
 <li>Removed dependence on rjson. httr incorporates jsonlite.</li>
 <li>Import base64_decode from openssl.</li>
 <li>Fixed issue with attributes.Selenium not firing error see #109</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-5-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-5-1" class="anchor"> </a>RSelenium 1.5.1</h1>
-<ul><li>Added a path argument to the remoteDriver class.</li>
-</ul></div>
+<ul>
+<li>Added a path argument to the remoteDriver class.</li>
+</ul>
+</div>
     <div id="rselenium-1-4-9" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-9" class="anchor"> </a>RSelenium 1.4.9</h1>
-<ul><li>Fix .DollarNames to correct issues running under recent RStudio version.</li>
-</ul></div>
+<ul>
+<li>Fix .DollarNames to correct issues running under recent RStudio version.</li>
+</ul>
+</div>
     <div id="rselenium-1-4-8" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-8" class="anchor"> </a>RSelenium 1.4.8</h1>
-<ul><li>Added tests for executeScript</li>
+<ul>
+<li>Added tests for executeScript</li>
 <li>Fixed issue in executeScript/executeAsyncScript with returning nested web elements</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-4-7" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-7" class="anchor"> </a>RSelenium 1.4.7</h1>
-<ul><li>Code tidied up</li>
+<ul>
+<li>Code tidied up</li>
 <li>statCodes added as an internal data.frame</li>
 <li>tidy up imports. importFrom instead of import</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-4-6" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-6" class="anchor"> </a>RSelenium 1.4.6</h1>
-<ul><li>Replace calls to cat with message when error</li>
-</ul></div>
+<ul>
+<li>Replace calls to cat with message when error</li>
+</ul>
+</div>
     <div id="rselenium-1-4-5" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-5" class="anchor"> </a>RSelenium 1.4.5</h1>
-<ul><li>Use canonical form for referring to r-project</li>
-</ul></div>
+<ul>
+<li>Use canonical form for referring to r-project</li>
+</ul>
+</div>
     <div id="rselenium-1-4-4" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-4" class="anchor"> </a>RSelenium 1.4.4</h1>
-<ul><li>Deprecate startServer and checkForServer (look at processx to manage process)</li>
+<ul>
+<li>Deprecate startServer and checkForServer (look at processx to manage process)</li>
 <li>Use message rather than print (thanks Dean Attali #88) in checkForServer. Fix typo in startServer (thanks Charles Thompson #85)</li>
 <li>Copy startServer and checkForServer to examples/serverUtils</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-4-3" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-3" class="anchor"> </a>RSelenium 1.4.3</h1>
-<ul><li>Moved testing to TRAVIS</li>
+<ul>
+<li>Moved testing to TRAVIS</li>
 <li>Switch to rjson from RJSONIO as issue with RJSONIO and TRAVIS/covr</li>
 <li>Ported api tests to TRAVIS</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-4-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-2" class="anchor"> </a>RSelenium 1.4.2</h1>
-<ul><li>Add vignette on RSelenium and Docker containers.</li>
-</ul></div>
+<ul>
+<li>Add vignette on RSelenium and Docker containers.</li>
+</ul>
+</div>
     <div id="rselenium-1-4-1" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-1" class="anchor"> </a>RSelenium 1.4.1</h1>
-<ul><li>Add option to pass arguments to JVM in startServer.</li>
+<ul>
+<li>Add option to pass arguments to JVM in startServer.</li>
 <li>In startServer look for multiple copies of selenium binary in selDIR</li>
 <li>Make renaming selenium binary optional in checkForServer</li>
 <li>Add option to download beta releases in checkForServer</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-4-0" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-4-0" class="anchor"> </a>RSelenium 1.4.0</h1>
-<ul><li>startServer utility function now returns a list of function; getpid returns the process id of the started server, the stop function stops the started server using the process id. Thanks to<br/>
+<ul>
+<li>startServer utility function now returns a list of function; getpid returns the process id of the started server, the stop function stops the started server using the process id. Thanks to<br>
 Dan Tenenbaum #67 and Toby Dylan Hocking #72</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-3-7" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-3-7" class="anchor"> </a>RSelenium 1.3.7</h1>
-<ul><li>Add fix for multiple/Beta JARS in checkForServer (Thanks Dean Attali #79)</li>
+<ul>
+<li>Add fix for multiple/Beta JARS in checkForServer (Thanks Dean Attali #79)</li>
 <li>Update reference for Selenium download (Thanks @mnel)</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-3-6" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-3-6" class="anchor"> </a>RSelenium 1.3.6</h1>
-<ul><li>Allow passing of system2 arguments in startServer utility function</li>
-</ul></div>
+<ul>
+<li>Allow passing of system2 arguments in startServer utility function</li>
+</ul>
+</div>
     <div id="rselenium-1-3-4" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-3-4" class="anchor"> </a>RSelenium 1.3.4</h1>
-<ul><li>Fix custom path not being passed correctly to phantom utility function.</li>
+<ul>
+<li>Fix custom path not being passed correctly to phantom utility function.</li>
 <li>Allowing passing of commandline arguments via utility function startServer.</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-3-3" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-3-3" class="anchor"> </a>RSelenium 1.3.3</h1>
-<ul><li>Add utility function makeFirefoxProfile (Thanks Shan Huang #24)</li>
+<ul>
+<li>Add utility function makeFirefoxProfile (Thanks Shan Huang #24)</li>
 <li>Fix phantom utility function for OSX (Thanks Carson Sievert #25)</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-3-2" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-3-2" class="anchor"> </a>RSelenium 1.3.2</h1>
-<ul><li>Methods now fail with errors if the server returns an error related status code. Summary and Detail of the error are outputted as well as the associated java class.</li>
+<ul>
+<li>Methods now fail with errors if the server returns an error related status code. Summary and Detail of the error are outputted as well as the associated java class.</li>
 <li>Add a phantom utility function to enable driving of phantomjs in webdriver mode independent of Selenium Server.</li>
 <li>Fixed file paths in startServer for windows (Thanks @mnel #22)</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-3-0" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-3-0" class="anchor"> </a>RSelenium 1.3.0</h1>
-<ul><li>Add the content from OC-RUG webinar as a vignette.</li>
+<ul>
+<li>Add the content from OC-RUG webinar as a vignette.</li>
 <li>Update the Driving OS/Browsers local and remote vignette.</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-2-5" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-2-5" class="anchor"> </a>RSelenium 1.2.5</h1>
-<ul><li>Update reference classes to use <code>@field</code> and inline docstrings for methods</li>
+<ul>
+<li>Update reference classes to use <code>@field</code> and inline docstrings for methods</li>
 <li>Allow partial string matching on the <code>using</code> argument of the findElement and findElements method from the remoteDriver class.</li>
 <li>Allow partial string matching on the <code>using</code> argument of the findChildElement and findChildElements method from the webElement class.</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-2-4" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-2-4" class="anchor"> </a>RSelenium 1.2.4</h1>
-<ul><li>Add getLogtypes() and log(type) methods to remoteDriver class</li>
+<ul>
+<li>Add getLogtypes() and log(type) methods to remoteDriver class</li>
 <li>Fix getFirefoxProfile so useBase = TRUE works under windows.</li>
 <li>Add additional support for encoding (thanks to Nicola Logrillo issue #16)</li>
 <li>Add file argument to screenshot method in remoteDriver class to allow writing screenshot to file</li>
 <li>Add a getChromeProfile utility function.</li>
-</ul></div>
+</ul>
+</div>
     <div id="rselenium-1-2-3" class="section level1">
 <h1 class="hasAnchor">
 <a href="#rselenium-1-2-3" class="anchor"> </a>RSelenium 1.2.3</h1>
-<ul><li>Add option to display screenshot in viewer panel if using RStudio</li>
-</ul></div>
+<ul>
+<li>Add option to display screenshot in viewer panel if using RStudio</li>
+</ul>
+</div>
     </div>
   </div>
 
@@ -221,6 +302,11 @@ Dan Tenenbaum #67 and Toby Dylan Hocking #72</li>
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#rselenium-1-7-0">1.7.0</a></li>
+        <li><a href="#rselenium-1-6-6">1.6.6</a></li>
+        <li><a href="#rselenium-1-6-5">1.6.5</a></li>
+        <li><a href="#rselenium-1-6-4">1.6.4</a></li>
+        <li><a href="#rselenium-1-6-3">1.6.3</a></li>
         <li><a href="#rselenium-1-6-1">1.6.1</a></li>
         <li><a href="#rselenium-1-6-0">1.6.0</a></li>
         <li><a href="#rselenium-1-5-1">1.5.1</a></li>
