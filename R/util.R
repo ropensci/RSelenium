@@ -27,7 +27,7 @@ checkForServer <- function (dir = NULL, update = FALSE, rename = TRUE
                             , beta = FALSE) 
 {
   .Defunct(rsDriver, "RSelenium",
-"checkForServer is now defunct. Users in future can find the function in 
+           "checkForServer is now defunct. Users in future can find the function in 
 file.path(find.package(\"RSelenium\"), \"example/serverUtils\"). The
 recommended way to run a selenium server is via Docker. Alternatively
 see the RSelenium::rsDriver function.")
@@ -78,7 +78,7 @@ startServer <- function (dir = NULL, args = NULL, javaargs = NULL,
                          log = TRUE,  ...) 
 {
   .Defunct(rsDriver, "RSelenium",
-"startServer is now defunct. Users in future can find the function in 
+           "startServer is now defunct. Users in future can find the function in 
 file.path(find.package(\"RSelenium\"), \"example/serverUtils\"). The
 recommended way to run a selenium server is via Docker. Alternatively
 see the RSelenium::rsDriver function.")
@@ -223,6 +223,11 @@ getChromeProfile <- function(dataDir, profileDir){
 #' }
 
 phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
+  .Deprecated(new = "phantomjs", package = "wdman", 
+              msg = "The phantom function in RSelenium 
+is now deprecated and will be defunct in future releases. 
+Users can drive PhantomJS via selenium using the RSelenium::rsDriver 
+function or directly using wdman::phantomjs")
   if (!nzchar(pjs_cmd)) {
     pjsPath <- Sys.which("phantomjs")
   }else{
@@ -362,7 +367,7 @@ testWebElement <- function(x, remDr){
     if(identical(names(x), "ELEMENT")){
       webElement$new(as.character(x))$import(remDr)
     }else{
-        x
+      x
     }
   }
   if(is.null(x)||identical(length(x), 0L)) return(x)
