@@ -1,3 +1,8 @@
+# RSelenium 1.7.1
+* Fixed issue where rsDriver was not passing additional arguments via ...
+* Fixed issue with rsDriver and Win/Firefox
+
+
 # RSelenium 1.7.0
 * Basic vignette update with appendix on using rsDriver
 * Print method added for environment returned by rsDriver
