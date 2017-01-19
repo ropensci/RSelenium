@@ -90,13 +90,12 @@ rsDriver <- function(port = 4567L,
         selServ$stop()
         stop(res[["message"]])
       }else{
-        oldSessions <- length(remDr$getSessions())
         chk <- NA_character_
         while(!identical(chk, character())){
           chk <- selServ$error(timeout = 1000)
         }
         count <- 0L
-        while(length(sessions <- remDr$getSessions()) <= oldSessions){
+        while(length(sessions <- remDr$getSessions()) == 0L){
           Sys.sleep(1)
           count <- count + 1L
           if(count > 4L){
@@ -113,7 +112,7 @@ rsDriver <- function(port = 4567L,
       selServ$stop()
       stop("Internet Explorer is only available on Windows.")
     }
-    remDr <- remoteDriver(browserName = browser, port = port)
+    remDr <- remoteDriver(browserName = browser, port = port, ...)
     remDr$open(silent = !verbose)
   }
   csEnv <- new.env()
