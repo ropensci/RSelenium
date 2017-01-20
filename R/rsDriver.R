@@ -67,6 +67,11 @@ rsDriver <- function(port = 4567L,
                      phantomver = "2.1.1", 
                      verbose = TRUE,
                      check = TRUE, ...){
+  browser <- match.arg(browser)
+  if(identical(browser, "internet explorer") &&
+     !identical(.Platform[["OS.type"]], "windows")){
+    stop("Internet Explorer is only available on Windows.")
+  }
   selServ <- wdman::selenium(port = port, verbose = verbose, 
                              version = version,
                              chromever = chromever,
@@ -74,13 +79,6 @@ rsDriver <- function(port = 4567L,
                              iedrver = iedrver,
                              phantomver = phantomver, 
                              check = TRUE)
-  browser <- match.arg(browser)
-  remDr <- remoteDriver(browserName = browser, port = port, ...)
-  if(identical(browser, "internet explorer") &&
-     !identical(.Platform[["OS.type"]], "windows")){
-    selServ$stop()
-    stop("Internet Explorer is only available on Windows.")
-  }
   remDr <- remoteDriver(browserName = browser, port = port, ...)
   # check server status
   count <- 0L
