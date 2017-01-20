@@ -76,7 +76,8 @@ rsDriver <- function(port = 4567L,
                              check = TRUE)
   browser <- match.arg(browser)
   remDr <- remoteDriver(browserName = browser, port = port, ...)
-  if(identical(browser, "internet explorer")){
+  if(identical(browser, "internet explorer") &&
+     !identical(.Platform[["OS.type"]], "windows")){
     selServ$stop()
     stop("Internet Explorer is only available on Windows.")
   }
