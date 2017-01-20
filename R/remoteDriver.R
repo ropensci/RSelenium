@@ -205,6 +205,7 @@ remoteDriver <-
           javascript <<- javascript
           nativeEvents <<- nativeEvents
           extraCapabilities <<- extraCapabilities
+          serverURL <<- paste0("http://",remoteServerAddr,":",port,path)
           callSuper(...)
           },
       show = function(){
@@ -234,7 +235,6 @@ remoteDriver <-
       open = function(silent = FALSE){
         "Send a request to the remote server to instantiate the browser."
         if(!silent){print("Connecting to remote server")}
-        serverURL <<- paste0("http://",remoteServerAddr,":",port,path)
         serverOpts <- list(desiredCapabilities = 
                              list(
                                browserName = browserName,
