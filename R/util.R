@@ -28,7 +28,7 @@ checkForServer <- function (dir = NULL, update = FALSE, rename = TRUE
 {
   .Defunct(rsDriver, "RSelenium",
            "checkForServer is now defunct. Users in future can find the function in 
-file.path(find.package(\"RSelenium\"), \"example/serverUtils\"). The
+file.path(find.package(\"RSelenium\"), \"examples/serverUtils\"). The
 recommended way to run a selenium server is via Docker. Alternatively
 see the RSelenium::rsDriver function.")
 }
@@ -79,7 +79,7 @@ startServer <- function (dir = NULL, args = NULL, javaargs = NULL,
 {
   .Defunct(rsDriver, "RSelenium",
            "startServer is now defunct. Users in future can find the function in 
-file.path(find.package(\"RSelenium\"), \"example/serverUtils\"). The
+file.path(find.package(\"RSelenium\"), \"examples/serverUtils\"). The
 recommended way to run a selenium server is via Docker. Alternatively
 see the RSelenium::rsDriver function.")
 }
