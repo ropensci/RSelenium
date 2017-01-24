@@ -884,11 +884,11 @@ So using the code above one can observe how to switch between different windows 
 In previous versions of `RSelenium` there were two functions 
 `checkForServer` and `startServer` which were used to download and start a
 Selenium binary. These functions are Deprecated/Defunct as users had issue 
-with using them cross-platform. They are still in the RSelenium package and can be accessed in the serverUtils directory `file.path(find.package("RSelenium"), "example/serverUtils")`
+with using them cross-platform. They are still in the RSelenium package and can be accessed in the serverUtils directory `file.path(find.package("RSelenium"), "examples/serverUtils")`
 
 ```
-> file.path(find.package("RSelenium"), "example/serverUtils")
-[1] "/home/john/R/x86_64-pc-linux-gnu-library/3.3/RSelenium/example/serverUtils"
+> file.path(find.package("RSelenium"), "examples/serverUtils")
+[1] "/home/john/R/x86_64-pc-linux-gnu-library/3.3/RSelenium/examples/serverUtils"
 ```
 
 They may work for you depending on your platform and setup but are not 
