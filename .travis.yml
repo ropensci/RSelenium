@@ -2,8 +2,6 @@ sudo: required
 language: R
 services:
 - docker
-addons:
-  sauce_connect: true
 env:
   matrix:
   - NOT_CRAN=true
