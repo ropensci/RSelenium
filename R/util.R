@@ -382,8 +382,12 @@ testWebElement <- function(x, remDr){
 #' @export
 print.rsClientServer <- function(x, ...){
   cat("$client\n")
-  print(as.data.frame(x[["client"]]$sessionInfo)[c("browserName", "id")], 
-        ...)
+  if(length(x[["client"]]$sessionInfo) == 0L){
+    print("No sessionInfo. Client browser is mostly likely not opened.")
+  }else{
+    print(as.data.frame(x[["client"]]$sessionInfo)[c("browserName", "id")], 
+          ...)
+  }
   cat("\n$server\n")
   print(x[["server"]][["process"]], ...)
 }
