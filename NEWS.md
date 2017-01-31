@@ -1,3 +1,7 @@
+# RSelenium 1.7.2
+* Fixed issue where rsDriver client when failing to open didnt catch error
+
+
 # RSelenium 1.7.1
 * Fixed issue where rsDriver was not passing additional arguments via ...
 * Fixed issue with rsDriver and Win/Firefox
