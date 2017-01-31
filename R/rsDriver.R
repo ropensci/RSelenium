@@ -92,7 +92,14 @@ rsDriver <- function(port = 4567L,
       break
     }
   }
-  remDr$open(silent = !verbose)
+  res <- tryCatch({remDr$open(silent = !verbose)},
+                  error = function(e){e}
+  )
+  if(inherits(res, "error")){
+    message("Could not open ", browser, " browser.")
+    message("Client error message:\n", res$message)
+    message("Check server log for further details.")
+  }
   
   csEnv <- new.env()
   csEnv[["server"]] <- selServ
