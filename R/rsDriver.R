@@ -78,7 +78,7 @@ rsDriver <- function(port = 4567L,
                              geckover = geckover,
                              iedrver = iedrver,
                              phantomver = phantomver, 
-                             check = TRUE)
+                             check = check)
   remDr <- remoteDriver(browserName = browser, port = port, ...)
   # check server status
   count <- 0L
