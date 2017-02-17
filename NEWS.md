@@ -1,5 +1,6 @@
 # RSelenium 1.7.2
 * Fixed issue where rsDriver client when failing to open didnt catch error
+* Correctly pass the check argument in rsDriver to wdman (thanks @bourdieu #123)
 
 
 # RSelenium 1.7.1
