@@ -2,6 +2,8 @@ sudo: required
 language: R
 services:
 - docker
+cache:
+- packages
 env:
   matrix:
   - NOT_CRAN=true
