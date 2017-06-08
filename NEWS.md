@@ -1,3 +1,7 @@
+# RSelenium 1.7.3
+* Address issue with user/pass credentials being exposed using SauceLabs (thanks @jstockwin #131)
+* Cache packages on TRAVIS to reduce runtime (thanks @jstockwin #132)
+
 # RSelenium 1.7.2
 * Fixed issue where rsDriver client when failing to open didnt catch error
 * Correctly pass the check argument in rsDriver to wdman (thanks @bourdieu #123)
