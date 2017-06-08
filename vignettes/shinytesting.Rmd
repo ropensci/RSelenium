@@ -78,7 +78,7 @@ runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"), port = 6012)
 An image of the app using `RSelenium` on a windows 8.1 machine running firefox 26.0
 
 <h6 align = center>shinytestapp on win 8.1 firefox 26.0</h6>
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/shinytesting/shinytestapp.png"  title = "shinytestapp on win 8.1 firefox 26.0"  width = '100%'/>
+<img src="http://i68.tinypic.com/3532jqo.jpg"  title = "shinytestapp on win 8.1 firefox 26.0"  width = '100%'/>
 
 The image was generated using `RSelenium` and the following code.
 
@@ -114,7 +114,7 @@ extraCapabilities <- list(name = "shinytestapp screenshot", username = user
 ```
 <h6 align = center>shinytestapp on win 8.1 firefox 26.0 res 1280x1024</h6>
 
-<img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/shinytesting/STA-highres.png" title = "shinytestapp on win 8.1 firefox 26.0 res 1280x1024"  width = '100%'/>
+<img src="http://i67.tinypic.com/5ujsko.jpg" title = "shinytestapp on win 8.1 firefox 26.0 res 1280x1024"  width = '100%'/>
 
 We can see things look a bit better but the `data-table` search box is a bit compacted.
 
