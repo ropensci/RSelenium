@@ -602,7 +602,7 @@ remDr$screenshot(display = TRUE)
 
 ```
 <h6 align = center>RProject front page</h6>
-<img src="http://i65.tinypic.com/2zybpcw.png" title = "RProject front page on linux firefox 26.0" width = '100%'/>
+<img src="http://oi64.tinypic.com/ohftf.jpg" title = "RProject front page on linux firefox 26.0" width = '100%'/>
 
 To access the content we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class. 
 
