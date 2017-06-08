@@ -176,7 +176,7 @@ errorHandler <-
         value <<- list()
         eMessage <- list(
           "Invalid call to server. Please check you have opened a browser.",
-          paste0("Couldnt connect to host on ", serverURL, 
+          paste0("Couldnt connect to host on ", obscureUrlPassword(serverURL),
                  ".\n  Please ensure a Selenium server is running."),
           function(x){
             paste0("Undefined error in httr call. httr output: ", x)
@@ -198,6 +198,18 @@ errorHandler <-
                class = statusclass,
                status = status
         )
+      },
+
+      obscureUrlPassword = function(url) {
+        "Replaces the username and password of url with ****"
+        parsedUrl <- httr::parse_url(url)
+        if (!is.null(parsedUrl$username)) {
+            parsedUrl$username <- "****"
+        }
+        if (!is.null(parsedUrl$password)) {
+            parsedUrl$password <- "****"
+        }
+        httr::build_url(parsedUrl)
       }
     )
   )
