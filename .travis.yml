@@ -11,6 +11,9 @@ before_install:
 - svn checkout https://github.com/SeleniumHQ/selenium/trunk/common/src/web
 - docker run -d -p 3000:8080 --name http-server -v $(pwd)/web:/public redsadic/docker-http-server&
 - docker run -d -p 127.0.0.1:4444:4444 --link http-server selenium/standalone-chrome:2.53.1
+r_github_packages:  
+  - johndharrison/binman
+  - johndharrison/wdman
 r:
 - oldrel
 - release
