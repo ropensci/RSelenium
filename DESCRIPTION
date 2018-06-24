@@ -23,15 +23,15 @@ Depends:
 Imports:
     XML,methods,caTools,tools,utils,
     openssl,
-    httr,
-    wdman(>= 0.2.2),
-    binman
+    httr
 Suggests:
     testthat,
     knitr,
     Rcompression,
     covr,
-    rmarkdown
+    rmarkdown,
+    wdman(>= 0.2.2),
+    binman
 VignetteBuilder: knitr
 LazyData: true
 Collate:

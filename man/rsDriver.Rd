@@ -16,7 +16,7 @@ rsDriver(port = 4567L, browser = c("chrome", "firefox", "phantomjs",
 
 \item{version}{what version of Selenium Server to run. Default = "latest"
 which runs the most recent version. To see other version currently
-sourced run binman::list_versions("seleniumserver")}
+sourced run binman::list_versions("seleniumserver").}
 
 \item{chromever}{what version of Chrome driver to run. Default = "latest"
 which runs the most recent version. To see other version currently
@@ -62,6 +62,10 @@ This function is a wrapper around \code{\link[wdman]{selenium}}.
     relating to the Selenium/webdriver project see the 
     \code{\link[wdman]{wdman}} package. Both the client and server
     are closed using a registered finalizer.
+    
+    The package binman is currently unavailable from CRAN but can be
+    installed using, for example,
+    \code{devtools::install_github("johndharrison/binman")}.
 }
 \examples{
 \dontrun{

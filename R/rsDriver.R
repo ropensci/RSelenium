@@ -4,7 +4,7 @@
 #' @param browser Which browser to start
 #' @param version what version of Selenium Server to run. Default = "latest"
 #'     which runs the most recent version. To see other version currently
-#'     sourced run binman::list_versions("seleniumserver")
+#'     sourced run binman::list_versions("seleniumserver").
 #' @param chromever what version of Chrome driver to run. Default = "latest"
 #'     which runs the most recent version. To see other version currently
 #'     sourced run binman::list_versions("chromedriver"), A value of NULL
@@ -36,9 +36,12 @@
 #'     Windows. For a more detailed set of functions for running binaries
 #'     relating to the Selenium/webdriver project see the 
 #'     \code{\link[wdman]{wdman}} package. Both the client and server
-#'     are closed using a registered finalizer. 
+#'     are closed using a registered finalizer.
+#'     
+#'     The package binman is currently unavailable from CRAN but can be
+#'     installed using, for example,
+#'     \code{devtools::install_github("johndharrison/binman")}.
 #' @export
-#' @importFrom wdman selenium
 #'
 #' @examples
 #' \dontrun{
@@ -71,6 +74,12 @@ rsDriver <- function(port = 4567L,
   if(identical(browser, "internet explorer") &&
      !identical(.Platform[["OS.type"]], "windows")){
     stop("Internet Explorer is only available on Windows.")
+  }
+  if (!requireNamespace("wdman", quietly = TRUE)) {
+    stop("Package \"wdman\" is needed for this function to ",
+         "work. Please install it (e.g. using \"devtools::",
+         "install_github(\"johndharrison/wdman\")\".",
+         call. = FALSE)
   }
   selServ <- wdman::selenium(port = port, verbose = verbose, 
                              version = version,
