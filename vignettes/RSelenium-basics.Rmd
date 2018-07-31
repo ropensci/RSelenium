@@ -49,7 +49,7 @@ with Docker see `vignette("RSelenium-docker", package = "RSelenium")`.
 For users who are not familiar with Docker there is now a function
 `rsDriver` which will manage the binaries needed for running a Selenium 
 Server. This provides a wrapper around the `wdman::selenium` function.
-For additional options and more control see the [wdman](https://github.com/johndharrison/wdman) project.
+For additional options and more control see the [wdman](https://github.com/ropensci/wdman) project.
 Examples using the `rsDriver` function are given in the appendix.
 **Please submit any issues with running binaries to the wdman 
 project** 
@@ -989,4 +989,4 @@ rD$server$process
 #> state     : terminated
 ```
 
-For further detail and any issues you may have with the `rsDriver` function please see the [wdman](https://github.com/johndharrison/wdman) project.
+For further detail and any issues you may have with the `rsDriver` function please see the [wdman](https://github.com/ropensci/wdman) project.

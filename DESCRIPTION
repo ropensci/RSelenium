@@ -2,8 +2,11 @@ Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
 Version: 1.7.3
-Authors@R: person("John", "Harrison", , "johndharrison0@gmail.com", 
-    role = c("aut", "cre"), comment = "R package RSelenium")
+Authors@R: c(
+    person("John", "Harrison", , "johndharrison0@gmail.com",
+    role = "aut", comment = "original author"),
+    person("Ju Yeong", "Kim", , "jkim2345@fredhutch.org",
+    role = "cre", comment = "rOpenSci maintainer"))
 Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
     (see <https://seleniumhq.github.io/docs/wd.html>
     for more information) using the 'JsonWireProtocol' (see
