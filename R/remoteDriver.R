@@ -621,7 +621,7 @@ remoteDriver <-
         testWebElement(.self$value, .self)
       },
       
-      executeScript = function(script,args = list()){
+      executeScript = function(script,args = list("")){
         "Inject a snippet of JavaScript into the page for execution in the 
         context of the currently selected frame. The executed script is 
         assumed to be synchronous and the result of evaluating the script 
