@@ -35,7 +35,7 @@ see the RSelenium::rsDriver function.")
 
 #' Start the standalone server.
 #' 
-#' #' Defunct. Please use \code{\link{rsDriver}}
+#' Defunct. Please use \code{\link{rsDriver}}
 #' 
 #' \code{startServer}
 #' A utility function to start the standalone server. Return two functions 
@@ -179,6 +179,8 @@ getChromeProfile <- function(dataDir, profileDir){
 
 #' Start a phantomjs binary in webdriver mode.
 #' 
+#' Defunct. Please use \code{\link{rsDriver}} or \code{\link[wdman]{phantomjs}}
+#' 
 #' \code{phantom}
 #' A utility function to control a phantomjs binary in webdriver mode. 
 #' @param pjs_cmd The name, full or partial path of a phantomjs 
@@ -223,45 +225,11 @@ getChromeProfile <- function(dataDir, profileDir){
 #' }
 
 phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...){
-  .Deprecated(new = "phantomjs", package = "wdman", 
-              msg = "The phantom function in RSelenium 
-is now deprecated and will be defunct in future releases. 
-Users can drive PhantomJS via selenium using the RSelenium::rsDriver 
-function or directly using wdman::phantomjs")
-  if (!nzchar(pjs_cmd)) {
-    pjsPath <- Sys.which("phantomjs")
-  }else{
-    pjsPath <- pjs_cmd
-  }
-  if(nchar(pjsPath) == 0){stop("PhantomJS binary not located.")}
-  pjsargs <- c(paste0("--webdriver=", port), extras)
-  if (.Platform$OS.type == "windows"){
-    system2(pjsPath, pjsargs, invisible = TRUE, wait = FALSE, ...)
-    pjsPID <- read.csv(text = system("tasklist /v /fo csv", intern = TRUE))
-    # support for MS-DOS-compatible (short) file name
-    pjsPID <- pjsPID$PID[grepl("phantomjs.exe|PHANTO~1.EXE", 
-                               pjsPID$Image.Name)]
-  }else{
-    system2(pjsPath, pjsargs, wait = FALSE, ...)
-    if(Sys.info()["sysname"] == "Darwin"){
-      pids <- system('ps -Ao"pid"', intern = TRUE)
-      args <- system('ps -Ao"args"', intern = TRUE)
-    }else{
-      pids <- system('ps -Ao"%p"', intern = TRUE)
-      args <- system('ps -Ao"%a"', intern = TRUE)
-    }
-    idx <- grepl("phantomjs", args)
-    if(!any(idx)) warning("Couldn't find the phantomjs process")
-    pjsPID <- pids[idx]
-  }
-  
-  list(
-    stop = function(){
-      tools::pskill(pjsPID)
-    },
-    getPID = function(){
-      return(pjsPID)
-    }
+  .Defunct(
+    new = "phantomjs",
+    package = "wdman",
+    msg = "phantom is now defunct. Users can drive PhantomJS via selenium using 
+    the RSelenium::rsDriver function or directly using wdman::phantomjs"
   )
 }
 

@@ -65,33 +65,33 @@ test_that("canGetChromeProfile", {
 }
 )
 
-test_that("canStartPhantom", {
-  if(Sys.info()[["sysname"]] != "Linux") return()
-  with_mock(
-    `base::system2` = function(command, args, ...){
-      if(grepl("myphantompath", command)){
-        return(0L)
-      }
-    },
-    `base::system` = function(command, ...){
-      if(grepl('ps -Ao"%p"', command)){
-        return(100L)
-      }
-      if(grepl('ps -Ao"%a"', command)){
-        return("phantomjs")
-      }
-    },
-    `tools::pskill` = function(pid, ...){
-      return(pid)
-    }, 
-    {
-      out <- phantom("myphantompath")
-      expect_identical(out$getPID(), 100L)
-      expect_identical(out$stop(), 100L)
-    }
-    
-  )
-})
+# test_that("canStartPhantom", {
+#   if(Sys.info()[["sysname"]] != "Linux") return()
+#   with_mock(
+#     `base::system2` = function(command, args, ...){
+#       if(grepl("myphantompath", command)){
+#         return(0L)
+#       }
+#     },
+#     `base::system` = function(command, ...){
+#       if(grepl('ps -Ao"%p"', command)){
+#         return(100L)
+#       }
+#       if(grepl('ps -Ao"%a"', command)){
+#         return("phantomjs")
+#       }
+#     },
+#     `tools::pskill` = function(pid, ...){
+#       return(pid)
+#     }, 
+#     {
+#       out <- phantom("myphantompath")
+#       expect_identical(out$getPID(), 100L)
+#       expect_identical(out$stop(), 100L)
+#     }
+#     
+#   )
+# })
 
 test_that("canMakeFirefoxProfile", {
   if(Sys.info()[["sysname"]] != "Linux") return()
