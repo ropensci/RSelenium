@@ -18,19 +18,34 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
 
+
+
+<meta property="og:title" content="Start the standalone server. — startServer" />
+
+<meta property="og:description" content="Defunct. Please use rsDriver" />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -44,24 +59,59 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">RSelenium</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">RSelenium</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/basics.html">Basics</a>
+    </li>
+    <li>
+      <a href="../articles/docker.html">Docker</a>
+    </li>
+    <li>
+      <a href="../articles/headless.html">Headless Browsing</a>
+    </li>
+    <li>
+      <a href="../articles/saucelabs.html">Driving OS/Browsers Local and Remote</a>
+    </li>
+    <li>
+      <a href="../articles/shinytesting.html">Testing Shiny Apps</a>
+    </li>
+    <li>
+      <a href="../articles/webinar.html">OCRUG Webinar</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -69,40 +119,56 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Start the standalone server.</h1>
+    
+    <div class="hidden name"><code>startServer.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>#&#39; Defunct. Please use <code><a href='rsDriver.html'>rsDriver</a></code></p>
+    <p>Defunct. Please use <code><a href='rsDriver.html'>rsDriver</a></code></p>
     
+    </div>
 
-    <pre><span class='fu'>startServer</span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>javaargs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>startServer</span>(<span class='kw'>dir</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>args</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>javaargs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>dir</dt>
-      <dd>A directory in which the binary is to be placed.</dd>
-      <dt>args</dt>
-      <dd>Additional arguments to be passed to Selenium Server.</dd>
-      <dt>javaargs</dt>
-      <dd>arguments passed to JVM as opposed to the Selenium 
-Server jar.</dd>
-      <dt>log</dt>
-      <dd>Logical value indicating whether to write a log file to the 
-directory containing the Selenium Server binary.</dd>
-      <dt>...</dt>
-      <dd>arguments passed <code>system2</code>. Unix defaults 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>dir</th>
+      <td><p>A directory in which the binary is to be placed.</p></td>
+    </tr>
+    <tr>
+      <th>args</th>
+      <td><p>Additional arguments to be passed to Selenium Server.</p></td>
+    </tr>
+    <tr>
+      <th>javaargs</th>
+      <td><p>arguments passed to JVM as opposed to the Selenium 
+Server jar.</p></td>
+    </tr>
+    <tr>
+      <th>log</th>
+      <td><p>Logical value indicating whether to write a log file to the 
+directory containing the Selenium Server binary.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>arguments passed <code>system2</code>. Unix defaults 
 wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults 
-wait = FALSE, invisible = TRUE.</dd>
-    </dl>
+wait = FALSE, invisible = TRUE.</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a list containing two functions. The &#39;getpid&#39; function 
-   returns the process id of the started Selenium binary. The &#39;stop&#39; 
+    <p>Returns a list containing two functions. The 'getpid' function 
+   returns the process id of the started Selenium binary. The 'stop' 
    function stops the started Selenium server using the process id.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -116,24 +182,24 @@ A utility function to start the standalone server. Return two functions
     <p>By default the binary is assumed to be in the 
    RSelenium package /bin directory. The log argument is for convience. 
    Setting it to FALSE and stipulating 
-   args = c(&quot;-log /user/etc/somePath/somefile.log&quot;) allows a custom 
+   args = c("-log /user/etc/somePath/somefile.log") allows a custom 
    location. Using log = TRUE sets the location to a file named 
    sellog.txt in the directory containing the Selenium Server binary.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># selServ &lt;- startServer()</span>
-<span class='co'># # example of commandline passing</span>
-<span class='co'># selServ &lt;- startServer(args = c("-port 4455"), </span>
-<span class='co'>#                        log = FALSE, invisible = FALSE)</span>
-<span class='co'># remDr &lt;- remoteDriver(browserName = "chrome", port = 4455)</span>
-<span class='co'># remDr$open()</span>
-<span class='co'># # get the process id of the selenium binary</span>
-<span class='co'># selServ$getpid()</span>
-<span class='co'># # stop the selenium binary</span>
-<span class='co'># selServ$stop()</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='no'>selServ</span> <span class='kw'>&lt;-</span> <span class='fu'>startServer</span>()
+<span class='co'># example of commandline passing</span>
+<span class='no'>selServ</span> <span class='kw'>&lt;-</span> <span class='fu'>startServer</span>(<span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"-port 4455"</span>),
+                       <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>invisible</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>remDr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='remoteDriver-class.html'>remoteDriver</a></span>(<span class='kw'>browserName</span> <span class='kw'>=</span> <span class='st'>"chrome"</span>, <span class='kw'>port</span> <span class='kw'>=</span> <span class='fl'>4455</span>)
+<span class='no'>remDr</span>$<span class='fu'>open</span>()
+<span class='co'># get the process id of the selenium binary</span>
+<span class='no'>selServ</span>$<span class='fu'>getpid</span>()
+<span class='co'># stop the selenium binary</span>
+<span class='no'>selServ</span>$<span class='fu'>stop</span>()
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -154,15 +220,18 @@ A utility function to start the standalone server. Return two functions
 
       <footer>
       <div class="copyright">
-  <p>Developed by John Harrison.</p>
+  <p>Developed by John Harrison, Ju Yeong Kim.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -5,17 +5,20 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RSelenium: Testing Shiny Apps • RSelenium</title>
+<title>Testing Shiny Apps • RSelenium</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Testing Shiny Apps">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,18 +27,52 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">RSelenium</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">RSelenium</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="../articles/index.html">Articles</a>
+      <a href="../articles/basics.html">Basics</a>
+    </li>
+    <li>
+      <a href="../articles/docker.html">Docker</a>
+    </li>
+    <li>
+      <a href="../articles/headless.html">Headless Browsing</a>
+    </li>
+    <li>
+      <a href="../articles/saucelabs.html">Driving OS/Browsers Local and Remote</a>
+    </li>
+    <li>
+      <a href="../articles/shinytesting.html">Testing Shiny Apps</a>
+    </li>
+    <li>
+      <a href="../articles/webinar.html">OCRUG Webinar</a>
+    </li>
+  </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -48,181 +85,163 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>RSelenium: Testing Shiny Apps</h1>
+      <h1>Testing Shiny Apps</h1>
             
-          </div>
+      
+      
+      <div class="hidden name"><code>shinytesting.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
-<!--
-%\VignetteEngine{knitr::rmarkdown}
-%\VignetteIndexEntry{Shiny Testing}
--->
-<div id="rselenium-testing-shiny-apps" class="section level1">
-<h1 class="hasAnchor">
-<html><body><a href="#rselenium-testing-shiny-apps" class="anchor"> </a></body></html>RSelenium: Testing Shiny Apps</h1>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#introduction" class="anchor"> </a></body></html>Introduction</h2>
-<p>The goal of this vignette is to give a basic overview of how one might approach “testing” a shiny app. <a href="http://www.rstudio.com/shiny/">Shiny</a> is a new package from <a href="http://www.rstudio.com/">RStudio</a> that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the <a href="http://getbootstrap.com/javascript/">Bootstrap</a> front-end framework. In this vignette we will looking at writing unit tests for a simple shiny wep app. The testing package we will use is <a href="https://github.com/hadley/testthat">testthat</a> which has a short introduction <a href="https://journal.R-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf">here</a>. I am using <code>testthat</code> version 0.8. The version on cran is version 0.7.1 and may give trouble for tests where I manipulate the test environment. You can install 0.8 from github <code>devtools::install_github("testthat", "hadley")</code></p>
-<p>This vignette is divided into five main sections:</p>
-<ul>
-<li><a href="#id1">Some thoughts on testing.</a></li>
-<li><a href="#id2">The shiny test app.</a></li>
-<li><a href="#id3">Basic tests.</a></li>
-<li><a href="#id4">Testing the Controls.</a></li>
-<li><a href="#id5">Testing the Output.</a></li>
-<li><a href="#id6">Further Tests.</a></li>
-</ul>
+<a href="#introduction" class="anchor"></a>Introduction</h2>
+<p>The goal of this vignette is to give a basic overview of how one might approach “testing” a shiny app. <a href="http://www.rstudio.com/shiny/">Shiny</a> is a new package from <a href="http://www.rstudio.com/">RStudio</a> that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the <a href="http://getbootstrap.com/javascript/">Bootstrap</a> front-end framework. In this vignette we will looking at writing unit tests for a simple shiny wep app. The testing package we will use is <a href="https://github.com/hadley/testthat">testthat</a> which has a short introduction <a href="https://journal.R-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf">here</a>. I am using <code>testthat</code> version 0.8. The version on cran is version 0.7.1 and may give trouble for tests where I manipulate the test environment. You can install 0.8 from github <code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">devtools::install_github("testthat", "hadley")</a></code></p>
 <p>Each section will be an introduction to an idea in testing shiny apps with Selenium, and point to more detailed explanation in other vignettes.</p>
 </div>
-<div id="some-thoughts-on-testing-" class="section level2">
+<div id="some-thoughts-on-testing" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#some-thoughts-on-testing-" class="anchor"> </a></body></html>
-<a id="id1">Some thoughts on testing.</a>
-</h2>
+<a href="#some-thoughts-on-testing" class="anchor"></a>Some Thoughts on Testing</h2>
 <div id="why-test" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#why-test" class="anchor"> </a></body></html>Why test?</h3>
-<p>When faced with testing for the first time the natural reaction is to think what now? what do i test? how much/many tests do I write? Tests need to do something useful to survive. Automated tests should help the team to make the next move by providing justified confidence a bug has been fixed, confirming refactored code still works as intended, or demonstrating that new features have been successfully implemented. There should be sufficient tests - neither more nor less: more increase the support burden, fewer leave us open to unpleasant surprises in production.</p>
-<p>One way to create our tests is to take the view of the user. What does the user want to do? They want to see this particular graph of a given data set. How do they do that? They select various options and input various choices. From this list of actions we can create an outline of our code for the test.</p>
+<a href="#why-test" class="anchor"></a>Why Test?</h3>
+<p>When faced with testing for the first time the natural reaction is to think what now? what do i test? how much/many tests do I write?</p>
+<p>Tests need to do something useful to survive. Automated tests should help the team to make the next move by providing justified confidence a bug has been fixed, confirming refactored code still works as intended, or demonstrating that new features have been successfully implemented. There should be sufficient tests - neither more nor less: more increase the support burden, fewer leave us open to unpleasant surprises in production.</p>
+<p>One way to create our tests is to take the view of the user. What does the user want to do?</p>
+<p>They want to see this particular graph of a given data set. How do they do that? They select various options and input various choices. From this list of actions we can create an outline of our code for the test.</p>
 <p>For each method, we need to work out how to implement it in code. How could an automated test select the sliderInput bar? Do alternative ways exist? An understanding of HTML, CSS, and JavaScript will help you if you plan to use browser automation tools. All the visible elements of a web application are reflected in the Document Object Model (DOM) in HTML, and they can be addressed in various ways. Some simple examples of interacting with the DOM using <code>RSelenium</code> are given in the <code>Rselenium-basic</code> vignette.</p>
 </div>
-<div id="vary-the-tests-" class="section level3">
+<div id="vary-the-tests" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#vary-the-tests-" class="anchor"> </a></body></html>Vary the tests.</h3>
+<a href="#vary-the-tests" class="anchor"></a>Vary the Tests</h3>
 <p>Having static tests can lead to problems. Introducing variance into the tests can help pick up unexpected errors. This can be achieved by introducing an element of randomness into automatic inputs or randomizing order of selection etc.</p>
 </div>
-<div id="vary-the-browsersos-" class="section level3">
+<div id="vary-the-browsersos" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#vary-the-browsersos-" class="anchor"> </a></body></html>Vary the browsers/OS.</h3>
+<a href="#vary-the-browsersos" class="anchor"></a>Vary the Browsers/OS</h3>
 <p>It can help to test against a variety of browsers and operating systems. <code>RSelenium</code> can interact with services like <a href="http://saucelabs.com/">sauceLabs</a>. <code>sauceLabs</code> allows one to choose the browser or operating system or the version of the selenium server to use. You can test with iOS/Android/Windows/Mac/Linux and browsers like firefox/chrome/ie/opera/safari. This can be very useful to test how your app works on a range of platforms. More detailed information and examples can be seen on the sauceLabs vignette.</p>
 </div>
-<div id="record-the-tests-" class="section level3">
+<div id="record-the-tests" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#record-the-tests-" class="anchor"> </a></body></html>Record the tests.</h3>
+<a href="#record-the-tests" class="anchor"></a>Record the Tests</h3>
 <p>RSelenium has the ability to take screenshots of the browser at a particular point in time. On failure of a test a screenshot can be useful to understand what happened. If you interface RSelenium with <code>sauceLabs</code> you get screenshots and videos automatically. See the sauceLabs vignette for further details.</p>
 </div>
-<div id="test-for-fixes-" class="section level3">
+<div id="test-for-fixes" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#test-for-fixes-" class="anchor"> </a></body></html>Test for fixes.</h3>
+<a href="#test-for-fixes" class="anchor"></a>Test for Fixes</h3>
 <p>Lots of bugs are discovered by means other than automated testing - they might be reported by users, for example. Once these bugs are fixed, the fixes must be tested. The tests must establish whether the problem has been fixed and, where practical, show that the root cause has been addressed. Since we want to make sure the bug doesn’t resurface unnoticed in future releases, having automated tests for the bug seems sensible.</p>
 </div>
 </div>
-<div id="the-shiny-test-app-" class="section level2">
+<div id="the-shiny-test-app" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#the-shiny-test-app-" class="anchor"> </a></body></html>
-<a id="id2">The shiny test app.</a>
-</h2>
+<a href="#the-shiny-test-app" class="anchor"></a>The Shiny Test App</h2>
 <div id="introduction-1" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#introduction-1" class="anchor"> </a></body></html>Introduction</h3>
-<p>The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the <code>ggplot2</code> library as output for one of the charts adapted from a discussion on <a href="http://stackoverflow.com/questions/11687739/two-legends-based-on-different-datasets-with-ggplot2">stackoverflow</a>. The app includes examples of some of the controls included with the <code>shiny</code> package namely <code>selectInput</code>, <code>numericInput</code>, <code>dateRangeInput</code> and a <code>sliderInput</code>. These controls are used to produce output rendered using <code>renderPrint</code>, <code>renderPlot(base)</code> , <code>renderPlot(ggplot2)</code> and <code>renderDataTable</code>. The app can be viewed if you have <code>shiny</code> installed.</p>
-<pre><code>require(shiny)
-runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"), port = 6012)
-</code></pre>
+<a href="#introduction-1" class="anchor"></a>Introduction</h3>
+<p>The shiny test app is composed of various widgets from the shiny package (0.8.0.99 at time of writing). We have also included the <code>ggplot2</code> library as output for one of the charts adapted from a discussion on <a href="http://stackoverflow.com/questions/11687739/two-legends-based-on-different-datasets-with-ggplot2">stackoverflow</a>. The app includes examples of some of the controls included with the <code>shiny</code> package namely <code>selectInput</code>, <code>numericInput</code>, <code>dateRangeInput</code> and a <code>sliderInput</code>. These controls are used to produce output rendered using <code>renderPrint</code>, <code><a href="http://www.rdocumentation.org/packages/shiny/topics/renderPlot">renderPlot(base)</a></code> , <code><a href="http://www.rdocumentation.org/packages/shiny/topics/renderPlot">renderPlot(ggplot2)</a></code> and <code>renderDataTable</code>.</p>
+<p>The app can be viewed if you have <code>shiny</code> installed.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(shiny)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/shiny/topics/runApp">runApp</a></span>(<span class="kw">paste0</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"/apps/shinytestapp"</span>), <span class="dt">port =</span> <span class="dv">6012</span>)</code></pre></div>
 <p>An image of the app using <code>RSelenium</code> on a windows 8.1 machine running firefox 26.0</p>
 <h6 align="center">
 shinytestapp on win 8.1 firefox 26.0
 </h6>
-<p><img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/shinytesting/shinytestapp.png" title="shinytestapp on win 8.1 firefox 26.0" width="100%"></p>
+<p><img src="https://res.cloudinary.com/johndharrison/image/upload/v1497012339/RSelenium/shinytesting/shinytestapp.png" title="shinytestapp on win 8.1 firefox 26.0" width="100%"></p>
 <p>The image was generated using <code>RSelenium</code> and the following code.</p>
-<pre><code>user &lt;- "rselenium0"
-pass &lt;- "***************************"
-port &lt;- 80
-ip &lt;- paste0(user, ':', pass, "@ondemand.saucelabs.com")
-browser &lt;- "firefox"
-version &lt;- "26"
-platform &lt;- "Windows 8.1"
-extraCapabilities &lt;- list(name = "shinytestapp screenshot", username = user, accessKey = pass)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">user &lt;-<span class="st"> "rselenium0"</span>
+pass &lt;-<span class="st"> "***************************"</span>
+port &lt;-<span class="st"> </span><span class="dv">80</span>
+ip &lt;-<span class="st"> </span><span class="kw">paste0</span>(user, <span class="st">':'</span>, pass, <span class="st">"@ondemand.saucelabs.com"</span>)
+browser &lt;-<span class="st"> "firefox"</span>
+version &lt;-<span class="st"> "26"</span>
+platform &lt;-<span class="st"> "Windows 8.1"</span>
+extraCapabilities &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">name =</span> <span class="st">"shinytestapp screenshot"</span>, <span class="dt">username =</span> user, <span class="dt">accessKey =</span> pass)
 
-remDr &lt;- remoteDriver$new(remoteServerAddr = ip, port = port, browserName = browser
-                          , version = version, platform = platform
-                          , extraCapabilities = extraCapabilities)
-remDr$open()
-remDr$navigate("http://spark.rstudio.com/johnharrison/shinytestapp/")
-webElems &lt;- remDr$findElements("css selector", "#ctrlSelect input")
-lapply(webElems, function(x){x$clickElement()})
-scr &lt;- remDr$screenshot(display = TRUE)</code></pre>
+remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(<span class="dt">remoteServerAddr =</span> ip, <span class="dt">port =</span> port, <span class="dt">browserName =</span> browser
+                          , <span class="dt">version =</span> version, <span class="dt">platform =</span> platform
+                          , <span class="dt">extraCapabilities =</span> extraCapabilities)
+remDr<span class="op">$</span><span class="kw">open</span>()
+remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://spark.rstudio.com/johnharrison/shinytestapp/"</span>)
+webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css selector"</span>, <span class="st">"#ctrlSelect input"</span>)
+<span class="kw">lapply</span>(webElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">clickElement</span>()})
+scr &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)</code></pre></div>
 </div>
 <div id="observations" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#observations" class="anchor"> </a></body></html>Observations</h3>
+<a href="#observations" class="anchor"></a>Observations</h3>
 <p>From the screenshot we retrieved from the remote Driver there are some interesting observations to make. Note that the <code>selectInput</code> and <code>numericInput</code> boxes are sticking out. This is occuring because the sidePanel is given a bootstrap span of 3. This is however fluid. The resolution on the remote machine is low so the pixel count on the span 3 is also low. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the <code>selectInput</code> and <code>numericInput</code> boxes sticking out.</p>
 <p>We could have run with a higher resolution by passing the additional <code>screen-resolution</code> parameter to <code>sauceLabs</code>.</p>
-<pre><code>extraCapabilities &lt;- list(name = "shinytestapp screenshot", username = user
-                          , accessKey = pass, "screen-resolution" = "1280x1024")
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">extraCapabilities &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">name =</span> <span class="st">"shinytestapp screenshot"</span>, <span class="dt">username =</span> user
+                          , <span class="dt">accessKey =</span> pass, <span class="st">"screen-resolution"</span> =<span class="st"> "1280x1024"</span>)</code></pre></div>
 <h6 align="center">
 shinytestapp on win 8.1 firefox 26.0 res 1280x1024
 </h6>
-<p><img src="https://dl.dropboxusercontent.com/u/38391057/RSelenium/shinytesting/STA-highres.png" title="shinytestapp on win 8.1 firefox 26.0 res 1280x1024" width="100%"></p>
+<p><img src="https://res.cloudinary.com/johndharrison/image/upload/v1497012340/RSelenium/shinytesting/STA-highres.png" title="shinytestapp on win 8.1 firefox 26.0 res 1280x1024" width="100%"></p>
 <p>We can see things look a bit better but the <code>data-table</code> search box is a bit compacted.</p>
 </div>
 <div id="inputs-and-outputs" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#inputs-and-outputs" class="anchor"> </a></body></html>Inputs and Outputs</h3>
+<a href="#inputs-and-outputs" class="anchor"></a>Inputs and Outputs</h3>
 <p>The app is designed to show testing of the basic shiny components. It is a bit contrived so testing it may not be as natural as testing a live working app. The outputs (charts and tables) are designed to sit side by side if possible with a maximum of 2 on a “row” then drop down to the next “row”. We can test to see if this is happening by checking the posistionof elements. We will investigate this later.</p>
 </div>
 </div>
-<div id="basic-tests-" class="section level2">
+<div id="basic-tests" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#basic-tests-" class="anchor"> </a></body></html>
-<a id="id3">Basic tests.</a>
-</h2>
+<a href="#basic-tests" class="anchor"></a>Basic Tests</h2>
 <div id="basic-functionality" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#basic-functionality" class="anchor"> </a></body></html>Basic Functionality</h3>
+<a href="#basic-functionality" class="anchor"></a>Basic Functionality</h3>
 <p>The first test we will look at implementing will be basic connection to the app. Typically we would make a request for the page and then observe what status code was returned. Selenium doesnt currently give the html status code of a navigation request so instead we will check if the title of the web page is correct. Our <code>Shiny Test App</code> has a title of “Shiny Test App” so we will check for this.</p>
 <p>We create a <code>test/</code> directory in our <code>Shiny Test App</code> folder. The first set of tests will be basic so we create a file <code>test-basic.r</code>. In this file we have the following code to start with:</p>
-<pre><code>context("basic")
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/context">context</a></span>(<span class="st">"basic"</span>)
 
-library(RSelenium)
-library(testthat)
+<span class="kw">library</span>(RSelenium)
+<span class="kw">library</span>(testthat)
 
-remDr &lt;- remoteDriver()
-remDr$open(silent = TRUE)
-appURL &lt;- "http://127.0.0.1:6012"
+remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>()
+remDr<span class="op">$</span><span class="kw">open</span>(<span class="dt">silent =</span> <span class="ot">TRUE</span>)
+appURL &lt;-<span class="st"> "http://127.0.0.1:6012"</span>
 
-test_that("can connect to app", {  
-  remDr$navigate(appURL)
-  appTitle &lt;- remDr$getTitle()[[1]]
-  expect_equal(appTitle, "Shiny Test App")  
+<span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_that">test_that</a></span>(<span class="st">"can connect to app"</span>, {  
+  remDr<span class="op">$</span><span class="kw">navigate</span>(appURL)
+  appTitle &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">getTitle</span>()[[<span class="dv">1</span>]]
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/equality-expectations">expect_equal</a></span>(appTitle, <span class="st">"Shiny Test App"</span>)  
 })
 
-remDr$close()
-</code></pre>
-<p>We have a context of “basic” for the tests in this file. The test “can connect to app” simply navigates to the app URL and attempts to get the page title. If the page title is “Shiny Test App” the test is deemed successful. For testing purposes we assume the app is running locally. The easiest way to do this is open a second R session and issue the command: <code>runApp(paste0(find.package("RSelenium"), "/apps/shinytestapp"), port = 6012)</code>. The second R session will listen for connection on port 6012 and return the <code>Shiny Test App</code>. If we ran this basic test we would expect the following output:</p>
-<pre><code>&gt; test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), filter = 'basic', reporter = "Tap")
-[1] "Connecting to remote server"
+remDr<span class="op">$</span><span class="kw">close</span>()</code></pre></div>
+<p>We have a context of “basic” for the tests in this file. The test “can connect to app” simply navigates to the app URL and attempts to get the page title. If the page title is “Shiny Test App” the test is deemed successful. For testing purposes we assume the app is running locally. The easiest way to do this is open a second R session and issue the command:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/shiny/topics/runApp">runApp</a></span>(<span class="kw">paste0</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"/apps/shinytestapp"</span>), <span class="dt">port =</span> <span class="dv">6012</span>)</code></pre></div>
+<p>The second R session will listen for connection on port 6012 and return the <code>Shiny Test App</code>. If we ran this basic test we would expect the following output:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_dir">test_dir</a></span>(<span class="kw">paste0</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"/apps/shinytestapp/tests/"</span>), <span class="dt">filter =</span> <span class="st">'basic'</span>, <span class="dt">reporter =</span> <span class="st">"Tap"</span>)</code></pre></div>
+<pre><code>[1] "Connecting to remote server"
 1..1
 # Context basic 
 ok 1 can connect to app 
 </code></pre>
 <p>So running the test we observe that we can successfully “connect” to the <code>Shiny Test App</code>. What other functionality can we add to our “basic” test context. We can check that the controls and the tabs are present. We can add these tests to our <code>test-basic.r</code> file.</p>
-<pre><code>test_that("controls are present", {  
-  webElems &lt;- remDr$findElements("css selector", "#ctrlSelect label")
-  appCtrlLabels &lt;- sapply(webElems, function(x){x$getElementText()})
-  expect_equal(appCtrlLabels[[1]], "Select controls required:")  
-  expect_equal(appCtrlLabels[[2]], "selectInput")  
-  expect_equal(appCtrlLabels[[3]], "numericInput")  
-  expect_equal(appCtrlLabels[[4]], "dateRangeInput")  
-  expect_equal(appCtrlLabels[[5]], "sliderInput")  
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_that">test_that</a></span>(<span class="st">"controls are present"</span>, {  
+  webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css selector"</span>, <span class="st">"#ctrlSelect label"</span>)
+  appCtrlLabels &lt;-<span class="st"> </span><span class="kw">sapply</span>(webElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">getElementText</span>()})
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/equality-expectations">expect_equal</a></span>(appCtrlLabels[[<span class="dv">1</span>]], <span class="st">"Select controls required:"</span>)  
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/equality-expectations">expect_equal</a></span>(appCtrlLabels[[<span class="dv">2</span>]], <span class="st">"selectInput"</span>)  
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/equality-expectations">expect_equal</a></span>(appCtrlLabels[[<span class="dv">3</span>]], <span class="st">"numericInput"</span>)  
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/equality-expectations">expect_equal</a></span>(appCtrlLabels[[<span class="dv">4</span>]], <span class="st">"dateRangeInput"</span>)  
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/equality-expectations">expect_equal</a></span>(appCtrlLabels[[<span class="dv">5</span>]], <span class="st">"sliderInput"</span>)  
 })
 
-test_that("tabs are present", {  
-  webElems &lt;- remDr$findElements("css selector", ".nav a")
-  appTabLabels &lt;- sapply(webElems, function(x){x$getElementText()})
-  expect_equal(appTabLabels[[1]], "Plots")  
-  expect_equal(appTabLabels[[2]], "About")  
-})
-</code></pre>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_that">test_that</a></span>(<span class="st">"tabs are present"</span>, {  
+  webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css selector"</span>, <span class="st">".nav a"</span>)
+  appTabLabels &lt;-<span class="st"> </span><span class="kw">sapply</span>(webElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">getElementText</span>()})
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/equality-expectations">expect_equal</a></span>(appTabLabels[[<span class="dv">1</span>]], <span class="st">"Plots"</span>)  
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/equality-expectations">expect_equal</a></span>(appTabLabels[[<span class="dv">2</span>]], <span class="st">"About"</span>)  
+})</code></pre></div>
 <p>When we rerun our basic test we should hopefully now see that it is checking for the prescence of the controls and the tabs.</p>
-<pre><code>&gt; test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), filter = 'basic', reporter = "Tap")
-[1] "Connecting to remote server"
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_dir">test_dir</a></span>(<span class="kw">paste0</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"/apps/shinytestapp/tests/"</span>), <span class="dt">filter =</span> <span class="st">'basic'</span>, <span class="dt">reporter =</span> <span class="st">"Tap"</span>)</code></pre></div>
+<pre><code>[1] "Connecting to remote server"
 1..8
 # Context basic 
 ok 1 can connect to app 
@@ -232,49 +251,45 @@ ok 4 controls are present
 ok 5 controls are present 
 ok 6 controls are present 
 ok 7 tabs are present 
-ok 8 tabs are present 
-</code></pre>
+ok 8 tabs are present </code></pre>
 <p>That concludes our basic test of the <code>Shiny Test App</code> functionality. Next we look at testing the input controls.</p>
 </div>
 </div>
 <div id="testing-the-controls" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#testing-the-controls" class="anchor"> </a></body></html>
-<a id="id4">Testing the Controls</a>
-</h2>
+<a href="#testing-the-controls" class="anchor"></a>Testing the Controls</h2>
 <p>Our first test of the controls will be the functioning of the checkbox. We open a new file in the test directory of our <code>Shiny Test App</code> and give it the name <code>test-checkbox.r</code>. We also give it a context of <code>controls</code>.</p>
-<pre><code>context("controls")
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/context">context</a></span>(<span class="st">"controls"</span>)
 
-library(RSelenium)
-library(testthat)
+<span class="kw">library</span>(RSelenium)
+<span class="kw">library</span>(testthat)
 
-remDr &lt;- remoteDriver()
-remDr$open(silent = TRUE)
-sysDetails &lt;- remDr$getStatus()
-browser &lt;- remDr$sessionInfo$browserName
-appURL &lt;- "http://127.0.0.1:6012"
+remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>()
+remDr<span class="op">$</span><span class="kw">open</span>(<span class="dt">silent =</span> <span class="ot">TRUE</span>)
+sysDetails &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">getStatus</span>()
+browser &lt;-<span class="st"> </span>remDr<span class="op">$</span>sessionInfo<span class="op">$</span>browserName
+appURL &lt;-<span class="st"> "http://127.0.0.1:6012"</span>
 
-test_that("can select/deselect checkbox 1", {  
-  remDr$navigate(appURL)
-  webElem &lt;- remDr$findElement("css selector", "#ctrlSelect1")
-  initState &lt;- webElem$isElementSelected()[[1]]
-  # check if we can select/deselect
-  if(browser == "internet explorer"){
-    webElem$sendKeysToElement(list(key = "space"))
-  }else{
-    webElem$clickElement()
+<span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_that">test_that</a></span>(<span class="st">"can select/deselect checkbox 1"</span>, {  
+  remDr<span class="op">$</span><span class="kw">navigate</span>(appURL)
+  webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css selector"</span>, <span class="st">"#ctrlSelect1"</span>)
+  initState &lt;-<span class="st"> </span>webElem<span class="op">$</span><span class="kw">isElementSelected</span>()[[<span class="dv">1</span>]]
+  <span class="co"># check if we can select/deselect</span>
+  <span class="cf">if</span>(browser <span class="op">==</span><span class="st"> "internet explorer"</span>){
+    webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span class="kw">list</span>(<span class="dt">key =</span> <span class="st">"space"</span>))
+  }<span class="cf">else</span>{
+    webElem<span class="op">$</span><span class="kw">clickElement</span>()
   }
-  changeState &lt;- webElem$isElementSelected()[[1]]
-  expect_is(initState, "logical")  
-  expect_is(changeState, "logical")  
-  expect_false(initState == changeState)  
+  changeState &lt;-<span class="st"> </span>webElem<span class="op">$</span><span class="kw">isElementSelected</span>()[[<span class="dv">1</span>]]
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/inheritance-expectations">expect_is</a></span>(initState, <span class="st">"logical"</span>)  
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/inheritance-expectations">expect_is</a></span>(changeState, <span class="st">"logical"</span>)  
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/logical-expectations">expect_false</a></span>(initState <span class="op">==</span><span class="st"> </span>changeState)  
 })
 
-remDr$close()
-</code></pre>
+remDr<span class="op">$</span><span class="kw">close</span>()</code></pre></div>
 <p>In this case I am informed there maybe issues with <code>Internet Explorer</code>. Usually one would select the element for the checkbox and click it. In the case of <code>Internet Explorer</code> it maybe necessary to pass a <code>space</code> key to the element instead. Otherwise the test is straightforward. We check the initial state of the checkbox. We click the checkbox or send a keypress of space to it. We check the changed state of the checkbox. If the initial state is different to the changed state the test is deemed a success. For good measure we also check that the initial and changed states are of class “logical”. We add code for the other 3 checkboxes. We can check our test as follows:</p>
-<pre><code>&gt; test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), reporter = "Tap", filter = "checkbox")
-[1] "Connecting to remote server"
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_dir">test_dir</a></span>(<span class="kw">paste0</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"/apps/shinytestapp/tests/"</span>), <span class="dt">reporter =</span> <span class="st">"Tap"</span>, <span class="dt">filter =</span> <span class="st">"checkbox"</span>)</code></pre></div>
+<pre><code>[1] "Connecting to remote server"
 1..12
 # Context controls 
 ok 1 can select/deselect checkbox 1 
@@ -288,115 +303,107 @@ ok 8 can select/deselect checkbox 3
 ok 9 can select/deselect checkbox 3 
 ok 10 can select/deselect checkbox 4 
 ok 11 can select/deselect checkbox 4 
-ok 12 can select/deselect checkbox 4 
-</code></pre>
+ok 12 can select/deselect checkbox 4 </code></pre>
 <p>We filter here on “checkbox” to only select this test file to run. If you watch the test running it will filter through the checkbox control checking each checkbox is functioning. The <code>checkboxGroupInput</code> drives the required controls which has id <code>reqcontrols</code>. Each of these controls is one of the building blocks of shiny and we will add a test for each.</p>
 <div id="testing-the-selectinput" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#testing-the-selectinput" class="anchor"> </a></body></html>Testing the selectInput</h3>
+<a href="#testing-the-selectinput" class="anchor"></a>Testing the selectInput</h3>
 <p>We write a simple test for the <code>selectInput</code>. It tests the options presented and the label of the control. We isolate the code in a seperate file <code>test-selectinput.r</code> in the test folder of our <code>Shiny Test App</code>. It also then selects an element from the options at random. It is tested whether the output changes or not.</p>
-<pre><code>test_that("selectInput dataSet correct", {  
-  remDr$navigate(appURL)
-  webElem &lt;- remDr$findElement("css selector", "#ctrlSelect1")
-  initState &lt;- webElem$isElementSelected()[[1]]
-  if(!initState){
-    # select the checkbox
-    if(browser == "internet explorer"){
-      webElem$sendKeysToElement(list(key = "space"))
-    }else{
-      webElem$clickElement()
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_that">test_that</a></span>(<span class="st">"selectInput dataSet correct"</span>, {  
+  remDr<span class="op">$</span><span class="kw">navigate</span>(appURL)
+  webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css selector"</span>, <span class="st">"#ctrlSelect1"</span>)
+  initState &lt;-<span class="st"> </span>webElem<span class="op">$</span><span class="kw">isElementSelected</span>()[[<span class="dv">1</span>]]
+  <span class="cf">if</span>(<span class="op">!</span>initState){
+    <span class="co"># select the checkbox</span>
+    <span class="cf">if</span>(browser <span class="op">==</span><span class="st"> "internet explorer"</span>){
+      webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span class="kw">list</span>(<span class="dt">key =</span> <span class="st">"space"</span>))
+    } <span class="cf">else</span> {
+      webElem<span class="op">$</span><span class="kw">clickElement</span>()
     }
   }
   
-  webElem &lt;- remDr$findElement("css selector", "#reqcontrols #dataset")
-  # check the available datasets
-  childElems &lt;- webElem$findChildElements("css selector", "[value]")
-  appDataSets &lt;- sapply(childElems, function(x){x$getElementAttribute("value")})
-  expect_true(all(c("rock", "pressure", "cars") %in% appDataSets))
+  webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css selector"</span>, <span class="st">"#reqcontrols #dataset"</span>)
+  <span class="co"># check the available datasets</span>
+  childElems &lt;-<span class="st"> </span>webElem<span class="op">$</span><span class="kw">findChildElements</span>(<span class="st">"css selector"</span>, <span class="st">"[value]"</span>)
+  appDataSets &lt;-<span class="st"> </span><span class="kw">sapply</span>(childElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">getElementAttribute</span>(<span class="st">"value"</span>)})
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/logical-expectations">expect_true</a></span>(<span class="kw">all</span>(<span class="kw">c</span>(<span class="st">"rock"</span>, <span class="st">"pressure"</span>, <span class="st">"cars"</span>) <span class="op">%in%</span><span class="st"> </span>appDataSets))
 })
 
-test_that("selectInput label correct", {
-  webElem &lt;- remDr$findElement("css selector", "#reqcontrols label[for = 'dataset']")
-  expect_output(webElem$getElementText()[[1]], "Choose a dataset:")
+<span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_that">test_that</a></span>(<span class="st">"selectInput label correct"</span>, {
+  webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css selector"</span>, <span class="st">"#reqcontrols label[for = 'dataset']"</span>)
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/output-expectations">expect_output</a></span>(webElem<span class="op">$</span><span class="kw">getElementText</span>()[[<span class="dv">1</span>]], <span class="st">"Choose a dataset:"</span>)
 }
 )
 
 
-test_that("selectInput selection invokes change", {
-  webElem &lt;- remDr$findElement("css selector", "#reqcontrols #dataset")
-  childElems &lt;- webElem$findChildElements("css selector", "[value]")
-  ceState &lt;- sapply(childElems, function(x){x$isElementSelected()})
-  newState &lt;- sample(seq_along(ceState)[!unlist(ceState)], 1)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_that">test_that</a></span>(<span class="st">"selectInput selection invokes change"</span>, {
+  webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css selector"</span>, <span class="st">"#reqcontrols #dataset"</span>)
+  childElems &lt;-<span class="st"> </span>webElem<span class="op">$</span><span class="kw">findChildElements</span>(<span class="st">"css selector"</span>, <span class="st">"[value]"</span>)
+  ceState &lt;-<span class="st"> </span><span class="kw">sapply</span>(childElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">isElementSelected</span>()})
+  newState &lt;-<span class="st"> </span><span class="kw">sample</span>(<span class="kw">seq_along</span>(ceState)[<span class="op">!</span><span class="kw">unlist</span>(ceState)], <span class="dv">1</span>)
   
-  outElem &lt;- remDr$findElement("css selector", "#summary")
-  initOutput &lt;- outElem$getElementText()[[1]]
+  outElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css selector"</span>, <span class="st">"#summary"</span>)
+  initOutput &lt;-<span class="st"> </span>outElem<span class="op">$</span><span class="kw">getElementText</span>()[[<span class="dv">1</span>]]
   
-  # change dataset 
-  childElems[[newState]]$clickElement()
-  outElem &lt;- remDr$findElement("css selector", "#summary")  
-  changeOutput &lt;- outElem$getElementText()[[1]]
+  <span class="co"># change dataset </span>
+  childElems[[newState]]<span class="op">$</span><span class="kw">clickElement</span>()
+  outElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css selector"</span>, <span class="st">"#summary"</span>)  
+  changeOutput &lt;-<span class="st"> </span>outElem<span class="op">$</span><span class="kw">getElementText</span>()[[<span class="dv">1</span>]]
   
-  expect_false(initOutput == changeOutput)
+  <span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/logical-expectations">expect_false</a></span>(initOutput <span class="op">==</span><span class="st"> </span>changeOutput)
 }
-)
-</code></pre>
+)</code></pre></div>
 <p>Running the <code>selectInput</code> test we get:</p>
-<pre><code>&gt; test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), reporter = "Tap", filter = "selectinput")
-[1] "Connecting to remote server"
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_dir">test_dir</a></span>(<span class="kw">paste0</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"/apps/shinytestapp/tests/"</span>), <span class="dt">reporter =</span> <span class="st">"Tap"</span>, <span class="dt">filter =</span> <span class="st">"selectinput"</span>)</code></pre></div>
+<pre><code>[1] "Connecting to remote server"
 1..3
 # Context controls 
 ok 1 selectInput dataSet correct 
 ok 2 selectInput label correct 
-ok 3 selectInput selection invokes change 
-</code></pre>
+ok 3 selectInput selection invokes change </code></pre>
 <p>Note we set <code>remDr$setImplicitWaitTimeout(3000)</code> in this test so that we get a 3 second limit to find an element.</p>
 </div>
 <div id="testing-the-numericinput" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#testing-the-numericinput" class="anchor"> </a></body></html>Testing the numericInput</h3>
+<a href="#testing-the-numericinput" class="anchor"></a>Testing the “numericInput”</h3>
 <p>The ideas behind testing the numericInput are similar to testing the selectInput. We test the label. We then test a random value between the allowable limits of the numericInput and check that the output changes. Finally a character string “test” is sent to the element and the appropriate error message on the output is checked. The final test can be adjusted to suit whatever bespoke error display etc is in your app. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-numericinput.r</code>. Again <code>remDr$setImplicitWaitTimeout(3000)</code> is called to give some leeway for element loading. Some commented out code indicates other methods one could deal with checking for element existence. Additional detail on timing races in Selenium can be found <a href="http://www.bizalgo.com/2012/01/14/timing-races-selenium-2-implicit-waits-explicit-waits/">here</a>.</p>
 </div>
 <div id="testing-the-daterangeinput" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#testing-the-daterangeinput" class="anchor"> </a></body></html>Testing the dateRangeInput</h3>
+<a href="#testing-the-daterangeinput" class="anchor"></a>Testing the “dateRangeInput”</h3>
 <p>The test on the dateRangeInput compose of two tests. We test the label and we test the two input dates. We choose two random dates from the set of allowable dates. The output is tested for change after the two dates ave been set. <code>remDr$setImplicitWaitTimeout(3000)</code> is set in the test to allow for race conditions on elements. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-daterangeinput.r</code>.</p>
 </div>
 <div id="testing-the-sliderinput" class="section level3">
 <h3 class="hasAnchor">
-<html><body><a href="#testing-the-sliderinput" class="anchor"> </a></body></html>Testing the sliderInput</h3>
+<a href="#testing-the-sliderinput" class="anchor"></a>Testing the “sliderInput”</h3>
 <p>For the sliderInput we test the label and we test changing the controls. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-sliderinput.r</code>. The label is tested in a similar fashion as the other controls. The second test needs a bit of explaining. There are a number of ways we could interact with the slider control to change its values. Some of the easiest ways would be to execute javascript with <code>Shiny.onInputChange("range", [2000, 10000])</code> or <code>Shiny.shinyapp.sendInput({range: [6222, 9333]})</code>. Both these methods would currently work. The Shiny server side would get the new values however the UI would show no change. The underlying sliderInput control is a <code>jslider</code>. Normally one can interact with the <code>jslider</code> thru calls similar to <code>$(".selector").slider("value", p1, p2)</code> as outlined <a href="http://egorkhmelev.github.io/jslider/">here</a>. We will use mouse movements and the <code>buttondown</code> <code>buttonup</code> methods of the remoteDriver class. <strong>Note that one may have problems forming the test in this manner, see for example <a href="http://stackoverflow.com/questions/19922578/understanding-of-cannot-perform-native-interaction-could-not-load-native-event">here</a></strong>. However it is useful to illustrate mouse and keyboard interactions in <code>RSelenium</code>.</p>
 <p>We get the attributes of the slider initially. We then get the dimension of the slider</p>
-<pre><code>webElem &lt;- remDr$findElement("css selector", "#reqcontrols input#range + .jslider")
-sliderDim &lt;- webElem$getElementSize()
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css selector"</span>, <span class="st">"#reqcontrols input#range + .jslider"</span>)
+sliderDim &lt;-<span class="st"> </span>webElem<span class="op">$</span><span class="kw">getElementSize</span>()</code></pre></div>
 <p>This gives us the pixel width of the slider as it currently stands. This will be different across machines. We generate some random values for the two slider points and then we calculate roughly how many pixels we need to move the sliders.</p>
-<pre><code>remDr$mouseMoveToLocation(webElement = webElems[[x]])
-remDr$buttondown()
-remDr$mouseMoveToLocation(x = as.integer(pxToMoveSldr[x]), y = -1L)#, webElement = webElems[[x]])
-remDr$buttonup()
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">mouseMoveToLocation</span>(<span class="dt">webElement =</span> webElems[[x]])
+remDr<span class="op">$</span><span class="kw">buttondown</span>()
+remDr<span class="op">$</span><span class="kw">mouseMoveToLocation</span>(<span class="dt">x =</span> <span class="kw">as.integer</span>(pxToMoveSldr[x]), <span class="dt">y =</span> <span class="op">-</span>1L)<span class="co">#, webElement = webElems[[x]])</span>
+remDr<span class="op">$</span><span class="kw">buttonup</span>()</code></pre></div>
 <p>The above code moves to the slider element. Pushes the left button down. Moves the mouse on the x axis in the direction calculated then releases the left mouse button. The output of the related data-table before and after the change is recorded and the test should result in the before and after not being equal.</p>
 <p>It is interesting to note that during initial writing of this vignette a new version of firefox 27.0.1 was released. As expected native events did not work under version 2.39 of selenium server and this updated version of firefox. Subsequently our test as formulated above would fail. There is an option to pass a list <code>rsel.opt</code> for use with some of the tests. Using this we can set <code>nativeEvents = FALSE</code> and the test above will pass again. When your tests fail it is not necessarily bad. This failure indicates a problem with your test setup rather then your app however.</p>
-<pre><code>testsel &lt;- test_env()
-with(testsel, rsel.opt &lt;- list(nativeEvents = FALSE))
-test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"), reporter = "Tap", filter = "slider", env = testsel)
-</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">testsel &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_env">test_env</a></span>()
+<span class="kw">with</span>(testsel, rsel.opt &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">nativeEvents =</span> <span class="ot">FALSE</span>))
+<span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_dir">test_dir</a></span>(<span class="kw">paste0</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"/apps/shinytestapp/tests/"</span>), <span class="dt">reporter =</span> <span class="st">"Tap"</span>, <span class="dt">filter =</span> <span class="st">"slider"</span>, <span class="dt">env =</span> testsel)</code></pre></div>
 </div>
 </div>
-<div id="testing-the-output-" class="section level2">
+<div id="testing-the-output" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#testing-the-output-" class="anchor"> </a></body></html>
-<a id="id5">Testing the Output.</a>
-</h2>
+<a href="#testing-the-output" class="anchor"></a>Testing the Output</h2>
 <p>Finally for this simple example we will look at testing the output. The test code is in the tests folder of the <code>Shiny Test App</code> in a file named <code>test-output.r</code>. The outputs should line up side by side with a maximum of 2 on a line. We can check the position of the outputs. Our first test will check whether the four outputs line up in a grid. This test will fail on low resolution setups which we will observe latter. We can check the headers on the outputs. The two chart plots are base64 encoded images which we can check in the HTML source. We can check the headers on the outputs. Finally we can check the controls on the datatable.</p>
 <p>The first test use the <code>getElementLocation</code> method of the <code>webElement</code> class to find the location in pixels of the output objects.</p>
-<pre><code>webElems &lt;- remDr$findElements("css selector", "#reqplots .span5")
-out &lt;- sapply(webElems, function(x){x$getElementLocation()})
-</code></pre>
-<p>The 1st and 2nd and the 3rd and 4th objects should share rows. The 1st and 3rd and the 2nd and 4th should share a column. This test will fail as the resolution of the app decreases and the output objects get compacted. The second test checks output labels in a similar fashion to other test. The third test checks whether the chart output are base 64 encoded png. The final test selects the data-table output and randomly selects a column from carat or price. It then checks whether the ordering functions when the column header is clicked.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css selector"</span>, <span class="st">"#reqplots .span5"</span>)
+out &lt;-<span class="st"> </span><span class="kw">sapply</span>(webElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">getElementLocation</span>()})</code></pre></div>
+<p>The 1st and 2nd and the 3rd and 4th objects should share rows. The 1st and 3rd and the 2nd and 4th should share a column. This test will fail as the resolution of the app decreases and the output objects get compacted. The second test checks output labels in a similar fashion to other test.</p>
+<p>The third test checks whether the chart output are base 64 encoded png. The final test selects the data-table output and randomly selects a column from carat or price. It then checks whether the ordering functions when the column header is clicked.</p>
 <p>Finally running all tests with a “summary” reporter we would hope to get:</p>
-<pre><code>&gt; test_dir(paste0(find.package("RSelenium"), "/apps/shinytestapp/tests/"))
-basic : [1] "Connecting to remote server"
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="http://www.rdocumentation.org/packages/testthat/topics/test_dir">test_dir</a></span>(<span class="kw">paste0</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"/apps/shinytestapp/tests/"</span>))</code></pre></div>
+<pre><code>basic : [1] "Connecting to remote server"
 ........
 controls : [1] "Connecting to remote server"
 ............
@@ -409,51 +416,31 @@ outputs : [1] "Connecting to remote server"
 controls : [1] "Connecting to remote server"
 ...
 controls : [1] "Connecting to remote server"
-..
-</code></pre>
+..</code></pre>
 </div>
-<div id="further-tests-" class="section level2">
+<div id="further-tests" class="section level2">
 <h2 class="hasAnchor">
-<html><body><a href="#further-tests-" class="anchor"> </a></body></html>
-<a id="id6">Further Tests.</a>
-</h2>
+<a href="#further-tests" class="anchor"></a>Further Tests</h2>
 <ul>
 <li>Test across multiple browsers and OS. See the saucelabs testing vignette</li>
 <li>Longitudinal type test. Record access times for various components of your app across time. See the RBMproxy testing vignette.</li>
 <li>Analysis current page load times. See the RBMproxy vignette</li>
 </ul>
 </div>
-</div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
         <div id="tocnav">
-      <h2>Contents</h2>
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#rselenium-testing-shiny-apps">RSelenium: Testing Shiny Apps</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#introduction">Introduction</a></li>
-      <li>
-<a href="#some-thoughts-on-testing."></a><a id="id1">Some thoughts on testing.</a>
-</li>
-      <li>
-<a href="#the-shiny-test-app."></a><a id="id2">The shiny test app.</a>
-</li>
-      <li>
-<a href="#basic-tests."></a><a id="id3">Basic tests.</a>
-</li>
-      <li>
-<a href="#testing-the-controls"></a><a id="id4">Testing the Controls</a>
-</li>
-      <li>
-<a href="#testing-the-output."></a><a id="id5">Testing the Output.</a>
-</li>
-      <li>
-<a href="#further-tests."></a><a id="id6">Further Tests.</a>
-</li>
-      </ul>
-</li>
+      <li><a href="#some-thoughts-on-testing">Some Thoughts on Testing</a></li>
+      <li><a href="#the-shiny-test-app">The Shiny Test App</a></li>
+      <li><a href="#basic-tests">Basic Tests</a></li>
+      <li><a href="#testing-the-controls">Testing the Controls</a></li>
+      <li><a href="#testing-the-output">Testing the Output</a></li>
+      <li><a href="#further-tests">Further Tests</a></li>
       </ul>
 </div>
       </div>
@@ -462,15 +449,17 @@ controls : [1] "Connecting to remote server"
 
 
       <footer><div class="copyright">
-  <p>Developed by John Harrison.</p>
+  <p>Developed by John Harrison, Ju Yeong Kim.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>
