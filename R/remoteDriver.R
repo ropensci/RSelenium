@@ -146,8 +146,8 @@
 #' 
 #' # EXAMPLE INJECTING INTO PHANTOMJS using phantomExecute
 #' require(RSelenium)
-#' pJS <- phantom()
-#' remDr <- remoteDriver(browserName = "phantomjs")
+#' pJS <- wdman::phantomjs(port = 4932L)
+#' remDr <- remoteDriver(browserName = "phantomjs", port = 4932L)
 #' remDr$open(silent = TRUE)
 #' remDr$navigate("http://ariya.github.com/js/random/")
 #' # returns a set of random numbers

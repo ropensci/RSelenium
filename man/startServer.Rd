@@ -4,7 +4,8 @@
 \alias{startServer}
 \title{Start the standalone server.}
 \usage{
-startServer(dir = NULL, args = NULL, javaargs = NULL, log = TRUE, ...)
+startServer(dir = NULL, args = NULL, javaargs = NULL, log = TRUE,
+  ...)
 }
 \arguments{
 \item{dir}{A directory in which the binary is to be placed.}
@@ -27,7 +28,7 @@ Returns a list containing two functions. The 'getpid' function
    function stops the started Selenium server using the process id.
 }
 \description{
-#' Defunct. Please use \code{\link{rsDriver}}
+Defunct. Please use \code{\link{rsDriver}}
 }
 \details{
 \code{startServer}
@@ -42,6 +43,7 @@ A utility function to start the standalone server. Return two functions
    location. Using log = TRUE sets the location to a file named 
    sellog.txt in the directory containing the Selenium Server binary.
 }
+
 \examples{
 \dontrun{
 selServ <- startServer()
@@ -56,4 +58,3 @@ selServ$getpid()
 selServ$stop()
 }
 }
-

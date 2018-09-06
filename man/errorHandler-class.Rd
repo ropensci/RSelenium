@@ -2,8 +2,8 @@
 % Please edit documentation in R/errorHandler.R
 \docType{class}
 \name{errorHandler-class}
-\alias{errorHandler}
 \alias{errorHandler-class}
+\alias{errorHandler}
 \title{CLASS errorHandler}
 \description{
 class to handle errors
@@ -94,6 +94,7 @@ errors:
 
 \item{\code{debugheader}}{Not currently implemented}
 }}
+
 \section{Methods}{
 
 \describe{
@@ -102,6 +103,8 @@ status indicates an error an appropriate error message is thrown.}
 
 \item{\code{errorDetails(type = "value")}}{Return error details. Type can one of c("value", "class", 
 "status")}
+
+\item{\code{obscureUrlPassword(url)}}{Replaces the username and password of url with ****}
 
 \item{\code{queryRD(ipAddr, method = "GET", qdata = NULL)}}{A method to communicate with the remote server implementing the 
 JSON wire protocol.}

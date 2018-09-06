@@ -4,7 +4,8 @@
 \alias{checkForServer}
 \title{Check for Server binary}
 \usage{
-checkForServer(dir = NULL, update = FALSE, rename = TRUE, beta = FALSE)
+checkForServer(dir = NULL, update = FALSE, rename = TRUE,
+  beta = FALSE)
 }
 \arguments{
 \item{dir}{A directory in which the binary is to be placed.}
@@ -31,9 +32,9 @@ A utility function to check if the Selenium Server stanalone binary is
    convience function downloads the standalone server and places it in 
    the RSelenium package directory bin folder by default.
 }
+
 \examples{
 \dontrun{
 checkForServer()
 }
 }
-

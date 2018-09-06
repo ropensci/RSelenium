@@ -25,6 +25,7 @@ Windows doesn't come with command-line zip capability.
    to the selenium server as a required capability with key 
    firefox_profile
 }
+
 \examples{
 \dontrun{
 fprof <- makeFirefoxProfile(list(browser.download.dir = "D:/temp"))
@@ -32,4 +33,3 @@ remDr <- remoteDriver(extraCapabilities = fprof)
 remDr$open()
 }
 }
-

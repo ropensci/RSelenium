@@ -21,6 +21,7 @@ A utility function to get a firefox profile.
    encoded. It can then be passed to the selenium server as a required 
    capability with key firefox_profile
 }
+
 \examples{
 \dontrun{
 fprof <- getFirefoxProfile("~/.mozilla/firefox/9qlj1ofd.testprofile")
@@ -28,4 +29,3 @@ remDr <- remoteDriver(extraCapabilities = fprof)
 remDr$open()
 }
 }
-

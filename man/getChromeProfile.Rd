@@ -37,6 +37,7 @@ Google Chrome: ~/.config/google-chrome
 The profile directory is contained in the user directory and by default 
 is named "Default"
 }
+
 \examples{
 \dontrun{
 # example from windows using a profile directory "Profile 1"
@@ -44,4 +45,3 @@ cprof <- getChromeProfile("C:\\\\Users\\\\john\\\\AppData\\\\Local\\\\Google\\\\
 remDr <- remoteDriver(browserName = "chrome", extraCapabilities = cprof)
 }
 }
-

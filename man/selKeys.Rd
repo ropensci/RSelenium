@@ -23,4 +23,3 @@ This data set contains a list of selenium key mappings.
 John Harrison, 2012-10-05
 }
 \keyword{datasets}
-

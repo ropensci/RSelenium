@@ -2,8 +2,8 @@
 % Please edit documentation in R/webElement.R
 \docType{class}
 \name{webElement-class}
-\alias{webElement}
 \alias{webElement-class}
+\alias{webElement}
 \title{CLASS webElement}
 \description{
 Selenium Webdriver represents all the HTML elements as WebElements. 
@@ -24,6 +24,7 @@ webElement is a generator object. To define a new webElement class
 \item{\code{elementId}}{Object of class \code{"character"}, giving a character 
 representation of the element id.}
 }}
+
 \section{Methods}{
 
 \describe{

@@ -19,6 +19,9 @@ Defaults to 4444. format [[<IP>:]<PORT>]}
 \item{...}{Arguments to pass to \code{\link{system2}}}
 }
 \description{
+Defunct. Please use \code{\link{rsDriver}} or \code{\link[wdman]{phantomjs}}
+}
+\details{
 \code{phantom}
 A utility function to control a phantomjs binary in webdriver mode.
 }
@@ -39,6 +42,7 @@ A utility function to control a phantomjs binary in webdriver mode.
    using \code{\link{pskill}}}
 }
 }
+
 \examples{
 \dontrun{
 pJS <- phantom()
@@ -58,4 +62,3 @@ remDr$close()
 pJS$stop()
 }
 }
-

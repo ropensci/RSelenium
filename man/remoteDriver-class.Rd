@@ -2,8 +2,8 @@
 % Please edit documentation in R/remoteDriver.R
 \docType{class}
 \name{remoteDriver-class}
-\alias{remoteDriver}
 \alias{remoteDriver-class}
+\alias{remoteDriver}
 \title{CLASS remoteDriver}
 \description{
 remoteDriver Class uses the JsonWireProtocol to communicate with the 
@@ -68,6 +68,7 @@ server which JSON requests are sent to.}
 \item{\code{sessionInfo}}{Object of class \code{"list"}. A list containing 
 information on sessions.}
 }}
+
 \section{Methods}{
 
 \describe{
@@ -126,7 +127,7 @@ returned to the client. Asynchronous script commands may not span
 page loads. If an unload event is fired while waiting for a script 
 result, an error should be returned to the client. }
 
-\item{\code{executeScript(script, args = list())}}{Inject a snippet of JavaScript into the page for execution in the 
+\item{\code{executeScript(script, args = list(""))}}{Inject a snippet of JavaScript into the page for execution in the 
 context of the currently selected frame. The executed script is 
 assumed to be synchronous and the result of evaluating the script 
 is returned to the client. The script argument defines the script 
@@ -338,6 +339,7 @@ server should switch to the page's default content.}
 be specified by its server assigned window handle, or by the value 
 of its name attribute.}
 }}
+
 \examples{
 \dontrun{
 # start the server if one isnt running
@@ -431,8 +433,8 @@ remDr$executeAsyncScript(jsscript, args = 1:2)
 
 # EXAMPLE INJECTING INTO PHANTOMJS using phantomExecute
 require(RSelenium)
-pJS <- phantom()
-remDr <- remoteDriver(browserName = "phantomjs")
+pJS <- wdman::phantomjs(port = 4932L)
+remDr <- remoteDriver(browserName = "phantomjs", port = 4932L)
 remDr$open(silent = TRUE)
 remDr$navigate("http://ariya.github.com/js/random/")
 # returns a set of random numbers
@@ -451,4 +453,3 @@ pJS$stop()
 }
 
 }
-
