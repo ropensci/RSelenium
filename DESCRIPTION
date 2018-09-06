@@ -1,7 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.3.9000
+Version: 1.7.4
 Authors@R: c(
     person("John", "Harrison", , "johndharrison0@gmail.com",
     role = "aut", comment = "original author"),
@@ -24,7 +24,11 @@ Additional_repositories: http://www.omegahat.net/R
 Depends:
     R (>= 3.0.0)
 Imports:
-    XML,methods,caTools,tools,utils,
+    XML,
+    methods,
+    caTools,
+    tools,
+    utils,
     openssl,
     httr,
     wdman(>= 0.2.2),
@@ -38,6 +42,7 @@ Suggests:
 VignetteBuilder: knitr
 LazyData: true
 Collate:
+    'RSelenium.R'
     'errorHandler.R'
     'remoteDriver.R'
     'rsDriver.R'
@@ -45,4 +50,5 @@ Collate:
     'util.R'
     'webElement.R'
     'zzz.R'
-RoxygenNote: 5.0.1
+Encoding: UTF-8
+RoxygenNote: 6.1.0
