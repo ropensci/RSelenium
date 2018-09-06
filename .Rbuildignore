@@ -5,3 +5,4 @@ inst/www
 ^web$
 docs
 ^\.github$
+^_pkgdown.yml$
