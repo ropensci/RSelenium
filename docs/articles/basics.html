@@ -109,51 +109,66 @@
 <h3 class="hasAnchor">
 <a href="#what-is-a-selenium-server" class="anchor"></a>What is a Selenium Server?</h3>
 <p>Selenium Server is a standalone java program which allows you to run HTML test suites in a range of different browsers, plus extra options like reporting.</p>
-<p>You may, or may not, need to run a Selenium Server, depending on how you intend to use Selenium-WebDriver (RSelenium).</p>
+<p>You may, or may not, need to run a Selenium Server, depending on how you intend to use Selenium-WebDriver (<code>RSelenium</code>).</p>
 </div>
 <div id="do-i-need-to-run-a-selenium-server" class="section level3">
 <h3 class="hasAnchor">
 <a href="#do-i-need-to-run-a-selenium-server" class="anchor"></a>Do I Need to Run a Selenium Server?</h3>
-<p>If you intend to drive a browser on the same machine that RSelenium is running on then you will need to have Selenium Server running on that machine.</p>
+<p>If you intend to drive a browser on the same machine that RSelenium is running on, you will need to have a Selenium Server running on that machine.</p>
 </div>
 <div id="how-do-i-get-the-selenium-server-standalone-binary" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-do-i-get-the-selenium-server-standalone-binary" class="anchor"></a>How Do I Get the Selenium Server Standalone Binary?</h3>
-<p>You can download the latest Selenium Server binary manually it is currently found <a href="http://selenium-release.storage.googleapis.com/index.html">here</a>. Look for <code>selenium-server-standalone-x.xx.x.jar</code>.</p>
+<p>You can download the latest Selenium Server binary manually <a href="http://selenium-release.storage.googleapis.com/index.html">here</a>. Look for <code>selenium-server-standalone-x.xx.x.jar</code>.</p>
 </div>
 <div id="how-do-i-run-the-selenium-server" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-do-i-run-the-selenium-server" class="anchor"></a>How Do I Run the Selenium Server?</h3>
-<p>The recommended way to run a Selenium Server is by running a Docker container. There is a seperate vignette which covers the using <code>RSelenium</code> with Docker see <code><a href="../articles/docker.html">vignette("docker", package = "RSelenium")</a></code>.</p>
-<p>For users who are not familiar with Docker there is now a function <code>rsDriver</code> which will manage the binaries needed for running a Selenium Server. This provides a wrapper around the <code><a href="http://www.rdocumentation.org/packages/wdman/topics/selenium">wdman::selenium</a></code> function. For additional options and more control see the <a href="https://github.com/ropensci/wdman">wdman</a> project. Examples using the <code>rsDriver</code> function are given in the appendix. <strong><em>Please submit any issues with running binaries to the wdman project</em></strong></p>
-<p>Alternatively you can run the binary manually. Open a console in your OS and navigate to where the binary is located and run:</p>
+<p>There are three ways to run a Selenium Server:</p>
+<div id="docker" class="section level4">
+<h4 class="hasAnchor">
+<a href="#docker" class="anchor"></a>Docker</h4>
+<p><strong>The recommended way</strong> to run a Selenium Server is by running a <a href="https://www.docker.com/">Docker</a> container.</p>
+<p>Run a server for example using Docker:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">docker</span> run -d -p 4445:4444 selenium/standalone-firefox:2.53.1</code></pre></div>
+<p>Use a debug image with a VNC viewer if you wish to view the browser:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">docker</span> run -d -p 5901:5900 -p 127.0.0.1:4445:4444 --link http-server selenium/standalone-firefox-debug:2.53.1</code></pre></div>
+<p>There is a seperate vignette which covers the using <code>RSelenium</code> with Docker see <code><a href="../articles/docker.html">vignette("docker", package = "RSelenium")</a></code> or <a href="http://ropensci.github.io/RSelenium/articles/docker.html">here</a>.</p>
+</div>
+<div id="rsdriver" class="section level4">
+<h4 class="hasAnchor">
+<a href="#rsdriver" class="anchor"></a><code>rsDriver</code>
+</h4>
+<p>For users who are not familiar with Docker, there is now a function <code>rsDriver</code> which will manage the binaries needed for running a Selenium Server. This provides a wrapper around the <code><a href="http://www.rdocumentation.org/packages/wdman/topics/selenium">wdman::selenium</a></code> function. For additional options and more control, see the <a href="https://ropensci.github.io/wdman/">wdman</a> project. Examples using the <code>rsDriver</code> function are given in the appendix. <strong><em>Please submit any issues with running binaries to the wdman project</em></strong></p>
+</div>
+<div id="java-binary" class="section level4">
+<h4 class="hasAnchor">
+<a href="#java-binary" class="anchor"></a>Java Binary</h4>
+<p>Alternatively, you can run the binary manually. Open a console in your OS and navigate to where the binary is located and run:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">java</span> -jar selenium-server-standalone-x.xx.x.jar</code></pre></div>
-<p>By default, the <code>Selenium Server</code> listens for connections on port 4444.</p>
-<p><strong><em>Note for Mac OSX:</em></strong> The default port 4444 is sometimes used by other programs such as kerberos. In our examples we use port 4445 in respect of this and for cdonsistency with the Docker vignette.</p>
+<p>By default, the Selenium Server listens for connections on port 4444.</p>
+<p><strong><em>Note for Mac OSX:</em></strong> The default port 4444 is sometimes used by other programs such as kerberos. In our examples, we use port 4445 in respect of this and for consistency with <a href="http://ropensci.github.io/RSelenium/articles/docker.html">the Docker vignette</a>.</p>
+</div>
 </div>
 <div id="how-do-i-connect-to-a-running-server" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-do-i-connect-to-a-running-server" class="anchor"></a>How Do I Connect to a Running Server?</h3>
-<p><code>RSelenium</code> has a main reference class named <code>remoteDriver</code>. To connect to a server you need to instantiate a new <code>remoteDriver</code> with appropriate options.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Run a server for example using Docker</span>
-<span class="co"># docker run -d -p 4445:4444 selenium/standalone-firefox:2.53.1</span>
-<span class="co"># Use a debug image with a VNC viewer if you wish to view the browser</span>
-<span class="co"># docker run -d -p 5901:5900 -p 127.0.0.1:4445:4444 --link http-server selenium/standalone-firefox-debug:2.53.1</span>
-<span class="co"># See Docker vignette for more detail or run a Selenium Server manually.</span>
-
-<span class="kw">require</span>(RSelenium)
+<p><code>RSelenium</code> has a main reference class named <code>remoteDriver</code>. To connect to a server, you need to instantiate a new <code>remoteDriver</code> with appropriate options.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RSelenium)
 remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(
   <span class="dt">remoteServerAddr =</span> <span class="st">"localhost"</span>,
   <span class="dt">port =</span> 4445L,
   <span class="dt">browserName =</span> <span class="st">"firefox"</span>
 )</code></pre></div>
-<p><strong><em>Note for Windows:</em></strong> If you are using Docker toolbox your remote server address will not be localhost. You need to use the ip address of the VM that is running docker for example</p>
+<p><strong><em>Note for Windows:</em></strong> If you are using Docker toolbox, your remote server address will not be localhost. You need to use the ip address of the VM that is running docker.</p>
+<p>For example:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">docker-machine</span> ip</code></pre></div>
 <pre><code>## 192.168.99.100</code></pre>
-<p><strong><em>Note:</em></strong> See the Docker vignette for further details. The newer Docker for windows however should be accessible on the localhost.</p>
-<p>It would have been sufficient to call <code>remDr &lt;- remoteDriver(port = 4445L)</code>, but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on the <code>saucelabs</code> vignette. To connect to the server use the <code>open</code> method.</p>
+<p><strong><em>Note:</em></strong> See <a href="http://ropensci.github.io/RSelenium/articles/docker.html">the Docker vignette</a> for further details. The newer Docker for windows however should be accessible on the localhost.</p>
+<p>It would have been sufficient to call <code>remDr &lt;- remoteDriver(port = 4445L)</code>, but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on <a href="http://ropensci.github.io/RSelenium/articles/saucelabs.html">the SauceLabs vignette</a>.</p>
+<p>To connect to the server, use the <code>open</code> method:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">open</span>()</code></pre></div>
-<p>RSelenium should now have a connection to the Selenium Server. You can query the status of the remote Server using the <code>status</code> method.</p>
+<p><code>remDr</code> should now have a connection to the Selenium Server. You can query the status of the remote server using the <code>getStatus</code> method:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">getStatus</span>()</code></pre></div>
 <pre><code>## $build
 ## $build$version
@@ -188,9 +203,9 @@ remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remot
 <div id="basic-navigation" class="section level3">
 <h3 class="hasAnchor">
 <a href="#basic-navigation" class="anchor"></a>Basic Navigation</h3>
-<p>To start with we navigate to a url.</p>
+<p>To start with, we navigate to a url:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</code></pre></div>
-<p>Then we navigate to a second page.</p>
+<p>Then, we navigate to a second page:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.bbc.co.uk"</span>)
 remDr<span class="op">$</span><span class="kw">getCurrentUrl</span>()</code></pre></div>
 <pre><code>## [[1]]
@@ -204,15 +219,15 @@ remDr<span class="op">$</span><span class="kw">getCurrentUrl</span>()</code></pr
 remDr<span class="op">$</span><span class="kw">getCurrentUrl</span>()</code></pre></div>
 <pre><code>## [[1]]
 ## [1] "http://www.bbc.co.uk/"</code></pre>
-<p>To refresh the current page you can use the <code>refresh</code> method.</p>
+<p>To refresh the current page, you can use the <code>refresh</code> method:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">refresh</span>()</code></pre></div>
 </div>
 </div>
 <div id="accessing-elements-in-the-dom" class="section level2">
 <h2 class="hasAnchor">
 <a href="#accessing-elements-in-the-dom" class="anchor"></a>Accessing Elements in the DOM</h2>
-<p>The DOM stands for the Document Object Model. It is a cross-platform and language-independent convention for representing and interacting with objects in HTML, XHTML and XML documents. Interacting with the DOM will be very important for us with Selenium and the webDriver provides a number of methods in which to do this.</p>
-<p>A basic html page is</p>
+<p>The DOM stands for <em>the Document Object Model</em>. It is a cross-platform and language-independent convention for representing and interacting with objects in <code>HTML</code>, <code>XHTML</code> and <code>XML</code> documents. Interacting with the DOM will be very important for us with Selenium, and the webDriver provides a number of methods in which to do this.</p>
+<p>A basic HTML page is:</p>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html<span class="dt">&gt;</span>
 <span class="kw">&lt;html&gt;</span>
 <span class="kw">&lt;body&gt;</span>
@@ -229,9 +244,9 @@ remDr<span class="op">$</span><span class="kw">getCurrentUrl</span>()</code></pr
 <div id="search-by-name" class="section level3">
 <h3 class="hasAnchor">
 <a href="#search-by-name" class="anchor"></a>Search by Name</h3>
-<p>To find this element in the DOM a number of methods can be used. We can search by the name.</p>
+<p>To find this element in the DOM, a number of methods can be used. We can search by the name:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
-webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">'name'</span>, <span class="dt">value =</span> <span class="st">"q"</span>)
+webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"name"</span>, <span class="dt">value =</span> <span class="st">"q"</span>)
 webElem<span class="op">$</span><span class="kw">getElementAttribute</span>(<span class="st">"name"</span>)</code></pre></div>
 <pre><code>## [[1]]
 ## [1] "q"</code></pre>
@@ -245,13 +260,13 @@ webElem<span class="op">$</span><span class="kw">getElementAttribute</span>(<spa
 <div id="search-by-id" class="section level3">
 <h3 class="hasAnchor">
 <a href="#search-by-id" class="anchor"></a>Search by ID</h3>
-<p>In HTML the id of a DOM element should be unique so this is usually a good locator to use. As noted above the google id of the query box may change (the one we see is “lst-ib” so we use that). You may see an alternative “id”.</p>
+<p>In HTML, the ID of a DOM element should be unique, so this is usually a good locator to use. As noted above, the Google ID of the query box may change (the one we see is “lst-ib”, so we use that). You may see an alternative ID.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"id"</span>, <span class="dt">value =</span> <span class="st">"lst-ib"</span>)</code></pre></div>
 <div id="highlight-an-element" class="section level4">
 <h4 class="hasAnchor">
 <a href="#highlight-an-element" class="anchor"></a>Highlight an Element</h4>
-<p>An element that is visible in the DOM can usually be highlighted. Using our <code>webElem</code> which is an object of class <code>"webElement"</code> we can use the associated <code>highlight</code> method to visually indicate to us we have the correct element. Try it:</p>
+<p>An element that is visible in the DOM can usually be highlighted. Using our <code>webElem</code> which is an object of class <code>webElement</code>, we can use the associated <code>highlightElement</code> method to visually indicate to us we have the correct element. Try it:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem<span class="op">$</span><span class="kw">highlightElement</span>()</code></pre></div>
 <p>You should see the query box flashing black and yellow to indicate visually the DOM element you have selected.</p>
 </div>
@@ -259,7 +274,7 @@ webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class=
 <div id="search-by-class" class="section level3">
 <h3 class="hasAnchor">
 <a href="#search-by-class" class="anchor"></a>Search by Class</h3>
-<p>We can also search by class name.</p>
+<p>We can also search by the class name:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"class"</span>, <span class="st">"gsfi"</span>)
 webElem<span class="op">$</span><span class="kw">getElementAttribute</span>(<span class="st">"class"</span>)</code></pre></div>
@@ -268,48 +283,48 @@ webElem<span class="op">$</span><span class="kw">getElementAttribute</span>(<spa
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem<span class="op">$</span><span class="kw">getElementAttribute</span>(<span class="st">"type"</span>)</code></pre></div>
 <pre><code>## [[1]]
 ## [1] "text"</code></pre>
-<p><strong><em>NOTE:</em></strong> the clas is listed as “gsfi lst-d-f” and we searched using “gsfi”? This is an example of a compound class. The class name selector can only be used for elements with a single class (“gsfi lst-d-f” indicates two classes “gsfi” and “lst-d-f”). For more complicated select queries we therefore use CSS or xpath instead.</p>
+<p><strong><em>NOTE:</em></strong> the class is listed as “gsfi lst-d-f”, and we searched using “gsfi”. This is an example of a compound class. The class name selector can only be used for elements with a single class (“gsfi lst-d-f” indicates two classes “gsfi” and “lst-d-f”). For more complicated select queries, we therefore use CSS or xpath instead.</p>
 </div>
 <div id="search-using-css-selectors" class="section level3">
 <h3 class="hasAnchor">
 <a href="#search-using-css-selectors" class="anchor"></a>Search Using CSS Selectors</h3>
-<p>To replicate our name search using css selectors we could use</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">'css'</span>, <span class="st">"input[name='q']"</span>)
+<p>To replicate our name search using css selectors, we could use:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"input[name='q']"</span>)
 <span class="co"># OR</span>
-webElem2 &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">'css'</span>, <span class="st">"[name='q']"</span>)</code></pre></div>
-<p>We can see we get the same element (using the compareElements method of the <code>"webElement"</code> class):</p>
+webElem2 &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"[name='q']"</span>)</code></pre></div>
+<p>We can see we get the same element (using the <code>compareElements</code> method of the <code>webElement</code> class):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem<span class="op">$</span><span class="kw">compareElements</span>(webElem2)</code></pre></div>
 <pre><code>## [[1]]
 ## [1] TRUE</code></pre>
-<p>and to search on id using css-selectors (again not the id you see maybe different)</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">'css'</span>, <span class="st">"input#lst-ib"</span>)
+<p>and to search on ID using the CSS Selectors (again, the ID you see maybe different):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"input#lst-ib"</span>)
 webElem<span class="op">$</span><span class="kw">getElementAttribute</span>(<span class="st">"name"</span>)</code></pre></div>
 <pre><code>## [[1]]
 ## [1] "q"</code></pre>
-<p>and class</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">'css'</span>, <span class="st">"[class = 'gsfi lst-d-f']"</span>)</code></pre></div>
+<p>and class:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"[class = 'gsfi lst-d-f']"</span>)</code></pre></div>
 <p><strong><em>NOTE:</em></strong> no issue with compound class names with CSS</p>
 <p>A good example of searching using css-selectors is given <a href="http://saucelabs.com/resources/selenium/css-selectors">here</a>.</p>
 </div>
 <div id="search-using-xpath" class="section level3">
 <h3 class="hasAnchor">
-<a href="#search-using-xpath" class="anchor"></a>Search Using xpath</h3>
-<p>The final option is to search using xpath. Normally one would use xpath by default when searching or CSS. Both are the go-to options.</p>
-<p>Xpath using id.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">'xpath'</span>, <span class="st">"//input[@id = 'lst-ib']"</span>)</code></pre></div>
-<p>Xpath using class.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">'xpath'</span>, <span class="st">"//input[@class = 'gsfi lst-d-f']"</span>)</code></pre></div>
-<p><strong><em>NOTE:</em></strong> with xpath we have no issues using a compound class name.</p>
+<a href="#search-using-xpath" class="anchor"></a>Search Using XPath</h3>
+<p>The final option is to search using XPath. Normally, one would use XPath by default when searching or CSS. Both are the go-to options.</p>
+<p>XPath using ID:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"xpath"</span>, <span class="st">"//input[@id = 'lst-ib']"</span>)</code></pre></div>
+<p>Xpath using class:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"xpath"</span>, <span class="st">"//input[@class = 'gsfi lst-d-f']"</span>)</code></pre></div>
+<p><strong><em>NOTE:</em></strong> with XPath, we have no issues using a compound class name.</p>
 </div>
 </div>
 <div id="sending-events-to-elements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sending-events-to-elements" class="anchor"></a>Sending Events to Elements</h2>
-<p>To illustrate how to interact with elements we will again use the <code>http://www.google.com/ncr</code> as an example.</p>
+<p>To illustrate how to interact with elements, we will again use the <code>http://www.google.com/ncr</code> as an example.</p>
 <div id="sending-text-to-elements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sending-text-to-elements" class="anchor"></a>Sending Text to Elements</h3>
-<p>Suppose we would like to search for <code>R cran</code> on google. We would need to find the element for the query box and send the appropriate text to it. We can do this using the <code>sendKeysToElement</code> method for the <code>webElement</code> class.</p>
+<p>Suppose we would like to search for “R cran” on google. We would need to find the element for the query box and send the appropriate text to it. We can do this using the <code>sendKeysToElement</code> method for the <code>webElement</code> class.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"[name = 'q']"</span>)
 webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span class="kw">list</span>(<span class="st">"R Cran"</span>))</code></pre></div>
@@ -317,13 +332,13 @@ webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span 
 <div id="sending-key-presses-to-elements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sending-key-presses-to-elements" class="anchor"></a>Sending Key Presses to Elements</h3>
-<p>We should see that the text <code>R Cran</code> has now been entered into the query box.</p>
-<p>How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as <code>"\uE007"</code>(its UTF-8 code) . So we could use:</p>
+<p>We should see that the text “R Cran” has now been entered into the query box.</p>
+<p>How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as <code>"\uE007"</code>(its UTF-8 code). So we could use:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"[name = 'q']"</span>)
 webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span class="kw">list</span>(<span class="st">"R Cran"</span>, <span class="st">"\uE007"</span>))</code></pre></div>
-<p>It is not very easy to remember UTF-8 codes for appropriate keys so a mapping has been provided in <code>RSelenium</code>. `?selkeys’ will bring up a help page explaining the mapping. The UTF-8 codes have been mapped to easy to remember names.</p>
-<p>To use <code>selkeys</code> we would send the following</p>
+<p>It is not very easy to remember UTF-8 codes for appropriate keys, so a mapping has been provided in <code>RSelenium</code>. <code>?selkeys</code> will bring up a help page explaining the mapping. The UTF-8 codes have been mapped to easy to remember names.</p>
+<p>To use <code>selkeys</code>, we would send the following:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"[name = 'q']"</span>)
 webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span class="kw">list</span>(<span class="st">"R Cran"</span>, <span class="dt">key =</span> <span class="st">"enter"</span>))</code></pre></div>
@@ -332,13 +347,13 @@ webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span 
 <div id="sending-mouse-events-to-elements" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sending-mouse-events-to-elements" class="anchor"></a>Sending Mouse Events to Elements</h3>
-<p>For this example we will go back to the google frontpage and search for <code>R Cran</code> then we will click the link for the <code>The Comprehensive R Archive Network</code>.</p>
+<p>For this example, we will go back to the Google front page and search for “R Cran”. then, we will click the link for “The Comprehensive R Archive Network”.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"[name = 'q']"</span>)
 webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span class="kw">list</span>(<span class="st">"R Cran"</span>, <span class="dt">key =</span> <span class="st">"enter"</span>))</code></pre></div>
-<p>The header for each link is contained in a <code>&lt;h3 class = "r"&gt;</code> tag. We will access the <code>h3</code> headers first. It will be succinct to find these elements using <code>css selectors</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="dt">using =</span> <span class="st">'css selector'</span>, <span class="st">"h3.r"</span>)
-resHeaders &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(webElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">getElementText</span>()}))
+<p>The header for each link is contained in a <code>&lt;h3 class = "r"&gt;</code> tag. We will access the “h3” headers first. It will be succinct to find these elements using “css selectors”.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="dt">using =</span> <span class="st">"css selector"</span>, <span class="st">"h3.r"</span>)
+resHeaders &lt;-<span class="st"> </span><span class="kw">unlist</span>(<span class="kw">lapply</span>(webElems, <span class="cf">function</span>(x) {x<span class="op">$</span><span class="kw">getElementText</span>()}))
 resHeaders</code></pre></div>
 <pre><code>## [1] "The Comprehensive R Archive Network"                                   
 ## [2] "Download R-3.3.2 for Windows. The R-project for statistical ... - CRAN"
@@ -351,9 +366,9 @@ resHeaders</code></pre></div>
 ## [9] "METACRAN"                                                              
 ## [10] "CRAN - Package PopGenReport"   </code></pre>
 <p><strong><em>NOTE:</em></strong> this is how the headers were presented at time of writing. Class names etc. are liable to change.</p>
-<p>We can see that the first link is the one we want but in case googles search results change we refer to it as</p>
+<p>We can see that the first link is the one we want, but in case Google’s search results change, we refer to it as</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem &lt;-<span class="st"> </span>webElems[[<span class="kw">which</span>(resHeaders <span class="op">==</span><span class="st"> "The Comprehensive R Archive Network"</span>)]]</code></pre></div>
-<p>How do we click the link. We can use the <code>clickElement</code> method:</p>
+<p>How do we click the link? We can use the <code>clickElement</code> method:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElem<span class="op">$</span><span class="kw">clickElement</span>()
 remDr<span class="op">$</span><span class="kw">getCurrentUrl</span>()</code></pre></div>
 <pre><code>## [[1]]
@@ -366,19 +381,20 @@ remDr<span class="op">$</span><span class="kw">getCurrentUrl</span>()</code></pr
 <div id="injecting-javascript" class="section level2">
 <h2 class="hasAnchor">
 <a href="#injecting-javascript" class="anchor"></a>Injecting JavaScript</h2>
-<p>Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page for example by adding the <code>JQuery</code> library to the page if it is missing. <code>Selenium</code> has two methods we can use to execute JavaScript namely <code>executeScript</code> and <code>executeAsyncScript</code> from the <code>remoteDriver</code> class. We return to the google front page to investigate these methods.</p>
+<p>Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page for example by adding the <code>JQuery</code> library to the page if it is missing.</p>
+<p><code>RSelenium</code> has two methods we can use to execute JavaScript namely <code>executeScript</code> and <code>executeAsyncScript</code> from the <code>remoteDriver</code> class. We return to the Google front page to investigate these methods.</p>
 <div id="injecting-javascript-synchronously" class="section level3">
 <h3 class="hasAnchor">
 <a href="#injecting-javascript-synchronously" class="anchor"></a>Injecting JavaScript Synchronously</h3>
-<p>Returning to the google homepage we can find the element for the <code>google</code> image. The image has <code>id = "hplogo"</code> and we can use this in an xpath or search by id etc to select the element. In this case we use <code>css selectors</code>:</p>
+<p>Returning to the Google front page, we can find the element for the “Google” image. The image has <code>id = "hplogo"</code>, and we can use this in an XPath or search by ID to select the element. In this case, we use “css selectors”:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css"</span>, <span class="st">"img#hplogo"</span>)</code></pre></div>
-<p>Is the image visible? Clearly it is but we can check using javascript.</p>
+<p>Is the image visible? Clearly, it is, but we can check using JavaScript:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">script &lt;-<span class="st"> "return document.getElementById('hplogo').hidden;"</span>
 remDr<span class="op">$</span><span class="kw">executeScript</span>(script, <span class="dt">args =</span> <span class="kw">list</span>())</code></pre></div>
 <pre><code>## [[1]]
 ## [1] FALSE</code></pre>
-<p>Great so the image is not hidden indicated by the <code>FALSE</code>. We can hide it executing some simple JavaScript.</p>
+<p>Great! So the image is not hidden indicated by the <code>FALSE</code>. We can hide it executing some simple JavaScript.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">script &lt;-<span class="st"> "document.getElementById('hplogo').hidden = true; </span>
 <span class="st">           return document.getElementById('hplogo').hidden;"</span>
 remDr<span class="op">$</span><span class="kw">executeScript</span>(script, <span class="dt">args =</span> <span class="kw">list</span>())</code></pre></div>
@@ -386,12 +402,12 @@ remDr<span class="op">$</span><span class="kw">executeScript</span>(script, <spa
 ## [1] TRUE
 </code></pre>
 <p>So now the image is hidden. We used an element here given by <code>id = "hplogo"</code>. We had to use the JavaScript function <code>getElementById</code> to access it. It would be nicer if we could have used <code>webElem</code> which we had specified earlier.</p>
-<p>If we pass a webElement object as an argument to either <code>executeScript</code> or <code>executeAsyncScript</code> <code>RSelenium</code> will pass it in an appropriate fashion.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">script &lt;-<span class="st">"arguments[0].hidden = false; return arguments[0].hidden;"</span>
+<p>If we pass a <code>webElement</code> object as an argument to either <code>executeScript</code> or <code>executeAsyncScript</code>, <code>RSelenium</code> will pass it in an appropriate fashion.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">script &lt;-<span class="st"> "arguments[0].hidden = false; return arguments[0].hidden;"</span>
 remDr<span class="op">$</span><span class="kw">executeScript</span>(script, <span class="dt">args =</span> <span class="kw">list</span>(webElem))</code></pre></div>
 <pre><code>## [[1]]
 ## [1] FALSE</code></pre>
-<p>Notive how we passed the web element to the method <code>executeScript</code>. The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided args. If the function returns an element then this will be returned as an object of class webElement:</p>
+<p>Notice that how we passed the <code>webElement</code> object to the method <code>executeScript</code>. The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided arguments. If the function returns an element, this will be returned as an object of <code>webElement</code> class:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">script &lt;-<span class="st"> "return document.getElementsByName('q');"</span>
 test &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">executeScript</span>(script, <span class="dt">args =</span> <span class="kw">list</span>())
 test[[<span class="dv">1</span>]]</code></pre></div>
@@ -433,7 +449,7 @@ test[[<span class="dv">1</span>]]</code></pre></div>
 <div id="injecting-javascript-asynchronously" class="section level3">
 <h3 class="hasAnchor">
 <a href="#injecting-javascript-asynchronously" class="anchor"></a>Injecting JavaScript Asynchronously</h3>
-<p>I will briefly touch on asynch versus sync calls here. We need to set an appropriate asynchronous timeout firstly (that is longer than the async operation we are likely to carryout but it will ensure we will eventually error out in case of an issue)</p>
+<p>I will briefly touch on asynch versus sync calls here. Firstly, we need to set an appropriate asynchronous timeout (that is longer than the async operation we are likely to carryout, but it will ensure that we will eventually error out in case of an issue).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 remDr<span class="op">$</span><span class="kw">setAsyncScriptTimeout</span>(<span class="dv">10000</span>)</code></pre></div>
 <p>Observe:</p>
@@ -443,7 +459,7 @@ script &lt;-<span class="st"> "</span>
 <span class="st">webElem = arguments[0];</span>
 <span class="st">setTimeout(function(){webElem.hidden = true; cb('DONE');},5000);"</span>
 remDr<span class="op">$</span><span class="kw">executeAsyncScript</span>(script, <span class="dt">args =</span> <span class="kw">list</span>(webElem))</code></pre></div>
-<p>versus</p>
+<p>Versus</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
 webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"css"</span>, <span class="st">"img#hplogo"</span>)
 script &lt;-<span class="st"> "</span>
@@ -452,7 +468,7 @@ script &lt;-<span class="st"> "</span>
 <span class="st">return 'DONE';</span>
 <span class="st">"</span>
 remDr<span class="op">$</span><span class="kw">executeScript</span>(script, <span class="dt">args =</span> <span class="kw">list</span>(webElem))</code></pre></div>
-<p>The async version waits until the callback (defined as the last argument <code>arguments[arguments.length -1]</code> as JavaScript is zero-indexed) is called whereas the sync version returns straight away. In both cases the google logo disappears after five seconds.</p>
+<p>The async version waits until the callback (defined as the last argument <code>arguments[arguments.length - 1]</code> as JavaScript is zero-indexed) is called whereas the sync version returns straight away. In both cases, the Google logo disappears after five seconds.</p>
 </div>
 </div>
 <div id="frames-and-windows" class="section level2">
@@ -462,7 +478,8 @@ remDr<span class="op">$</span><span class="kw">executeScript</span>(script, <spa
 <div id="frames-in-selenium" class="section level3">
 <h3 class="hasAnchor">
 <a href="#frames-in-selenium" class="anchor"></a>Frames in Selenium</h3>
-<p>We will demonstrate interacting with frames by way of example. <a href="https://CRAN.R-project.org/">The Comprehensive R Archive Network</a> conveniently contains frames so we shall use <code>RSelenium</code> to interact with it. Assume we have a remoteDriver opened.</p>
+<p>We will demonstrate interacting with frames by way of example. <a href="https://CRAN.R-project.org/">The Comprehensive R Archive Network</a> conveniently contains frames so we shall use <code>RSelenium</code> to interact with it.</p>
+<p>Assume that we have a remoteDriver opened:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"https://CRAN.r-project.org/"</span>)
 XML<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse">htmlParse</a></span>(remDr<span class="op">$</span><span class="kw">getPageSource</span>()[[<span class="dv">1</span>]])</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd"<span class="dt">&gt;</span>
@@ -488,14 +505,14 @@ here is the <span class="dv">&amp;lt;</span>A href="navbar.html"<span class="dv"
 <span class="kw">&lt;/noframes&gt;</span>
 <span class="kw">&lt;/frameset&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></div>
-<p>We can see the content is contained in three frames and we dont appear to have access to the content within a frame. But in the browser we see all the content:</p>
+<p>We can see that the content is contained in three frames, and we don’t appear to have access to the content within a frame, but in the browser, we see all the content:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">maxWindowSize</span>()
 remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <h6 align="center">
 RProject front page
 </h6>
 <p><img src="RProject.png" title="RProject front page on linux firefox 26.0" width="100%"></p>
-<p>To access the content we have to switch to a frame using the <code>switchToFrame</code> method of the <code>remoteDriver</code> class.</p>
+<p>To access the content, we have to switch to a frame using the <code>switchToFrame</code> method of the <code>remoteDriver</code> class.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="dt">using =</span> <span class="st">"tag name"</span>, <span class="st">"frame"</span>)
 <span class="co"># webElems &lt;- remDr$findElements(value = "//frame") # using xpath</span>
 <span class="co"># webElems &lt;- remDr$findElements("css", value = "frame") # using css</span>
@@ -532,9 +549,9 @@ XML<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation
 <span class="kw">&lt;em</span><span class="ot"> class=</span><span class="st">"navigation"</span><span class="kw">&gt;</span>Documentation<span class="kw">&lt;/em&gt;&lt;br&gt;&lt;a</span><span class="ot"> target=</span><span class="st">"banner"</span><span class="ot"> href=</span><span class="st">"manuals.html"</span><span class="kw">&gt;</span>Manuals<span class="kw">&lt;/a&gt;&lt;br&gt;&lt;a</span><span class="ot"> target=</span><span class="st">"banner"</span><span class="ot"> href=</span><span class="st">"faqs.html"</span><span class="kw">&gt;</span>FAQs<span class="kw">&lt;/a&gt;&lt;br&gt;&lt;a</span><span class="ot"> target=</span><span class="st">"banner"</span><span class="ot"> href=</span><span class="st">"other-docs.html"</span><span class="kw">&gt;</span>Contributed<span class="kw">&lt;/a&gt;&lt;br&gt;&lt;/p&gt;</span>
 <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre></div>
-<p>Now we see the source code of the navigation sidePanel. Notice how we used a webElement in the method <code>switchToFrame</code>. To further demonstrate we are now “in” this frame lets get all the <code>href</code> attributes:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css"</span>, <span class="st">"[href]"</span>)
-<span class="kw">unlist</span>(<span class="kw">sapply</span>(webElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">getElementAttribute</span>(<span class="st">"href"</span>)}))</code></pre></div>
+<p>Now, we see the source code of the navigation side panel. Notice that how we used a <code>webElement</code> in the method <code>switchToFrame</code>. To further demonstrate, we are now “in” this frame. Let’s get all the “href” attributes:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="dt">using =</span> <span class="st">"css"</span>, <span class="st">"[href]"</span>)
+<span class="kw">unlist</span>(<span class="kw">sapply</span>(webElems, <span class="cf">function</span>(x) {x<span class="op">$</span><span class="kw">getElementAttribute</span>(<span class="st">"href"</span>)}))</code></pre></div>
 <pre><code>## [1] "https://cran.r-project.org/R.css"              
 ## [2] "https://cran.r-project.org/mirrors.html"       
 ## [3] "https://www.r-project.org/news.html"           
@@ -549,7 +566,7 @@ XML<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation
 ## [12] "https://cran.r-project.org/manuals.html"       
 ## [13] "https://cran.r-project.org/faqs.html"          
 ## [14] "https://cran.r-project.org/other-docs.html"    </code></pre>
-<p>Notice if we pass a <code>NULL</code> value to the method <code>switchToFrame</code> we move back to the default view.</p>
+<p>Notice that if we pass a <code>NULL</code> value to the method <code>switchToFrame</code>, we move back to the default view.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">switchToFrame</span>(<span class="ot">NULL</span>)
 XML<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/XML/topics/xmlTreeParse">htmlParse</a></span>(remDr<span class="op">$</span><span class="kw">getPageSource</span>()[[<span class="dv">1</span>]])</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="dt">&lt;!DOCTYPE </span>html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd"<span class="dt">&gt;</span>
@@ -675,7 +692,7 @@ binaries of their platform, respectively.
 <div id="windows-in-selenium" class="section level3">
 <h3 class="hasAnchor">
 <a href="#windows-in-selenium" class="anchor"></a>Windows in Selenium</h3>
-<p>The easiest way to illustrate Windows in RSelenium is again by way of example. We will use the “CRAN” website. First we select the <code>download R</code> element in the main frame.</p>
+<p>The easiest way to illustrate Windows in RSelenium is again by way of example. We will use the CRAN website. First, we select the “download R”" element in the main frame.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"https://cran.r-project.org/"</span>)
 remDr<span class="op">$</span><span class="kw">switchToFrame</span>(<span class="st">"banner"</span>)
 webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"partial link text"</span>, <span class="st">"Download R"</span>)
@@ -731,17 +748,17 @@ remDr<span class="op">$</span><span class="kw">getTitle</span>()</code></pre></d
 <div id="server-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#server-functions" class="anchor"></a>Server Functions</h3>
-<p>In previous versions of <code>RSelenium</code> there were two functions <code>checkForServer</code> and <code>startServer</code> which were used to download and start a Selenium binary. These functions are Deprecated/Defunct as users had issue with using them cross-platform. They are still in the RSelenium package and can be accessed in the serverUtils directory <code>file.path(find.package("RSelenium"), "examples/serverUtils")</code></p>
+<p>In previous versions of <code>RSelenium</code>, there were two functions <code>checkForServer</code> and <code>startServer</code> which were used to download and start a Selenium binary. These functions are defunct as users had issue with using them cross-platform. They are still in the RSelenium package and can be accessed in the serverUtils directory <code>file.path(find.package("RSelenium"), "examples/serverUtils")</code></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">file.path</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"examples/serverUtils"</span>)</code></pre></div>
 <pre><code>## [1] "/home/john/R/x86_64-pc-linux-gnu-library/3.3/RSelenium/examples/serverUtils"</code></pre>
-<p>They may work for you depending on your platform and setup but are not supported.</p>
+<p>They may work for you depending on your platform and setup, but are not supported.</p>
 </div>
-<div id="rsdriver" class="section level3">
+<div id="rsdriver-1" class="section level3">
 <h3 class="hasAnchor">
-<a href="#rsdriver" class="anchor"></a>rsDriver</h3>
-<p>The <code>rsDriver</code> function is a wrapper for the <code>selenium</code> function from the <a href="https://cran.r-project.org/package=wdman">wdman</a> package. It allows the user to manage the binaries used to run a Selenium Server. It returns an environment containing a “client” and a “server”.</p>
-<p>By default it runs a chrome browser. Other browsers (firefox, PhantomJS, Internet Explorer (Win)) can be selected using the <code>browser</code> argument.</p>
-<p>The default port a Selenium Server is run on using the <code>rsDriver</code> function is <code>port = 4567L</code>.</p>
+<a href="#rsdriver-1" class="anchor"></a>rsDriver</h3>
+<p>The <code>rsDriver</code> function is a wrapper for the <code>selenium</code> function from the <a href="https://ropensci.github.io/wdman/">wdman</a> package. It allows the user to manage the binaries used to run a Selenium Server. It returns an environment containing a <code>client</code> and a <code>server</code>.</p>
+<p>By default, it runs a Chrome browser. Other browsers such as Firefox, PhantomJS, and Internet Explorer can be selected using the <code>browser</code> argument.</p>
+<p>The default port a Selenium Server is run on using the <code>rsDriver</code> function is 4567L.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rD &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rsDriver.html">rsDriver</a></span>(<span class="dt">verbose =</span> <span class="ot">FALSE</span>)
 rD</code></pre></div>
 <pre><code>## $client
@@ -753,14 +770,15 @@ rD</code></pre></div>
 ## command   : /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -Dwebdriver.chrome.driver=/home/john/.local/share/binman_chromedriver/linux64/2.27/chromedriver -Dwebdriver.gecko.driver=/home/john/.local/share/binman_geckodriver/linux64/0.13.0/geckodriver -Dphantomjs.binary.path=/home/john/.local/share/binman_phantomjs/linux64/2.1.1/phantomjs-2.1.1-linux-x86_64/bin/phantomjs -jar /home/john/.local/share/binman_seleniumserver/generic/3.0.1/selenium-server-standalone-3.0.1.jar -port 4567
 ## system id : 120670
 ## state     : running</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># assign the client to a new variable</span>
-remDr &lt;-<span class="st"> </span>rD<span class="op">$</span>client
+<p>Assign the client to a new variable and drive the client to navigate to a page:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr &lt;-<span class="st"> </span>rD<span class="op">$</span>client
+
 remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.r-project.org"</span>)
 remDr<span class="op">$</span><span class="kw">getTitle</span>()</code></pre></div>
 <pre><code>## [[1]]
 ## [1] "R: The R Project for Statistical Computing"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check the server logs</span>
-rD<span class="op">$</span>server<span class="op">$</span><span class="kw">log</span>()</code></pre></div>
+<p>Check the server logs:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rD<span class="op">$</span>server<span class="op">$</span><span class="kw">log</span>()</code></pre></div>
 <pre><code>#&gt; $stderr
 #&gt;  [1] "10:29:11.536 INFO - Selenium build info: version: '3.0.1', revision: '1969d75'"                                                                                          
 #&gt;  [2] "10:29:11.537 INFO - Launching a standalone Selenium Server"                                                                                                              
@@ -796,17 +814,17 @@ rD<span class="op">$</span>server<span class="op">$</span><span class="kw">log</
 #&gt; 
 #&gt; $stdout
 #&gt; character(0)</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># close client/server</span>
-remDr<span class="op">$</span><span class="kw">close</span>()
+<p>Close the client and the server:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">close</span>()
 rD<span class="op">$</span>server<span class="op">$</span><span class="kw">stop</span>()</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># check server</span>
-rD<span class="op">$</span>server<span class="op">$</span>process</code></pre></div>
+<p>Check the server status:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">rD<span class="op">$</span>server<span class="op">$</span>process</code></pre></div>
 <pre><code>## Process Handle
 ## command   : /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java -Dwebdriver.chrome.driver=/home/john/.local/share/binman_chromedriver/linux64/2.27/chromedriver -Dwebdriver.gecko.driver=/home/john/.local/share/binman_geckodriver/linux64/0.13.0/geckodriver -Dphantomjs.binary.path=/home/john/.local/share/binman_phantomjs/linux64/2.1.1/phantomjs-2.1.1-linux-x86_64/bin/phantomjs -jar /home/john/.local/share/binman_seleniumserver/generic/3.0.1/selenium-server-standalone-3.0.1.jar -port 4567
 ## system id : 120670
 ## state     : terminated</code></pre>
-<p>For further detail and any issues you may have with the <code>rsDriver</code> function please see the <a href="https://github.com/ropensci/wdman">wdman</a> project.</p>
+<p>For further detail and any issues you may have with the <code>rsDriver</code> function, please see the <a href="https://ropensci.github.io/wdman/">wdman</a> project.</p>
 </div>
 </div>
   </div>
