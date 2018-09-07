@@ -21,44 +21,60 @@ The goal of RSelenium is to make it easy to connect to a Selenium Server/Remote 
 
 Selenium Server is a standalone java program which allows you to run HTML test suites in a range of different browsers, plus extra options like reporting.
 
-You may, or may not, need to run a Selenium Server, depending on how you intend to use Selenium-WebDriver (RSelenium).
+You may, or may not, need to run a Selenium Server, depending on how you intend to use Selenium-WebDriver (`RSelenium`).
 
 ### Do I Need to Run a Selenium Server?
 
-If you intend to drive a browser on the same machine that RSelenium is running on then you will need to have Selenium Server running on that machine. 
+If you intend to drive a browser on the same machine that RSelenium is running on, you will need to have a Selenium Server running on that machine.
 
 ### How Do I Get the Selenium Server Standalone Binary?
 
-You can download the latest Selenium Server binary manually it is currently found [here](http://selenium-release.storage.googleapis.com/index.html). Look for `selenium-server-standalone-x.xx.x.jar`.
+You can download the latest Selenium Server binary manually [here](http://selenium-release.storage.googleapis.com/index.html). Look for `selenium-server-standalone-x.xx.x.jar`.
 
 ### How Do I Run the Selenium Server?
 
-The recommended way to run a Selenium Server is by running a Docker container. There is a seperate vignette which covers the using `RSelenium` with Docker see `vignette("docker", package = "RSelenium")`.
+There are three ways to run a Selenium Server:
 
-For users who are not familiar with Docker there is now a function `rsDriver` which will manage the binaries needed for running a Selenium Server. This provides a wrapper around the `wdman::selenium` function. For additional options and more control see the [wdman](https://github.com/ropensci/wdman) project. Examples using the `rsDriver` function are given in the appendix. ***Please submit any issues with running binaries to the wdman  project***
+#### Docker
 
-Alternatively you can run the binary manually. Open a console in your OS and navigate to where the binary is located and run:
+**The recommended way** to run a Selenium Server is by running a [Docker](https://www.docker.com/) container.
+
+Run a server for example using Docker:
+
+```sh
+docker run -d -p 4445:4444 selenium/standalone-firefox:2.53.1
+```
+
+Use a debug image with a VNC viewer if you wish to view the browser:
+
+```sh
+docker run -d -p 5901:5900 -p 127.0.0.1:4445:4444 --link http-server selenium/standalone-firefox-debug:2.53.1
+```
+
+There is a seperate vignette which covers the using `RSelenium` with Docker see `vignette("docker", package = "RSelenium")` or [here](http://ropensci.github.io/RSelenium/articles/docker.html).
+
+#### `rsDriver`
+
+For users who are not familiar with Docker, there is now a function `rsDriver` which will manage the binaries needed for running a Selenium Server. This provides a wrapper around the `wdman::selenium` function. For additional options and more control, see the [wdman](https://ropensci.github.io/wdman/) project. Examples using the `rsDriver` function are given in the appendix. ***Please submit any issues with running binaries to the wdman project***
+
+#### Java Binary
+
+Alternatively, you can run the binary manually. Open a console in your OS and navigate to where the binary is located and run:
 
 ```sh
 java -jar selenium-server-standalone-x.xx.x.jar
 ```
 
-By default, the `Selenium Server` listens for connections on port 4444.
+By default, the Selenium Server listens for connections on port 4444.
 
-***Note for Mac OSX:*** The default port 4444 is sometimes used by other programs such as kerberos. In our examples we use port 4445 in respect of this and for cdonsistency with the Docker vignette.
+***Note for Mac OSX:*** The default port 4444 is sometimes used by other programs such as kerberos. In our examples, we use port 4445 in respect of this and for consistency with [the Docker vignette](http://ropensci.github.io/RSelenium/articles/docker.html).
 
 ### How Do I Connect to a Running Server?
 
-`RSelenium` has a main reference class named `remoteDriver`. To connect to a server you need to instantiate a new `remoteDriver` with appropriate options.
+`RSelenium` has a main reference class named `remoteDriver`. To connect to a server, you need to instantiate a new `remoteDriver` with appropriate options.
 
 ```R
-# Run a server for example using Docker
-# docker run -d -p 4445:4444 selenium/standalone-firefox:2.53.1
-# Use a debug image with a VNC viewer if you wish to view the browser
-# docker run -d -p 5901:5900 -p 127.0.0.1:4445:4444 --link http-server selenium/standalone-firefox-debug:2.53.1
-# See Docker vignette for more detail or run a Selenium Server manually.
-
-require(RSelenium)
+library(RSelenium)
 remDr <- remoteDriver(
   remoteServerAddr = "localhost",
   port = 4445L,
@@ -66,7 +82,9 @@ remDr <- remoteDriver(
 )
 ```
 
-***Note for Windows:*** If you are using Docker toolbox your remote server address will not be localhost. You need to use the ip address of the VM that is running docker for example
+***Note for Windows:*** If you are using Docker toolbox, your remote server address will not be localhost. You need to use the ip address of the VM that is running docker.
+
+For example:
 
 ```sh
 docker-machine ip
@@ -76,15 +94,17 @@ docker-machine ip
 ## 192.168.99.100
 ```
 
-***Note:*** See the Docker vignette for further details. The newer Docker for windows however should be accessible on the localhost.
+***Note:*** See [the Docker vignette](http://ropensci.github.io/RSelenium/articles/docker.html) for further details. The newer Docker for windows however should be accessible on the localhost.
 
-It would have been sufficient to call `remDr <- remoteDriver(port = 4445L)`, but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on the `saucelabs` vignette. To connect to the server use the `open` method.
+It would have been sufficient to call `remDr <- remoteDriver(port = 4445L)`, but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on [the SauceLabs vignette](http://ropensci.github.io/RSelenium/articles/saucelabs.html).
+
+To connect to the server, use the `open` method:
 
 ```R
 remDr$open()
 ```
 
-RSelenium should now have a connection to the Selenium Server. You can query the status of the remote Server using the `status` method.
+`remDr` should now have a connection to the Selenium Server. You can query the status of the remote server using the `getStatus` method:
 
 ```R
 remDr$getStatus()
@@ -123,13 +143,13 @@ remDr$getStatus()
 
 ### Basic Navigation
 
-To start with we navigate to a url.
+To start with, we navigate to a url:
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
 ```
 
-Then we navigate to a second page.
+Then, we navigate to a second page:
 
 ```R
 remDr$navigate("http://www.bbc.co.uk")
@@ -163,7 +183,7 @@ remDr$getCurrentUrl()
 ## [1] "http://www.bbc.co.uk/"
 ```
 
-To refresh the current page you can use the `refresh` method.
+To refresh the current page, you can use the `refresh` method:
 
 ```R
 remDr$refresh()
@@ -172,9 +192,9 @@ remDr$refresh()
 
 ## Accessing Elements in the DOM
 
-The DOM stands for the Document Object Model. It is a cross-platform and language-independent convention for representing and interacting with objects in HTML, XHTML and XML documents. Interacting with the DOM will be very important for us with Selenium and the webDriver provides a number of methods in which to do this.
+The DOM stands for *the Document Object Model*. It is a cross-platform and language-independent convention for representing and interacting with objects in `HTML`, `XHTML` and `XML` documents. Interacting with the DOM will be very important for us with Selenium, and the webDriver provides a number of methods in which to do this.
 
-A basic html page is 
+A basic HTML page is:
 
 ```html
 <!DOCTYPE html>
@@ -199,11 +219,11 @@ The query box on the front page of `http://www.google.com` has html code `<input
 
 ### Search by Name
 
-To find this element in the DOM a number of methods can be used. We can search by the name.
+To find this element in the DOM, a number of methods can be used. We can search by the name:
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
-webElem <- remDr$findElement(using = 'name', value = "q")
+webElem <- remDr$findElement(using = "name", value = "q")
 webElem$getElementAttribute("name")
 ```
 
@@ -232,7 +252,7 @@ webElem$getElementAttribute("id")
 
 ### Search by ID
 
-In HTML the id of a DOM element should be unique so this is usually a good locator to use. As noted above the google id of the query box may change (the one we see is "lst-ib" so we use that). You may see an alternative "id".
+In HTML, the ID of a DOM element should be unique, so this is usually a good locator to use. As noted above, the Google ID of the query box may change (the one we see is "lst-ib", so we use that). You may see an alternative ID.
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -241,7 +261,7 @@ webElem <- remDr$findElement(using = "id", value = "lst-ib")
 
 #### Highlight an Element
 
-An element that is visible in the DOM can usually be highlighted. Using our `webElem` which is an object of class `"webElement"` we can use the associated `highlight` method to visually indicate to us we have the correct element. Try it:
+An element that is visible in the DOM can usually be highlighted. Using our `webElem` which is an object of class `webElement`, we can use the associated `highlightElement` method to visually indicate to us we have the correct element. Try it:
 
 ```R
 webElem$highlightElement()
@@ -251,7 +271,7 @@ You should see the query box flashing black and yellow to indicate visually the 
 
 ### Search by Class
 
-We can also search by class name.
+We can also search by the class name:
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -273,19 +293,19 @@ webElem$getElementAttribute("type")
 ## [1] "text"
 ```
 
-***NOTE:*** the clas is listed as "gsfi lst-d-f" and we searched using "gsfi"? This is an example of a compound class. The class name selector can only be used for elements with a single class ("gsfi lst-d-f" indicates two classes "gsfi" and "lst-d-f"). For more complicated select queries we therefore use CSS or xpath instead.
+***NOTE:*** the class is listed as "gsfi lst-d-f", and we searched using "gsfi". This is an example of a compound class. The class name selector can only be used for elements with a single class ("gsfi lst-d-f" indicates two classes "gsfi" and "lst-d-f"). For more complicated select queries, we therefore use CSS or xpath instead.
 
 ### Search Using CSS Selectors
 
-To replicate our name search using css selectors we could use
+To replicate our name search using css selectors, we could use:
 
 ```R
-webElem <- remDr$findElement(using = 'css', "input[name='q']")
+webElem <- remDr$findElement(using = "css", "input[name='q']")
 # OR
-webElem2 <- remDr$findElement(using = 'css', "[name='q']")
+webElem2 <- remDr$findElement(using = "css", "[name='q']")
 ```
 
-We can see we get the same element (using the compareElements method of the `"webElement"` class):
+We can see we get the same element (using the `compareElements` method of the `webElement` class):
 
 ```R
 webElem$compareElements(webElem2)
@@ -296,10 +316,10 @@ webElem$compareElements(webElem2)
 ## [1] TRUE
 ```
 
-and to search on id using css-selectors (again not the id you see maybe different)
+and to search on ID using the CSS Selectors (again, the ID you see maybe different):
 
 ```R
-webElem <- remDr$findElement(using = 'css', "input#lst-ib")
+webElem <- remDr$findElement(using = "css", "input#lst-ib")
 webElem$getElementAttribute("name")
 ```
 
@@ -308,42 +328,42 @@ webElem$getElementAttribute("name")
 ## [1] "q"
 ```
 
-and class
+and class:
 
 ```R
-webElem <- remDr$findElement('css', "[class = 'gsfi lst-d-f']")
+webElem <- remDr$findElement(using = "css", "[class = 'gsfi lst-d-f']")
 ```
 
 ***NOTE:*** no issue with compound class names with CSS
 
 A good example of searching using css-selectors is given [here](http://saucelabs.com/resources/selenium/css-selectors).
 
-### Search Using xpath
+### Search Using XPath
 
-The final option is to search using xpath. Normally one would use xpath by default when searching or CSS. Both are the go-to options. 
+The final option is to search using XPath. Normally, one would use XPath by default when searching or CSS. Both are the go-to options. 
 
-Xpath using id.
-
-```R
-webElem <- remDr$findElement('xpath', "//input[@id = 'lst-ib']")
-```
-
-Xpath using class.
+XPath using ID:
 
 ```R
-webElem <- remDr$findElement('xpath', "//input[@class = 'gsfi lst-d-f']")
+webElem <- remDr$findElement(using = "xpath", "//input[@id = 'lst-ib']")
 ```
 
-***NOTE:*** with xpath we have no issues using a compound class name.
+Xpath using class:
+
+```R
+webElem <- remDr$findElement(using = "xpath", "//input[@class = 'gsfi lst-d-f']")
+```
+
+***NOTE:*** with XPath, we have no issues using a compound class name.
 
 
 ## Sending Events to Elements
 
-To illustrate how to interact with elements we will again use the `http://www.google.com/ncr` as an example.
+To illustrate how to interact with elements, we will again use the `http://www.google.com/ncr` as an example.
 
 ### Sending Text to Elements
 
-Suppose we would like to search for `R cran` on google. We would need to find the element for the query box and send the appropriate text to it. We can do this using the `sendKeysToElement` method for the `webElement` class.
+Suppose we would like to search for "R cran" on google. We would need to find the element for the query box and send the appropriate text to it. We can do this using the `sendKeysToElement` method for the `webElement` class.
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -353,9 +373,9 @@ webElem$sendKeysToElement(list("R Cran"))
 
 ### Sending Key Presses to Elements
 
-We should see that the text `R Cran` has now been entered into the query box.
+We should see that the text "R Cran" has now been entered into the query box.
 
-How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as `"\uE007"`(its UTF-8 code) . So we could use:
+How do we press enter. We can simply send the enter key to query box. The enter key would be denoted as `"\uE007"`(its UTF-8 code). So we could use:
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -363,9 +383,9 @@ webElem <- remDr$findElement(using = "css", "[name = 'q']")
 webElem$sendKeysToElement(list("R Cran", "\uE007"))
 ```
 
-It is not very easy to remember UTF-8 codes for appropriate keys so a mapping has been provided in `RSelenium`. `?selkeys' will bring up a help page explaining the mapping. The UTF-8 codes have been mapped to easy to remember names. 
+It is not very easy to remember UTF-8 codes for appropriate keys, so a mapping has been provided in `RSelenium`. `?selkeys` will bring up a help page explaining the mapping. The UTF-8 codes have been mapped to easy to remember names.
 
-To use `selkeys` we would send the following
+To use `selkeys`, we would send the following:
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -377,7 +397,7 @@ Typing `selKeys` into the console will bring up the list of mappings.
 
 ### Sending Mouse Events to Elements
 
-For this example we will go back to the google frontpage and search for `R Cran` then we will click the link for the `The Comprehensive R Archive Network`.
+For this example, we will go back to the Google front page and search for "R Cran". then, we will click the link for "The Comprehensive R Archive Network".
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -385,11 +405,11 @@ webElem <- remDr$findElement(using = "css", "[name = 'q']")
 webElem$sendKeysToElement(list("R Cran", key = "enter"))
 ```
 
-The header for each link is contained in a `<h3 class = "r">` tag. We will access the `h3` headers first. It will be succinct to find these elements using `css selectors`.
+The header for each link is contained in a `<h3 class = "r">` tag. We will access the "h3" headers first. It will be succinct to find these elements using "css selectors".
 
 ```R
-webElems <- remDr$findElements(using = 'css selector', "h3.r")
-resHeaders <- unlist(lapply(webElems, function(x){x$getElementText()}))
+webElems <- remDr$findElements(using = "css selector", "h3.r")
+resHeaders <- unlist(lapply(webElems, function(x) {x$getElementText()}))
 resHeaders
 ```
 
@@ -408,13 +428,13 @@ resHeaders
 
 ***NOTE:*** this is how the headers were presented at time of writing. Class names etc. are liable to change.
 
-We can see that the first link is the one we want but in case googles search results change we refer to it as 
+We can see that the first link is the one we want, but in case Google's search results change, we refer to it as
 
 ```R
 webElem <- webElems[[which(resHeaders == "The Comprehensive R Archive Network")]]
 ```
 
-How do we click the link. We can use the `clickElement` method:
+How do we click the link? We can use the `clickElement` method:
 
 ```R
 webElem$clickElement()
@@ -435,20 +455,23 @@ remDr$getTitle()
 ## [1] "The Comprehensive R Archive Network"
 ```
 
+
 ## Injecting JavaScript
 
-Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page for example by adding the `JQuery` library to the page if it is missing. `Selenium` has two methods we can use to execute JavaScript namely `executeScript` and `executeAsyncScript` from the `remoteDriver` class. We return to the google front page to investigate these methods.
+Sometimes it is necessary to interact with the current url using JavaScript. This maybe necessary to call bespoke methods or to have more control over the page for example by adding the `JQuery` library to the page if it is missing.
+
+`RSelenium` has two methods we can use to execute JavaScript namely `executeScript` and `executeAsyncScript` from the `remoteDriver` class. We return to the Google front page to investigate these methods.
 
 ### Injecting JavaScript Synchronously
 
-Returning to the google homepage we can find the element for the `google` image. The image has `id = "hplogo"` and we can use this in an xpath or search by id etc to select the element. In this case we use `css selectors`:
+Returning to the Google front page, we can find the element for the "Google" image. The image has `id = "hplogo"`, and we can use this in an XPath or search by ID to select the element. In this case, we use "css selectors":
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
 webElem <- remDr$findElement("css", "img#hplogo")
 ```
 
-Is the image visible? Clearly it is but we can check using javascript. 
+Is the image visible? Clearly, it is, but we can check using JavaScript:
 
 ```R
 script <- "return document.getElementById('hplogo').hidden;"
@@ -460,7 +483,7 @@ remDr$executeScript(script, args = list())
 ## [1] FALSE
 ```
 
-Great so the image is not hidden indicated by the `FALSE`. We can hide it executing some simple JavaScript.
+Great! So the image is not hidden indicated by the `FALSE`. We can hide it executing some simple JavaScript.
 
 ```R
 script <- "document.getElementById('hplogo').hidden = true; 
@@ -473,12 +496,13 @@ remDr$executeScript(script, args = list())
 ## [1] TRUE
 
 ```
+
 So now the image is hidden. We used an element here given by `id = "hplogo"`. We had to use the JavaScript function `getElementById` to access it. It would be nicer if we could have used `webElem` which we had specified earlier.
 
-If we pass a webElement object as an argument to either `executeScript` or `executeAsyncScript` `RSelenium` will pass it in an appropriate fashion.
+If we pass a `webElement` object as an argument to either `executeScript` or `executeAsyncScript`, `RSelenium` will pass it in an appropriate fashion.
 
 ```R
-script <-"arguments[0].hidden = false; return arguments[0].hidden;"
+script <- "arguments[0].hidden = false; return arguments[0].hidden;"
 remDr$executeScript(script, args = list(webElem))
 ```
 
@@ -487,7 +511,7 @@ remDr$executeScript(script, args = list(webElem))
 ## [1] FALSE
 ```
 
-Notive how we passed the web element to the method `executeScript`. The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided args. If the function returns an element then this will be returned as an object of class webElement:
+Notice that how we passed the `webElement` object to the method `executeScript`. The script argument defines the script to execute in the form of a function body. The value returned by that function will be returned to the client. The function will be invoked with the provided arguments. If the function returns an element, this will be returned as an object of `webElement` class:
 
 ```R
 script <- "return document.getElementsByName('q');"
@@ -544,7 +568,7 @@ test[[1]]$highlightElement()
 
 ### Injecting JavaScript Asynchronously
 
-I will briefly touch on asynch versus sync calls here. We need to set an appropriate asynchronous timeout firstly (that is longer than the async operation we are likely to carryout but it will ensure we will eventually error out in case of an issue)
+I will briefly touch on asynch versus sync calls here. Firstly, we need to set an appropriate asynchronous timeout (that is longer than the async operation we are likely to carryout, but it will ensure that we will eventually error out in case of an issue).
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -562,7 +586,7 @@ setTimeout(function(){webElem.hidden = true; cb('DONE');},5000);"
 remDr$executeAsyncScript(script, args = list(webElem))
 ```
 
-versus
+Versus
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -575,7 +599,7 @@ return 'DONE';
 remDr$executeScript(script, args = list(webElem))
 ```
 
-The async version waits until the callback (defined as the last argument `arguments[arguments.length -1]` as JavaScript is zero-indexed) is called whereas the sync version returns straight away. In both cases the google logo disappears after five seconds.
+The async version waits until the callback (defined as the last argument `arguments[arguments.length - 1]` as JavaScript is zero-indexed) is called whereas the sync version returns straight away. In both cases, the Google logo disappears after five seconds.
 
 
 ## Frames and Windows
@@ -584,8 +608,9 @@ In the context of a web browser, a frame is a part of a web page or browser wind
 
 ### Frames in Selenium
 
-We will demonstrate interacting with frames by way of example. [The Comprehensive R Archive Network](https://CRAN.R-project.org/) conveniently contains frames so we shall use `RSelenium` to interact with it. 
-Assume we have a remoteDriver opened.
+We will demonstrate interacting with frames by way of example. [The Comprehensive R Archive Network](https://CRAN.R-project.org/) conveniently contains frames so we shall use `RSelenium` to interact with it.
+
+Assume that we have a remoteDriver opened:
 
 ```R
 remDr$navigate("https://CRAN.r-project.org/")
@@ -618,7 +643,7 @@ here is the &lt;A href="navbar.html"&gt;contents page&lt;/A&gt; of CRAN.
 </html>
 ```
 
-We can see the content is contained in three frames and we dont appear to have access to the content within a frame. But in the browser we see all the content:
+We can see that the content is contained in three frames, and we don't appear to have access to the content within a frame, but in the browser, we see all the content:
 
 ```R
 remDr$maxWindowSize()
@@ -628,7 +653,7 @@ remDr$screenshot(display = TRUE)
 <h6 align = center>RProject front page</h6>
 <img src="RProject.png" title = "RProject front page on linux firefox 26.0" width = '100%'/>
 
-To access the content we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class. 
+To access the content, we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class.
 
 ```R
 webElems <- remDr$findElements(using = "tag name", "frame")
@@ -678,11 +703,11 @@ XML::htmlParse(remDr$getPageSource()[[1]])
 </html>
 ```
 
-Now we see the source code of the navigation sidePanel. Notice how we used a webElement in the method `switchToFrame`. To further demonstrate we are now "in" this frame lets get all the `href` attributes:
+Now, we see the source code of the navigation side panel. Notice that how we used a `webElement` in the method `switchToFrame`. To further demonstrate, we are now "in" this frame. Let's get all the "href" attributes:
 
 ```R
-webElems <- remDr$findElements("css", "[href]")
-unlist(sapply(webElems, function(x){x$getElementAttribute("href")}))
+webElems <- remDr$findElements(using = "css", "[href]")
+unlist(sapply(webElems, function(x) {x$getElementAttribute("href")}))
 ```
 
 ```
@@ -702,7 +727,7 @@ unlist(sapply(webElems, function(x){x$getElementAttribute("href")}))
 ## [14] "https://cran.r-project.org/other-docs.html"    
 ```
 
-Notice if we pass a `NULL` value to the method `switchToFrame` we move back to the default view.
+Notice that if we pass a `NULL` value to the method `switchToFrame`, we move back to the default view.
 
 ```R
 remDr$switchToFrame(NULL)
@@ -840,8 +865,8 @@ binaries of their platform, respectively.
 
 ### Windows in Selenium
 
-The easiest way to illustrate Windows in RSelenium is again by way of example. We will use the "CRAN" website.
-First we select the `download R` element in the main frame. 
+The easiest way to illustrate Windows in RSelenium is again by way of example. We will use the CRAN website.
+First, we select the "download R"" element in the main frame. 
 
 ```R
 remDr$navigate("https://cran.r-project.org/")
@@ -930,14 +955,14 @@ remDr$getTitle()
 ## [1] "Index of /bin/linux"
 ```
 
-So using the code above one can observe how to switch between different windows on the remote browser. 
+So using the code above one can observe how to switch between different windows on the remote browser.
 
 
 ## Appendix
 
 ### Server Functions
 
-In previous versions of `RSelenium` there were two functions `checkForServer` and `startServer` which were used to download and start a Selenium binary. These functions are Deprecated/Defunct as users had issue with using them cross-platform. They are still in the RSelenium package and can be accessed in the serverUtils directory `file.path(find.package("RSelenium"), "examples/serverUtils")`
+In previous versions of `RSelenium`, there were two functions `checkForServer` and `startServer` which were used to download and start a Selenium binary. These functions are defunct as users had issue with using them cross-platform. They are still in the RSelenium package and can be accessed in the serverUtils directory `file.path(find.package("RSelenium"), "examples/serverUtils")`
 
 ```R
 file.path(find.package("RSelenium"), "examples/serverUtils")
@@ -947,15 +972,15 @@ file.path(find.package("RSelenium"), "examples/serverUtils")
 ## [1] "/home/john/R/x86_64-pc-linux-gnu-library/3.3/RSelenium/examples/serverUtils"
 ```
 
-They may work for you depending on your platform and setup but are not supported.
+They may work for you depending on your platform and setup, but are not supported.
 
 ### rsDriver
 
-The `rsDriver` function is a wrapper for the `selenium` function from the [wdman](https://cran.r-project.org/package=wdman) package. It allows the user to manage the binaries used to run a Selenium Server. It returns an environment containing a "client" and a "server". 
+The `rsDriver` function is a wrapper for the `selenium` function from the [wdman](https://ropensci.github.io/wdman/) package. It allows the user to manage the binaries used to run a Selenium Server. It returns an environment containing a `client` and a `server`. 
 
-By default it runs a chrome browser. Other browsers (firefox, PhantomJS, Internet Explorer (Win)) can be selected using the `browser` argument.
+By default, it runs a Chrome browser. Other browsers such as Firefox, PhantomJS, and Internet Explorer can be selected using the `browser` argument.
 
-The default port a Selenium Server is run on using the `rsDriver` function is `port = 4567L`.
+The default port a Selenium Server is run on using the `rsDriver` function is 4567L.
 
 ```R
 rD <- rsDriver(verbose = FALSE)
@@ -974,9 +999,11 @@ rD
 ## state     : running
 ```
 
+Assign the client to a new variable and drive the client to navigate to a page:
+
 ```R
-# assign the client to a new variable
 remDr <- rD$client
+
 remDr$navigate("http://www.r-project.org")
 remDr$getTitle()
 ```
@@ -986,8 +1013,9 @@ remDr$getTitle()
 ## [1] "R: The R Project for Statistical Computing"
 ```
 
+Check the server logs:
+
 ```R
-# check the server logs
 rD$server$log()
 ```
 
@@ -1029,8 +1057,9 @@ rD$server$log()
 #> character(0)
 ```
 
+Close the client and the server:
+
 ```R
-# close client/server
 remDr$close()
 rD$server$stop()
 ```
@@ -1039,8 +1068,9 @@ rD$server$stop()
 ## [1] TRUE
 ```
 
+Check the server status:
+
 ```R
-# check server
 rD$server$process
 ```
 
@@ -1051,4 +1081,4 @@ rD$server$process
 ## state     : terminated
 ```
 
-For further detail and any issues you may have with the `rsDriver` function please see the [wdman](https://github.com/ropensci/wdman) project.
+For further detail and any issues you may have with the `rsDriver` function, please see the [wdman](https://ropensci.github.io/wdman/) project.
