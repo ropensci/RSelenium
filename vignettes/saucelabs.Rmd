@@ -356,7 +356,7 @@ C:\Program Files\Java\jdk1.7.0_51
 
 ##### SDK
 
-Another Developement kit needs to be installed [SDK](http://developer.android.com/sdk/index.html) in this case. From the link provided you can download the ADT Bundle for Windows. I downloaded the bundle and extracted the zip to the Desktop this resulted in a directory `C:\Users\john\Desktop\adt-bundle-windows-x86_64-20131030`. There is a guide to setup the SDK [here](http://spring.io/guides/gs/android/). The environment variable `ANDROID_HOME` needs to be set. This should be set to the /sdk/ directory in the extracted bundle.
+Another Developement kit needs to be installed [SDK](http://developer.android.com/sdk/index.html) in this case. From the link provided you can download the ADT Bundle for Windows. I downloaded the bundle and extracted the zip to the Desktop this resulted in a directory `C:\Users\john\Desktop\adt-bundle-windows-x86_64-20131030`. There is a guide to setup the SDK [here](http://projects.spring.io/spring-android/#quick-start). The environment variable `ANDROID_HOME` needs to be set. This should be set to the /sdk/ directory in the extracted bundle.
 
 ```batch
 echo %ANDROID_HOME%
@@ -423,7 +423,7 @@ remDr$navigate("http://www.google.com/ncr")
 
 ### iOS
 
-Testing iOS requires a Mac. The setup is similar to selendroid. [Appium](http://appium.io/getting-started.html) and [ios-driver](http://ios-driver.github.io/ios-driver/?page=setup) can be used. An SDK is required namely iPhone simulator SDK and a virtual phone is ran in a similar fashion to Selendroid.
+Testing iOS requires a Mac. The setup is similar to selendroid. [Appium](http://appium.io/docs/en/about-appium/getting-started/?lang=en) and [ios-driver](http://ios-driver.github.io/ios-driver/?page=setup) can be used. An SDK is required namely iPhone simulator SDK and a virtual phone is ran in a similar fashion to Selendroid.
 
 
 ## RSelenium with Remote Browsers and External Sites

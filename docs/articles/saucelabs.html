@@ -369,7 +369,7 @@ Java HotSpot(TM) 64-Bit Server VM (build 24.51-b03, mixed mode)</code></pre>
 <div id="sdk" class="section level5">
 <h5 class="hasAnchor">
 <a href="#sdk" class="anchor"></a>SDK</h5>
-<p>Another Developement kit needs to be installed <a href="http://developer.android.com/sdk/index.html">SDK</a> in this case. From the link provided you can download the ADT Bundle for Windows. I downloaded the bundle and extracted the zip to the Desktop this resulted in a directory <code>C:\Users\john\Desktop\adt-bundle-windows-x86_64-20131030</code>. There is a guide to setup the SDK <a href="http://spring.io/guides/gs/android/">here</a>. The environment variable <code>ANDROID_HOME</code> needs to be set. This should be set to the /sdk/ directory in the extracted bundle.</p>
+<p>Another Developement kit needs to be installed <a href="http://developer.android.com/sdk/index.html">SDK</a> in this case. From the link provided you can download the ADT Bundle for Windows. I downloaded the bundle and extracted the zip to the Desktop this resulted in a directory <code>C:\Users\john\Desktop\adt-bundle-windows-x86_64-20131030</code>. There is a guide to setup the SDK <a href="http://projects.spring.io/spring-android/#quick-start">here</a>. The environment variable <code>ANDROID_HOME</code> needs to be set. This should be set to the /sdk/ directory in the extracted bundle.</p>
 <pre class="batch"><code>echo %ANDROID_HOME%</code></pre>
 <pre><code>C:\Users\john\Desktop\adt-bundle-windows-x86_64-20131030\sdk</code></pre>
 <p>After setting <code>ANDROID_HOME</code> <code>%ANDROID_HOME%\tools;%ANDROID_HOME%\platform-tools</code> needs to be added to the system path also. Typing android in a command prompt should bring up the following:</p>
@@ -423,7 +423,7 @@ Android with RSelenium on win 8.1
 <div id="ios" class="section level3">
 <h3 class="hasAnchor">
 <a href="#ios" class="anchor"></a>iOS</h3>
-<p>Testing iOS requires a Mac. The setup is similar to selendroid. <a href="http://appium.io/getting-started.html">Appium</a> and <a href="http://ios-driver.github.io/ios-driver/?page=setup">ios-driver</a> can be used. An SDK is required namely iPhone simulator SDK and a virtual phone is ran in a similar fashion to Selendroid.</p>
+<p>Testing iOS requires a Mac. The setup is similar to selendroid. <a href="http://appium.io/docs/en/about-appium/getting-started/?lang=en">Appium</a> and <a href="http://ios-driver.github.io/ios-driver/?page=setup">ios-driver</a> can be used. An SDK is required namely iPhone simulator SDK and a virtual phone is ran in a similar fashion to Selendroid.</p>
 </div>
 </div>
 <div id="rselenium-with-remote-browsers-and-external-sites" class="section level2">
