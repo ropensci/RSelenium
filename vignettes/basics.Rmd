@@ -651,7 +651,7 @@ remDr$screenshot(display = TRUE)
 ```
 
 <h6 align = center>RProject front page</h6>
-<img src="RProject.png" title = "RProject front page on linux firefox 26.0" width = '100%'/>
+<img src="https://res.cloudinary.com/rselenium/image/upload/v1537203294/RProject.png" title = "RProject front page on linux firefox 26.0" width = '100%'/>
 
 To access the content, we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class.
 
