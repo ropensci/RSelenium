@@ -117,7 +117,7 @@
 <p>Depending on your version of windows there are currently two ways of running docker. Details are given at <a href="https://docs.docker.com/engine/installation/windows/">Docker</a>. For the version of windows Being used in this vignette (win 10 home) the older <a href="https://www.docker.com/products/docker-toolbox">Docker toolbox</a> is what we are going to use to run containers.</p>
 <p>Download the <code>.exe</code> for Docker toolbox and begin the install. Follow the instructions on the <a href="https://docs.docker.com/toolbox/toolbox_install_windows/">toolbox install windows</a> page.</p>
 <p>Clicking on the Docker Quickstart terminal link should eventually give you a terminal that resembles the following:</p>
-<p><img src="windowsToolbox.png" title="Docker toolbox on Win 10 Home" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203296/windowsToolbox.png" title="Docker toolbox on Win 10 Home" width="100%"></p>
 </div>
 </div>
 <div id="preparing-docker-on-linux" class="section level2">
@@ -146,7 +146,7 @@
 <p>You can check that the Docker is working by running a test container:</p>
 <p>For now run as <code>sudo</code></p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> docker run hello-world</code></pre></div>
-<p><img src="ubuntuHelloWorld.png" title="Docker hello-world Ubuntu 16.04" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203294/ubuntuHelloWorld.png" title="Docker hello-world Ubuntu 16.04" width="100%"></p>
 </div>
 <div id="running-without-sudo" class="section level4">
 <h4 class="hasAnchor">
@@ -159,12 +159,12 @@
 <h2 class="hasAnchor">
 <a href="#using-selenium-docker-images" class="anchor"></a>Using Selenium Docker Images</h2>
 <p>The official docker repository can be viewed <a href="https://hub.docker.com/u/selenium/">here</a> at Docker Hub.</p>
-<p><img src="SeleniumDockerHub.png" title="Official Selenium repository at Docker Hub" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203294/SeleniumDockerHub.png" title="Official Selenium repository at Docker Hub" width="100%"></p>
 <div id="whats-in-an-image" class="section level3">
 <h3 class="hasAnchor">
 <a href="#whats-in-an-image" class="anchor"></a>What’s in an Image?</h3>
 <p>Lets examine the <a href="https://hub.docker.com/r/selenium/node-firefox/"><code>selenium/node-firefox</code></a> image. The first thing to note is the <code>Tags</code>.</p>
-<p><img src="node-firefox.png" title="Selenium node-firefox image tags" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203294/node-firefox.png" title="Selenium node-firefox image tags" width="100%"></p>
 <p>Clicking this gives us the various tagged versions of this image. Clicking Dockerfile allows us to view the source behind the image:</p>
 <pre><code>FROM selenium/node-base:2.53.0 
 MAINTAINER Selenium &lt;selenium-developers@googlegroups.com&gt; 
@@ -186,7 +186,7 @@ ENV FIREFOX_VERSION 45.0.2 </code></pre>
 <p>We then issue the following command:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">docker</span> pull selenium/standalone-firefox:2.53.0</code></pre></div>
 <p>Notice we appended a tag version so we are asking for the <code>2.53.0</code> version of this image.</p>
-<p><img src="Win10PullFirefox.png" title="Official Selenium repository at Docker Hub" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203296/Win10PullFirefox.png" title="Official Selenium repository at Docker Hub" width="100%"></p>
 </div>
 <div id="ubuntu-16-04-1" class="section level4">
 <h4 class="hasAnchor">
@@ -207,7 +207,7 @@ ENV FIREFOX_VERSION 45.0.2 </code></pre>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">docker</span> run -d -p 4445:4444 selenium/standalone-firefox:2.53.0</code></pre></div>
 <p>For illustration here we are mapping the container port 4444 to the host port 4445 so when we want to refer to our server on the host machine we will use 4445 as the port.</p>
 <p>We also run the <a href="https://docs.docker.com/engine/reference/commandline/ps/"><code>ps</code></a> command after running to show our current running containers.</p>
-<p><img src="SeleniumRunWin10.png" title="Running standalone-firefox:2.53.0 Win 10" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203294/SeleniumRunWin10.png" title="Running standalone-firefox:2.53.0 Win 10" width="100%"></p>
 <p>So we can see an instance of standalone-firefox:2.53.0 is running. It has <code>id=ac61567a8f06</code> and is named <code>peaceful_aryabhata</code>.</p>
 </div>
 <div id="ubuntu-16-04-running-an-image" class="section level4">
@@ -217,7 +217,7 @@ ENV FIREFOX_VERSION 45.0.2 </code></pre>
 <p>Again run as <code>sudo</code> if necessary:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> docker run -d -p 4445:4444 selenium/standalone-firefox:2.53.0
 <span class="fu">sudo</span> docker ps</code></pre></div>
-<p><img src="SeleniumRunUbuntu.png" title="Running standalone-firefox:2.53.0 Win 10" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203293/SeleniumRunUbuntu.png" title="Running standalone-firefox:2.53.0 Win 10" width="100%"></p>
 <p>The <code>Ubuntu</code> container has <code>id=5475923fc4dc</code> and is named <code>peaceful_payne</code>.</p>
 <p>A tip if you dont want to strain your eyes is to use the <code>--format</code> argument:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> docker ps --format <span class="st">'table {{.Names}}\t{{.Image}}\t{{.ID}}'</span></code></pre></div>
@@ -426,7 +426,7 @@ remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">
 remDr<span class="op">$</span><span class="kw">getTitle</span>()
 remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <p>Now we open <code>TightVNC</code> and use the VM ip with appropriate port for VNC:</p>
-<p><img src="TightVNC.png" title="Accessing Firefox debug with Tight VNC" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203294/TightVNC.png" title="Accessing Firefox debug with Tight VNC" width="100%"></p>
 <p>You will be asked for a password which is <code>secret</code>. This can be seen by reading the images dockerfile:</p>
 <pre><code>RUN apt-get update -qqy \
   &amp;&amp; apt-get -qqy install \
@@ -495,7 +495,7 @@ remDr<span class="op">$</span><span class="kw">getTitle</span>()</code></pre></d
 <pre><code>## [[1]]
 ## [1] "Google"</code></pre>
 <p>Now open Vinagre and input the correct ip/port (127.0.0.1:5901 in this case):</p>
-<p><img src="VinagreVNC.png" title="Accessing Firefox debug with Tight VNC" width="100%"></p>
+<p><img src="https://res.cloudinary.com/rselenium/image/upload/v1537203295/VinagreVNC.png" title="Accessing Firefox debug with Tight VNC" width="100%"></p>
 <p>Again it will ask for a password which as before is <code>secret</code>.</p>
 <p>You should now be able to interact with the containers browser. Again navigate to another website and observe the containers browser:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.bbc.com"</span>)
