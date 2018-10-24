@@ -733,7 +733,12 @@ remoteDriver <-
           "%s/session/%s/window", 
           serverURL, sessionInfo[["id"]]
         )
-        queryRD(qpath, "POST", qdata = list(name = windowId))
+        if (browserName == "firefox") {
+          qdata <- list(handle = windowId)
+        } else {
+          qdata <- list(name = windowId)
+        }
+        queryRD(qpath, "POST", qdata = qdata)
       },
       
       setWindowPosition = function(x, y, winHand = 'current'){
