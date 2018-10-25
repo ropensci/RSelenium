@@ -32,14 +32,11 @@
 #' returned by \code{\link[wdman]{selenium}} and the client is an object of class
 #' \code{\link{remoteDriver}}
 #' @details This function is a wrapper around \code{\link[wdman]{selenium}}.
-#'     It provides a "shim" for the current issue running firefox on 
+#'     It provides a "shim" for the current issue running firefox on
 #'     Windows. For a more detailed set of functions for running binaries
-#'     relating to the Selenium/webdriver project see the 
+#'     relating to the Selenium/webdriver project see the
 #'     \code{\link[wdman]{wdman}} package. Both the client and server
-#'     are closed using a registered finalizer. 
-#' @export
-#' @importFrom wdman selenium
-#'
+#'     are closed using a registered finalizer.
 #' @examples
 #' \dontrun{
 #' # start a chrome browser
@@ -49,68 +46,74 @@
 #' remDr$navigate("http://www.bbc.com")
 #' remDr$close()
 #' # stop the selenium server
-#' rD[["server"]]$stop() 
-#' 
+#' rD[["server"]]$stop()
+#'
 #' # if user forgets to stop server it will be garbage collected.
 #' rD <- rsDriver()
 #' rm(rD)
 #' gc(rD)
 #' }
-
-rsDriver <- function(port = 4567L,
-                     browser = c("chrome", "firefox", "phantomjs", 
-                                 "internet explorer"),
-                     version = "latest",
-                     chromever = "latest",
-                     geckover = "latest",
-                     iedrver = NULL,
-                     phantomver = "2.1.1", 
-                     verbose = TRUE,
-                     check = TRUE, ...){
+#' @export
+#' @importFrom wdman selenium
+rsDriver <- function(
+  port = 4567L,
+  browser = c("chrome", "firefox", "phantomjs", "internet explorer"),
+  version = "latest",
+  chromever = "latest",
+  geckover = "latest",
+  iedrver = NULL,
+  phantomver = "2.1.1",
+  verbose = TRUE,
+  check = TRUE, ...
+) {
   browser <- match.arg(browser)
-  if(identical(browser, "internet explorer") &&
-     !identical(.Platform[["OS.type"]], "windows")){
+  if (identical(browser, "internet explorer") &&
+      !identical(.Platform[["OS.type"]], "windows")) {
     stop("Internet Explorer is only available on Windows.")
   }
-  selServ <- wdman::selenium(port = port, verbose = verbose, 
-                             version = version,
-                             chromever = chromever,
-                             geckover = geckover,
-                             iedrver = iedrver,
-                             phantomver = phantomver, 
-                             check = check)
+  selServ <- wdman::selenium(
+    port = port,
+    verbose = verbose,
+    version = version,
+    chromever = chromever,
+    geckover = geckover,
+    iedrver = iedrver,
+    phantomver = phantomver,
+    check = check
+  )
   remDr <- remoteDriver(browserName = browser, port = port, ...)
+
   # check server status
   count <- 0L
-  while(inherits(res <- tryCatch({remDr$getStatus() }, 
-                                 error = function(e){e}),
-                 "error")){
+  while (
+    inherits(res <- tryCatch(remDr$getStatus(), error = function(e) e), "error")
+  ) {
     Sys.sleep(1)
     count <- count + 1L
-    if(count > 5L){
+    if (count > 5L) {
       warning("Could not determine server status.")
       break
     }
   }
-  res <- tryCatch({remDr$open(silent = !verbose)},
-                  error = function(e){e}
-  )
-  if(inherits(res, "error")){
+
+  res <- tryCatch(remDr$open(silent = !verbose), error = function(e) e)
+  if (inherits(res, "error")) {
     message("Could not open ", browser, " browser.")
     message("Client error message:\n", res$message)
     message("Check server log for further details.")
   }
-  
+
   csEnv <- new.env()
   csEnv[["server"]] <- selServ
   csEnv[["client"]] <- remDr
-  clean <- function(e){
+  clean <- function(e) {
     chk <- suppressMessages(
-      tryCatch({e[["client"]]$close()}, error = function(e)e)
+      tryCatch(e[["client"]]$close(), error = function(e) e)
     )
     e[["server"]]$stop()
   }
   reg.finalizer(csEnv, clean)
-  class(csEnv) <- c("rsClientServer",class(csEnv))
+  class(csEnv) <- c("rsClientServer", class(csEnv))
+
   return(csEnv)
 }
