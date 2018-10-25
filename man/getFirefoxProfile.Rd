@@ -9,7 +9,7 @@ getFirefoxProfile(profDir, useBase = FALSE)
 \arguments{
 \item{profDir}{The directory in which the firefox profile resides}
 
-\item{useBase}{Logical indicating whether to attempt to use zip from 
+\item{useBase}{Logical indicating whether to attempt to use zip from
 utils package. Maybe easier for Windows users.}
 }
 \description{
@@ -17,8 +17,8 @@ utils package. Maybe easier for Windows users.}
 A utility function to get a firefox profile.
 }
 \section{Detail}{
- A firefox profile directory is zipped and base64 
-   encoded. It can then be passed to the selenium server as a required 
+ A firefox profile directory is zipped and base64
+   encoded. It can then be passed to the selenium server as a required
    capability with key firefox_profile
 }
 

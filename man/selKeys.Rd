@@ -4,22 +4,18 @@
 \name{selKeys}
 \alias{selKeys}
 \title{Selenium key mappings}
-\format{A named list. The names are the descriptions of the keys. The 
+\format{A named list. The names are the descriptions of the keys. The
    values are the "UTF-8" character representations.}
 \source{
-http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value
+https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#sessionsessionidelementidvalue
 }
 \usage{
 selKeys
 }
 \description{
-This data set contains a list of selenium key mappings. 
-   The key mappings are outlined at \cr
-   http://code.google.com/p/selenium/wiki/JsonWireProtocol#/session/:sessionId/element/:id/value.
-   selKeys is used when a sendKeys variable is needed. sendKeys is defined 
-   as a list. If an entry is needed from selKeys it is denoted by key.
-}
-\author{
-John Harrison, 2012-10-05
+This data set contains a list of selenium key mappings.
+selKeys is used when a sendKeys variable is needed.
+sendKeys is defined as a list.
+If an entry is needed from selKeys it is denoted by key.
 }
 \keyword{datasets}

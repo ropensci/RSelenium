@@ -57,9 +57,9 @@ Start a selenium server and browser
 }
 \details{
 This function is a wrapper around \code{\link[wdman]{selenium}}.
-    It provides a "shim" for the current issue running firefox on 
+    It provides a "shim" for the current issue running firefox on
     Windows. For a more detailed set of functions for running binaries
-    relating to the Selenium/webdriver project see the 
+    relating to the Selenium/webdriver project see the
     \code{\link[wdman]{wdman}} package. Both the client and server
     are closed using a registered finalizer.
 }
@@ -72,7 +72,7 @@ remDr$navigate("http://www.google.com/ncr")
 remDr$navigate("http://www.bbc.com")
 remDr$close()
 # stop the selenium server
-rD[["server"]]$stop() 
+rD[["server"]]$stop()
 
 # if user forgets to stop server it will be garbage collected.
 rD <- rsDriver()

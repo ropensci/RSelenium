@@ -5,10 +5,10 @@
 \alias{RSelenium}
 \title{An R client for Selenium Remote Webdriver}
 \description{
-These are R bindings for the WebDriver API in Selenium 2. They use 
-the JsonWireProtocol defined at 
-http://code.google.com/p/selenium/wiki/JsonWireProtocol to communicate with 
-a Selenium RemoteWebDriver Server.
+These are R bindings for the WebDriver API in Selenium 2.
+They use the JsonWireProtocol defined at
+https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol
+to communicate with a Selenium RemoteWebDriver Server.
 }
 \references{
 http://seleniumhq.org/projects/webdriver/

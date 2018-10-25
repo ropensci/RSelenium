@@ -7,10 +7,10 @@
 getChromeProfile(dataDir, profileDir)
 }
 \arguments{
-\item{dataDir}{Specifies the user data directory, which is where the 
+\item{dataDir}{Specifies the user data directory, which is where the
 browser will look for all of its state.}
 
-\item{profileDir}{Selects directory of profile to associate with the 
+\item{profileDir}{Selects directory of profile to associate with the
 first browser launched.}
 }
 \description{
@@ -34,14 +34,17 @@ Google Chrome: ~/Library/Application Support/Google/Chrome
 Google Chrome: ~/.config/google-chrome
 }
 }
-The profile directory is contained in the user directory and by default 
+The profile directory is contained in the user directory and by default
 is named "Default"
 }
 
 \examples{
 \dontrun{
 # example from windows using a profile directory "Profile 1"
-cprof <- getChromeProfile("C:\\\\Users\\\\john\\\\AppData\\\\Local\\\\Google\\\\Chrome\\\\User Data", "Profile 1")
+cprof <- getChromeProfile(
+  "C:\\\\Users\\\\john\\\\AppData\\\\Local\\\\Google\\\\Chrome\\\\User Data",
+  "Profile 1"
+)
 remDr <- remoteDriver(browserName = "chrome", extraCapabilities = cprof)
 }
 }

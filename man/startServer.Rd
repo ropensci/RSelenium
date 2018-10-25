@@ -12,19 +12,19 @@ startServer(dir = NULL, args = NULL, javaargs = NULL, log = TRUE,
 
 \item{args}{Additional arguments to be passed to Selenium Server.}
 
-\item{javaargs}{arguments passed to JVM as opposed to the Selenium 
+\item{javaargs}{arguments passed to JVM as opposed to the Selenium
 Server jar.}
 
-\item{log}{Logical value indicating whether to write a log file to the 
+\item{log}{Logical value indicating whether to write a log file to the
 directory containing the Selenium Server binary.}
 
-\item{...}{arguments passed \code{\link{system2}}. Unix defaults 
-wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults 
+\item{...}{arguments passed \code{\link{system2}}. Unix defaults
+wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults
 wait = FALSE, invisible = TRUE.}
 }
 \value{
-Returns a list containing two functions. The 'getpid' function 
-   returns the process id of the started Selenium binary. The 'stop' 
+Returns a list containing two functions. The 'getpid' function
+   returns the process id of the started Selenium binary. The 'stop'
    function stops the started Selenium server using the process id.
 }
 \description{
@@ -32,15 +32,15 @@ Defunct. Please use \code{\link{rsDriver}}
 }
 \details{
 \code{startServer}
-A utility function to start the standalone server. Return two functions 
+A utility function to start the standalone server. Return two functions
    see values.
 }
 \section{Detail}{
- By default the binary is assumed to be in the 
-   RSelenium package /bin directory. The log argument is for convience. 
-   Setting it to FALSE and stipulating 
-   args = c("-log /user/etc/somePath/somefile.log") allows a custom 
-   location. Using log = TRUE sets the location to a file named 
+ By default the binary is assumed to be in the
+   RSelenium package /bin directory. The log argument is for convience.
+   Setting it to FALSE and stipulating
+   args = c("-log /user/etc/somePath/somefile.log") allows a custom
+   location. Using log = TRUE sets the location to a file named
    sellog.txt in the directory containing the Selenium Server binary.
 }
 
@@ -48,8 +48,11 @@ A utility function to start the standalone server. Return two functions
 \dontrun{
 selServ <- startServer()
 # example of commandline passing
-selServ <- startServer(args = c("-port 4455"), 
-                       log = FALSE, invisible = FALSE)
+selServ <- startServer(
+  args = c("-port 4455"),
+  log = FALSE,
+  invisible = FALSE
+)
 remDr <- remoteDriver(browserName = "chrome", port = 4455)
 remDr$open()
 # get the process id of the selenium binary

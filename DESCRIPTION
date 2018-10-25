@@ -49,6 +49,5 @@ Collate:
     'selKeys-data.R'
     'util.R'
     'webElement.R'
-    'zzz.R'
 Encoding: UTF-8
 RoxygenNote: 6.1.0
