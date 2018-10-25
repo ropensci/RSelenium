@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RSelenium</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4.9000</span>
       </span>
     </div>
 
@@ -100,7 +100,7 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The goal of this vignette is to give a basic overview of how one might approach “testing” a shiny app. <a href="http://www.rstudio.com/shiny/">Shiny</a> is a new package from <a href="http://www.rstudio.com/">RStudio</a> that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the <a href="http://getbootstrap.com/javascript/">Bootstrap</a> front-end framework. In this vignette we will looking at writing unit tests for a simple shiny wep app. The testing package we will use is <a href="https://github.com/hadley/testthat">testthat</a> which has a short introduction <a href="https://journal.R-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf">here</a>. I am using <code>testthat</code> version 0.8. The version on cran is version 0.7.1 and may give trouble for tests where I manipulate the test environment. You can install 0.8 from github <code><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">devtools::install_github("testthat", "hadley")</a></code></p>
+<p>The goal of this vignette is to give a basic overview of how one might approach “testing” a shiny app. <a href="http://www.rstudio.com/shiny/">Shiny</a> is a new package from <a href="http://www.rstudio.com/">RStudio</a> that makes it dramatically easier to build interactive web applications with R. Shiny Uses a reactive programming model and has built-in widgets derived from the <a href="http://getbootstrap.com/javascript/">Bootstrap</a> front-end framework. In this vignette we will looking at writing unit tests for a simple shiny wep app. The testing package we will use is <a href="https://github.com/hadley/testthat">testthat</a> which has a short introduction <a href="https://journal.R-project.org/archive/2011-1/RJournal_2011-1_Wickham.pdf">here</a>. I am using <code>testthat</code> version 0.8. The version on cran is version 0.7.1 and may give trouble for tests where I manipulate the test environment. You can install 0.8 from github <code><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">devtools::install_github("testthat", "hadley")</a></code></p>
 <p>Each section will be an introduction to an idea in testing shiny apps with Selenium, and point to more detailed explanation in other vignettes.</p>
 </div>
 <div id="some-thoughts-on-testing" class="section level2">

@@ -62,7 +62,7 @@ A utility function to get a Chrome profile." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RSelenium</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4.9000</span>
       </span>
     </div>
 
@@ -142,12 +142,12 @@ A utility function to get a Chrome profile.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>dataDir</th>
-      <td><p>Specifies the user data directory, which is where the 
+      <td><p>Specifies the user data directory, which is where the
 browser will look for all of its state.</p></td>
     </tr>
     <tr>
       <th>profileDir</th>
-      <td><p>Selects directory of profile to associate with the 
+      <td><p>Selects directory of profile to associate with the
 first browser launched.</p></td>
     </tr>
     </table>
@@ -160,14 +160,17 @@ The data dir has a number of default locations</p><dl class='dl-horizontal'>
 <dt>Windows 8 or 7 or Vista</dt><dd><p>Google Chrome: C:/Users/%USERNAME%/AppData/Local/Google/Chrome/User Data</p></dd>
 <dt>Mac OS X</dt><dd><p>Google Chrome: ~/Library/Application Support/Google/Chrome</p></dd>
 <dt>Linux</dt><dd><p>Google Chrome: ~/.config/google-chrome</p></dd>
-</dl><p>The profile directory is contained in the user directory and by default 
+</dl><p>The profile directory is contained in the user directory and by default
 is named "Default"</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'># example from windows using a profile directory "Profile 1"</span>
-<span class='no'>cprof</span> <span class='kw'>&lt;-</span> <span class='fu'>getChromeProfile</span>(<span class='st'>"C:\\Users\\john\\AppData\\Local\\Google\\Chrome\\User Data"</span>, <span class='st'>"Profile 1"</span>)
+<span class='no'>cprof</span> <span class='kw'>&lt;-</span> <span class='fu'>getChromeProfile</span>(
+  <span class='st'>"C:\\Users\\john\\AppData\\Local\\Google\\Chrome\\User Data"</span>,
+  <span class='st'>"Profile 1"</span>
+)
 <span class='no'>remDr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='remoteDriver-class.html'>remoteDriver</a></span>(<span class='kw'>browserName</span> <span class='kw'>=</span> <span class='st'>"chrome"</span>, <span class='kw'>extraCapabilities</span> <span class='kw'>=</span> <span class='no'>cprof</span>)
 <span class='co'># }</span></pre>
   </div>

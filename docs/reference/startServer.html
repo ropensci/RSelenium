@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RSelenium</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4.9000</span>
       </span>
     </div>
 
@@ -149,41 +149,41 @@
     </tr>
     <tr>
       <th>javaargs</th>
-      <td><p>arguments passed to JVM as opposed to the Selenium 
+      <td><p>arguments passed to JVM as opposed to the Selenium
 Server jar.</p></td>
     </tr>
     <tr>
       <th>log</th>
-      <td><p>Logical value indicating whether to write a log file to the 
+      <td><p>Logical value indicating whether to write a log file to the
 directory containing the Selenium Server binary.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>arguments passed <code>system2</code>. Unix defaults 
-wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults 
+      <td><p>arguments passed <code>system2</code>. Unix defaults
+wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults
 wait = FALSE, invisible = TRUE.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Returns a list containing two functions. The 'getpid' function 
-   returns the process id of the started Selenium binary. The 'stop' 
+    <p>Returns a list containing two functions. The 'getpid' function
+   returns the process id of the started Selenium binary. The 'stop'
    function stops the started Selenium server using the process id.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p><code>startServer</code>
-A utility function to start the standalone server. Return two functions 
+A utility function to start the standalone server. Return two functions
    see values.</p>
     
     <h2 class="hasAnchor" id="detail"><a class="anchor" href="#detail"></a>Detail</h2>
 
-    <p>By default the binary is assumed to be in the 
-   RSelenium package /bin directory. The log argument is for convience. 
-   Setting it to FALSE and stipulating 
-   args = c("-log /user/etc/somePath/somefile.log") allows a custom 
-   location. Using log = TRUE sets the location to a file named 
+    <p>By default the binary is assumed to be in the
+   RSelenium package /bin directory. The log argument is for convience.
+   Setting it to FALSE and stipulating
+   args = c("-log /user/etc/somePath/somefile.log") allows a custom
+   location. Using log = TRUE sets the location to a file named
    sellog.txt in the directory containing the Selenium Server binary.</p>
     
 
@@ -191,8 +191,11 @@ A utility function to start the standalone server. Return two functions
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>selServ</span> <span class='kw'>&lt;-</span> <span class='fu'>startServer</span>()
 <span class='co'># example of commandline passing</span>
-<span class='no'>selServ</span> <span class='kw'>&lt;-</span> <span class='fu'>startServer</span>(<span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"-port 4455"</span>),
-                       <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>invisible</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>selServ</span> <span class='kw'>&lt;-</span> <span class='fu'>startServer</span>(
+  <span class='kw'>args</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"-port 4455"</span>),
+  <span class='kw'>log</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>invisible</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)
 <span class='no'>remDr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='remoteDriver-class.html'>remoteDriver</a></span>(<span class='kw'>browserName</span> <span class='kw'>=</span> <span class='st'>"chrome"</span>, <span class='kw'>port</span> <span class='kw'>=</span> <span class='fl'>4455</span>)
 <span class='no'>remDr</span>$<span class='fu'>open</span>()
 <span class='co'># get the process id of the selenium binary</span>

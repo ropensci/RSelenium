@@ -32,10 +32,10 @@
 
 <meta property="og:title" content="CLASS webElement — webElement-class" />
 
-<meta property="og:description" content="Selenium Webdriver represents all the HTML elements as WebElements. 
-   This class provides a mechanism to represent them as objects &amp;amp; 
-   perform various actions on the related elements. Typically, the 
-   findElement method in remoteDriver returns an object 
+<meta property="og:description" content="Selenium Webdriver represents all the HTML elements as WebElements.
+   This class provides a mechanism to represent them as objects &amp;amp;
+   perform various actions on the related elements. Typically, the
+   findElement method in remoteDriver returns an object
    of class webElement." />
 <meta name="twitter:card" content="summary" />
 
@@ -65,7 +65,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RSelenium</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4.9000</span>
       </span>
     </div>
 
@@ -133,10 +133,10 @@
 
     <div class="ref-description">
     
-    <p>Selenium Webdriver represents all the HTML elements as WebElements. 
-   This class provides a mechanism to represent them as objects &amp; 
-   perform various actions on the related elements. Typically, the 
-   findElement method in <code><a href='remoteDriver-class.html'>remoteDriver</a></code> returns an object 
+    <p>Selenium Webdriver represents all the HTML elements as WebElements.
+   This class provides a mechanism to represent them as objects &amp;
+   perform various actions on the related elements. Typically, the
+   findElement method in <code><a href='remoteDriver-class.html'>remoteDriver</a></code> returns an object
    of class webElement.</p>
     
     </div>
@@ -144,16 +144,16 @@
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>webElement is a generator object. To define a new webElement class 
-   method `new` is called.  When a webElement class is created an 
-   elementId should be given. Each webElement inherits from a 
+    <p>webElement is a generator object. To define a new webElement class
+   method `new` is called.  When a webElement class is created an
+   elementId should be given. Each webElement inherits from a
    remoteDriver. webElement is not usually called by the end-user.</p>
     
     <h2 class="hasAnchor" id="fields"><a class="anchor" href="#fields"></a>Fields</h2>
 
     
     <dl class='dl-horizontal'>
-<dt><code>elementId</code></dt><dd><p>Object of class <code>"character"</code>, giving a character 
+<dt><code>elementId</code></dt><dd><p>Object of class <code>"character"</code>, giving a character
 representation of the element id.</p></dd>
 </dl>
     
@@ -163,70 +163,70 @@ representation of the element id.</p></dd>
     <dl class='dl-horizontal'>
 <dt><code>clearElement()</code></dt><dd><p>Clear a TEXTAREA or text INPUT element's value.</p></dd>
     <dt><code>clickElement()</code></dt><dd><p>Click the element.</p></dd>
-    <dt><code>compareElements(otherElem)</code></dt><dd><p>Test if the current webElement and an other web element refer to 
+    <dt><code>compareElements(otherElem)</code></dt><dd><p>Test if the current webElement and an other web element refer to
 the same DOM element.</p></dd>
     <dt><code>describeElement()</code></dt><dd><p>Describe the identified element.</p></dd>
     <dt><code>findChildElement(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)</code></dt><dd><p>Search for an element on the page, starting from the node defined 
-by the parent webElement. The located element will be returned as 
+  "class name", "link text", "partial link text"), value)</code></dt><dd><p>Search for an element on the page, starting from the node defined
+by the parent webElement. The located element will be returned as
 an object of webElement class.
 The inputs are:
 <dl class='dl-horizontal'>
-  <dt><code>using</code>:</dt><dd><p>Locator scheme to use to search the 
-    element, available schemes: "class name", "css selector", 
-    "id", "name", "link text", "partial link text", 
-    "tag name", "xpath" . Defaults to 'xpath'. Partial string 
+  <dt><code>using</code>:</dt><dd><p>Locator scheme to use to search the
+    element, available schemes: "class name", "css selector",
+    "id", "name", "link text", "partial link text",
+    "tag name", "xpath" . Defaults to 'xpath'. Partial string
     matching is accepted.</p></dd>
   <dt><code>value</code>:</dt><dd><p>The search target. See examples.</p></dd>
 </dl></p></dd>
     <dt><code>findChildElements(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)</code></dt><dd><p>Search for multiple elements on the page, starting from the node 
-defined by the parent webElement. The located elements will be 
-returned as an list of objects of class WebElement. 
+  "class name", "link text", "partial link text"), value)</code></dt><dd><p>Search for multiple elements on the page, starting from the node
+defined by the parent webElement. The located elements will be
+returned as an list of objects of class WebElement.
 The inputs are:
 <dl class='dl-horizontal'>
-  <dt><code>using</code>:</dt><dd><p>Locator scheme to use to search the 
-    element, available schemes: "class name", "css selector", 
-    "id", "name", "link text", "partial link text", 
-    "tag name", "xpath" . Defaults to 'xpath'. 
+  <dt><code>using</code>:</dt><dd><p>Locator scheme to use to search the
+    element, available schemes: "class name", "css selector",
+    "id", "name", "link text", "partial link text",
+    "tag name", "xpath" . Defaults to 'xpath'.
     Partial string matching is accepted.</p></dd>
   <dt><code>value</code>:</dt><dd><p>The search target. See examples.</p></dd>
 </dl></p></dd>
     <dt><code>getElementAttribute(attrName)</code></dt><dd><p>Get the value of an element's attribute. See examples.</p></dd>
-    <dt><code>getElementLocation()</code></dt><dd><p>Determine an element's location on the page. The point (0, 0) 
+    <dt><code>getElementLocation()</code></dt><dd><p>Determine an element's location on the page. The point (0, 0)
 refers to the upper-left corner of the page.</p></dd>
-    <dt><code>getElementLocationInView()</code></dt><dd><p>Determine an element's location on the screen once it has been 
+    <dt><code>getElementLocationInView()</code></dt><dd><p>Determine an element's location on the screen once it has been
 scrolled into view.
-Note: This is considered an internal command and should only be 
-used to determine an element's location for correctly generating 
+Note: This is considered an internal command and should only be
+used to determine an element's location for correctly generating
 native events.</p></dd>
-    <dt><code>getElementSize()</code></dt><dd><p>Determine an element's size in pixels. The size will be returned 
+    <dt><code>getElementSize()</code></dt><dd><p>Determine an element's size in pixels. The size will be returned
 with width and height properties.</p></dd>
     <dt><code>getElementTagName()</code></dt><dd><p>Query for an element's tag name.</p></dd>
     <dt><code>getElementText()</code></dt><dd><p>Get the innerText of the element.</p></dd>
-    <dt><code>getElementValueOfCssProperty(propName)</code></dt><dd><p>Query the value of an element's computed CSS property. The CSS 
-property to query should be specified using the CSS property name, 
-not the JavaScript property name (e.g. background-color instead of 
+    <dt><code>getElementValueOfCssProperty(propName)</code></dt><dd><p>Query the value of an element's computed CSS property. The CSS
+property to query should be specified using the CSS property name,
+not the JavaScript property name (e.g. background-color instead of
 backgroundColor).</p></dd>
-    <dt><code>highlightElement(wait = 75/1000)</code></dt><dd><p>Utility function to highlight current Element. Wait denotes the 
+    <dt><code>highlightElement(wait = 75/1000)</code></dt><dd><p>Utility function to highlight current Element. Wait denotes the
 time in seconds between style changes on element.</p></dd>
     <dt><code>isElementDisplayed()</code></dt><dd><p>Determine if an element is currently displayed.</p></dd>
-    <dt><code>isElementEnabled()</code></dt><dd><p>Determine if an element is currently enabled. Obviously to enable 
+    <dt><code>isElementEnabled()</code></dt><dd><p>Determine if an element is currently enabled. Obviously to enable
 an element just preform a click on it.</p></dd>
-    <dt><code>isElementSelected()</code></dt><dd><p>Determine if an OPTION element, or an INPUT element of type 
+    <dt><code>isElementSelected()</code></dt><dd><p>Determine if an OPTION element, or an INPUT element of type
 checkbox or radiobutton is currently selected.</p></dd>
-    <dt><code>selectTag()</code></dt><dd><p>Utility function to return options from a select DOM node. The 
-option nodes are returned as webElements. The option text and the 
-value of the option attribute 'value' and whether the option is 
+    <dt><code>selectTag()</code></dt><dd><p>Utility function to return options from a select DOM node. The
+option nodes are returned as webElements. The option text and the
+value of the option attribute 'value' and whether the option is
 selected are returned also. If this
-method is called on a webElement that is not a select DOM node an 
+method is called on a webElement that is not a select DOM node an
 error will result.</p></dd>
-    <dt><code>sendKeysToElement(sendKeys)</code></dt><dd><p>Send a sequence of key strokes to an element. The key strokes are 
-sent as a list. Plain text is enter as an unnamed element of the 
-list. Keyboard entries are defined in `selKeys` and should be 
+    <dt><code>sendKeysToElement(sendKeys)</code></dt><dd><p>Send a sequence of key strokes to an element. The key strokes are
+sent as a list. Plain text is enter as an unnamed element of the
+list. Keyboard entries are defined in `selKeys` and should be
 listed with name `key`. See the examples.</p></dd>
     <dt><code>setElementAttribute(attributeName, value)</code></dt><dd><p>Utility function to set an elements atrributes.</p></dd>
-    <dt><code>submitElement()</code></dt><dd><p>Submit a FORM element. The submit command may also be applied to 
+    <dt><code>submitElement()</code></dt><dd><p>Submit a FORM element. The submit command may also be applied to
 any element that is a descendant of a FORM element.</p></dd>
 </dl>
     

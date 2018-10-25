@@ -61,7 +61,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RSelenium</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4.9000</span>
       </span>
     </div>
 
@@ -140,13 +140,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>pjs_cmd</th>
-      <td><p>The name, full or partial path of a phantomjs 
-executable. This is optional only state if the executable is not in 
+      <td><p>The name, full or partial path of a phantomjs
+executable. This is optional only state if the executable is not in
 your path.</p></td>
     </tr>
     <tr>
       <th>port</th>
-      <td><p>An integer giving the port on which phantomjs will listen. 
+      <td><p>An integer giving the port on which phantomjs will listen.
 Defaults to 4444. format [[&lt;IP&gt;:]&lt;PORT&gt;]</p></td>
     </tr>
     <tr>
@@ -166,18 +166,18 @@ A utility function to control a phantomjs binary in webdriver mode.</p>
     
     <h2 class="hasAnchor" id="detail"><a class="anchor" href="#detail"></a>Detail</h2>
 
-    <p>phantom() is used to start a phantomjs binary in 
-   webdriver mode. This can be used to drive a phantomjs binary on a 
-   machine without selenium server. Argument extras can be used to 
-   specify optional extra command line arguments see 
+    <p>phantom() is used to start a phantomjs binary in
+   webdriver mode. This can be used to drive a phantomjs binary on a
+   machine without selenium server. Argument extras can be used to
+   specify optional extra command line arguments see
    <a href='http://phantomjs.org/api/command-line.html'>http://phantomjs.org/api/command-line.html</a></p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>phantom() returns a list with two functions:</p><dl class='dl-horizontal'>
-<dt>getPID</dt><dd><p>returns the process id of the phantomjs binary running in 
+<dt>getPID</dt><dd><p>returns the process id of the phantomjs binary running in
    webdriver mode.</p></dd>
-<dt>stop</dt><dd><p>terminates the phantomjs binary running in webdriver mode 
+<dt>stop</dt><dd><p>terminates the phantomjs binary running in webdriver mode
    using <code>pskill</code></p></dd>
 </dl>
     
@@ -185,7 +185,7 @@ A utility function to control a phantomjs binary in webdriver mode.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='no'>pJS</span> <span class='kw'>&lt;-</span> <span class='fu'>phantom</span>()
-<span class='co'># note we are running here without a selenium server phantomjs is </span>
+<span class='co'># note we are running here without a selenium server phantomjs is</span>
 <span class='co'># listening on port 4444</span>
 <span class='co'># in webdriver mode</span>
 <span class='no'>remDr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='remoteDriver-class.html'>remoteDriver</a></span>(<span class='kw'>browserName</span> <span class='kw'>=</span> <span class='st'>"phantomjs"</span>)
@@ -196,7 +196,7 @@ A utility function to control a phantomjs binary in webdriver mode.</p>
 <span class='no'>webElem</span>$<span class='fu'>sendKeysToElement</span>(<span class='fu'>list</span>(<span class='st'>"HELLO WORLD"</span>))
 <span class='no'>remDr</span>$<span class='fu'>screenshot</span>(<span class='kw'>display</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>remDr</span>$<span class='fu'>close</span>()
-<span class='co'># note remDr$closeServer() is not called here. We stop the phantomjs </span>
+<span class='co'># note remDr$closeServer() is not called here. We stop the phantomjs</span>
 <span class='co'># binary using</span>
 <span class='no'>pJS</span>$<span class='fu'>stop</span>()
 <span class='co'># }</span></pre>

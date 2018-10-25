@@ -32,16 +32,16 @@
 
 <meta property="og:title" content="CLASS remoteDriver — remoteDriver-class" />
 
-<meta property="og:description" content="remoteDriver Class uses the JsonWireProtocol to communicate with the 
-   Selenium Server. If an error occurs while executing the command then 
-   the server sends back an HTTP error code with a JSON encoded reponse 
-   that indicates the precise Response Error Code. The remoteDriver 
-   class inherits from the errorHandler class. If no error 
-   occurred, then the subroutine called will return the value sent back 
+<meta property="og:description" content="remoteDriver Class uses the JsonWireProtocol to communicate with the
+   Selenium Server. If an error occurs while executing the command then
+   the server sends back an HTTP error code with a JSON encoded reponse
+   that indicates the precise Response Error Code. The remoteDriver
+   class inherits from the errorHandler class. If no error
+   occurred, then the subroutine called will return the value sent back
    from the server (if a return value was sent).
-   So a rule of thumb while invoking methods on the driver is if the 
-   method did not return a status greater then zero when called, then 
-   you can safely assume the command was successful even if nothing was 
+   So a rule of thumb while invoking methods on the driver is if the
+   method did not return a status greater then zero when called, then
+   you can safely assume the command was successful even if nothing was
    returned by the method." />
 <meta name="twitter:card" content="summary" />
 
@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RSelenium</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.4.9000</span>
       </span>
     </div>
 
@@ -139,16 +139,16 @@
 
     <div class="ref-description">
     
-    <p>remoteDriver Class uses the JsonWireProtocol to communicate with the 
-   Selenium Server. If an error occurs while executing the command then 
-   the server sends back an HTTP error code with a JSON encoded reponse 
-   that indicates the precise Response Error Code. The remoteDriver 
-   class inherits from the <code>errorHandler</code> class. If no error 
-   occurred, then the subroutine called will return the value sent back 
+    <p>remoteDriver Class uses the JsonWireProtocol to communicate with the
+   Selenium Server. If an error occurs while executing the command then
+   the server sends back an HTTP error code with a JSON encoded reponse
+   that indicates the precise Response Error Code. The remoteDriver
+   class inherits from the <code>errorHandler</code> class. If no error
+   occurred, then the subroutine called will return the value sent back
    from the server (if a return value was sent).
-   So a rule of thumb while invoking methods on the driver is if the 
-   method did not return a status greater then zero when called, then 
-   you can safely assume the command was successful even if nothing was 
+   So a rule of thumb while invoking methods on the driver is if the
+   method did not return a status greater then zero when called, then
+   you can safely assume the command was successful even if nothing was
    returned by the method.</p>
     
     </div>
@@ -156,10 +156,10 @@
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>remoteDriver is a generator object. To define a new remoteDriver class 
-   method `new` is called. The slots (default value) that are user 
+    <p>remoteDriver is a generator object. To define a new remoteDriver class
+   method `new` is called. The slots (default value) that are user
    defined are:
-     remoteServerAddr(localhost), port(4444), browserName(firefox), 
+     remoteServerAddr(localhost), port(4444), browserName(firefox),
      version(""), platform(ANY),
      javascript(TRUE). See examples for more information on use.</p>
     
@@ -167,34 +167,34 @@
 
     
     <dl class='dl-horizontal'>
-<dt><code>remoteServerAddr</code></dt><dd><p>Object of class <code>"character"</code>, giving the 
+<dt><code>remoteServerAddr</code></dt><dd><p>Object of class <code>"character"</code>, giving the
 ip of the remote server. Defaults to localhost</p></dd>
-    <dt><code>port</code></dt><dd><p>Object of class <code>"numeric"</code>, the port of the remote 
+    <dt><code>port</code></dt><dd><p>Object of class <code>"numeric"</code>, the port of the remote
 server on which to connect</p></dd>
-    <dt><code>browserName</code></dt><dd><p>Object of class <code>"character"</code>. The name of the 
+    <dt><code>browserName</code></dt><dd><p>Object of class <code>"character"</code>. The name of the
 browser being used; should be one of chrome|firefox|htmlunit|
 internet explorer|iphone.</p></dd>
-    <dt><code>path</code></dt><dd><p>base URL path prefix for commands on the remote server. 
+    <dt><code>path</code></dt><dd><p>base URL path prefix for commands on the remote server.
 Defaults to "/wd/hub"</p></dd>
-    <dt><code>version</code></dt><dd><p>Object of class <code>"character"</code>. The browser version, 
+    <dt><code>version</code></dt><dd><p>Object of class <code>"character"</code>. The browser version,
 or the empty string if unknown.</p></dd>
-    <dt><code>platform</code></dt><dd><p>Object of class <code>"character"</code>. A key specifying 
-which platform the browser is running on. This value should be one 
-of WINDOWS|XP|VISTA|MAC|LINUX|UNIX. When requesting a new session, 
-the client may specify ANY to indicate any available platform may be 
+    <dt><code>platform</code></dt><dd><p>Object of class <code>"character"</code>. A key specifying
+which platform the browser is running on. This value should be one
+of WINDOWS|XP|VISTA|MAC|LINUX|UNIX. When requesting a new session,
+the client may specify ANY to indicate any available platform may be
 used.</p></dd>
-    <dt><code>javascript</code></dt><dd><p>Object of class <code>"logical"</code>. Whether the session 
-supports executing user supplied JavaScript in the context of the 
+    <dt><code>javascript</code></dt><dd><p>Object of class <code>"logical"</code>. Whether the session
+supports executing user supplied JavaScript in the context of the
 current page.</p></dd>
-    <dt><code>nativeEvents</code></dt><dd><p>Object of class <code>"logical"</code>. Whether the 
-session supports native events. n WebDriver advanced user 
-interactions are provided by either simulating the Javascript events 
-directly (i.e. synthetic events) or by letting the browser generate 
-the Javascript events (i.e. native events). Native events simulate 
+    <dt><code>nativeEvents</code></dt><dd><p>Object of class <code>"logical"</code>. Whether the
+session supports native events. n WebDriver advanced user
+interactions are provided by either simulating the Javascript events
+directly (i.e. synthetic events) or by letting the browser generate
+the Javascript events (i.e. native events). Native events simulate
 the user interactions better.</p></dd>
-    <dt><code>serverURL</code></dt><dd><p>Object of class <code>"character"</code>. Url of the remote 
+    <dt><code>serverURL</code></dt><dd><p>Object of class <code>"character"</code>. Url of the remote
 server which JSON requests are sent to.</p></dd>
-    <dt><code>sessionInfo</code></dt><dd><p>Object of class <code>"list"</code>. A list containing 
+    <dt><code>sessionInfo</code></dt><dd><p>Object of class <code>"list"</code>. A list containing
 information on sessions.</p></dd>
 </dl>
     
@@ -202,107 +202,107 @@ information on sessions.</p></dd>
 
     
     <dl class='dl-horizontal'>
-<dt><code>acceptAlert()</code></dt><dd><p>Accepts the currently displayed alert dialog.  Usually, this is 
+<dt><code>acceptAlert()</code></dt><dd><p>Accepts the currently displayed alert dialog.  Usually, this is
 equivalent to clicking the 'OK' button in the dialog.</p></dd>
     <dt><code>addCookie(name, value, path = "/", domain = NULL, httpOnly = NULL,
-  expiry = NULL, secure = FALSE)</code></dt><dd><p>Set a cookie on the domain. The inputs are required apart from 
+  expiry = NULL, secure = FALSE)</code></dt><dd><p>Set a cookie on the domain. The inputs are required apart from
 those with default values.</p></dd>
-    <dt><code>buttondown(buttonId = 0)</code></dt><dd><p>Click and hold the given mouse button (at the coordinates set by 
-the last moveto command). Note that the next mouse-related command 
-that should follow is buttondown . Any other mouse command (such 
-as click or another call to buttondown) will yield undefined 
-behaviour. buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2. 
+    <dt><code>buttondown(buttonId = 0)</code></dt><dd><p>Click and hold the given mouse button (at the coordinates set by
+the last moveto command). Note that the next mouse-related command
+that should follow is buttondown . Any other mouse command (such
+as click or another call to buttondown) will yield undefined
+behaviour. buttonId - any one of 'LEFT'/0 'MIDDLE'/1 'RIGHT'/2.
 Defaults to 'LEFT'</p></dd>
-    <dt><code>buttonup(buttonId = 0)</code></dt><dd><p>Releases the mouse button previously held (where the mouse is 
-currently at). Must be called once for every buttondown command 
-issued. See the note in click and buttondown about implications of 
-out-of-order commands. buttonId - any one of 'LEFT'/0 'MIDDLE'/1 
+    <dt><code>buttonup(buttonId = 0)</code></dt><dd><p>Releases the mouse button previously held (where the mouse is
+currently at). Must be called once for every buttondown command
+issued. See the note in click and buttondown about implications of
+out-of-order commands. buttonId - any one of 'LEFT'/0 'MIDDLE'/1
 'RIGHT'/2. Defaults to 'LEFT'</p></dd>
-    <dt><code>click(buttonId = 0)</code></dt><dd><p>Click any mouse button (at the coordinates set by the last 
-mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 
+    <dt><code>click(buttonId = 0)</code></dt><dd><p>Click any mouse button (at the coordinates set by the last
+mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0
 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'</p></dd>
     <dt><code>close()</code></dt><dd><p>Close the current session.</p></dd>
-    <dt><code>closeServer()</code></dt><dd><p>Closes the server in practice terminating the process. This is 
-useful for linux systems. On windows the java binary operates as a 
+    <dt><code>closeServer()</code></dt><dd><p>Closes the server in practice terminating the process. This is
+useful for linux systems. On windows the java binary operates as a
 seperate shell which the user can terminate.</p></dd>
     <dt><code>closeWindow()</code></dt><dd><p>Close the current window.</p></dd>
     <dt><code>deleteAllCookies()</code></dt><dd><p>Delete all cookies visible to the current page.</p></dd>
-    <dt><code>deleteCookieNamed(name)</code></dt><dd><p>Delete the cookie with the given name. This command will be a 
+    <dt><code>deleteCookieNamed(name)</code></dt><dd><p>Delete the cookie with the given name. This command will be a
 no-op if there is no such cookie visible to the current page.</p></dd>
-    <dt><code>dismissAlert()</code></dt><dd><p>Dismisses the currently displayed alert dialog. For comfirm() and 
-prompt() dialogs, this is equivalent to clicking the 'Cancel' 
-button. For alert() dialogs, this is equivalent to clicking the 
+    <dt><code>dismissAlert()</code></dt><dd><p>Dismisses the currently displayed alert dialog. For comfirm() and
+prompt() dialogs, this is equivalent to clicking the 'Cancel'
+button. For alert() dialogs, this is equivalent to clicking the
 'OK' button.</p></dd>
-    <dt><code>doubleclick(buttonId = 0)</code></dt><dd><p>Double-Click any mouse button (at the coordinates set by the last 
-mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0 
+    <dt><code>doubleclick(buttonId = 0)</code></dt><dd><p>Double-Click any mouse button (at the coordinates set by the last
+mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0
 'MIDDLE'/1 'RIGHT'/2. Defaults to 'LEFT'</p></dd>
-    <dt><code>executeAsyncScript(script, args = list())</code></dt><dd><p>Inject a snippet of JavaScript into the page for execution in the 
-context of the currently selected frame. The executed script is 
-assumed to be asynchronous and must signal that is done by 
-invoking the provided callback, which is always provided as the 
-final argument to the function. The value to this callback will be 
-returned to the client. Asynchronous script commands may not span 
-page loads. If an unload event is fired while waiting for a script 
+    <dt><code>executeAsyncScript(script, args = list())</code></dt><dd><p>Inject a snippet of JavaScript into the page for execution in the
+context of the currently selected frame. The executed script is
+assumed to be asynchronous and must signal that is done by
+invoking the provided callback, which is always provided as the
+final argument to the function. The value to this callback will be
+returned to the client. Asynchronous script commands may not span
+page loads. If an unload event is fired while waiting for a script
 result, an error should be returned to the client.</p></dd>
-    <dt><code>executeScript(script, args = list(""))</code></dt><dd><p>Inject a snippet of JavaScript into the page for execution in the 
-context of the currently selected frame. The executed script is 
-assumed to be synchronous and the result of evaluating the script 
-is returned to the client. The script argument defines the script 
-to execute in the form of a function body. The value returned by 
-that function will be returned to the client. The function will be 
-invoked with the provided args array and the values may be 
-accessed via the arguments object in the order specified. 
-Arguments may be any JSON-primitive, array, or JSON object. JSON 
-objects that define a WebElement reference will be converted to 
-the corresponding DOM element. Likewise, any WebElements in the 
-script result will be returned to the client as WebElement JSON 
+    <dt><code>executeScript(script, args = list(""))</code></dt><dd><p>Inject a snippet of JavaScript into the page for execution in the
+context of the currently selected frame. The executed script is
+assumed to be synchronous and the result of evaluating the script
+is returned to the client. The script argument defines the script
+to execute in the form of a function body. The value returned by
+that function will be returned to the client. The function will be
+invoked with the provided args array and the values may be
+accessed via the arguments object in the order specified.
+Arguments may be any JSON-primitive, array, or JSON object. JSON
+objects that define a WebElement reference will be converted to
+the corresponding DOM element. Likewise, any WebElements in the
+script result will be returned to the client as WebElement JSON
 objects.</p></dd>
     <dt><code>findElement(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)</code></dt><dd><p>Search for an element on the page, starting from the document 
-root. The located element will be returned as an object of 
+  "class name", "link text", "partial link text"), value)</code></dt><dd><p>Search for an element on the page, starting from the document
+root. The located element will be returned as an object of
 webElement class.The inputs are:
 <dl class='dl-horizontal'>
-  <dt><code>using</code>:</dt><dd><p>Locator scheme to use to search the 
-    element, available schemes: Defaults to 'xpath'. Partial 
+  <dt><code>using</code>:</dt><dd><p>Locator scheme to use to search the
+    element, available schemes: Defaults to 'xpath'. Partial
     string matching is accepted.
     <dl class='dl-horizontal'>
-      <dt>"class name" :</dt><dd><p>Returns an element whose class name 
-        contains the search value; compound class names are not 
+      <dt>"class name" :</dt><dd><p>Returns an element whose class name
+        contains the search value; compound class names are not
         permitted.</p></dd>
-      <dt>"css selector" :</dt><dd><p>Returns an element matching a CSS 
+      <dt>"css selector" :</dt><dd><p>Returns an element matching a CSS
         selector.</p></dd>
-      <dt>"id" :</dt><dd><p>Returns an element whose ID attribute 
+      <dt>"id" :</dt><dd><p>Returns an element whose ID attribute
         matches the search value.</p></dd>
-      <dt>"name" :</dt><dd><p>Returns an element whose NAME attribute 
+      <dt>"name" :</dt><dd><p>Returns an element whose NAME attribute
         matches the search value.</p></dd>
-      <dt>"link text" :</dt><dd><p>Returns an anchor element whose 
+      <dt>"link text" :</dt><dd><p>Returns an anchor element whose
         visible text matches the search value.</p></dd>
-      <dt>"partial link text" :</dt><dd><p>Returns an anchor element 
+      <dt>"partial link text" :</dt><dd><p>Returns an anchor element
         whose visible text partially matches the search value.</p></dd>
-      <dt>"tag name" :</dt><dd><p>Returns an element whose tag name 
+      <dt>"tag name" :</dt><dd><p>Returns an element whose tag name
         matches the search value.</p></dd>
-      <dt>"xpath" :</dt><dd><p>Returns an element matching an XPath 
+      <dt>"xpath" :</dt><dd><p>Returns an element matching an XPath
         expression.</p></dd>
     </dl></p></dd>
   <dt><code>value</code>:</dt><dd><p>The search target. See examples.</p></dd>
 </dl></p></dd>
     <dt><code>findElements(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)</code></dt><dd><p>Search for multiple elements on the page, starting from the 
-document root. The located elements will be returned as an list of 
+  "class name", "link text", "partial link text"), value)</code></dt><dd><p>Search for multiple elements on the page, starting from the
+document root. The located elements will be returned as an list of
 objects of class WebElement. The inputs are:
 <dl class='dl-horizontal'>
-  <dt><code>using</code>:</dt><dd><p>Locator scheme to use to search the 
-  element, available schemes: "class name", "css selector", 
-  "id", "name", "link text", "partial link text", 
-  "tag name", "xpath" . Defaults to 'xpath'. Partial string 
+  <dt><code>using</code>:</dt><dd><p>Locator scheme to use to search the
+  element, available schemes: "class name", "css selector",
+  "id", "name", "link text", "partial link text",
+  "tag name", "xpath" . Defaults to 'xpath'. Partial string
   matching is accepted. See the findElement method for details</p></dd>
   <dt><code>value</code>:</dt><dd><p>The search target. See examples.</p></dd>
 </dl></p></dd>
-    <dt><code>getActiveElement()</code></dt><dd><p>Get the element on the page that currently has focus. The located 
+    <dt><code>getActiveElement()</code></dt><dd><p>Get the element on the page that currently has focus. The located
 element will be returned as a WebElement id.</p></dd>
-    <dt><code>getAlertText()</code></dt><dd><p>Gets the text of the currently displayed JavaScript alert(), 
+    <dt><code>getAlertText()</code></dt><dd><p>Gets the text of the currently displayed JavaScript alert(),
 confirm() or prompt() dialog.</p></dd>
-    <dt><code>getAllCookies()</code></dt><dd><p>Retrieve all cookies visible to the current page. Each cookie 
+    <dt><code>getAllCookies()</code></dt><dd><p>Retrieve all cookies visible to the current page. Each cookie
 will be returned as a list with the following name and value types:
 <dl class='dl-horizontal'>
   <dt><code>name</code>:</dt><dd><p>character</p></dd>
@@ -313,111 +313,111 @@ will be returned as a list with the following name and value types:
 </dl></p></dd>
     <dt><code>getCurrentUrl()</code></dt><dd><p>Retrieve the url of the current page.</p></dd>
     <dt><code>getCurrentWindowHandle()</code></dt><dd><p>Retrieve the current window handle.</p></dd>
-    <dt><code>getLogTypes()</code></dt><dd><p>Get available log types. Common log types include 'client' = Logs 
-from the client, 'driver' = Logs from the webdriver, 'browser' =  
-Logs from the browser, 'server' = Logs from the server. Other log 
-types, for instance, for performance logging may also be 
-available. phantomjs for example returns a har log type which is a 
-single-entry log, with the HAR (HTTP Archive) of the current 
+    <dt><code>getLogTypes()</code></dt><dd><p>Get available log types. Common log types include 'client' = Logs
+from the client, 'driver' = Logs from the webdriver, 'browser' =
+Logs from the browser, 'server' = Logs from the server. Other log
+types, for instance, for performance logging may also be
+available. phantomjs for example returns a har log type which is a
+single-entry log, with the HAR (HTTP Archive) of the current
 webpage, since the first load (it's cleared at every unload event)</p></dd>
     <dt><code>getPageSource(...)</code></dt><dd><p>Get the current page source.</p></dd>
-    <dt><code>getSessions()</code></dt><dd><p>Returns a list of the currently active sessions. Each session 
+    <dt><code>getSessions()</code></dt><dd><p>Returns a list of the currently active sessions. Each session
 will be returned as a list containing amongst other items:
 <dl class='dl-horizontal'>
   <dt><code>id</code>:</dt><dd><p>The session ID</p></dd>
-  <dt><code>capabilities</code>:</dt><dd><p>An object describing session's 
+  <dt><code>capabilities</code>:</dt><dd><p>An object describing session's
     capabilities</p></dd>
 </dl></p></dd>
-    <dt><code>getStatus()</code></dt><dd><p>Query the server's current status. All server implementations 
-should return two basic objects describing the server's current 
+    <dt><code>getStatus()</code></dt><dd><p>Query the server's current status. All server implementations
+should return two basic objects describing the server's current
 platform and when the server was built.</p></dd>
     <dt><code>getTitle(url)</code></dt><dd><p>Get the current page title.</p></dd>
     <dt><code>getWindowHandles()</code></dt><dd><p>Retrieve the list of window handles used in the session.</p></dd>
-    <dt><code>getWindowPosition(windowId = "current")</code></dt><dd><p>Retrieve the window position. `windowid` is optional (default is 
+    <dt><code>getWindowPosition(windowId = "current")</code></dt><dd><p>Retrieve the window position. `windowid` is optional (default is
 'current' window). Can pass an appropriate `handle`</p></dd>
-    <dt><code>getWindowSize(windowId = "current")</code></dt><dd><p>Retrieve the window size. `windowid` is optional (default is 
+    <dt><code>getWindowSize(windowId = "current")</code></dt><dd><p>Retrieve the window size. `windowid` is optional (default is
 'current' window). Can pass an appropriate `handle`</p></dd>
     <dt><code>goBack()</code></dt><dd><p>Equivalent to hitting the back button on the browser.</p></dd>
     <dt><code>goForward()</code></dt><dd><p>Equivalent to hitting the forward button on the browser.</p></dd>
-    <dt><code>log(type)</code></dt><dd><p>Get the log for a given log type. Log buffer is reset after each 
+    <dt><code>log(type)</code></dt><dd><p>Get the log for a given log type. Log buffer is reset after each
 request.
 <dl class='dl-horizontal'>
-  <dt><code>type</code>:</dt><dd><p>The log type. Typically 'client', 'driver', 
+  <dt><code>type</code>:</dt><dd><p>The log type. Typically 'client', 'driver',
     'browser', 'server'</p></dd>
 </dl></p></dd>
-    <dt><code>maxWindowSize(winHand = "current")</code></dt><dd><p>Set the size of the browser window to maximum. The windows handle 
+    <dt><code>maxWindowSize(winHand = "current")</code></dt><dd><p>Set the size of the browser window to maximum. The windows handle
 is optional. If not specified the current window in focus is used.</p></dd>
-    <dt><code>mouseMoveToLocation(x = NA_integer_, y = NA_integer_, webElement = NULL)</code></dt><dd><p>Move the mouse by an offset of the specificed element. If no 
-element is specified, the move is relative to the current mouse 
-cursor. If an element is provided but no offset, the mouse will be 
-moved to the center of the element. If the element is not visible, 
+    <dt><code>mouseMoveToLocation(x = NA_integer_, y = NA_integer_, webElement = NULL)</code></dt><dd><p>Move the mouse by an offset of the specificed element. If no
+element is specified, the move is relative to the current mouse
+cursor. If an element is provided but no offset, the mouse will be
+moved to the center of the element. If the element is not visible,
 it will be scrolled into view.</p></dd>
     <dt><code>navigate(url)</code></dt><dd><p>Navigate to a given url.</p></dd>
     <dt><code>open(silent = FALSE)</code></dt><dd><p>Send a request to the remote server to instantiate the browser.</p></dd>
-    <dt><code>phantomExecute(script, args = list())</code></dt><dd><p>This API allows you to send a string of JavaScript via 'script', 
-written for PhantomJS, and be interpreted within the context of a 
-WebDriver Page. In other words, for the given script then this 
-variable is initialized to be the current Page. See 
-<a href='https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage'>https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage</a> 
-and the example in this help file. NOTE: Calling the PhantomJS API 
-currently only works when PhantomJS is driven directly via 
+    <dt><code>phantomExecute(script, args = list())</code></dt><dd><p>This API allows you to send a string of JavaScript via 'script',
+written for PhantomJS, and be interpreted within the context of a
+WebDriver Page. In other words, for the given script then this
+variable is initialized to be the current Page. See
+<a href='https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage'>https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage</a>
+and the example in this help file. NOTE: Calling the PhantomJS API
+currently only works when PhantomJS is driven directly via
 <code><a href='phantom.html'>phantom</a></code></p></dd>
     <dt><code>quit()</code></dt><dd><p>Delete the session &amp; close open browsers.</p></dd>
     <dt><code>refresh()</code></dt><dd><p>Reload the current page.</p></dd>
-    <dt><code>screenshot(display = FALSE, useViewer = TRUE, file = NULL)</code></dt><dd><p>Take a screenshot of the current page. The screenshot is returned 
-as a base64 encoded PNG. If display is TRUE the screenshot is 
-displayed locally. If useViewer is TRUE and RStudio is in use the 
-screenshot is displayed in the RStudio viewer panel. If file is 
-not NULL and display = FALSE the screenshot is written to the file 
+    <dt><code>screenshot(display = FALSE, useViewer = TRUE, file = NULL)</code></dt><dd><p>Take a screenshot of the current page. The screenshot is returned
+as a base64 encoded PNG. If display is TRUE the screenshot is
+displayed locally. If useViewer is TRUE and RStudio is in use the
+screenshot is displayed in the RStudio viewer panel. If file is
+not NULL and display = FALSE the screenshot is written to the file
 denoted by file.</p></dd>
-    <dt><code>sendKeysToActiveElement(sendKeys)</code></dt><dd><p>Send a sequence of key strokes to the active element. This 
-command is similar to the send keys command in every aspect except 
-the implicit termination: The modifiers are not released at the 
-end of the call. Rather, the state of the modifier keys is kept 
-between calls, so mouse interactions can be performed while 
-modifier keys are depressed. The key strokes are sent as a list. 
-Plain text is enter as an unnamed element of the list. Keyboard 
-entries are defined in `selKeys` and should be listed with name 
+    <dt><code>sendKeysToActiveElement(sendKeys)</code></dt><dd><p>Send a sequence of key strokes to the active element. This
+command is similar to the send keys command in every aspect except
+the implicit termination: The modifiers are not released at the
+end of the call. Rather, the state of the modifier keys is kept
+between calls, so mouse interactions can be performed while
+modifier keys are depressed. The key strokes are sent as a list.
+Plain text is enter as an unnamed element of the list. Keyboard
+entries are defined in `selKeys` and should be listed with name
 `key`. See the examples.</p></dd>
     <dt><code>sendKeysToAlert(sendKeys)</code></dt><dd><p>Sends keystrokes to a JavaScript prompt() or alert() dialog.
-The key strokes are sent as a list. Plain text is enter as an 
-unnamed element of the list. Keyboard entries are defined in 
+The key strokes are sent as a list. Plain text is enter as an
+unnamed element of the list. Keyboard entries are defined in
 `selKeys` and should be listed with name `key`. See the examples.</p></dd>
-    <dt><code>setAsyncScriptTimeout(milliseconds = 10000)</code></dt><dd><p>Set the amount of time, in milliseconds, that asynchronous 
-scripts executed by execute_async_script() are permitted to run 
-before they are aborted and a |Timeout| error is returned to the 
+    <dt><code>setAsyncScriptTimeout(milliseconds = 10000)</code></dt><dd><p>Set the amount of time, in milliseconds, that asynchronous
+scripts executed by execute_async_script() are permitted to run
+before they are aborted and a |Timeout| error is returned to the
 client.</p></dd>
-    <dt><code>setImplicitWaitTimeout(milliseconds = 10000)</code></dt><dd><p>Set the amount of time the driver should wait when searching for 
+    <dt><code>setImplicitWaitTimeout(milliseconds = 10000)</code></dt><dd><p>Set the amount of time the driver should wait when searching for
 elements. When searching for a single element, the driver will poll
-the page until an element is found or the timeout expires, 
-whichever occurs first. When searching for multiple elements, the 
-driver should poll the page until at least one element is found or 
-the timeout expires, at which point it will return an empty list. 
-If this method is never called, the driver will default to an 
+the page until an element is found or the timeout expires,
+whichever occurs first. When searching for multiple elements, the
+driver should poll the page until at least one element is found or
+the timeout expires, at which point it will return an empty list.
+If this method is never called, the driver will default to an
 implicit wait of 0ms.</p></dd>
-    <dt><code>setTimeout(type = "page load", milliseconds = 10000)</code></dt><dd><p>Configure the amount of time that a particular type of operation 
-can execute for before they are aborted and a |Timeout| error is 
+    <dt><code>setTimeout(type = "page load", milliseconds = 10000)</code></dt><dd><p>Configure the amount of time that a particular type of operation
+can execute for before they are aborted and a |Timeout| error is
 returned to the client.
 <dl class='dl-horizontal'>
-  <dt><code>type</code>:</dt><dd><p>The type of operation to set the timeout 
-    for. Valid values are: "script" for script timeouts, 
-    "implicit" for modifying the implicit wait timeout and 
-    "page load" for setting a page load timeout. Defaults to 
+  <dt><code>type</code>:</dt><dd><p>The type of operation to set the timeout
+    for. Valid values are: "script" for script timeouts,
+    "implicit" for modifying the implicit wait timeout and
+    "page load" for setting a page load timeout. Defaults to
     "page load"</p></dd>
-  <dt><code>milliseconds</code>:</dt><dd><p>The amount of time, in 
-    milliseconds, that time-limited commands are permitted to run. 
+  <dt><code>milliseconds</code>:</dt><dd><p>The amount of time, in
+    milliseconds, that time-limited commands are permitted to run.
     Defaults to 10000 milliseconds.</p></dd>
 </dl></p></dd>
-    <dt><code>setWindowPosition(x, y, winHand = "current")</code></dt><dd><p>Set the position (on screen) where you want your browser to be 
-displayed. The windows handle is optional. If not specified the 
+    <dt><code>setWindowPosition(x, y, winHand = "current")</code></dt><dd><p>Set the position (on screen) where you want your browser to be
+displayed. The windows handle is optional. If not specified the
 current window in focus is used.</p></dd>
-    <dt><code>setWindowSize(width, height, winHand = "current")</code></dt><dd><p>Set the size of the browser window. The windows handle is 
+    <dt><code>setWindowSize(width, height, winHand = "current")</code></dt><dd><p>Set the size of the browser window. The windows handle is
 optional. If not specified the current window in focus is used.</p></dd>
-    <dt><code>switchToFrame(Id)</code></dt><dd><p>Change focus to another frame on the page. Id can be 
-string|number|null|WebElement Object. If the Id is null, the 
+    <dt><code>switchToFrame(Id)</code></dt><dd><p>Change focus to another frame on the page. Id can be
+string|number|null|WebElement Object. If the Id is null, the
 server should switch to the page's default content.</p></dd>
-    <dt><code>switchToWindow(windowId)</code></dt><dd><p>Change focus to another window. The window to change focus to may 
-be specified by its server assigned window handle, or by the value 
+    <dt><code>switchToWindow(windowId)</code></dt><dd><p>Change focus to another window. The window to change focus to may
+be specified by its server assigned window handle, or by the value
 of its name attribute.</p></dd>
 </dl>
     
@@ -451,10 +451,10 @@ of its name attribute.</p></dd>
 
 <span class='co'># The R homepage contains frames</span>
 <span class='no'>webElem</span> <span class='kw'>&lt;-</span> <span class='no'>remDr</span>$<span class='fu'>findElements</span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"//frame"</span>)
-<span class='fu'>sapply</span>(<span class='no'>webElem</span>, <span class='kw'>function</span>(<span class='no'>x</span>){<span class='no'>x</span>$<span class='fu'>getElementAttribute</span>(<span class='st'>'name'</span>)})
+<span class='fu'>sapply</span>(<span class='no'>webElem</span>, <span class='kw'>function</span>(<span class='no'>x</span>) {<span class='no'>x</span>$<span class='fu'>getElementAttribute</span>(<span class='st'>'name'</span>)})
 
 <span class='co'># The homepage contains 3 frames: logo, contents and banner</span>
-<span class='co'># switch to the `contents` frame </span>
+<span class='co'># switch to the `contents` frame</span>
 <span class='no'>webElem</span> <span class='kw'>&lt;-</span> <span class='no'>remDr</span>$<span class='fu'>findElement</span>(<span class='kw'>using</span> <span class='kw'>=</span> <span class='st'>'name'</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>'contents'</span>)
 <span class='no'>remDr</span>$<span class='fu'>switchToFrame</span>(<span class='no'>webElem</span>$<span class='no'>elementId</span>)
 
@@ -466,7 +466,7 @@ of its name attribute.</p></dd>
 <span class='co'># Find the link for the search page on R homepage. Use xpath as default.</span>
 <span class='no'>webElem</span> <span class='kw'>&lt;-</span> <span class='no'>remDr</span>$<span class='fu'>findElement</span>(<span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>'//a[@href = "search.html"]'</span>)
 <span class='no'>webElem</span>$<span class='fu'>getElementAttribute</span>(<span class='st'>'href'</span>)
-<span class='co'># "http://www.r-project.org/search.html"</span>
+<span class='co'># http://www.r-project.org/search.html</span>
 
 <span class='co'># click the search link</span>
 <span class='no'>webElem</span>$<span class='fu'>clickElement</span>()
