@@ -44,7 +44,7 @@ docker rm $(docker ps -aq)
 #### System variables
 
 For CRAN and TRAVIS compatibility two env variables are looked for: NOT_CRAN and 
-TRAVIS. If the tests are being ran locally with the above setup you can set these environmental variables = "true" or set them in R:
+TRAVIS. If the tests are being run locally with the above setup you can set these environmental variables = "true" or set them in R:
 
 ```
 Sys.setenv("NOT_CRAN" = "true")
