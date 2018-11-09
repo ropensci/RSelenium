@@ -1,0 +1,26 @@
+home:
+  strip_header: true
+
+reference:
+  - title: "Package"
+    contents:
+      - RSelenium-package
+  - title: "Classes"
+    contents:
+      - remoteDriver-class
+      - webElement-class
+      - errorHandler-class
+  - title: "Functions"
+    contents:
+      - rsDriver
+      - makeFirefoxProfile
+      - getChromeProfile
+      - getFirefoxProfile
+  - title: "Mappings"
+    contents:
+      - selKeys
+  - title: "Defunct Functions"
+    contents:
+      - startServer
+      - checkForServer
+      - phantom

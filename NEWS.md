@@ -1,3 +1,9 @@
+# RSelenium 1.7.4
+* `executeScript` now passes a dummy argument
+* Defunct `phantom()` function
+* Updated unit tests and test environment
+* Updated vignettes and documentation
+
 # RSelenium 1.7.3
 * Address issue with user/pass credentials being exposed using SauceLabs (thanks @jstockwin #131)
 * Cache packages on TRAVIS to reduce runtime (thanks @jstockwin #132)

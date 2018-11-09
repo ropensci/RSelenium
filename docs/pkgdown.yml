@@ -1,0 +1,11 @@
+pandoc: 1.19.2.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  basics: basics.html
+  docker: docker.html
+  headless: headless.html
+  saucelabs: saucelabs.html
+  shinytesting: shinytesting.html
+  webinar: webinar.html
+
