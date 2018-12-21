@@ -61,6 +61,9 @@
       <a href="../articles/headless.html">Headless Browsing</a>
     </li>
     <li>
+      <a href="../articles/internetexplorer.html">Internet Explorer</a>
+    </li>
+    <li>
       <a href="../articles/saucelabs.html">Driving OS/Browsers Local and Remote</a>
     </li>
     <li>
@@ -109,8 +112,8 @@
 <h3 class="hasAnchor">
 <a href="#firefox" class="anchor"></a>Firefox</h3>
 <p>The default browser for <code>RSelenium</code> is firefox. When a <code>remoteDriver</code> class is instantiated using default options for example <code>remdr &lt;- remoteDriver()</code> then the browser listed is firefox.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>()
-remDr</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">remdr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>()</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">remDr</a></code></pre></div>
 <pre><code>## $remoteServerAddr
 ## [1] "localhost"
 ## 
@@ -148,12 +151,12 @@ remDr</code></pre></div>
 Supports Chrome v31-34</code></pre>
 <p>We download the appropriate <a href="http://chromedriver.storage.googleapis.com/2.9/chromedriver_win32.zip">file</a> for windows and extract the .exe to our Documents folder. The .exe can be placed where the user pleases but it must be in the system path. In this case we placed in the Documents folder namely C:. This directory was added to the system path.</p>
 <p>We assume that a selenium server is also running if not one can be started using <code><a href="../reference/startServer.html">RSelenium::startServer()</a></code>. Now we are done. A chrome browser can be controlled as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-<span class="co"># RSelenium::startServer() # if needed</span>
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"chrome"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-
-<span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co"># RSelenium::startServer() # if needed</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"chrome"</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo)</a></code></pre></div>
 <pre><code>## $platform
 ## [1] "WIN8"
 ## 
@@ -178,12 +181,12 @@ remDr<span class="op">$</span><span class="kw">open</span>()
 <h3 class="hasAnchor">
 <a href="#internet-explorer" class="anchor"></a>Internet Explorer</h3>
 <p>Similarly to the chrome browser you do not need to run an installer before using the InternetExplorerDriver, though some configuration is required. The standalone server executable must be downloaded from the Downloads page and placed in your PATH. Again we need to download this executable and place it in our path. At the time of writing the internet explorer .exe is included with the main standalone server <a href="http://selenium-release.storage.googleapis.com/index.html">here</a>. The current release is 2.40. The system I am running is 64 bit so we download the <a href="http://selenium-release.storage.googleapis.com/2.40/IEDriverServer_x64_2.40.0.zip">64bit version</a>. For simplicity we again place this in our Documents directory namely C:. This directory is already in the system path from running the chrome example. If you want to place the internet explorer .exe in another folder add this folder to your system path. To control internet explorer as a browser is now as simple as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-<span class="co"># RSelenium::startServer() # if needed</span>
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"internet explorer"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-
-<span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo, <span class="dv">7</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co"># RSelenium::startServer() # if needed</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"internet explorer"</span>)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo, <span class="dv">7</span>)</a></code></pre></div>
 <pre><code>## $platform
 ## [1] "WINDOWS"
 ## 
@@ -209,11 +212,11 @@ remDr<span class="op">$</span><span class="kw">open</span>()
 <h3 class="hasAnchor">
 <a href="#safari" class="anchor"></a>Safari</h3>
 <p>Currently Apple have discontinued developement of safari for windows. The latest version for windows was 5.1.7 available <a href="http://filehippo.com/download_safari/">here</a>. Starting with Selenium 2.30.0, the SafariDriver comes bundled with the Selenium server so nothing other then having safari installed should be required. For the purposes of this vignette I downloaded and installed safari 5.1.7 on a windows 8.1 system. Once installed controlling safari was as easy as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-<span class="co"># RSelenium::startServer() # if needed</span>
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"safari"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-<span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co"># RSelenium::startServer() # if needed</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"safari"</span>)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo)</a></code></pre></div>
 <pre><code>## $platform
 ## [1] "WINDOWS"
 ## 
@@ -236,12 +239,12 @@ remDr<span class="op">$</span><span class="kw">open</span>()
 <h3 class="hasAnchor">
 <a href="#opera" class="anchor"></a>Opera</h3>
 <p>Opera is currently not supported for versions newer then 12. <a href="http://code.google.com/p/selenium/wiki/OperaDriver" class="uri">http://code.google.com/p/selenium/wiki/OperaDriver</a> gives details on the current status. For the purposes of this vignette I downloaded and installed the 64 bit version of 12.16 located <a href="http://www.opera.com/download/guide/?os=windows&amp;ver=12.16&amp;local=y">here</a>. I had some issues getting this to run YMMV however. The first issue was getting the following error message</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-<span class="co"># RSelenium::startServer() # if needed</span>
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"opera"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-
-<span class="kw">cat</span>(remDr<span class="op">$</span>value<span class="op">$</span>message)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co"># RSelenium::startServer() # if needed</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"opera"</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="kw">cat</span>(remDr<span class="op">$</span>value<span class="op">$</span>message)</a></code></pre></div>
 <pre><code>## Could not find a platform that supports bundled launchers, please set it manually
 ## Build info: version: '2.40.0', revision: 'fbe29a9', time: '2014-02-19 20:54:28'
 ## System info: host: 'johnlt', ip: '192.168.58.1', os.name: 'Windows 8', os.arch: 'amd64', os.version: '6.2', java.version: '1.7.0_45'
@@ -251,23 +254,23 @@ remDr<span class="op">$</span><span class="kw">open</span>()
 <pre class="batch"><code>java -Dos.name=windows -jar selenium-server-standalone.jar</code></pre>
 <p>This is actually using <code>java -D</code> which is used to set a system property. The system property we set is <code>os.name</code>. This is nothing to do with selenium-server and the appearance of <code>Dos</code> is a coincidence not related to DOS.</p>
 <p>Now we get a new issue.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-<span class="co"># RSelenium::startServer() # if needed</span>
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"opera"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-
-remDr<span class="op">$</span>value<span class="op">$</span>message</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co"># RSelenium::startServer() # if needed</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"opera"</span>)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6">remDr<span class="op">$</span>value<span class="op">$</span>message</a></code></pre></div>
 <pre><code>## [1] "Unable to find executable for product Opera Desktop"</code></pre>
 <p>So in this case we refer to the operadriver <a href="http://code.google.com/p/selenium/wiki/OperaDriver">wiki</a>. It states that the OperaDriver server expects you to have Opera or Opera Next installed in the default location for each system which for windows is %PROGRAMFILES%.exe or more precisely C:Files.exe. As I have installed the 64bit version I need to tell opera driver where to look</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-<span class="co"># RSelenium::startServer() # if needed</span>
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(
-  <span class="dt">browserName =</span> <span class="st">"opera"</span>,
-  <span class="dt">extraCapabilities =</span> <span class="kw">list</span>(<span class="st">"opera.binary"</span> =<span class="st"> "C:</span><span class="ch">\\</span><span class="st">Program Files</span><span class="ch">\\</span><span class="st">Opera x64</span><span class="ch">\\</span><span class="st">opera.exe"</span>)
-)
-remDr<span class="op">$</span><span class="kw">open</span>()
-
-<span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co"># RSelenium::startServer() # if needed</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">  <span class="dt">browserName =</span> <span class="st">"opera"</span>,</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">  <span class="dt">extraCapabilities =</span> <span class="kw">list</span>(<span class="st">"opera.binary"</span> =<span class="st"> "C:</span><span class="ch">\\</span><span class="st">Program Files</span><span class="ch">\\</span><span class="st">Opera x64</span><span class="ch">\\</span><span class="st">opera.exe"</span>)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6">)</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo)</a></code></pre></div>
 <pre><code>## $platform
 ## [1] "ANY"
 ## 
@@ -303,12 +306,12 @@ remDr<span class="op">$</span><span class="kw">open</span>()
 <a href="#phantomjs" class="anchor"></a>phantomjs</h3>
 <p>The first headless browser we shall look at is <code>phantomjs</code>. Firstly download the relevant zip file for your OS from <a href="http://phantomjs.org/download.html">here</a>. We are using windows so we downloaded <a href="https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-windows.zip">phantomjs-2.1.1-windows.zip</a>. It is sufficient to place the location of the directory containing <code>phantomjs.exe</code> in your path. In this case we probably could have just extracted <code>phantomjs.exe</code> to the Documents folder where chromedriver etc current reside.</p>
 <p>However I extracted it to the desktop keeping the contents of the zip. The reasoning behind this was that phantomjs is driven by selenium using <a href="https://github.com/detro/ghostdriver">ghostdriver</a>. At some point the version of ghostdriver phantomjs uses will be upgraded and will accept calls from an unexposed method <code>phantomExecute</code> of the RSelenium <code>remoteDriver</code> class. There are interesting scripts contained in the phantomjs /example directory like netsniff.js which captures network traffic in HAR format. When the <code>phantomExecute</code> method is exposed these scripts will be useful. So I added the location of the .exe to my path namely the directory C:-1.9.7-windows. Once your operating system can find <code>phantomjs.exe</code> or the equivalent driving a phantomjs browser is as easy as:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-<span class="co"># RSelenium::startServer() # if needed</span>
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-
-<span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co"># RSelenium::startServer() # if needed</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>)</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="kw">head</span>(remDr<span class="op">$</span>sessionInfo)</a></code></pre></div>
 <pre><code>## $platform
 ## [1] "XP"
 ## 
@@ -327,8 +330,8 @@ remDr<span class="op">$</span><span class="kw">open</span>()
 ## $driverVersion
 ## [1] "1.1.0"</code></pre>
 <p>We can take a screenshot even thou the browser is headless:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
-remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <h6 align="center">
 RSelenium on win 8.1 driving phantomjs
 </h6>
@@ -409,10 +412,10 @@ Android AVD my_avd on win 8.1
 <h5 class="hasAnchor">
 <a href="#rselenium-and-selendroid" class="anchor"></a>RSelenium and Selendroid</h5>
 <p>Finally we are ready to use <code>RSelenium</code> to control an android browser.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"android"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"android"</span>)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a></code></pre></div>
 <h6 align="center">
 Android with RSelenium on win 8.1
 </h6>
@@ -434,94 +437,94 @@ Android with RSelenium on win 8.1
 <h3 class="hasAnchor">
 <a href="#setting-up-sauce-labs" class="anchor"></a>Setting up Sauce Labs</h3>
 <p>We assume in this vignette that you are setting up Sauce Labs for an open source project. Firstly you should register your project <a href="https://saucelabs.com/opensauce">here</a>. On the <a href="https://saucelabs.com/account">account page</a> you will find the access key for your account that is in a similar format to <code>49953c74-5c46-4ff9-b584-cf31a4c71809</code>. Using Sauce Labs is pretty straightforward. You need to tell it what OS/Browser combination you would like. A list of possible setups can be viewed <a href="https://saucelabs.com/platforms">here</a>. As an example lets suppose we wished to run google chrome version 33 on OSX version mavericks.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-user &lt;-<span class="st"> "rselenium0"</span> <span class="co"># Your Sauce Labs username</span>
-pass &lt;-<span class="st"> "49953c74-5c46-4ff9-b584-cf31a4c71809"</span> <span class="co"># Your Sauce Labs access key </span>
-port &lt;-<span class="st"> </span><span class="dv">80</span>
-ip &lt;-<span class="st"> </span><span class="kw">paste0</span>(user, <span class="st">':'</span>, pass, <span class="st">"@ondemand.saucelabs.com"</span>)
-rdBrowser &lt;-<span class="st"> "chrome"</span>
-version &lt;-<span class="st"> "33"</span>
-platform &lt;-<span class="st"> "OS X 10.9"</span>
-extraCapabilities &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">name =</span> <span class="st">"RSelenium OS/Browsers vignette first example"</span>,
-  <span class="dt">username =</span> user,
-  <span class="dt">accessKey =</span> pass,
-  <span class="dt">tags =</span> <span class="kw">list</span>(<span class="st">"RSelenium-vignette"</span>, <span class="st">"OS/Browsers-vignette"</span>)
-)
-remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(
-  <span class="dt">remoteServerAddr =</span> ip,
-  <span class="dt">port =</span> port,
-  <span class="dt">browserName =</span> rdBrowser,
-  <span class="dt">version =</span> version,
-  <span class="dt">platform =</span> platform,
-  <span class="dt">extraCapabilities =</span> extraCapabilities
-)</code></pre></div>
-<p>We state the browser and OS we require (chrome 33/ Mac OSX 10.9). The user and password are used to form an appropriate ip address for our remote server (<a href="http://rselenium0:49953c74-5c46-4ff9-b584-cf31a4c71809@ondemand.saucelabs.com" class="uri">http://rselenium0:49953c74-5c46-4ff9-b584-cf31a4c71809@ondemand.saucelabs.com</a> in this case). They are also passed as <code>extraCapabilities</code> to the remote Selenium server.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">user &lt;-<span class="st"> "rselenium0"</span> <span class="co"># Your Sauce Labs username</span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">pass &lt;-<span class="st"> "49953c74-5c46-4ff9-b584-cf31a4c71809"</span> <span class="co"># Your Sauce Labs access key </span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">port &lt;-<span class="st"> </span><span class="dv">80</span></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">ip &lt;-<span class="st"> </span><span class="kw">paste0</span>(user, <span class="st">':'</span>, pass, <span class="st">"@ondemand.saucelabs.com"</span>)</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">rdBrowser &lt;-<span class="st"> "chrome"</span></a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">version &lt;-<span class="st"> "33"</span></a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">platform &lt;-<span class="st"> "OS X 10.9"</span></a>
+<a class="sourceLine" id="cb28-9" data-line-number="9">extraCapabilities &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb28-10" data-line-number="10">  <span class="dt">name =</span> <span class="st">"RSelenium OS/Browsers vignette first example"</span>,</a>
+<a class="sourceLine" id="cb28-11" data-line-number="11">  <span class="dt">username =</span> user,</a>
+<a class="sourceLine" id="cb28-12" data-line-number="12">  <span class="dt">accessKey =</span> pass,</a>
+<a class="sourceLine" id="cb28-13" data-line-number="13">  <span class="dt">tags =</span> <span class="kw">list</span>(<span class="st">"RSelenium-vignette"</span>, <span class="st">"OS/Browsers-vignette"</span>)</a>
+<a class="sourceLine" id="cb28-14" data-line-number="14">)</a>
+<a class="sourceLine" id="cb28-15" data-line-number="15">remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(</a>
+<a class="sourceLine" id="cb28-16" data-line-number="16">  <span class="dt">remoteServerAddr =</span> ip,</a>
+<a class="sourceLine" id="cb28-17" data-line-number="17">  <span class="dt">port =</span> port,</a>
+<a class="sourceLine" id="cb28-18" data-line-number="18">  <span class="dt">browserName =</span> rdBrowser,</a>
+<a class="sourceLine" id="cb28-19" data-line-number="19">  <span class="dt">version =</span> version,</a>
+<a class="sourceLine" id="cb28-20" data-line-number="20">  <span class="dt">platform =</span> platform,</a>
+<a class="sourceLine" id="cb28-21" data-line-number="21">  <span class="dt">extraCapabilities =</span> extraCapabilities</a>
+<a class="sourceLine" id="cb28-22" data-line-number="22">)</a></code></pre></div>
+<p>We state the browser and OS we require (chrome 33/ Mac OSX 10.9). The user and password are used to form an appropriate ip address for our remote server (<a href="http://rselenium0:49953c74-5c46-4ff9-b584-cf31a4c71809@ondemand.saucelabs.com">http://rselenium0:49953c74-5c46-4ff9-b584-cf31a4c71809@ondemand.saucelabs.com</a> in this case). They are also passed as <code>extraCapabilities</code> to the remote Selenium server.</p>
 <p>We give our test a <code>name</code> and any additional <code>tags</code> we wish that are passed to the remote Selenium server. Details of the name and tags are given <a href="https://saucelabs.com/docs/additional-config">here</a>. They are used to annotate our tests.</p>
 <div id="basic-example" class="section level4">
 <h4 class="hasAnchor">
 <a href="#basic-example" class="anchor"></a>Basic Example</h4>
 <p>As a basic first example we will run a script using the mavericks/ chrome 33 combination. We run the following commands:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">testScript &lt;-<span class="st"> </span><span class="cf">function</span>(remDr){
-  remDr<span class="op">$</span><span class="kw">open</span>()
-  remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
-  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)
-  <span class="co"># highlight the query box</span>
-  remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"name"</span>, <span class="st">"q"</span>)<span class="op">$</span><span class="kw">highlightElement</span>()
-  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)
-  <span class="co"># goto rproject</span>
-  remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.r-project.org"</span>)
-  <span class="co"># go Back</span>
-  remDr<span class="op">$</span><span class="kw">goBack</span>()
-  <span class="co"># go Forward</span>
-  remDr<span class="op">$</span><span class="kw">goForward</span>()
-  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)
-  webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css selector"</span>, <span class="st">"frame"</span>)
-  <span class="co"># highlight the frames</span>
-  <span class="kw">lapply</span>(webElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">highlightElement</span>()})
-  
-  remDr<span class="op">$</span><span class="kw">close</span>()
-}
-
-<span class="kw">testScript</span>(remDr)</code></pre></div>
-<p>And thats it. We have ran our first remote test using Sauce Labs. The results of the test can be viewed <a href="https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329" class="uri">https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329</a>. I think you will agree its a nice setup. We have access to screenshots of all the commands we issued and a video (screencast) of the test run. We can view the selenium server logs and the medadata associated with our test.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">testScript &lt;-<span class="st"> </span><span class="cf">function</span>(remDr){</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">  remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb29-3" data-line-number="3">  remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">  <span class="co"># highlight the query box</span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6">  remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"name"</span>, <span class="st">"q"</span>)<span class="op">$</span><span class="kw">highlightElement</span>()</a>
+<a class="sourceLine" id="cb29-7" data-line-number="7">  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb29-8" data-line-number="8">  <span class="co"># goto rproject</span></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9">  remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.r-project.org"</span>)</a>
+<a class="sourceLine" id="cb29-10" data-line-number="10">  <span class="co"># go Back</span></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11">  remDr<span class="op">$</span><span class="kw">goBack</span>()</a>
+<a class="sourceLine" id="cb29-12" data-line-number="12">  <span class="co"># go Forward</span></a>
+<a class="sourceLine" id="cb29-13" data-line-number="13">  remDr<span class="op">$</span><span class="kw">goForward</span>()</a>
+<a class="sourceLine" id="cb29-14" data-line-number="14">  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb29-15" data-line-number="15">  webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css selector"</span>, <span class="st">"frame"</span>)</a>
+<a class="sourceLine" id="cb29-16" data-line-number="16">  <span class="co"># highlight the frames</span></a>
+<a class="sourceLine" id="cb29-17" data-line-number="17">  <span class="kw">lapply</span>(webElems, <span class="cf">function</span>(x){x<span class="op">$</span><span class="kw">highlightElement</span>()})</a>
+<a class="sourceLine" id="cb29-18" data-line-number="18">  </a>
+<a class="sourceLine" id="cb29-19" data-line-number="19">  remDr<span class="op">$</span><span class="kw">close</span>()</a>
+<a class="sourceLine" id="cb29-20" data-line-number="20">}</a>
+<a class="sourceLine" id="cb29-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb29-22" data-line-number="22"><span class="kw">testScript</span>(remDr)</a></code></pre></div>
+<p>And thats it. We have ran our first remote test using Sauce Labs. The results of the test can be viewed <a href="https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329">https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329</a>. I think you will agree its a nice setup. We have access to screenshots of all the commands we issued and a video (screencast) of the test run. We can view the selenium server logs and the medadata associated with our test.</p>
 </div>
 </div>
 <div id="testing-multiple-osbrowsers" class="section level3">
 <h3 class="hasAnchor">
 <a href="#testing-multiple-osbrowsers" class="anchor"></a>Testing Multiple OS/Browsers</h3>
 <p>We can easily extend the simple test we ran for multiple OS/Browser combinations. The browser and platform variables need to be assigned the combinations we require.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">osBrowser &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="st">"OS X 10.9"</span> =<span class="st"> </span><span class="kw">list</span>(
-    <span class="dt">browser =</span> <span class="kw">list</span>(<span class="st">"safari"</span>, <span class="st">"firefox"</span>),
-    <span class="dt">version =</span> <span class="kw">list</span>(<span class="st">'7'</span>, <span class="st">'28'</span>)
-  ),
-  <span class="st">"Windows 8"</span> =<span class="st"> </span><span class="kw">list</span>(
-    <span class="dt">browser =</span> <span class="kw">list</span>(<span class="st">"chrome"</span>, <span class="st">"firefox"</span>, <span class="st">"internet explorer"</span>),
-    <span class="dt">version =</span> <span class="kw">list</span>(<span class="st">'33'</span>, <span class="st">'28'</span>, <span class="st">'10'</span>)
-  ),
-  <span class="st">"Linux"</span> =<span class="st"> </span><span class="kw">list</span>(
-    <span class="dt">browser =</span> <span class="kw">list</span>(<span class="st">"chrome"</span>, <span class="st">"firefox"</span>, <span class="st">"opera"</span>),
-    <span class="dt">version =</span> <span class="kw">list</span>(<span class="st">'33'</span>, <span class="st">'28'</span>, <span class="st">'12'</span>)
-  )
-)
-<span class="kw">lapply</span>(<span class="kw">seq_along</span>(osBrowser), <span class="cf">function</span>(x) {
-  platform &lt;-<span class="st"> </span><span class="kw">names</span>(osBrowser)[x]
-  <span class="kw">lapply</span>(<span class="kw">seq_along</span>(osBrowser[[x]]<span class="op">$</span>browser), <span class="cf">function</span>(y){
-    rdBrowser &lt;-<span class="st"> </span>osBrowser[[x]]<span class="op">$</span>browser[[y]]
-    version &lt;-<span class="st"> </span>osBrowser[[x]]<span class="op">$</span>version[[y]]
-    remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(
-      <span class="dt">remoteServerAddr =</span> ip,
-      <span class="dt">port =</span> port,
-      <span class="dt">browserName =</span> rdBrowser,
-      <span class="dt">version =</span> version,
-      <span class="dt">platform =</span> platform,
-      <span class="dt">extraCapabilities =</span> extraCapabilities
-    )
-    <span class="kw">testScript</span>(remDr)
-  })
-})</code></pre></div>
-<p>To view the results you can goto the <code>RSelenium</code> project page on Sauce Labs <a href="https://saucelabs.com/u/rselenium" class="uri">https://saucelabs.com/u/rselenium</a>. Listed here are all the tests ran on the <code>RSelenium</code> package. A partial search by name <code>Browsers vignette first example</code> will give the results of this test. There are a few repeats of the first Mavericks/ chrome 33 test where I tuned the script.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">osBrowser &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2">  <span class="st">"OS X 10.9"</span> =<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb30-3" data-line-number="3">    <span class="dt">browser =</span> <span class="kw">list</span>(<span class="st">"safari"</span>, <span class="st">"firefox"</span>),</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4">    <span class="dt">version =</span> <span class="kw">list</span>(<span class="st">'7'</span>, <span class="st">'28'</span>)</a>
+<a class="sourceLine" id="cb30-5" data-line-number="5">  ),</a>
+<a class="sourceLine" id="cb30-6" data-line-number="6">  <span class="st">"Windows 8"</span> =<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb30-7" data-line-number="7">    <span class="dt">browser =</span> <span class="kw">list</span>(<span class="st">"chrome"</span>, <span class="st">"firefox"</span>, <span class="st">"internet explorer"</span>),</a>
+<a class="sourceLine" id="cb30-8" data-line-number="8">    <span class="dt">version =</span> <span class="kw">list</span>(<span class="st">'33'</span>, <span class="st">'28'</span>, <span class="st">'10'</span>)</a>
+<a class="sourceLine" id="cb30-9" data-line-number="9">  ),</a>
+<a class="sourceLine" id="cb30-10" data-line-number="10">  <span class="st">"Linux"</span> =<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb30-11" data-line-number="11">    <span class="dt">browser =</span> <span class="kw">list</span>(<span class="st">"chrome"</span>, <span class="st">"firefox"</span>, <span class="st">"opera"</span>),</a>
+<a class="sourceLine" id="cb30-12" data-line-number="12">    <span class="dt">version =</span> <span class="kw">list</span>(<span class="st">'33'</span>, <span class="st">'28'</span>, <span class="st">'12'</span>)</a>
+<a class="sourceLine" id="cb30-13" data-line-number="13">  )</a>
+<a class="sourceLine" id="cb30-14" data-line-number="14">)</a>
+<a class="sourceLine" id="cb30-15" data-line-number="15"><span class="kw">lapply</span>(<span class="kw">seq_along</span>(osBrowser), <span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb30-16" data-line-number="16">  platform &lt;-<span class="st"> </span><span class="kw">names</span>(osBrowser)[x]</a>
+<a class="sourceLine" id="cb30-17" data-line-number="17">  <span class="kw">lapply</span>(<span class="kw">seq_along</span>(osBrowser[[x]]<span class="op">$</span>browser), <span class="cf">function</span>(y){</a>
+<a class="sourceLine" id="cb30-18" data-line-number="18">    rdBrowser &lt;-<span class="st"> </span>osBrowser[[x]]<span class="op">$</span>browser[[y]]</a>
+<a class="sourceLine" id="cb30-19" data-line-number="19">    version &lt;-<span class="st"> </span>osBrowser[[x]]<span class="op">$</span>version[[y]]</a>
+<a class="sourceLine" id="cb30-20" data-line-number="20">    remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(</a>
+<a class="sourceLine" id="cb30-21" data-line-number="21">      <span class="dt">remoteServerAddr =</span> ip,</a>
+<a class="sourceLine" id="cb30-22" data-line-number="22">      <span class="dt">port =</span> port,</a>
+<a class="sourceLine" id="cb30-23" data-line-number="23">      <span class="dt">browserName =</span> rdBrowser,</a>
+<a class="sourceLine" id="cb30-24" data-line-number="24">      <span class="dt">version =</span> version,</a>
+<a class="sourceLine" id="cb30-25" data-line-number="25">      <span class="dt">platform =</span> platform,</a>
+<a class="sourceLine" id="cb30-26" data-line-number="26">      <span class="dt">extraCapabilities =</span> extraCapabilities</a>
+<a class="sourceLine" id="cb30-27" data-line-number="27">    )</a>
+<a class="sourceLine" id="cb30-28" data-line-number="28">    <span class="kw">testScript</span>(remDr)</a>
+<a class="sourceLine" id="cb30-29" data-line-number="29">  })</a>
+<a class="sourceLine" id="cb30-30" data-line-number="30">})</a></code></pre></div>
+<p>To view the results you can goto the <code>RSelenium</code> project page on Sauce Labs <a href="https://saucelabs.com/u/rselenium">https://saucelabs.com/u/rselenium</a>. Listed here are all the tests ran on the <code>RSelenium</code> package. A partial search by name <code>Browsers vignette first example</code> will give the results of this test. There are a few repeats of the first Mavericks/ chrome 33 test where I tuned the script.</p>
 <h6 align="center">
 Sauce Labs results for simple test script
 </h6>
@@ -532,8 +535,8 @@ Sauce Labs results for simple test script
 <h2 class="hasAnchor">
 <a href="#rselenium-with-remote-browsers-and-local-sites" class="anchor"></a>RSelenium with Remote Browsers and Local Sites</h2>
 <p>Testing external webpages and websites across a range of operating systems and browsers can be achieved using Sauce Labs as we observed in the last section. Often however especially in a developement phase of a project we either do not have or do not want an external version of our webpage/website/webapp. A good example would be our <code>shinytestapp</code>. Lets open a new R session and run our testapp.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(shiny)
-<span class="kw"><a href="http://www.rdocumentation.org/packages/shiny/topics/runApp">runApp</a></span>(<span class="kw">file.path</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"apps"</span>, <span class="st">"shinytestapp"</span>), <span class="dt">port =</span> <span class="dv">3000</span>)</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">require</span>(shiny)</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/shiny/topics/runApp">runApp</a></span>(<span class="kw">file.path</span>(<span class="kw">find.package</span>(<span class="st">"RSelenium"</span>), <span class="st">"apps"</span>, <span class="st">"shinytestapp"</span>), <span class="dt">port =</span> <span class="dv">3000</span>)</a></code></pre></div>
 <p>To access our app we would require the ip address <code>http://localhost:3000/</code>. How do we access this from a remote webdriver?</p>
 <div id="sauce-connect" class="section level3">
 <h3 class="hasAnchor">
@@ -551,9 +554,9 @@ Sauce Labs results for simple test script
 <h3 class="hasAnchor">
 <a href="#basic-example-1" class="anchor"></a>Basic Example</h3>
 <p>We opened our shinytestapp on port 3000 because Sauce Connect only supports a set number of ports. All ports can be used but for this you need a locally-defined domain name (which can be set in your hosts file) rather than localhost. This is simple to do but for the purposes of this vignette we shall connect to <code>http://localhost:3000</code>. Again to start with we shall use Mavericks with Chrome 33.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-user &lt;-<span class="st"> "rselenium0"</span> <span class="co"># Your Sauce Labs username</span>
-pass &lt;-<span class="st"> "49953c74-5c46-4ff9-b584-cf31a4c71809"</span> <span class="co"># Your Sauce Labs access key </span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2">user &lt;-<span class="st"> "rselenium0"</span> <span class="co"># Your Sauce Labs username</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3">pass &lt;-<span class="st"> "49953c74-5c46-4ff9-b584-cf31a4c71809"</span> <span class="co"># Your Sauce Labs access key </span></a></code></pre></div>
 <p><del>port &lt;- 80</del><br><del>ip &lt;- paste0(user, ‘:’, pass, “<span class="citation">@ondemand.saucelabs.com</span>”)</del></p>
 <pre><code>port &lt;- 4445
 ip &lt;- paste0(user, ':', pass, "@localhost")
@@ -579,30 +582,30 @@ remDr &lt;- remoteDriver$new(
   extraCapabilities = extraCapabilities
 )</code></pre>
 <p>Everything is as before the exeception is that when we ask to browse to a localhost address Sauce Connect will intervene. Also we connect to Sauce Labs through Sauce Connect on <code>localhost:4445</code> by default instead of <code>ondemand.saucelabs.com:80</code>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">localScript &lt;-<span class="st"> </span><span class="cf">function</span>(remDr){
-  remDr<span class="op">$</span><span class="kw">open</span>()
-  remDr<span class="op">$</span><span class="kw">setImplicitWaitTimeout</span>(<span class="dv">2000</span>) <span class="co"># wait for elements for 2 seconds</span>
-  remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://localhost:3000"</span>)
-  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)
-  <span class="co"># highlight the labels</span>
-  webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css selector"</span>, <span class="st">"#ctrlSelect span"</span>)
-  <span class="kw">lapply</span>(webElems, <span class="cf">function</span>(x) {x<span class="op">$</span><span class="kw">highlightElement</span>()})
-  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)
-  appIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"summary"</span>, <span class="st">"distPlot"</span>, <span class="st">"ggPlot"</span>, <span class="st">"dttable"</span>)
-  <span class="co"># Click each checkbox and check for its output</span>
-  <span class="kw">lapply</span>(<span class="kw">seq_along</span>(webElems), <span class="cf">function</span>(x) {
-    <span class="cf">if</span>(<span class="op">!</span>webElems[[x]]<span class="op">$</span><span class="kw">isElementSelected</span>()[[<span class="dv">1</span>]]) {
-      webElems[[x]]<span class="op">$</span><span class="kw">clickElement</span>()
-      <span class="co"># test for its output</span>
-      out &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"id"</span>, appIds[x])
-      out<span class="op">$</span><span class="kw">highlightElement</span>()
-    }
-  })
-  
-  remDr<span class="op">$</span><span class="kw">close</span>()
-}
-
-<span class="kw">localScript</span>(remDr)</code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">localScript &lt;-<span class="st"> </span><span class="cf">function</span>(remDr){</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2">  remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb36-3" data-line-number="3">  remDr<span class="op">$</span><span class="kw">setImplicitWaitTimeout</span>(<span class="dv">2000</span>) <span class="co"># wait for elements for 2 seconds</span></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4">  remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://localhost:3000"</span>)</a>
+<a class="sourceLine" id="cb36-5" data-line-number="5">  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb36-6" data-line-number="6">  <span class="co"># highlight the labels</span></a>
+<a class="sourceLine" id="cb36-7" data-line-number="7">  webElems &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElements</span>(<span class="st">"css selector"</span>, <span class="st">"#ctrlSelect span"</span>)</a>
+<a class="sourceLine" id="cb36-8" data-line-number="8">  <span class="kw">lapply</span>(webElems, <span class="cf">function</span>(x) {x<span class="op">$</span><span class="kw">highlightElement</span>()})</a>
+<a class="sourceLine" id="cb36-9" data-line-number="9">  <span class="kw">Sys.sleep</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb36-10" data-line-number="10">  appIds &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"summary"</span>, <span class="st">"distPlot"</span>, <span class="st">"ggPlot"</span>, <span class="st">"dttable"</span>)</a>
+<a class="sourceLine" id="cb36-11" data-line-number="11">  <span class="co"># Click each checkbox and check for its output</span></a>
+<a class="sourceLine" id="cb36-12" data-line-number="12">  <span class="kw">lapply</span>(<span class="kw">seq_along</span>(webElems), <span class="cf">function</span>(x) {</a>
+<a class="sourceLine" id="cb36-13" data-line-number="13">    <span class="cf">if</span>(<span class="op">!</span>webElems[[x]]<span class="op">$</span><span class="kw">isElementSelected</span>()[[<span class="dv">1</span>]]) {</a>
+<a class="sourceLine" id="cb36-14" data-line-number="14">      webElems[[x]]<span class="op">$</span><span class="kw">clickElement</span>()</a>
+<a class="sourceLine" id="cb36-15" data-line-number="15">      <span class="co"># test for its output</span></a>
+<a class="sourceLine" id="cb36-16" data-line-number="16">      out &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"id"</span>, appIds[x])</a>
+<a class="sourceLine" id="cb36-17" data-line-number="17">      out<span class="op">$</span><span class="kw">highlightElement</span>()</a>
+<a class="sourceLine" id="cb36-18" data-line-number="18">    }</a>
+<a class="sourceLine" id="cb36-19" data-line-number="19">  })</a>
+<a class="sourceLine" id="cb36-20" data-line-number="20">  </a>
+<a class="sourceLine" id="cb36-21" data-line-number="21">  remDr<span class="op">$</span><span class="kw">close</span>()</a>
+<a class="sourceLine" id="cb36-22" data-line-number="22">}</a>
+<a class="sourceLine" id="cb36-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb36-24" data-line-number="24"><span class="kw">localScript</span>(remDr)</a></code></pre></div>
 </div>
 </div>
   </div>

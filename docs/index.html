@@ -70,6 +70,9 @@
       <a href="articles/headless.html">Headless Browsing</a>
     </li>
     <li>
+      <a href="articles/internetexplorer.html">Internet Explorer</a>
+    </li>
+    <li>
       <a href="articles/saucelabs.html">Driving OS/Browsers Local and Remote</a>
     </li>
     <li>
@@ -103,12 +106,12 @@
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
 <p>To install <code>RSelenium</code> from CRAN, run:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"RSelenium"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">"RSelenium"</span>)</a></code></pre></div>
 <p>To install the development version from GitHub, run:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
-devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/RSelenium"</span>)</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"ropensci/RSelenium"</span>)</a></code></pre></div>
 <p>To get started using <code>RSelenium</code> you can look at the introduction vignette located in <code>/doc/basics.html</code> once <code>RSelenium</code> is installed or run</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">vignette</span>(<span class="st">"basics"</span>, <span class="dt">package =</span> <span class="st">"RSelenium"</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">vignette</span>(<span class="st">"basics"</span>, <span class="dt">package =</span> <span class="st">"RSelenium"</span>)</a></code></pre></div>
 <p>or the basic vignette can be viewed <a href="http://ropensci.github.io/RSelenium/articles/basics.html">here</a>.</p>
 <p>There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at <a href="http://ropensci.github.io/RSelenium/articles/saucelabs.html">Driving OS/Browsers Local and Remote</a>. Finally, you can read all about running a headless browser or running a normal browser on a headless server at <a href="http://ropensci.github.io/RSelenium/articles/headless.html">Headless Browsing</a>.</p>
 <div id="summary-of-vignettes" class="section level3">
@@ -120,6 +123,7 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <li><a href="http://ropensci.github.io/RSelenium/articles/shinytesting.html">Testing Shiny Apps</a></li>
 <li><a href="http://ropensci.github.io/RSelenium/articles/headless.html">Headless Browsing</a></li>
 <li><a href="http://ropensci.github.io/RSelenium/articles/docker.html">Docker</a></li>
+<li><a href="http://ropensci.github.io/RSelenium/articles/internetexplorer.html">Internet Explorer</a></li>
 <li><a href="http://ropensci.github.io/RSelenium/articles/webinar.html">Orange County R Users Group Webinar</a></li>
 </ol>
 </div>
@@ -136,48 +140,48 @@ devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocument
 <div id="sauce-labs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sauce-labs" class="anchor"></a>Sauce Labs</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">user &lt;-<span class="st"> "rselenium0"</span>
-pass &lt;-<span class="st"> "*******************************"</span>
-port &lt;-<span class="st"> </span><span class="dv">80</span>
-ip &lt;-<span class="st"> </span><span class="kw">paste0</span>(user, <span class="st">':'</span>, pass, <span class="st">"@ondemand.saucelabs.com"</span>)
-browser &lt;-<span class="st"> "firefox"</span>
-version &lt;-<span class="st"> "25"</span>
-platform &lt;-<span class="st"> "OS X 10.9"</span>
-extraCapabilities &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">name =</span> <span class="st">"Test RSelenium"</span>,
-  <span class="dt">username =</span> user,
-  <span class="dt">accessKey =</span> pass
-)
-
-remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(
-  <span class="dt">remoteServerAddr =</span> ip,
-  <span class="dt">port =</span> port,
-  <span class="dt">browserName =</span> browser,
-  <span class="dt">version =</span> version,
-  <span class="dt">platform =</span> platform,
-  <span class="dt">extraCapabilities =</span> extraCapabilities
-)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">user &lt;-<span class="st"> "rselenium0"</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">pass &lt;-<span class="st"> "*******************************"</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">port &lt;-<span class="st"> </span><span class="dv">80</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">ip &lt;-<span class="st"> </span><span class="kw">paste0</span>(user, <span class="st">':'</span>, pass, <span class="st">"@ondemand.saucelabs.com"</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">browser &lt;-<span class="st"> "firefox"</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">version &lt;-<span class="st"> "25"</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">platform &lt;-<span class="st"> "OS X 10.9"</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">extraCapabilities &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">  <span class="dt">name =</span> <span class="st">"Test RSelenium"</span>,</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">  <span class="dt">username =</span> user,</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">  <span class="dt">accessKey =</span> pass</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">)</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">  <span class="dt">remoteServerAddr =</span> ip,</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">  <span class="dt">port =</span> port,</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">  <span class="dt">browserName =</span> browser,</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">  <span class="dt">version =</span> version,</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">  <span class="dt">platform =</span> platform,</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">  <span class="dt">extraCapabilities =</span> extraCapabilities</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">)</a></code></pre></div>
 </div>
 <div id="browserstack" class="section level3">
 <h3 class="hasAnchor">
 <a href="#browserstack" class="anchor"></a>BrowserStack</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">user &lt;-<span class="st"> "johnharrison"</span> 
-pass &lt;-<span class="st"> "*******************"</span>
-port &lt;-<span class="st"> </span><span class="dv">80</span>
-ip &lt;-<span class="st"> </span><span class="kw">paste0</span>(user, <span class="st">':'</span>, pass, <span class="st">"@hub.browserstack.com"</span>)
-extraCapabilities &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="st">"browser"</span> =<span class="st"> "IE"</span>,
-  <span class="st">"browser_version"</span> =<span class="st"> "7.0"</span>,
-  <span class="st">"os"</span> =<span class="st"> "Windows"</span>,
-  <span class="st">"os_version"</span> =<span class="st"> "XP"</span>,
-  <span class="st">"browserstack.debug"</span> =<span class="st"> "true"</span>
-)
-
-remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(
-  <span class="dt">remoteServerAddr =</span> ip,
-  <span class="dt">port =</span> port,
-  <span class="dt">extraCapabilities =</span> extraCapabilities
-)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">user &lt;-<span class="st"> "johnharrison"</span> </a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">pass &lt;-<span class="st"> "*******************"</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">port &lt;-<span class="st"> </span><span class="dv">80</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">ip &lt;-<span class="st"> </span><span class="kw">paste0</span>(user, <span class="st">':'</span>, pass, <span class="st">"@hub.browserstack.com"</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">extraCapabilities &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="st">"browser"</span> =<span class="st"> "IE"</span>,</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">  <span class="st">"browser_version"</span> =<span class="st"> "7.0"</span>,</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">  <span class="st">"os"</span> =<span class="st"> "Windows"</span>,</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">  <span class="st">"os_version"</span> =<span class="st"> "XP"</span>,</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">  <span class="st">"browserstack.debug"</span> =<span class="st"> "true"</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11">)</a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">remDr &lt;-<span class="st"> </span>remoteDriver<span class="op">$</span><span class="kw">new</span>(</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">  <span class="dt">remoteServerAddr =</span> ip,</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">  <span class="dt">port =</span> port,</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">  <span class="dt">extraCapabilities =</span> extraCapabilities</a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">)</a></code></pre></div>
 </div>
 </div>
 <div id="related-work" class="section level2">

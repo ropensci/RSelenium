@@ -61,6 +61,9 @@
       <a href="../articles/headless.html">Headless Browsing</a>
     </li>
     <li>
+      <a href="../articles/internetexplorer.html">Internet Explorer</a>
+    </li>
+    <li>
       <a href="../articles/saucelabs.html">Driving OS/Browsers Local and Remote</a>
     </li>
     <li>
@@ -104,39 +107,39 @@
 <div id="driving-phantomjs-directly" class="section level3">
 <h3 class="hasAnchor">
 <a href="#driving-phantomjs-directly" class="anchor"></a>Driving PhantomJS Directly</h3>
-<p>The <code>PhantomJS</code> binary can be driven directly with <code>RSelenium</code>. <code>PhantomJS</code> needs to be started in webdriver mode then <code>RSelenium</code> can <strong>communicate with it directly without the need for Selenium Server.</strong> The command line options for <code>PhantomJS</code> are outlined at <a href="http://phantomjs.org/api/command-line.html" class="uri">http://phantomjs.org/api/command-line.html</a>. We note that it is necessary to start <code>PhantomJS</code> with the <code>--webdriver</code> option and an optional IP/port. <code>RSelenium</code> as of <code>v1.3.2</code> has a utility function <code>phantom</code> that will handle starting the <code>PhantomJS</code> binary in webdriver mode by default on port 4444. So to drive <code>PhantomJS</code> sans Selenium Server can be done as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()
-<span class="kw">Sys.sleep</span>(<span class="dv">5</span>) <span class="co"># give the binary a moment</span>
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">'phantomjs'</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
-remDr<span class="op">$</span><span class="kw">getTitle</span>()[[<span class="dv">1</span>]] <span class="co"># [1] "Google"</span>
-remDr<span class="op">$</span>close
-pJS<span class="op">$</span><span class="kw">stop</span>() <span class="co"># close the PhantomJS process, note we dont call remDr$closeServer()</span></code></pre></div>
+<p>The <code>PhantomJS</code> binary can be driven directly with <code>RSelenium</code>. <code>PhantomJS</code> needs to be started in webdriver mode then <code>RSelenium</code> can <strong>communicate with it directly without the need for Selenium Server.</strong> The command line options for <code>PhantomJS</code> are outlined at <a href="http://phantomjs.org/api/command-line.html">http://phantomjs.org/api/command-line.html</a>. We note that it is necessary to start <code>PhantomJS</code> with the <code>--webdriver</code> option and an optional IP/port. <code>RSelenium</code> as of <code>v1.3.2</code> has a utility function <code>phantom</code> that will handle starting the <code>PhantomJS</code> binary in webdriver mode by default on port 4444. So to drive <code>PhantomJS</code> sans Selenium Server can be done as follows:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">Sys.sleep</span>(<span class="dv">5</span>) <span class="co"># give the binary a moment</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">'phantomjs'</span>)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">remDr<span class="op">$</span><span class="kw">getTitle</span>()[[<span class="dv">1</span>]] <span class="co"># [1] "Google"</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">remDr<span class="op">$</span>close</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">pJS<span class="op">$</span><span class="kw">stop</span>() <span class="co"># close the PhantomJS process, note we dont call remDr$closeServer()</span></a></code></pre></div>
 </div>
 <div id="driving-phantomjs-using-selenium-server" class="section level3">
 <h3 class="hasAnchor">
 <a href="#driving-phantomjs-using-selenium-server" class="anchor"></a>Driving PhantomJS Using Selenium Server</h3>
 <p>For completeness we outline the process of opening a <code>PhantomJS</code> browser using selenium server. It is assummed that the <code>PhantomJS</code> binary is in the users path.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-RSelenium<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RSelenium/topics/startServer">startServer</a></span>()
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
-remDr<span class="op">$</span><span class="kw">close</span>()
-remDr<span class="op">$</span><span class="kw">closeServer</span>()</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">RSelenium<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RSelenium/topics/startServer">startServer</a></span>()</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">remDr<span class="op">$</span><span class="kw">close</span>()</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">remDr<span class="op">$</span><span class="kw">closeServer</span>()</a></code></pre></div>
 <div id="providing-the-phantomjs-path" class="section level4">
 <h4 class="hasAnchor">
 <a href="#providing-the-phantomjs-path" class="anchor"></a>Providing the PhantomJS Path</h4>
 <p>It may not be possible for a user to have the <code>PhantomJS</code> binary in their path. In this case a user may pass the path of the <code>PhantomJS</code> binary to Selenium Server:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-RSelenium<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RSelenium/topics/startServer">startServer</a></span>()
-eCap &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">phantomjs.binary.path =</span> <span class="st">"C:/Users/john/Desktop/phantomjs.exe"</span>)
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>, <span class="dt">extraCapabilities =</span> eCap)
-remDr<span class="op">$</span><span class="kw">open</span>()
-....</code></pre></div>
-<p>So in the above example I suppose the <code>PhantomJS</code> binary has been moved to my Desktop which we assume is not in my path. An extra capability <code>phantomjs.binary.path</code> detailed <a href="https://github.com/detro/ghostdriver" class="uri">https://github.com/detro/ghostdriver</a> can be used to provide the path to <code>PhantomJS</code> to Selenium Server.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">RSelenium<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RSelenium/topics/startServer">startServer</a></span>()</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">eCap &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">phantomjs.binary.path =</span> <span class="st">"C:/Users/john/Desktop/phantomjs.exe"</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>, <span class="dt">extraCapabilities =</span> eCap)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">....</a></code></pre></div>
+<p>So in the above example I suppose the <code>PhantomJS</code> binary has been moved to my Desktop which we assume is not in my path. An extra capability <code>phantomjs.binary.path</code> detailed <a href="https://github.com/detro/ghostdriver">https://github.com/detro/ghostdriver</a> can be used to provide the path to <code>PhantomJS</code> to Selenium Server.</p>
 </div>
 </div>
 <div id="additional-phantomjs-capabilities" class="section level3">
@@ -146,42 +149,42 @@ remDr<span class="op">$</span><span class="kw">open</span>()
 <h4 class="hasAnchor">
 <a href="#setting-a-user-agent" class="anchor"></a>Setting a User Agent</h4>
 <p>A user agent can be set using the <code>phantomjs.page.settings.userAgent</code> capability.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()
-<span class="kw">Sys.sleep</span>(<span class="dv">5</span>)
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.whatsmyuseragent.com/"</span>)
-remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"id"</span>, <span class="st">"userAgent"</span>)<span class="op">$</span><span class="kw">getElementText</span>()[[<span class="dv">1</span>]]</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">Sys.sleep</span>(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.whatsmyuseragent.com/"</span>)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"id"</span>, <span class="st">"userAgent"</span>)<span class="op">$</span><span class="kw">getElementText</span>()[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## [1] "Your User Agent String is:\nMozilla/5.0 (Unknown; Linux x86_64)
 ## AppleWebKit/534.34 (KHTML, like Gecko) PhantomJS/1.9.7 Safari/534.34"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">close</span>()
-eCap &lt;-<span class="st"> </span><span class="kw">list</span>(
-  <span class="dt">phantomjs.page.settings.userAgent =</span> <span class="st">"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20120101 Firefox/29.0"</span>
-)
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>, <span class="dt">extraCapabilities =</span> eCap)
-remDr<span class="op">$</span><span class="kw">open</span>()
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.whatsmyuseragent.com/"</span>)
-remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"id"</span>, <span class="st">"userAgent"</span>)<span class="op">$</span><span class="kw">getElementText</span>()[[<span class="dv">1</span>]]</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">remDr<span class="op">$</span><span class="kw">close</span>()</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">eCap &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="dt">phantomjs.page.settings.userAgent =</span> <span class="st">"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0) Gecko/20120101 Firefox/29.0"</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>, <span class="dt">extraCapabilities =</span> eCap)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.whatsmyuseragent.com/"</span>)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">remDr<span class="op">$</span><span class="kw">findElement</span>(<span class="st">"id"</span>, <span class="st">"userAgent"</span>)<span class="op">$</span><span class="kw">getElementText</span>()[[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## [1] "Your User Agent String is:\nMozilla/5.0 (Windows NT 6.1; WOW64; rv:29.0)
 ## Gecko/20120101 Firefox/29.0"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">close</span>()
-pJS<span class="op">$</span><span class="kw">stop</span>()</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">remDr<span class="op">$</span><span class="kw">close</span>()</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">pJS<span class="op">$</span><span class="kw">stop</span>()</a></code></pre></div>
 <p>The <a href="https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#webpage-settings" class="uri">https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#webpage-settings</a> In the above example it can be seen that the default useragent identifies us as <code>PhantomJS</code>. Some web content maybe inaccessible or blocked for <code>PhantomJS</code> users. Here we demonstrate changing our user agent so the website sees us as <code>Firefox 29.0</code>.</p>
 </div>
 <div id="other-possible-options" class="section level4">
 <h4 class="hasAnchor">
 <a href="#other-possible-options" class="anchor"></a>Other Possible Options</h4>
 <p>The general form of specifying <a href="https://github.com/ariya/phantomjs/wiki/API-Reference-WebPage#webpage-settings">PhantomJS internal page objects</a> take the form <code>phantomjs.page.settings.SETTING = VALUE</code> where <code>SETTING</code> is the appropriate PhantomJS internal page object. As an example we inhibit the loading of inline images:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(RSelenium)
-pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()
-<span class="kw">Sys.sleep</span>(<span class="dv">5</span>)
-eCap &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">phantomjs.page.settings.loadImages =</span> <span class="ot">FALSE</span>)
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>, <span class="dt">extraCapabilities =</span> eCap)
-remDr<span class="op">$</span><span class="kw">open</span>()
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
-remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)
-remDr<span class="op">$</span><span class="kw">close</span>()
-pJS<span class="op">$</span><span class="kw">stop</span>()</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">require</span>(RSelenium)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">Sys.sleep</span>(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">eCap &lt;-<span class="st"> </span><span class="kw">list</span>(<span class="dt">phantomjs.page.settings.loadImages =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantomjs"</span>, <span class="dt">extraCapabilities =</span> eCap)</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">remDr<span class="op">$</span><span class="kw">close</span>()</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">pJS<span class="op">$</span><span class="kw">stop</span>()</a></code></pre></div>
 <p>We can see that the images are not loaded: <img src="https://res.cloudinary.com/johndharrison/image/upload/v1497012298/RSelenium/headless/Screenshot_2014-06-03_14.32.18.png" title="PhantomJS loadImages = FALSE" style="margin-left: auto;margin-right: auto; display: block;" width="100%"></p>
 </div>
 </div>
@@ -194,26 +197,26 @@ pJS<span class="op">$</span><span class="kw">stop</span>()</code></pre></div>
 <h3 class="hasAnchor">
 <a href="#setup" class="anchor"></a>Setup</h3>
 <p>The VPS i am connecting to has an ip of <code>128.199.255.233</code>. I have rstudio server running on port 8787. On the remote server we observe</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RSelenium)
-RSelenium<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RSelenium/topics/startServer">startServer</a></span>()
-<span class="kw">Sys.which</span>(<span class="st">'phantomjs'</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">library</span>(RSelenium)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">RSelenium<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/RSelenium/topics/startServer">startServer</a></span>()</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw">Sys.which</span>(<span class="st">'phantomjs'</span>)</a></code></pre></div>
 <pre><code>                 phantomjs
 "/usr/local/bin/phantomjs"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.which</span>(<span class="st">'firefox'</span>)</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">Sys.which</span>(<span class="st">'firefox'</span>)</a></code></pre></div>
 <pre><code>firefox
      ""</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.which</span>(<span class="st">'chrome'</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">Sys.which</span>(<span class="st">'chrome'</span>)</a></code></pre></div>
 <pre><code>chrome
     ""</code></pre>
 <p>So we have started a selenium server running on (default) port 4444. Firefox and google chrome are not currently installed on this remote machine. Lets install firefox first. On the remote VPS we run</p>
-<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="fu">sudo</span> apt-get install firefox</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="fu">sudo</span> apt-get install firefox</a></code></pre></div>
 <p>Now checking in the remote rstudio</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.which</span>(<span class="st">'firefox'</span>)</code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">Sys.which</span>(<span class="st">'firefox'</span>)</a></code></pre></div>
 <pre><code>##            firefox 
 ## "/usr/bin/firefox" </code></pre>
 <p>If we try now to connect to the remote server and open firefox:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">remoteServerAddr =</span> <span class="st">"128.199.255.233"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">remoteServerAddr =</span> <span class="st">"128.199.255.233"</span>)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">remDr<span class="op">$</span><span class="kw">open</span>()</a></code></pre></div>
 <pre><code>## [1] "Connecting to remote server"
 ## Error:    Summary: UnknownError
 ##    Detail: An unknown server-side error occurred while processing the command.
@@ -235,115 +238,115 @@ nohup xvfb-run java -jar selenium-server-standalone.jar &gt; selenium.log &amp;<
 <a href="#interacting-with-the-console" class="anchor"></a>Interacting with the Console</h3>
 <p>The <code>PhantomJS</code> API implements a number of callbacks which can be defined. <a href="http://phantomjs.org/api/webpage/handler/on-load-finished.html">onLoadFinished</a> is one such callback. This callback is invoked when the page finishes the loading. It may accept a single argument indicating the pages status: <code>success</code> if no network errors occurred, otherwise <code>fail</code>.</p>
 <p>We give a simple example of writing to the console log when a page is loaded.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RSelenium)
-pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantom"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-result &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">phantomExecute</span>(<span class="st">"var page = this;</span>
-<span class="st">                                page.onLoadFinished = function(status) {</span>
-<span class="st">                                var url = page.url;</span>
-<span class="st">                                console.log(</span><span class="ch">\"</span><span class="st">Status:  </span><span class="ch">\"</span><span class="st"> + status);</span>
-<span class="st">                                console.log(</span><span class="ch">\"</span><span class="st">Loaded:  </span><span class="ch">\"</span><span class="st"> + url);</span>
-<span class="st">                               };"</span>)
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">library</span>(RSelenium)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantom"</span>)</a>
+<a class="sourceLine" id="cb22-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">result &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">phantomExecute</span>(<span class="st">"var page = this;</span></a>
+<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="st">                                page.onLoadFinished = function(status) {</span></a>
+<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="st">                                var url = page.url;</span></a>
+<a class="sourceLine" id="cb22-8" data-line-number="8"><span class="st">                                console.log(</span><span class="ch">\"</span><span class="st">Status:  </span><span class="ch">\"</span><span class="st"> + status);</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="st">                                console.log(</span><span class="ch">\"</span><span class="st">Loaded:  </span><span class="ch">\"</span><span class="st"> + url);</span></a>
+<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="st">                               };"</span>)</a>
+<a class="sourceLine" id="cb22-11" data-line-number="11">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a></code></pre></div>
 <pre><code>## Status:  success
 ## Loaded:  http://www.google.com/</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.bbc.co.uk"</span>)</code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.bbc.co.uk"</span>)</a></code></pre></div>
 <pre><code>## Status:  success
 ## Loaded:  http://www.bbc.co.uk/</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.bbc.com"</span>)</code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.bbc.com"</span>)</a></code></pre></div>
 <pre><code>## Status:  success
 ## Loaded:  http://www.bbc.com/</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pJS<span class="op">$</span><span class="kw">stop</span>()</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">pJS<span class="op">$</span><span class="kw">stop</span>()</a></code></pre></div>
 <p>It can be seen that the callback persists across page calls.</p>
 </div>
 <div id="phantomjs-writing-to-file" class="section level3">
 <h3 class="hasAnchor">
 <a href="#phantomjs-writing-to-file" class="anchor"></a>PhantomJS Writing to File</h3>
 <p>The next example demonstrates writing to file from <code>PhantomJS</code>. Once again the <code>onLoadFinished</code> callback is utilised. In this example the html source of the page that is navigated to is downloaded to <code>output.htm</code> relative to <code>getwd()</code>. An example is given of using <code>phantom.exit()</code> to close <code>PhantomJS</code> from the API.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RSelenium)
-pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantom"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-result &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">phantomExecute</span>(<span class="st">"var page = this;</span>
-<span class="st">                                var fs = require(</span><span class="ch">\"</span><span class="st">fs</span><span class="ch">\"</span><span class="st">);</span>
-<span class="st">                                page.onLoadFinished = function(status) {</span>
-<span class="st">                                var file = fs.open(</span><span class="ch">\"</span><span class="st">output.htm</span><span class="ch">\"</span><span class="st">, </span><span class="ch">\"</span><span class="st">w</span><span class="ch">\"</span><span class="st">);</span>
-<span class="st">                                file.write(page.content);</span>
-<span class="st">                                file.close();</span>
-<span class="st">                                phantom.exit();</span>
-<span class="st">                               };"</span>)
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
-<span class="kw">htmlParse</span>(<span class="st">"output.htm"</span>)[<span class="st">'//title/text()'</span>][[<span class="dv">1</span>]]</code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">library</span>(RSelenium)</a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()</a>
+<a class="sourceLine" id="cb29-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantom"</span>)</a>
+<a class="sourceLine" id="cb29-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb29-5" data-line-number="5">result &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">phantomExecute</span>(<span class="st">"var page = this;</span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="st">                                var fs = require(</span><span class="ch">\"</span><span class="st">fs</span><span class="ch">\"</span><span class="st">);</span></a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="st">                                page.onLoadFinished = function(status) {</span></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="st">                                var file = fs.open(</span><span class="ch">\"</span><span class="st">output.htm</span><span class="ch">\"</span><span class="st">, </span><span class="ch">\"</span><span class="st">w</span><span class="ch">\"</span><span class="st">);</span></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="st">                                file.write(page.content);</span></a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="st">                                file.close();</span></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="st">                                phantom.exit();</span></a>
+<a class="sourceLine" id="cb29-12" data-line-number="12"><span class="st">                               };"</span>)</a>
+<a class="sourceLine" id="cb29-13" data-line-number="13">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a>
+<a class="sourceLine" id="cb29-14" data-line-number="14"><span class="kw">htmlParse</span>(<span class="st">"output.htm"</span>)[<span class="st">'//title/text()'</span>][[<span class="dv">1</span>]]</a></code></pre></div>
 <pre><code>## Google</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pJS<span class="op">$</span><span class="kw">stop</span>()</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">pJS<span class="op">$</span><span class="kw">stop</span>()</a></code></pre></div>
 </div>
 <div id="injecting-a-library-into-phantomjs" class="section level3">
 <h3 class="hasAnchor">
 <a href="#injecting-a-library-into-phantomjs" class="anchor"></a>Injecting a Library into PhantomJS</h3>
 <p>Next we look at <a href="http://phantomjs.org/api/webpage/method/include-js.html">includeJs</a>.</p>
 <p>This includes an external script from the specified url (usually a remote location) on the page and executes the callback upon completion. The library we shall include is <code>JQuery</code> using the google CDN. Now any page we call with <code>PhantomJS</code> will have the <code>JQuery</code> library loaded after the page has finished loading.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(RSelenium)
-pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantom"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)
-<span class="co"># check if the JQuery library is loaded</span>
-remDr<span class="op">$</span><span class="kw">executeScript</span>(<span class="st">"return window.jQuery == undefined;"</span>)[[<span class="dv">1</span>]]
-<span class="co"># TRUE is returned indicating JQuery is not present</span>
-result &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">phantomExecute</span>(<span class="st">"var page = this;</span>
-<span class="st">                                page.onLoadFinished = function(status) {</span>
-<span class="st">                                 var url = page.url;</span>
-<span class="st">                                 var jURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';</span>
-<span class="st">                                 console.log(</span><span class="ch">\"</span><span class="st">Status:  </span><span class="ch">\"</span><span class="st"> + status);</span>
-<span class="st">                                 console.log(</span><span class="ch">\"</span><span class="st">Loaded:  </span><span class="ch">\"</span><span class="st"> + url);</span>
-<span class="st">                                 page.includeJs(jURL, function() {console.log(</span><span class="ch">\"</span><span class="st">Loaded jQuery!</span><span class="ch">\"</span><span class="st">);})</span>
-<span class="st">                                };"</span>
-                               )
-remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">library</span>(RSelenium)</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()</a>
+<a class="sourceLine" id="cb32-3" data-line-number="3">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantom"</span>)</a>
+<a class="sourceLine" id="cb32-4" data-line-number="4">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb32-5" data-line-number="5">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a>
+<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co"># check if the JQuery library is loaded</span></a>
+<a class="sourceLine" id="cb32-7" data-line-number="7">remDr<span class="op">$</span><span class="kw">executeScript</span>(<span class="st">"return window.jQuery == undefined;"</span>)[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb32-8" data-line-number="8"><span class="co"># TRUE is returned indicating JQuery is not present</span></a>
+<a class="sourceLine" id="cb32-9" data-line-number="9">result &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">phantomExecute</span>(<span class="st">"var page = this;</span></a>
+<a class="sourceLine" id="cb32-10" data-line-number="10"><span class="st">                                page.onLoadFinished = function(status) {</span></a>
+<a class="sourceLine" id="cb32-11" data-line-number="11"><span class="st">                                 var url = page.url;</span></a>
+<a class="sourceLine" id="cb32-12" data-line-number="12"><span class="st">                                 var jURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';</span></a>
+<a class="sourceLine" id="cb32-13" data-line-number="13"><span class="st">                                 console.log(</span><span class="ch">\"</span><span class="st">Status:  </span><span class="ch">\"</span><span class="st"> + status);</span></a>
+<a class="sourceLine" id="cb32-14" data-line-number="14"><span class="st">                                 console.log(</span><span class="ch">\"</span><span class="st">Loaded:  </span><span class="ch">\"</span><span class="st"> + url);</span></a>
+<a class="sourceLine" id="cb32-15" data-line-number="15"><span class="st">                                 page.includeJs(jURL, function() {console.log(</span><span class="ch">\"</span><span class="st">Loaded jQuery!</span><span class="ch">\"</span><span class="st">);})</span></a>
+<a class="sourceLine" id="cb32-16" data-line-number="16"><span class="st">                                };"</span></a>
+<a class="sourceLine" id="cb32-17" data-line-number="17">                               )</a>
+<a class="sourceLine" id="cb32-18" data-line-number="18">remDr<span class="op">$</span><span class="kw">navigate</span>(<span class="st">"http://www.google.com/ncr"</span>)</a></code></pre></div>
 <pre><code>## Status:  success
 ## Loaded:  http://www.google.com/
 ## Loaded jQuery!</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remDr<span class="op">$</span><span class="kw">executeScript</span>(<span class="st">"return window.jQuery == undefined;"</span>)[[<span class="dv">1</span>]]
-<span class="co"># FALSE is returned indicating that JQuery is present</span>
-webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">executeScript</span>(<span class="st">"return $(</span><span class="ch">\"</span><span class="st">[name='q']</span><span class="ch">\"</span><span class="st">).get(0);"</span>)[[<span class="dv">1</span>]]
-webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span class="kw">list</span>(<span class="st">"PhantomJS was here"</span>))
-remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)
-pJS<span class="op">$</span><span class="kw">stop</span>()</code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">remDr<span class="op">$</span><span class="kw">executeScript</span>(<span class="st">"return window.jQuery == undefined;"</span>)[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="co"># FALSE is returned indicating that JQuery is present</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3">webElem &lt;-<span class="st"> </span>remDr<span class="op">$</span><span class="kw">executeScript</span>(<span class="st">"return $(</span><span class="ch">\"</span><span class="st">[name='q']</span><span class="ch">\"</span><span class="st">).get(0);"</span>)[[<span class="dv">1</span>]]</a>
+<a class="sourceLine" id="cb34-4" data-line-number="4">webElem<span class="op">$</span><span class="kw">sendKeysToElement</span>(<span class="kw">list</span>(<span class="st">"PhantomJS was here"</span>))</a>
+<a class="sourceLine" id="cb34-5" data-line-number="5">remDr<span class="op">$</span><span class="kw">screenshot</span>(<span class="dt">display =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb34-6" data-line-number="6">pJS<span class="op">$</span><span class="kw">stop</span>()</a></code></pre></div>
 <p><img src="https://res.cloudinary.com/johndharrison/image/upload/v1497012295/RSelenium/headless/googlePhantomJS.png" title="PhantomJS with Jquery injected" style="margin-left: auto;margin-right: auto; display: block;" width="100%"></p>
 </div>
 <div id="starting-a-phantomjs-web-server" class="section level3">
 <h3 class="hasAnchor">
 <a href="#starting-a-phantomjs-web-server" class="anchor"></a>Starting a PhantomJS Web Server</h3>
-<p><code>PhantomJS</code> has the ability to act as a <a href="http://phantomjs.org/api/webserver/">Web Server</a>. Here we demonstrate setting <code>PhantomJS</code> up as a web server on the localhost on port <code>8080</code>. When a user browses to <code>http://localhost:8080</code> they are returned a list of the current blog titles on <a href="http://www.r-bloggers.com" class="uri">http://www.r-bloggers.com</a>. The <code>Jquery</code> library is also injected to aid extraction of the blog titles.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()
-remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantom"</span>)
-remDr<span class="op">$</span><span class="kw">open</span>()
-<span class="st">"</span>
-<span class="st">var server = require('webserver').create();</span>
-<span class="st">server.listen(8080, function (request, response) {</span>
-<span class="st">  var page = new WebPage();</span>
-<span class="st">  page.open('http://www.r-bloggers.com/', function (status) {</span>
-<span class="st">    var jURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';</span>
-<span class="st">    page.includeJs(jURL, function() {</span>
-<span class="st">      console.log(</span><span class="ch">\"</span><span class="st">Loaded jQuery!</span><span class="ch">\"</span><span class="st">);</span>
-<span class="st">      var blogs = page.evaluate(function () {</span>
-<span class="st">        res = $('#mainwrapper .post a[rel=</span><span class="ch">\"</span><span class="st">bookmark</span><span class="ch">\"</span><span class="st">]');</span>
-<span class="st">        return res.map(function(){return this.innerHTML}).toArray().join('</span><span class="ch">\\</span><span class="st">n');</span>
-<span class="st">      });</span>
-<span class="st">      response.statusCode = 200;</span>
-<span class="st">      response.write('Current blogs on r-bloggers:</span><span class="ch">\\</span><span class="st">n');</span>
-<span class="st">      response.write(blogs);</span>
-<span class="st">      response.write('</span><span class="ch">\\</span><span class="st">n');</span>
-<span class="st">      response.close();</span>
-<span class="st">      page.close();</span>
-<span class="st">    });</span>
-<span class="st">  });</span>
-<span class="st">});"</span> -&gt;<span class="st"> </span>wsScript
-
-remDr<span class="op">$</span><span class="kw">phantomExecute</span>(wsScript)
-
-<span class="kw">head</span>(<span class="kw">readLines</span>(<span class="st">"http://localhost:8080/"</span>))</code></pre></div>
+<p><code>PhantomJS</code> has the ability to act as a <a href="http://phantomjs.org/api/webserver/">Web Server</a>. Here we demonstrate setting <code>PhantomJS</code> up as a web server on the localhost on port <code>8080</code>. When a user browses to <code>http://localhost:8080</code> they are returned a list of the current blog titles on <a href="http://www.r-bloggers.com">http://www.r-bloggers.com</a>. The <code>Jquery</code> library is also injected to aid extraction of the blog titles.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">pJS &lt;-<span class="st"> </span><span class="kw"><a href="../reference/phantom.html">phantom</a></span>()</a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">remDr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/remoteDriver-class.html">remoteDriver</a></span>(<span class="dt">browserName =</span> <span class="st">"phantom"</span>)</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3">remDr<span class="op">$</span><span class="kw">open</span>()</a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="st">"</span></a>
+<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="st">var server = require('webserver').create();</span></a>
+<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="st">server.listen(8080, function (request, response) {</span></a>
+<a class="sourceLine" id="cb35-7" data-line-number="7"><span class="st">  var page = new WebPage();</span></a>
+<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="st">  page.open('http://www.r-bloggers.com/', function (status) {</span></a>
+<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="st">    var jURL = 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js';</span></a>
+<a class="sourceLine" id="cb35-10" data-line-number="10"><span class="st">    page.includeJs(jURL, function() {</span></a>
+<a class="sourceLine" id="cb35-11" data-line-number="11"><span class="st">      console.log(</span><span class="ch">\"</span><span class="st">Loaded jQuery!</span><span class="ch">\"</span><span class="st">);</span></a>
+<a class="sourceLine" id="cb35-12" data-line-number="12"><span class="st">      var blogs = page.evaluate(function () {</span></a>
+<a class="sourceLine" id="cb35-13" data-line-number="13"><span class="st">        res = $('#mainwrapper .post a[rel=</span><span class="ch">\"</span><span class="st">bookmark</span><span class="ch">\"</span><span class="st">]');</span></a>
+<a class="sourceLine" id="cb35-14" data-line-number="14"><span class="st">        return res.map(function(){return this.innerHTML}).toArray().join('</span><span class="ch">\\</span><span class="st">n');</span></a>
+<a class="sourceLine" id="cb35-15" data-line-number="15"><span class="st">      });</span></a>
+<a class="sourceLine" id="cb35-16" data-line-number="16"><span class="st">      response.statusCode = 200;</span></a>
+<a class="sourceLine" id="cb35-17" data-line-number="17"><span class="st">      response.write('Current blogs on r-bloggers:</span><span class="ch">\\</span><span class="st">n');</span></a>
+<a class="sourceLine" id="cb35-18" data-line-number="18"><span class="st">      response.write(blogs);</span></a>
+<a class="sourceLine" id="cb35-19" data-line-number="19"><span class="st">      response.write('</span><span class="ch">\\</span><span class="st">n');</span></a>
+<a class="sourceLine" id="cb35-20" data-line-number="20"><span class="st">      response.close();</span></a>
+<a class="sourceLine" id="cb35-21" data-line-number="21"><span class="st">      page.close();</span></a>
+<a class="sourceLine" id="cb35-22" data-line-number="22"><span class="st">    });</span></a>
+<a class="sourceLine" id="cb35-23" data-line-number="23"><span class="st">  });</span></a>
+<a class="sourceLine" id="cb35-24" data-line-number="24"><span class="st">});"</span> -&gt;<span class="st"> </span>wsScript</a>
+<a class="sourceLine" id="cb35-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb35-26" data-line-number="26">remDr<span class="op">$</span><span class="kw">phantomExecute</span>(wsScript)</a>
+<a class="sourceLine" id="cb35-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb35-28" data-line-number="28"><span class="kw">head</span>(<span class="kw">readLines</span>(<span class="st">"http://localhost:8080/"</span>))</a></code></pre></div>
 <pre><code>## Loaded jQuery!
 ## [1] "Current blogs on r-bloggers:"                        "Specifying complicated groups of time series in hts"
 ## [3] "Creating Inset Map with ggplot2"                     "R and Vertica"                                      

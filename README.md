@@ -44,6 +44,7 @@ There is a second vignette dealing with running RSelenium on different browsers/
 1. [Testing Shiny Apps](http://ropensci.github.io/RSelenium/articles/shinytesting.html)
 1. [Headless Browsing](http://ropensci.github.io/RSelenium/articles/headless.html)
 1. [Docker](http://ropensci.github.io/RSelenium/articles/docker.html)
+1. [Internet Explorer](http://ropensci.github.io/RSelenium/articles/internetexplorer.html)
 1. [Orange County R Users Group Webinar](http://ropensci.github.io/RSelenium/articles/webinar.html)
 
 
