@@ -1,21 +1,20 @@
 ---
 title: "Internet Explorer"
+author: "Sebastian Wolf"
 output:
   html_vignette:
     toc: yes
 vignette: >
-  %\VignetteIndexEntry{RSelenium Basics}
+  %\VignetteIndexEntry{Internet Explorer}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
+
 ## Introduction
 
-This tutorial shall show you creating a setup that allows you to test web apps
-using Selenium Server + a connection to Microsoft Internet Explorer. It
-contains the most important tricks in Microsoft Windows you'll need to perform.
-Additionally some extra information is given on how to change default methods
-like clicking to run stable in Internet Explorer.
+This tutorial shall show you creating a setup that allows you to test web apps using Selenium Server + a connection to Microsoft Internet Explorer. It contains the most important tricks in Microsoft Windows you'll need to perform. Additionally some extra information is given on how to change default methods like clicking to run stable in Internet Explorer.
+
 
 ## Windows Registry setup
 
@@ -25,8 +24,7 @@ You will need administrator rights to perform all steps in this chapter
 
 ### Edit Registry Main
 
-To allow the Internet Explorer Selenium connection there are certain settings
-in the Windows Registry that need to be changed.
+To allow the Internet Explorer Selenium connection there are certain settings in the Windows Registry that need to be changed.
 
 Open registry by `regedit` command on Windows
 
@@ -36,11 +34,9 @@ Create the Key:
 HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE
 ```
 
-Please note that the FEATURE_BFCACHE subkey may or may not be present, and 
-should be created if it is not present.
+Please note that the `FEATURE_BFCACHE` subkey may or may not be present, and should be created if it is not present.
 
-**Important**: Inside this key, create a `DWORD` value named `iexplore.exe` with
-the value of `0`.
+**Important**: Inside this key, create a `DWORD` value named `iexplore.exe` with the value of `0`.
 
 ### Edit Registry User
 
@@ -50,225 +46,181 @@ Create the Key:
 HKEY_LOCAL_MACHINE \SOFTW ARE\Microsoft\Internet Explorer\Main\FeatureControl\FEATURE_BFCACHE 
 ```
 
-Please note
-that the FEATURE_BFCACHE subkey may or may not be present, and should be created
-if it is not present. 
+Please note that the `FEATURE_BFCACHE` subkey may or may not be present, and should be created if it is not present.
 
-**Important**: Inside this key, create a `DWORD` value named
-`iexplore.exe` with the value of `0`. 
+**Important**: Inside this key, create a `DWORD` value named `iexplore.exe` with the value of `0`.
 
 ### Allow Window Navigation
 
-
-Go to: 
+Go to:
 
 ```
 HKEY_CURRENT_USER \Software
 \Microsoft \Internet Explorer \Main
 ```
 
-Inside this key (Main) , create a `DWORD` value named `TabProcGrowth` with the
-value of `0`.
+Inside this key (Main) , create a `DWORD` value named `TabProcGrowth` with the value of `0`.
+
 
 ## Selenium Server
 
-To use Internet Exlorer there is sadly just one way to use a Selenium Server
-which is running it via the Java Binary as explained in the **Basics** vignette 
-of this package.
+To use Internet Exlorer there is sadly just one way to use a Selenium Server which is running it via the Java Binary as explained in the **Basics** vignette of this package.
+
 
 ## Selenium Driver
 
-For Internet Explorer please download the 32-bit version of the SeleniumDriver.
-The 64 bit version still has trouble inserting text and can make your user
-interface testing really slow.
+For Internet Explorer please download the 32-bit version of the SeleniumDriver. The 64 bit version still has trouble inserting text and can make your user interface testing really slow.
 
-Please have the "IEDriverServer.exe" in your PATH variable. You can simply do
-this by using 
+Please have the `IEDriverServer.exe` in your PATH variable. You can simply do this by using 
 
-```
+```R
 ie_driver_folder <- "C:\\Selenium"
-Sys.setenv(PATH=paste(ie_driver_folder,
-						Sys.getenv("PATH"),
-						sep=";"))
+Sys.setenv(PATH = paste(ie_driver_folder, Sys.getenv("PATH"), sep = ";"))
 ```
 
 if you copied the "IEDriverServer.exe" to `C:\Selenium`
+
 
 ## Initialization fo a Selenium Driver object
 
 ### Set extra capabilities
 
-For initialization of a Selenium Driver object in with Internet Explorer there
-are certain extra settings to be made. The first one are the extraCapabilities.
-Not all of these are needed, but those 
+For initialization of a Selenium Driver object in with Internet Explorer there are certain extra settings to be made. The first one are the extraCapabilities. Not all of these are needed, but those 
 
-`ie.forceCreateProcessApi=FALSE` and
-`InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAIN=TRUE`
-are needed to basically access the Internet Explorer from Selenium.
-
-`InternetExplorerDriver.IGNORE_ZOOM_SETTING=TRUE` will allow you to start
-Internet Explorer Selenium Driver Sessions even if you did not set the zoom to 
-"100%" before starting your session.
-
-`requireWindowFocus=TRUE` allows more native browser interactions.
-
-`enablePersistentHover=FALSE` allows you to hover and focus elements.
+- `ie.forceCreateProcessApi=FALSE` and `InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAIN=TRUE` are needed to basically access the Internet Explorer from Selenium.
+- `InternetExplorerDriver.IGNORE_ZOOM_SETTING=TRUE` will allow you to start Internet Explorer Selenium Driver Sessions even if you did not set the zoom to "100%" before starting your session.
+- `requireWindowFocus=TRUE` allows more native browser interactions.
+- `enablePersistentHover=FALSE` allows you to hover and focus elements.
 
 So please define a list like that:
 
-```
+```R
 extraCapabilities <- list(
-				ie.forceCreateProcessApi=FALSE,
-				InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAIN=TRUE,
-				InternetExplorerDriver.IGNORE_ZOOM_SETTING=TRUE,
-				requireWindowFocus=TRUE,
-				enablePersistentHover=FALSE)
+  ie.forceCreateProcessApi = FALSE,
+  InternetExplorerDriver.INTRODUCE_FLAKINESS_BY_IGNORING_SECURITY_DOMAIN = TRUE,
+  InternetExplorerDriver.IGNORE_ZOOM_SETTING = TRUE,
+  requireWindowFocus = TRUE,
+  enablePersistentHover = FALSE
+)
 ```
 
 ### Start the driver
 
-To navigate to your first page you can now start the remoteDriver.
-Please note that Internet Explorer will now open and connect to the local
-Selenium Server. You need to have the followin
+To navigate to your first page you can now start the remoteDriver. Please note that Internet Explorer will now open and connect to the local Selenium Server. You need to have the followin
 
-```
-remDr <<- remoteDriver(
-						browserName = "internet explorer",
-						extraCapabilities = extraCapabilities
-				)
+```R
+remDr <- remoteDriver(
+  browserName = "internet explorer",
+  extraCapabilities = extraCapabilities
+)
 remDr$open()
-
 remDr$setImplicitWaitTimeout(as.numeric(10000))
 
 url <- "http://ropensci.github.io/RSelenium"
-
 remDr$navigate(url)
 ```
 
-We use a global definition of the `remDr` element as there exists no possibility
-to create two paralel sessions using Internet Explorer. Additionally it is
-necessary to set a really long implicit wait timeout due to basic troubles
-Internet Exploer might have running multiple tests in a row.
+We use a global definition of the `remDr` element as there exists no possibility to create two paralel sessions using Internet Explorer. Additionally it is necessary to set a really long implicit wait timeout due to basic troubles Internet Exploer might have running multiple tests in a row.
 
 ### Initialization for more reproducible tests
 
-For reproducibility reasons we noticed that in Internet Explorer you either
-want to always maximize the screen or set it to a fixed size. Additionally
-always move the Window to the top left corner of your screen. This is mainly
-important for checking images that you want to compare against other images 
-created by your web app.
+For reproducibility reasons we noticed that in Internet Explorer you either want to always maximize the screen or set it to a fixed size. Additionally always move the Window to the top left corner of your screen. This is mainly important for checking images that you want to compare against other images created by your web app.
 
-```
+```R
 remDr$navigate(url)
 remDr$maxWindowSize()
 remDr$setWindowSize(1936, 1056)
-remDr$setWindowPosition(0,0)
+remDr$setWindowPosition(0, 0)
 ```
 
 ### Addtional functionalities for testing shiny
 
-Shiny may sometimes run inside `iframes`. In Internet Explorer it might be hard
-to get into those. Therefore in testing shiny using Internet Explorer we
-recommend adding a boolean variable called `in_shiny` to your sessionInfo.
+Shiny may sometimes run inside `iframes`. In Internet Explorer it might be hard to get into those. Therefore in testing shiny using Internet Explorer we recommend adding a boolean variable called `in_shiny` to your sessionInfo.
 
-```
+```R
 remDr$sessionInfo$in_shiny <- FALSE
 ```
 
-This variable can be used to check if you are runnning inside the shiny app already or not. You do
-not want do go into an iframe inside the shiny app, if you are already inside the shiny app.
+This variable can be used to check if you are runnning inside the shiny app already or not. You do not want do go into an iframe inside the shiny app, if you are already inside the shiny app.
 
 So after starting a Selenium Session maybe do the following:
 
 Navigate to the mainframe
-```
+
+```R
 remDr$sessionInfo$in_shiny <- FALSE
 object$switchToFrame(NULL)
 object$setImplicitWaitTimeout(1000)
 ```
 
 Navigate into the first iframe if an iframe is there.
-```
+
+```R
 iframe_found <- TRUE
 
-if(length(remDr$findElements("tag","iframe"))==0 || remDr$sessionInfo$in_shiny){
-	iframe_found <- FALSE
-	remDr$sessionInfo$in_shiny<-TRUE
-}else{
-	remDr$sessionInfo$in_shiny<-TRUE
-				
-	remDr$switchToFrame(remDr$findElements("tag","iframe")[[1]])
+if (length(remDr$findElements("tag", "iframe")) == 0 || remDr$sessionInfo$in_shiny) {
+  iframe_found <- FALSE
+  remDr$sessionInfo$in_shiny <- TRUE
+} else {
+  remDr$sessionInfo$in_shiny <- TRUE
+  remDr$switchToFrame(remDr$findElements("tag", "iframe")[[1]])
 }
 ```
+
 
 ## Interacting with the page
 
 ### Clicking
 
-As simple as it might seem, during a lot of test runs using Internet Explorer
-for Web testing with Selenium, we found that clicking might have some hurdles.
-Instead of using the basic `click` functionality of Selenium we recommend either
+As simple as it might seem, during a lot of test runs using Internet Explorer for Web testing with Selenium, we found that clicking might have some hurdles. Instead of using the basic `click` functionality of Selenium we recommend either
 
 1. Move the mouse to the element and click
 
-```
-
-web_element <- remDr$findElements("tag","a")[[1]]
-
-remDr$mouseMoveToLocation(x=round(web_element$getElementSize()$width/3),
-						  y=round(web_element_selector$getElementSize()$height/3),
-                          webElement=web_element)
+```R
+web_element <- remDr$findElements("tag", "a")[[1]]
+remDr$mouseMoveToLocation(
+ x = round(web_element$getElementSize()$width / 3),
+ y = round(web_element_selector$getElementSize()$height / 3),
+ webElement = web_element
+)
 web_element$clickElement()
-				
 ```
 
 2. Click by using javascript
 
-```
-remDr$executeScript("arguments[0].click();", list(web_element));
+```R
+remDr$executeScript("arguments[0].click();", list(web_element))
 ```
 
 ### Entering Text in a input text field
 
-For entering a text into a Text box in Internet Explorer we highly recommend to
-first set the value of the text box. Afterwards clean it and then send the 
-character string to the textbox to type it in.
+For entering a text into a Text box in Internet Explorer we highly recommend to first set the value of the text box. Afterwards clean it and then send the character string to the textbox to type it in.
 
-```
-web_element <- remDr$findElements("css selector","input[type='text']")[[1]]
-
+```R
+web_element <- remDr$findElements("css selector", "input[type='text']")[[1]]
 text_to_type = "My input text"
-
 remDr$executeScript(
-						paste0("arguments[0].setAttribute('value','",
-								text_to_type,"');"),
-						list(web_element))						
-				
+  paste0("arguments[0].setAttribute('value','", text_to_type, "');"),
+  list(web_element)
+)
+
 web_element$clearElement()
-
 web_element$sendKeysToElement(list(text_to_type))
-
 ```
 
 ### Checking a checkbox
 
-It may seem simple, but it is one of the hardest parts using Selenium to check a
-checkbox. In Internet Explorer there is just one way to make it save and always
-happen.
+It may seem simple, but it is one of the hardest parts using Selenium to check a checkbox. In Internet Explorer there is just one way to make it save and always happen.
 
-**Important** You are never allowed to not have the cursor on the screen where
-Internet Explorer is running. You need to have the Internet Explorer Window
-focused.
+**Important** You are never allowed to not have the cursor on the screen where Internet Explorer is running. You need to have the Internet Explorer Window focused.
 
-Please always get the checkboxed focus by executing Javascript code using
-Selenium and afterwards click just the `input` element of this checkbox.
+Please always get the checkboxed focus by executing Javascript code using Selenium and afterwards click just the `input` element of this checkbox.
 
+```R
+checkboxes <- remDr$findElements("class name", "checkbox")
+remDr$executeScript(
+  "arguments[0].focus();",
+  list(checkboxes[[1]]$findChildElements("tag", "input")[[1]])
+)
+checkboxes[[1]]$findChildElements("tag", "input")[[1]]$clickElement()
 ```
-checkboxes <- remDr$findElements("class name","checkbox")
-
-remDr$executeScript("arguments[0].focus();",
-			list(checkboxes[[1]]$findChildElements("tag","input")[[1]]))
-							
-checkboxes[[1]]$findChildElements("tag","input")[[1]]$clickElement()
-```
-
