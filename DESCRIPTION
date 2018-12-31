@@ -1,7 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.4.9000
+Version: 1.7.5
 Authors@R: c(
     person("John", "Harrison", , "johndharrison0@gmail.com",
     role = "aut", comment = "original author"),
@@ -50,4 +50,4 @@ Collate:
     'util.R'
     'webElement.R'
 Encoding: UTF-8
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1

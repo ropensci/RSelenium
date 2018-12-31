@@ -1,3 +1,8 @@
+# RSelenium 1.7.5
+* Fix switchToWindow issue in fiefox (#143)
+* Add a tutorial to allow running RSelenium Tests in Internet Explorer (thanks @zappingseb #193)
+* Updated vignettes and documentation
+
 # RSelenium 1.7.4
 * `executeScript` now passes a dummy argument
 * Defunct `phantom()` function
