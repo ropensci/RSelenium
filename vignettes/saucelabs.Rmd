@@ -461,7 +461,7 @@ remDr <- remoteDriver$new(
 
 We state the browser and OS we require (chrome 33/ Mac OSX 10.9). The user and password are used to form an appropriate ip address for our remote server ([http://rselenium0:49953c74-5c46-4ff9-b584-cf31a4c71809@ondemand.saucelabs.com](http://rselenium0:49953c74-5c46-4ff9-b584-cf31a4c71809@ondemand.saucelabs.com) in this case). They are also passed as `extraCapabilities` to the remote Selenium server.
 
-We give our test a `name` and any additional `tags` we wish that are passed to the remote Selenium server. Details of the name and tags are given [here](https://saucelabs.com/docs/additional-config). They are used to annotate our tests.
+We give our test a `name` and any additional `tags` we wish that are passed to the remote Selenium server. Details of the name and tags are given [here](https://wiki.saucelabs.com/display/DOCS/Test+Configuration+Options). They are used to annotate our tests.
 
 #### Basic Example
 

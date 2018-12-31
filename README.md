@@ -2,7 +2,6 @@ RSelenium
 ================
 
 [![Build Status](https://travis-ci.org/ropensci/RSelenium.svg?branch=master)](https://travis-ci.org/ropensci/RSelenium)
-[![Selenium Test Status](https://saucelabs.com/buildstatus/rselenium)](https://saucelabs.com/u/rselenium)
 [![codecov](https://codecov.io/gh/ropensci/RSelenium/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/RSelenium)
 [![](http://www.r-pkg.org/badges/version/RSelenium)](https://CRAN.R-project.org/package=RSelenium)
 ![](http://cranlogs.r-pkg.org/badges/RSelenium?color=yellow)
