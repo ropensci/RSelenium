@@ -17,7 +17,7 @@
 #'    to route session-specific commands. This ID should be included in
 #'    all future session-commands in place of the :sessionId path segment
 #'    variable.
-#' @field hcode
+#' @field hcode A list
 #' @field value A list containing detailed information regarding possible
 #'    errors:
 #'    \describe{

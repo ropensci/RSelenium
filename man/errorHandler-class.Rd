@@ -30,6 +30,8 @@ to route session-specific commands. This ID should be included in
 all future session-commands in place of the :sessionId path segment
 variable.}
 
+\item{\code{hcode}}{A list}
+
 \item{\code{value}}{A list containing detailed information regarding possible
 errors:
 \describe{
