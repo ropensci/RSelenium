@@ -18,7 +18,7 @@ Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
     browsers). Using RSelenium you can automate browsers locally or
     remotely.
 License: AGPL-3
-URL: http://ropensci.github.io/RSelenium
+URL: http://docs.ropensci.org/RSelenium
 BugReports: http://github.com/ropensci/RSelenium/issues
 Additional_repositories: http://www.omegahat.net/R
 Depends:
