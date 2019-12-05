@@ -32,24 +32,24 @@ To get started using `RSelenium` you can look at the introduction vignette locat
 vignette("basics", package = "RSelenium")
 ```
 
-or the basic vignette can be viewed [here](http://ropensci.github.io/RSelenium/articles/basics.html).
+or the basic vignette can be viewed [here](http://docs.ropensci.org/RSelenium/articles/basics.html).
 
-There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at [Driving OS/Browsers Local and Remote](http://ropensci.github.io/RSelenium/articles/saucelabs.html). Finally, you can read all about running a headless browser or running a normal browser on a headless server at [Headless Browsing](http://ropensci.github.io/RSelenium/articles/headless.html).
+There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at [Driving OS/Browsers Local and Remote](http://docs.ropensci.org/RSelenium/articles/saucelabs.html). Finally, you can read all about running a headless browser or running a normal browser on a headless server at [Headless Browsing](http://docs.ropensci.org/RSelenium/articles/headless.html).
 
 ### Summary of Vignettes
 
-1. [Basics](http://ropensci.github.io/RSelenium/articles/basics.html)
-1. [Driving OS/Browsers Local and Remote](http://ropensci.github.io/RSelenium/articles/saucelabs.html)
-1. [Testing Shiny Apps](http://ropensci.github.io/RSelenium/articles/shinytesting.html)
-1. [Headless Browsing](http://ropensci.github.io/RSelenium/articles/headless.html)
-1. [Docker](http://ropensci.github.io/RSelenium/articles/docker.html)
-1. [Internet Explorer](http://ropensci.github.io/RSelenium/articles/internetexplorer.html)
-1. [Orange County R Users Group Webinar](http://ropensci.github.io/RSelenium/articles/webinar.html)
+1. [Basics](http://docs.ropensci.org/RSelenium/articles/basics.html)
+1. [Driving OS/Browsers Local and Remote](http://docs.ropensci.org/RSelenium/articles/saucelabs.html)
+1. [Testing Shiny Apps](http://docs.ropensci.org/RSelenium/articles/shinytesting.html)
+1. [Headless Browsing](http://docs.ropensci.org/RSelenium/articles/headless.html)
+1. [Docker](http://docs.ropensci.org/RSelenium/articles/docker.html)
+1. [Internet Explorer](http://docs.ropensci.org/RSelenium/articles/internetexplorer.html)
+1. [Orange County R Users Group Webinar](http://docs.ropensci.org/RSelenium/articles/webinar.html)
 
 
 ## Test Shiny Apps
 
-Use `RSelenium` to test your Shiny Apps. Read the introductory tutorial [here](http://ropensci.github.io/RSelenium/articles/shinytesting.html).
+Use `RSelenium` to test your Shiny Apps. Read the introductory tutorial [here](http://docs.ropensci.org/RSelenium/articles/shinytesting.html).
 
 
 ## Use [Sauce Labs](https://saucelabs.com/) and [BrowserStack](https://www.browserstack.com/)
