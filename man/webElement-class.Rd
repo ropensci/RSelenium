@@ -37,8 +37,11 @@ the same DOM element.}
 
 \item{\code{describeElement()}}{Describe the identified element.}
 
-\item{\code{findChildElement(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)}}{Search for an element on the page, starting from the node defined
+\item{\code{findChildElement(
+  using = c("xpath", "css selector", "id", "name", "tag name", "class name",
+    "link text", "partial link text"),
+  value
+)}}{Search for an element on the page, starting from the node defined
 by the parent webElement. The located element will be returned as
 an object of webElement class.
 The inputs are:
@@ -51,8 +54,11 @@ The inputs are:
   \item{\code{value}:}{The search target. See examples.}
 }}
 
-\item{\code{findChildElements(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)}}{Search for multiple elements on the page, starting from the node
+\item{\code{findChildElements(
+  using = c("xpath", "css selector", "id", "name", "tag name", "class name",
+    "link text", "partial link text"),
+  value
+)}}{Search for multiple elements on the page, starting from the node
 defined by the parent webElement. The located elements will be
 returned as an list of objects of class WebElement.
 The inputs are:
@@ -111,7 +117,7 @@ sent as a list. Plain text is enter as an unnamed element of the
 list. Keyboard entries are defined in `selKeys` and should be
 listed with name `key`. See the examples.}
 
-\item{\code{setElementAttribute(attributeName, value)}}{Utility function to set an elements atrributes.}
+\item{\code{setElementAttribute(attributeName, value)}}{Utility function to set an elements attributes.}
 
 \item{\code{submitElement()}}{Submit a FORM element. The submit command may also be applied to
 any element that is a descendant of a FORM element.}

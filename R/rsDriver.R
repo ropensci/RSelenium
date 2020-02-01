@@ -56,19 +56,18 @@
 #' @export
 #' @importFrom wdman selenium
 rsDriver <- function(
-  port = 4567L,
-  browser = c("chrome", "firefox", "phantomjs", "internet explorer"),
-  version = "latest",
-  chromever = "latest",
-  geckover = "latest",
-  iedrver = NULL,
-  phantomver = "2.1.1",
-  verbose = TRUE,
-  check = TRUE, ...
-) {
+                     port = 4567L,
+                     browser = c("chrome", "firefox", "phantomjs", "internet explorer"),
+                     version = "latest",
+                     chromever = "latest",
+                     geckover = "latest",
+                     iedrver = NULL,
+                     phantomver = "2.1.1",
+                     verbose = TRUE,
+                     check = TRUE, ...) {
   browser <- match.arg(browser)
   if (identical(browser, "internet explorer") &&
-      !identical(.Platform[["OS.type"]], "windows")) {
+    !identical(.Platform[["OS.type"]], "windows")) {
     stop("Internet Explorer is only available on Windows.")
   }
   selServ <- wdman::selenium(

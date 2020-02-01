@@ -90,7 +90,7 @@ scr <- remDr$screenshot(display = TRUE)
 
 ### Observations
 
-From the screenshot we retrieved from the remote Driver there are some interesting observations to make. Note that the `selectInput` and `numericInput` boxes are sticking out. This is occuring because the sidePanel is given a bootstrap span of 3. This is however fluid. The resolution on the remote machine is low so the pixel count on the span 3 is also low. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the `selectInput` and `numericInput` boxes sticking out. 
+From the screenshot we retrieved from the remote Driver there are some interesting observations to make. Note that the `selectInput` and `numericInput` boxes are sticking out. This is occurring because the sidePanel is given a bootstrap span of 3. This is however fluid. The resolution on the remote machine is low so the pixel count on the span 3 is also low. On a local machine with high resolution (Nothing amazing just a laptop) we did not observe the `selectInput` and `numericInput` boxes sticking out. 
 
 We could have run with a higher resolution by passing the additional `screen-resolution` parameter to `sauceLabs`. 
 
@@ -113,7 +113,7 @@ The app is designed to show testing of the basic shiny components. It is a bit c
 
 ### Basic Functionality
 
-The first test we will look at implementing will be basic connection to the app. Typically we would make a request for the page and then observe what status code was returned. Selenium doesnt currently give the html status code of a navigation request so instead we will check if the title of the web page is correct. Our `Shiny Test App` has a title of "Shiny Test App" so we will check for this.
+The first test we will look at implementing will be basic connection to the app. Typically we would make a request for the page and then observe what status code was returned. Selenium doesn't currently give the html status code of a navigation request so instead we will check if the title of the web page is correct. Our `Shiny Test App` has a title of "Shiny Test App" so we will check for this.
 
 We create a `test/` directory in our `Shiny Test App` folder. The first set of tests will be basic so we create a file `test-basic.r`. In this file we have the following code to start with:
 
@@ -177,7 +177,7 @@ test_that("tabs are present", {
 })
 ```
 
-When we rerun our basic test we should hopefully now see that it is checking for the prescence of
+When we rerun our basic test we should hopefully now see that it is checking for the presence of
 the controls and the tabs.
 
 ```R
@@ -264,7 +264,7 @@ We filter here on "checkbox" to only select this test file to run. If you watch 
 
 ### Testing the selectInput
 
-We write a simple test for the `selectInput`. It tests the options presented and the label of the control. We isolate the code in a seperate file `test-selectinput.r` in the test folder of our `Shiny Test App`. It also then selects an element from the options at random. It is tested whether the output changes or not.
+We write a simple test for the `selectInput`. It tests the options presented and the label of the control. We isolate the code in a separate file `test-selectinput.r` in the test folder of our `Shiny Test App`. It also then selects an element from the options at random. It is tested whether the output changes or not.
 
 ```R
 test_that("selectInput dataSet correct", {  

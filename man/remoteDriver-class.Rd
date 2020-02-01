@@ -8,7 +8,7 @@
 \description{
 remoteDriver Class uses the JsonWireProtocol to communicate with the
    Selenium Server. If an error occurs while executing the command then
-   the server sends back an HTTP error code with a JSON encoded reponse
+   the server sends back an HTTP error code with a JSON encoded response
    that indicates the precise Response Error Code. The remoteDriver
    class inherits from the \code{errorHandler} class. If no error
    occurred, then the subroutine called will return the value sent back
@@ -75,8 +75,15 @@ information on sessions.}
 \item{\code{acceptAlert()}}{Accepts the currently displayed alert dialog.  Usually, this is
 equivalent to clicking the 'OK' button in the dialog.}
 
-\item{\code{addCookie(name, value, path = "/", domain = NULL, httpOnly = NULL,
-  expiry = NULL, secure = FALSE)}}{Set a cookie on the domain. The inputs are required apart from
+\item{\code{addCookie(
+  name,
+  value,
+  path = "/",
+  domain = NULL,
+  httpOnly = NULL,
+  expiry = NULL,
+  secure = FALSE
+)}}{Set a cookie on the domain. The inputs are required apart from
 those with default values.}
 
 \item{\code{buttondown(buttonId = 0)}}{Click and hold the given mouse button (at the coordinates set by
@@ -100,7 +107,7 @@ mouseMoveToLocation() command). buttonId - any one of 'LEFT'/0
 
 \item{\code{closeServer()}}{Closes the server in practice terminating the process. This is
 useful for linux systems. On windows the java binary operates as a
-seperate shell which the user can terminate.}
+separate shell which the user can terminate.}
 
 \item{\code{closeWindow()}}{Close the current window.}
 
@@ -109,7 +116,7 @@ seperate shell which the user can terminate.}
 \item{\code{deleteCookieNamed(name)}}{Delete the cookie with the given name. This command will be a
 no-op if there is no such cookie visible to the current page.}
 
-\item{\code{dismissAlert()}}{Dismisses the currently displayed alert dialog. For comfirm() and
+\item{\code{dismissAlert()}}{Dismisses the currently displayed alert dialog. For confirm() and
 prompt() dialogs, this is equivalent to clicking the 'Cancel'
 button. For alert() dialogs, this is equivalent to clicking the
 'OK' button.}
@@ -141,8 +148,11 @@ the corresponding DOM element. Likewise, any WebElements in the
 script result will be returned to the client as WebElement JSON
 objects.}
 
-\item{\code{findElement(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)}}{Search for an element on the page, starting from the document
+\item{\code{findElement(
+  using = c("xpath", "css selector", "id", "name", "tag name", "class name",
+    "link text", "partial link text"),
+  value
+)}}{Search for an element on the page, starting from the document
 root. The located element will be returned as an object of
 webElement class.The inputs are:
 \describe{
@@ -172,8 +182,11 @@ webElement class.The inputs are:
   \item{\code{value}:}{The search target. See examples.}
 }}
 
-\item{\code{findElements(using = c("xpath", "css selector", "id", "name", "tag name",
-  "class name", "link text", "partial link text"), value)}}{Search for multiple elements on the page, starting from the
+\item{\code{findElements(
+  using = c("xpath", "css selector", "id", "name", "tag name", "class name",
+    "link text", "partial link text"),
+  value
+)}}{Search for multiple elements on the page, starting from the
 document root. The located elements will be returned as an list of
 objects of class WebElement. The inputs are:
 \describe{
@@ -251,7 +264,7 @@ request.
 \item{\code{maxWindowSize(winHand = "current")}}{Set the size of the browser window to maximum. The windows handle
 is optional. If not specified the current window in focus is used.}
 
-\item{\code{mouseMoveToLocation(x = NA_integer_, y = NA_integer_, webElement = NULL)}}{Move the mouse by an offset of the specificed element. If no
+\item{\code{mouseMoveToLocation(x = NA_integer_, y = NA_integer_, webElement = NULL)}}{Move the mouse by an offset of the specified element. If no
 element is specified, the move is relative to the current mouse
 cursor. If an element is provided but no offset, the mouse will be
 moved to the center of the element. If the element is not visible,
@@ -369,11 +382,13 @@ frontPage <- remDr$getPageSource()
 
 # The R homepage contains frames
 webElem <- remDr$findElements(value = "//frame")
-sapply(webElem, function(x) {x$getElementAttribute('name')})
+sapply(webElem, function(x) {
+  x$getElementAttribute("name")
+})
 
 # The homepage contains 3 frames: logo, contents and banner
 # switch to the `contents` frame
-webElem <- remDr$findElement(using = 'name', value = 'contents')
+webElem <- remDr$findElement(using = "name", value = "contents")
 remDr$switchToFrame(webElem$elementId)
 
 # re-examine the page source
@@ -383,7 +398,7 @@ identical(contentPage, frontPage) # false we hope!!
 
 # Find the link for the search page on R homepage. Use xpath as default.
 webElem <- remDr$findElement(value = '//a[@href = "search.html"]')
-webElem$getElementAttribute('href')
+webElem$getElementAttribute("href")
 # http://www.r-project.org/search.html
 
 # click the search link
@@ -394,23 +409,26 @@ remDr$navigate("http://www.google.com")
 
 # show different methods of accessing DOM components
 
-webElem1 <- remDr$findElement(using = 'name', value = 'q')
+webElem1 <- remDr$findElement(using = "name", value = "q")
 webElem2 <- remDr$findElement(
-  using = 'id',
-  value = webElem1$getElementAttribute('id')[[1]])
-webElem3 <- remDr$findElement(using = 'xpath',
-                              value = '//input[@name = "q"]')
+  using = "id",
+  value = webElem1$getElementAttribute("id")[[1]]
+)
+webElem3 <- remDr$findElement(
+  using = "xpath",
+  value = '//input[@name = "q"]'
+)
 
 # Enter some text in the search box
 
-webElem1$sendKeysToElement(list('RSelenium was here'))
+webElem1$sendKeysToElement(list("RSelenium was here"))
 
 # clear the text previously entered
 
 webElem1$clearElement()
 
 # show an example of sending a key press
-webElem1$sendKeysToElement(list('R', key = 'enter'))
+webElem1$sendKeysToElement(list("R", key = "enter"))
 
 # Collate the results for the `R` search
 googLinkText <- remDr$findElements(value = "//h3[@class = 'r']")
@@ -418,11 +436,15 @@ linkHeading <- sapply(googLinkText, function(x) x$getElementText())
 googLinkDesc <- remDr$findElements(value = "//div[@class = 's']")
 linkDescription <- sapply(googLinkDesc, function(x) x$getElementText())
 googLinkHref <- remDr$findElements(value = "//h3[@class = 'r']/a")
-linkHref <- sapply(googLinkHref,
-                   function(x) x$getElementAttribute('href'))
+linkHref <- sapply(
+  googLinkHref,
+  function(x) x$getElementAttribute("href")
+)
 
-data.frame(heading = linkHeading,
-           description = linkDescription, href = linkHref)
+data.frame(
+  heading = linkHeading,
+  description = linkDescription, href = linkHref
+)
 
 # Example of javascript call
 remDr$executeScript("return arguments[0] + arguments[1];", args = 1:2)
@@ -439,12 +461,13 @@ remDr$open(silent = TRUE)
 remDr$navigate("http://ariya.github.com/js/random/")
 # returns a set of random numbers
 remDr$findElement("id", "numbers")$getElementText()[[1]]
-result = remDr$phantomExecute("var page = this;
+#  # now try injecting a new Math,random function
+result <- remDr$phantomExecute("var page = this;
                                page.onInitialized = function () {
                                page.evaluate(function () {
                                Math.random = function() {return 42/100}
                                })
-                               }", list());
+                               }", list())
 remDr$navigate("http://ariya.github.com/js/random/")
 # Math.random returns our custom function
 remDr$findElement("id", "numbers")$getElementText()[[1]]

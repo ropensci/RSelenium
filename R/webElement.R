@@ -22,7 +22,7 @@ webElement <-
     Class = "webElement",
     fields = list(elementId = "character"),
     contains = "remoteDriver",
-    methods  = list(
+    methods = list(
       initialize = function(elementId = "", ...) {
         elementId <<- elementId
         callSuper(...)
@@ -36,12 +36,11 @@ webElement <-
       },
 
       findChildElement = function(
-        using = c(
-          "xpath", "css selector", "id", "name", "tag name", "class name",
-          "link text", "partial link text"
-        ),
-        value
-      ) {
+                                  using = c(
+                                    "xpath", "css selector", "id", "name", "tag name", "class name",
+                                    "link text", "partial link text"
+                                  ),
+                                  value) {
         "Search for an element on the page, starting from the node defined
         by the parent webElement. The located element will be returned as
         an object of webElement class.
@@ -67,12 +66,11 @@ webElement <-
       },
 
       findChildElements = function(
-        using = c(
-          "xpath", "css selector", "id", "name", "tag name", "class name",
-          "link text", "partial link text"
-        ),
-        value
-      ) {
+                                   using = c(
+                                     "xpath", "css selector", "id", "name", "tag name", "class name",
+                                     "link text", "partial link text"
+                                   ),
+                                   value) {
         "Search for multiple elements on the page, starting from the node
         defined by the parent webElement. The located elements will be
         returned as an list of objects of class WebElement.
@@ -277,7 +275,7 @@ webElement <-
       },
 
       setElementAttribute = function(attributeName, value) {
-        "Utility function to set an elements atrributes."
+        "Utility function to set an elements attributes."
         if (.self$javascript) {
           jS <- "arguments[0].setAttribute(arguments[1], arguments[2]);"
           invisible(executeScript(jS, list(.self, attributeName, value)))

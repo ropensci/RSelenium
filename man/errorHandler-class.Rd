@@ -45,7 +45,7 @@ errors:
   \item{\code{stackTrace}:}{array   (Optional) If included,
     specifies an array of JSON objects describing the stack trace
     for the exception that was thrown when the command failed. The
-    zeroeth element of the array represents the top of the stack.}
+    zeroth element of the array represents the top of the stack.}
 }}
 
 \item{\code{responseheader}}{There are two levels of error handling specified

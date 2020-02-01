@@ -14,10 +14,10 @@ example[[1]]
 #   <start>73.1,87.1</start>
 #   <end>97.9,49.1</end>
 #   </event>
-#   </time_slice> 
+#   </time_slice>
 
 # > xmlValue(querySelectorAll(xmlParse(squawkData[[1]]), "players #531 name")[[1]])
 # [1] "Charlie Adam"
-# 
+#
 # > xmlValue(querySelectorAll(xmlParse(squawkData[[1]]), "game team#44 long_name")[[1]])
 # [1] "Stoke City"

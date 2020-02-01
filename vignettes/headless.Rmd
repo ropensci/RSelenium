@@ -31,7 +31,7 @@ pJS$stop() # close the PhantomJS process, note we dont call remDr$closeServer()
 
 ### Driving PhantomJS Using Selenium Server
 
-For completeness we outline the process of opening a `PhantomJS` browser using selenium server. It is assummed that the `PhantomJS` binary is in the users path.
+For completeness we outline the process of opening a `PhantomJS` browser using selenium server. It is assumed that the `PhantomJS` binary is in the users path.
 
 ```R
 require(RSelenium)
@@ -209,7 +209,7 @@ nohup xvfb-run java -jar selenium-server-standalone.jar > selenium.log &
 
 ## PhantomJS API Examples
 
-The `phantomExecute` method of the `remoteDriver` class allows the user to interact with the `PhantomJS` API. Currently the method only works for direct calls to `PhantomJS` using the `phantom` utility function. Driving `PhantomJS` through the `Selenium` Server and calling the `phantomExecute` method currently doesnt function and is an open issue (in the ghostDriver project). In the following sections we outline examples of using the `PhantomJS` API.
+The `phantomExecute` method of the `remoteDriver` class allows the user to interact with the `PhantomJS` API. Currently the method only works for direct calls to `PhantomJS` using the `phantom` utility function. Driving `PhantomJS` through the `Selenium` Server and calling the `phantomExecute` method currently doesn't function and is an open issue (in the ghostDriver project). In the following sections we outline examples of using the `PhantomJS` API.
 
 ### Interacting with the Console
 

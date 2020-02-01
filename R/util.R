@@ -16,18 +16,17 @@
 #' @importFrom utils download.file
 #' @section Detail: The downloads for the Selenium project can be found at
 #'    http://selenium-release.storage.googleapis.com/index.html. This
-#'    convience function downloads the standalone server and places it in
+#'    convenient function downloads the standalone server and places it in
 #'    the RSelenium package directory bin folder by default.
 #' @examples
 #' \dontrun{
 #' checkForServer()
 #' }
 checkForServer <- function(
-  dir = NULL,
-  update = FALSE,
-  rename = TRUE,
-  beta = FALSE
-) {
+                           dir = NULL,
+                           update = FALSE,
+                           rename = TRUE,
+                           beta = FALSE) {
   .Defunct(
     new = rsDriver,
     package = "RSelenium",
@@ -57,7 +56,7 @@ checkForServer <- function(
 #' @export
 #' @importFrom XML readHTMLTable htmlParse
 #' @section Detail: By default the binary is assumed to be in the
-#'    RSelenium package /bin directory. The log argument is for convience.
+#'    RSelenium package /bin directory. The log argument is for convenience.
 #'    Setting it to FALSE and stipulating
 #'    args = c("-log /user/etc/somePath/somefile.log") allows a custom
 #'    location. Using log = TRUE sets the location to a file named
@@ -82,12 +81,11 @@ checkForServer <- function(
 #' selServ$stop()
 #' }
 startServer <- function(
-  dir = NULL,
-  args = NULL,
-  javaargs = NULL,
-  log = TRUE,
-  ...
-) {
+                        dir = NULL,
+                        args = NULL,
+                        javaargs = NULL,
+                        log = TRUE,
+                        ...) {
   .Defunct(
     new = rsDriver,
     package = "RSelenium",
@@ -136,9 +134,10 @@ getFirefoxProfile <- function(profDir, useBase = FALSE) {
     ]
     chunks <- sum(nchar(reqFiles)) %/% 8000 + 2
     chunks <- as.integer(seq(1, length(reqFiles), length.out = chunks))
-    chunks <- mapply(`:`, head(chunks, -1)
-                     , tail(chunks, -1) - c(rep(1, length(chunks) - 2), 0)
-                     , SIMPLIFY = FALSE)
+    chunks <- mapply(`:`, head(chunks, -1),
+      tail(chunks, -1) - c(rep(1, length(chunks) - 2), 0),
+      SIMPLIFY = FALSE
+    )
     out <- lapply(chunks, function(x) {
       zip(tmpfile, reqFiles[x])
     })
@@ -246,7 +245,7 @@ getChromeProfile <- function(dataDir, profileDir) {
 #' # binary using
 #' pJS$stop()
 #' }
-phantom <- function (pjs_cmd = "", port = 4444L, extras = "", ...) {
+phantom <- function(pjs_cmd = "", port = 4444L, extras = "", ...) {
   .Defunct(
     new = "phantomjs",
     package = "wdman",
@@ -349,7 +348,7 @@ testWebElement <- function(x, remDr) {
   if (inherits(remDr, "webElement")) {
     remDr <- remDr$export("remoteDriver")
   }
-  replaceWE <- function(x, remDr){
+  replaceWE <- function(x, remDr) {
     if (identical(names(x), "ELEMENT")) {
       webElement$
         new(as.character(x))$
@@ -358,7 +357,9 @@ testWebElement <- function(x, remDr) {
       x
     }
   }
-  if (is.null(x) || identical(length(x), 0L)) return(x)
+  if (is.null(x) || identical(length(x), 0L)) {
+    return(x)
+  }
   listTest <- sum(vapply(x, inherits, logical(1), "list")) > 0
   if (listTest) {
     lapply(x, testWebElement, remDr = remDr)

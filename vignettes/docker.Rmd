@@ -193,7 +193,7 @@ sudo docker ps
 
 The `Ubuntu` container has `id=5475923fc4dc` and is named `peaceful_payne`.
 
-A tip if you dont want to strain your eyes is to use the `--format` argument:
+A tip if you don't want to strain your eyes is to use the `--format` argument:
 
 ```sh
 sudo docker ps --format 'table {{.Names}}\t{{.Image}}\t{{.ID}}'
@@ -220,7 +220,7 @@ docker-machine ip
 192.168.99.100
 ```
 
-So as we can see the virtual machine has `ip = 192.168.99.100` and as we noted previously we mapped port 4444 to port 4445 on the host (the virtual machine in this case). So we should have a Selenium server accesible on port 4445 of the virtual machine. Lets try it:
+So as we can see the virtual machine has `ip = 192.168.99.100` and as we noted previously we mapped port 4444 to port 4445 on the host (the virtual machine in this case). So we should have a Selenium server accessible on port 4445 of the virtual machine. Lets try it:
 
 ```R
 library(RSelenium)
@@ -292,7 +292,7 @@ remDr$getTitle()
 ## [1] "Google"
 ```
 
-So as expected we have version `45.0.2` of firefox running in `Linux`. We note that no browser popped up and we dont see any signs in the `MINGW64` console. This is expected the browser is headless. If you are using `RStudio` you can use the `Viewer` pane to get a screenshot `remDr$screenshot(display = TRUE)`. Later we will see how we can run a debug version that uses `VNC` to allow us to interact with the containers browser.
+So as expected we have version `45.0.2` of firefox running in `Linux`. We note that no browser popped up and we don't see any signs in the `MINGW64` console. This is expected the browser is headless. If you are using `RStudio` you can use the `Viewer` pane to get a screenshot `remDr$screenshot(display = TRUE)`. Later we will see how we can run a debug version that uses `VNC` to allow us to interact with the containers browser.
 
 #### Utilising the Firefox Standalone Container in Ubuntu 16.04
 
@@ -366,7 +366,7 @@ remDr$getTitle()
 
 ```
 
-Again we see that we have `Firefox` 45.0.2 running on `Linux`. So running docker containers allows us to run a standard setup OS independent and we dont need to worry about machine specifics.
+Again we see that we have `Firefox` 45.0.2 running on `Linux`. So running docker containers allows us to run a standard setup OS independent and we don't need to worry about machine specifics.
 
 ## Debugging Using VNC
 
@@ -465,7 +465,7 @@ NAMES               IMAGE                                      CONTAINER ID
 focused_tesla       selenium/standalone-firefox-debug:2.53.0   ee0c0bb8b711
 ```
 
-Again we note that the container is ran on a virtual machine not on our Windows 10 box so we expose the ip of said virtual machine. Next we download a VNC viewer if we dont have one. 
+Again we note that the container is ran on a virtual machine not on our Windows 10 box so we expose the ip of said virtual machine. Next we download a VNC viewer if we don't have one. 
 
 [TightVNC](http://www.tightvnc.com/download.php) has worked for me so I use it here.
 

@@ -4,8 +4,7 @@
 \alias{startServer}
 \title{Start the standalone server.}
 \usage{
-startServer(dir = NULL, args = NULL, javaargs = NULL, log = TRUE,
-  ...)
+startServer(dir = NULL, args = NULL, javaargs = NULL, log = TRUE, ...)
 }
 \arguments{
 \item{dir}{A directory in which the binary is to be placed.}
@@ -37,7 +36,7 @@ A utility function to start the standalone server. Return two functions
 }
 \section{Detail}{
  By default the binary is assumed to be in the
-   RSelenium package /bin directory. The log argument is for convience.
+   RSelenium package /bin directory. The log argument is for convenience.
    Setting it to FALSE and stipulating
    args = c("-log /user/etc/somePath/somefile.log") allows a custom
    location. Using log = TRUE sets the location to a file named

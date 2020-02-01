@@ -6,3 +6,5 @@ inst/www
 docs
 ^\.github$
 ^_pkgdown.yml$
+^codemeta\.json$
+^cran-comments\.md$

@@ -1,6 +1,8 @@
 context("misc_webElement_methods_tests")
 init <- initFun()
-remDr <- init$remDr; rdBrowser <- init$rdBrowser; loadPage <- init$loadPage
+remDr <- init$remDr
+rdBrowser <- init$rdBrowser
+loadPage <- init$loadPage
 on.exit(remDr$closeall())
 
 test_that("canSetElementAttribute", {

@@ -51,11 +51,11 @@ Use a debug image with a VNC viewer if you wish to view the browser:
 docker run -d -p 5901:5900 -p 127.0.0.1:4445:4444 --link http-server selenium/standalone-firefox-debug:2.53.1
 ```
 
-There is a seperate vignette which covers the using `RSelenium` with Docker see `vignette("docker", package = "RSelenium")` or [here](http://ropensci.github.io/RSelenium/articles/docker.html).
+There is a separate vignette which covers the using `RSelenium` with Docker see `vignette("docker", package = "RSelenium")` or [here](https://docs.ropensci.org/RSelenium/articles/docker.html).
 
 #### `rsDriver`
 
-For users who are not familiar with Docker, there is now a function `rsDriver` which will manage the binaries needed for running a Selenium Server. This provides a wrapper around the `wdman::selenium` function. For additional options and more control, see the [wdman](https://ropensci.github.io/wdman/) project. Examples using the `rsDriver` function are given in the appendix. ***Please submit any issues with running binaries to the wdman project***
+For users who are not familiar with Docker, there is now a function `rsDriver` which will manage the binaries needed for running a Selenium Server. This provides a wrapper around the `wdman::selenium` function. For additional options and more control, see the [wdman](https://docs.ropensci.org/wdman/) project. Examples using the `rsDriver` function are given in the appendix. ***Please submit any issues with running binaries to the wdman project***
 
 #### Java Binary
 
@@ -67,7 +67,7 @@ java -jar selenium-server-standalone-x.xx.x.jar
 
 By default, the Selenium Server listens for connections on port 4444.
 
-***Note for Mac OSX:*** The default port 4444 is sometimes used by other programs such as kerberos. In our examples, we use port 4445 in respect of this and for consistency with [the Docker vignette](http://ropensci.github.io/RSelenium/articles/docker.html).
+***Note for Mac OSX:*** The default port 4444 is sometimes used by other programs such as kerberos. In our examples, we use port 4445 in respect of this and for consistency with [the Docker vignette](https://docs.ropensci.org/RSelenium/articles/docker.html).
 
 ### How Do I Connect to a Running Server?
 
@@ -94,9 +94,9 @@ docker-machine ip
 ## 192.168.99.100
 ```
 
-***Note:*** See [the Docker vignette](http://ropensci.github.io/RSelenium/articles/docker.html) for further details. The newer Docker for windows however should be accessible on the localhost.
+***Note:*** See [the Docker vignette](https://docs.ropensci.org/RSelenium/articles/docker.html) for further details. The newer Docker for windows however should be accessible on the localhost.
 
-It would have been sufficient to call `remDr <- remoteDriver(port = 4445L)`, but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on [the SauceLabs vignette](http://ropensci.github.io/RSelenium/articles/saucelabs.html).
+It would have been sufficient to call `remDr <- remoteDriver(port = 4445L)`, but the options where explicitly listed to show how one may connect to an arbitrary ip/port/browser etc. More detail maybe found on [the SauceLabs vignette](https://docs.ropensci.org/RSelenium/articles/saucelabs.html).
 
 To connect to the server, use the `open` method:
 
@@ -568,7 +568,7 @@ test[[1]]$highlightElement()
 
 ### Injecting JavaScript Asynchronously
 
-I will briefly touch on asynch versus sync calls here. Firstly, we need to set an appropriate asynchronous timeout (that is longer than the async operation we are likely to carryout, but it will ensure that we will eventually error out in case of an issue).
+I will briefly touch on async versus sync calls here. Firstly, we need to set an appropriate asynchronous timeout (that is longer than the async operation we are likely to carryout, but it will ensure that we will eventually error out in case of an issue).
 
 ```R
 remDr$navigate("http://www.google.com/ncr")
@@ -976,7 +976,7 @@ They may work for you depending on your platform and setup, but are not supporte
 
 ### rsDriver
 
-The `rsDriver` function is a wrapper for the `selenium` function from the [wdman](https://ropensci.github.io/wdman/) package. It allows the user to manage the binaries used to run a Selenium Server. It returns an environment containing a `client` and a `server`. 
+The `rsDriver` function is a wrapper for the `selenium` function from the [wdman](https://docs.ropensci.org/wdman/) package. It allows the user to manage the binaries used to run a Selenium Server. It returns an environment containing a `client` and a `server`. 
 
 By default, it runs a Chrome browser. Other browsers such as Firefox, PhantomJS, and Internet Explorer can be selected using the `browser` argument.
 
@@ -1081,4 +1081,4 @@ rD$server$process
 ## state     : terminated
 ```
 
-For further detail and any issues you may have with the `rsDriver` function, please see the [wdman](https://ropensci.github.io/wdman/) project.
+For further detail and any issues you may have with the `rsDriver` function, please see the [wdman](https://docs.ropensci.org/wdman/) project.

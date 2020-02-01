@@ -1,3 +1,8 @@
+# RSelenium 1.7.6
+* No functional changes in this version (need to re-submit to CRAN for being archived)
+* Fixed typos in vignettes and documentation
+* Styled the package with `styler` package following the tidyverse formatting rules
+
 # RSelenium 1.7.5
 * Fix switchToWindow issue in fiefox (#143)
 * Add a tutorial to allow running RSelenium Tests in Internet Explorer (thanks @zappingseb #193)
@@ -14,9 +19,8 @@
 * Cache packages on TRAVIS to reduce runtime (thanks @jstockwin #132)
 
 # RSelenium 1.7.2
-* Fixed issue where rsDriver client when failing to open didnt catch error
+* Fixed issue where rsDriver client when failing to open didn't catch error
 * Correctly pass the check argument in rsDriver to wdman (thanks @bourdieu #123)
-
 
 # RSelenium 1.7.1
 * Fixed issue where rsDriver was not passing additional arguments via ...
@@ -125,13 +129,11 @@
 * Update the Driving OS/Browsers local and remote vignette.
 
 # RSelenium 1.2.5
-
 * Update reference classes to use `@field` and inline docstrings for methods
 * Allow partial string matching on the `using` argument of the findElement and findElements method from the remoteDriver class.
 * Allow partial string matching on the `using` argument of the findChildElement and findChildElements method from the webElement class.
 
 # RSelenium 1.2.4
-
 * Add getLogtypes() and log(type) methods to remoteDriver class
 * Fix getFirefoxProfile so useBase = TRUE works under windows.
 * Add additional support for encoding (thanks to Nicola Logrillo issue #16)
@@ -139,6 +141,4 @@
 * Add a getChromeProfile utility function.
 
 # RSelenium 1.2.3
-
 * Add option to display screenshot in viewer panel if using RStudio
-

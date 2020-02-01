@@ -1,0 +1,198 @@
+{
+  "@context": [
+    "https://doi.org/10.5063/schema/codemeta-2.0",
+    "http://schema.org"
+  ],
+  "@type": "SoftwareSourceCode",
+  "identifier": "RSelenium",
+  "description": "Provides a set of R bindings for the 'Selenium 2.0 WebDriver'\n    (see <https://selenium.dev/documentation/en/>\n    for more information) using the 'JsonWireProtocol' (see\n    <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for more\n    information). 'Selenium 2.0 WebDriver' allows driving a web browser\n    natively as a user would either locally or on a remote machine using\n    the Selenium server it marks a leap forward in terms of web browser\n    automation. Selenium automates web browsers (commonly referred to as\n    browsers). Using RSelenium you can automate browsers locally or\n    remotely.",
+  "name": "RSelenium: R Bindings for 'Selenium WebDriver'",
+  "codeRepository": "http://docs.ropensci.org/RSelenium",
+  "issueTracker": "http://github.com/ropensci/RSelenium/issues",
+  "license": "https://spdx.org/licenses/AGPL-3.0",
+  "version": "1.7.6",
+  "programmingLanguage": {
+    "@type": "ComputerLanguage",
+    "name": "R",
+    "version": "3.6.2",
+    "url": "https://r-project.org"
+  },
+  "runtimePlatform": "R version 3.6.2 (2019-12-12)",
+  "author": [
+    {
+      "@type": "Person",
+      "givenName": "John",
+      "familyName": "Harrison",
+      "email": "johndharrison0@gmail.com"
+    }
+  ],
+  "contributor": {},
+  "copyrightHolder": {},
+  "funder": {},
+  "maintainer": [
+    {
+      "@type": "Person",
+      "givenName": "Ju Yeong",
+      "familyName": "Kim",
+      "email": "jkim2345@fredhutch.org"
+    }
+  ],
+  "softwareSuggestions": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "testthat",
+      "name": "testthat",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=testthat"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "knitr",
+      "name": "knitr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=knitr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "Rcompression",
+      "name": "Rcompression"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "covr",
+      "name": "covr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=covr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "rmarkdown",
+      "name": "rmarkdown",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=rmarkdown"
+    }
+  ],
+  "softwareRequirements": [
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "R",
+      "name": "R",
+      "version": ">= 3.0.0"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "XML",
+      "name": "XML",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=XML"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "methods",
+      "name": "methods"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "caTools",
+      "name": "caTools",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=caTools"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "tools",
+      "name": "tools"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "utils",
+      "name": "utils"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "openssl",
+      "name": "openssl",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=openssl"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "httr",
+      "name": "httr",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=httr"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "wdman",
+      "name": "wdman",
+      "version": ">= 0.2.2",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=wdman"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "identifier": "binman",
+      "name": "binman",
+      "provider": {
+        "@id": "https://cran.r-project.org",
+        "@type": "Organization",
+        "name": "Comprehensive R Archive Network (CRAN)",
+        "url": "https://cran.r-project.org"
+      },
+      "sameAs": "https://CRAN.R-project.org/package=binman"
+    }
+  ],
+  "releaseNotes": "https://github.com/ropensci/RSelenium/blob/master/NEWS.md",
+  "readme": "https://github.com/ropensci/RSelenium/blob/master/README.md",
+  "fileSize": "101.66KB",
+  "contIntegration": [
+    "https://travis-ci.org/ropensci/RSelenium",
+    "https://codecov.io/gh/ropensci/RSelenium"
+  ]
+}

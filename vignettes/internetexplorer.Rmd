@@ -64,7 +64,7 @@ Inside this key (Main) , create a `DWORD` value named `TabProcGrowth` with the v
 
 ## Selenium Server
 
-To use Internet Exlorer there is sadly just one way to use a Selenium Server which is running it via the Java Binary as explained in the **Basics** vignette of this package.
+To use Internet Explorer there is sadly just one way to use a Selenium Server which is running it via the Java Binary as explained in the **Basics** vignette of this package.
 
 
 ## Selenium Driver
@@ -81,7 +81,7 @@ Sys.setenv(PATH = paste(ie_driver_folder, Sys.getenv("PATH"), sep = ";"))
 if you copied the "IEDriverServer.exe" to `C:\Selenium`
 
 
-## Initialization fo a Selenium Driver object
+## Initialization for a Selenium Driver object
 
 ### Set extra capabilities
 
@@ -106,7 +106,7 @@ extraCapabilities <- list(
 
 ### Start the driver
 
-To navigate to your first page you can now start the remoteDriver. Please note that Internet Explorer will now open and connect to the local Selenium Server. You need to have the followin
+To navigate to your first page you can now start the remoteDriver. Please note that Internet Explorer will now open and connect to the local Selenium Server. You need to have the following:
 
 ```R
 remDr <- remoteDriver(
@@ -116,11 +116,11 @@ remDr <- remoteDriver(
 remDr$open()
 remDr$setImplicitWaitTimeout(as.numeric(10000))
 
-url <- "http://ropensci.github.io/RSelenium"
+url <- "https://docs.ropensci.org/RSelenium"
 remDr$navigate(url)
 ```
 
-We use a global definition of the `remDr` element as there exists no possibility to create two paralel sessions using Internet Explorer. Additionally it is necessary to set a really long implicit wait timeout due to basic troubles Internet Exploer might have running multiple tests in a row.
+We use a global definition of the `remDr` element as there exists no possibility to create two parallel sessions using Internet Explorer. Additionally it is necessary to set a really long implicit wait timeout due to basic troubles Internet Explorer might have running multiple tests in a row.
 
 ### Initialization for more reproducible tests
 
@@ -133,7 +133,7 @@ remDr$setWindowSize(1936, 1056)
 remDr$setWindowPosition(0, 0)
 ```
 
-### Addtional functionalities for testing shiny
+### Additional functionalities for testing shiny
 
 Shiny may sometimes run inside `iframes`. In Internet Explorer it might be hard to get into those. Therefore in testing shiny using Internet Explorer we recommend adding a boolean variable called `in_shiny` to your sessionInfo.
 
@@ -141,7 +141,7 @@ Shiny may sometimes run inside `iframes`. In Internet Explorer it might be hard 
 remDr$sessionInfo$in_shiny <- FALSE
 ```
 
-This variable can be used to check if you are runnning inside the shiny app already or not. You do not want do go into an iframe inside the shiny app, if you are already inside the shiny app.
+This variable can be used to check if you are running inside the shiny app already or not. You do not want do go into an iframe inside the shiny app, if you are already inside the shiny app.
 
 So after starting a Selenium Session maybe do the following:
 

@@ -13,10 +13,10 @@ dateElem$clearElement()
 dateElem$sendKeysToElement(list("01/14/2014", key = "enter")) # send a date to app
 hourElem <- remDr$findElement(using = "css selector", '#ddlHour [value="5"]') # select the 5th hour
 hourElem$clickElement() # select this hour
-buttonElem <-remDr$findElement(using = "id", "cmdView")
+buttonElem <- remDr$findElement(using = "id", "cmdView")
 buttonElem$clickElement() # click the view button
 
-#Sys.sleep(5)
+# Sys.sleep(5)
 tableElem <- remDr$findElement(using = "id", "dgLIP")
 readHTMLTable(htmlParse(tableElem$getElementAttribute("outerHTML")[[1]]))
 # [1] "tableElem$getElementAttribute(\"outerHTML\")"
@@ -49,4 +49,4 @@ readHTMLTable(htmlParse(tableElem$getElementAttribute("outerHTML")[[1]]))
 # 25 201401132252 201401132300      CSWS136_YALELD1  18.9             CSWS_LA            AEP_LOSS
 # 26 201401132252 201401132300  CSWS141_PINELDXFMR1 19.09             CSWS_LA           AEPM_CSWS
 # 27          < >         <NA>                 <NA>  <NA>                <NA>                <NA>
-#   
+#

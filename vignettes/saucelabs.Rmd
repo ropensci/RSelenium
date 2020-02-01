@@ -56,7 +56,7 @@ remDr
 
 Other browsers can be driven using `RSelenium`. We shall split these browsers into three groups. Full-fledged browsers, headless browsers and mobile browsers.
 
-The standalone selenium jar has the ability to drive other full-fleged browsers such as chrome, internet explorer, safari and opera. First we shall look at how to drive chrome using `RSelenium`
+The standalone selenium jar has the ability to drive other full-fledged browsers such as chrome, internet explorer, safari and opera. First we shall look at how to drive chrome using `RSelenium`
 
 ### Chrome
 
@@ -193,7 +193,7 @@ cat(remDr$value$message)
 
 So not surprising win 8.1 was first unveiled and released as a public beta in June 2013 and on July 4, 2013, Opera 12.16 was released being the last current version of opera supported by selenium. OperaLauncherRunner.java located [here](https://github.com/operasoftware/operadriver/blob/master/src/com/opera/core/systems/runner/launcher/OperaLauncherRunner.java) does not currently cater for the WIN8 enum returned by Platform.getCurrent().
 
-The solution is to start the selenium server with additional parameters passed to java (RSelenium::startServer doesnt pass arguments to java atm)
+The solution is to start the selenium server with additional parameters passed to java (RSelenium::startServer doesn't pass arguments to java atm)
 
 ```batch
 java -Dos.name=windows -jar selenium-server-standalone.jar
@@ -261,7 +261,7 @@ Next we shall look at running what is known as headless browsers. Usually a brow
 1. Render the content into dom, eg executing javascript inside the script tag. and the executed result will be reflected on the browsers dom.
 1. Render the dom into visualised content.
 
-A headless browser handles items 1 and 2 but doesnt carryout 3. This means it doesnt display anything. All pages etc. are in memory rather then displayed to the user. The result of this is that headless browsers should perform faster then their full-fledged competitors which could be welcome news to speed up testing.
+A headless browser handles items 1 and 2 but doesn't carryout 3. This means it doesn't display anything. All pages etc. are in memory rather then displayed to the user. The result of this is that headless browsers should perform faster then their full-fledged competitors which could be welcome news to speed up testing.
 
 ### phantomjs
 
@@ -356,7 +356,7 @@ C:\Program Files\Java\jdk1.7.0_51
 
 ##### SDK
 
-Another Developement kit needs to be installed [SDK](http://developer.android.com/sdk/index.html) in this case. From the link provided you can download the ADT Bundle for Windows. I downloaded the bundle and extracted the zip to the Desktop this resulted in a directory `C:\Users\john\Desktop\adt-bundle-windows-x86_64-20131030`. There is a guide to setup the SDK [here](http://projects.spring.io/spring-android/#quick-start). The environment variable `ANDROID_HOME` needs to be set. This should be set to the /sdk/ directory in the extracted bundle.
+Another Development kit needs to be installed [SDK](http://developer.android.com/sdk/index.html) in this case. From the link provided you can download the ADT Bundle for Windows. I downloaded the bundle and extracted the zip to the Desktop this resulted in a directory `C:\Users\john\Desktop\adt-bundle-windows-x86_64-20131030`. There is a guide to setup the SDK [here](http://projects.spring.io/spring-android/#quick-start). The environment variable `ANDROID_HOME` needs to be set. This should be set to the /sdk/ directory in the extracted bundle.
 
 ```batch
 echo %ANDROID_HOME%
@@ -398,7 +398,7 @@ If you have got to this point it is most likely you will now be able to drive th
 
 ##### Selendroid
 
-Finally, we need to download the selendroid driver. The selendroid [homepage](http://selendroid.io/) has a link at the bootom to the most recent [jar](https://github.com/selendroid/selendroid/releases/download/0.8.0/selendroid-standalone-0.8.0-with-dependencies.jar).
+Finally, we need to download the selendroid driver. The selendroid [homepage](http://selendroid.io/) has a link at the bottom to the most recent [jar](https://github.com/selendroid/selendroid/releases/download/0.8.0/selendroid-standalone-0.8.0-with-dependencies.jar).
 This jar should be saved on the local computer. I saved the jar in the Documents folder namely `C:\Users\john\Documents`. To begin running tests you need to run the jar with java
 in a command prompt.
 
@@ -492,7 +492,7 @@ testScript <- function(remDr){
 testScript(remDr)
 ```
 
-And thats it. We have ran our first remote test using Sauce Labs. The results of the test can be viewed [https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329](https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329). I think you will agree its a nice setup. We have access to screenshots of all the commands we issued and a video (screencast) of the test run. We can view the selenium server logs and the medadata associated with our test.
+And that's it. We have ran our first remote test using Sauce Labs. The results of the test can be viewed [https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329](https://saucelabs.com/tests/ae22f859de8746f9bfedad2f49c1c329). I think you will agree its a nice setup. We have access to screenshots of all the commands we issued and a video (screencast) of the test run. We can view the selenium server logs and the medadata associated with our test.
 
 ### Testing Multiple OS/Browsers
 
@@ -539,7 +539,7 @@ To view the results you can goto the `RSelenium` project page on Sauce Labs [htt
 
 ## RSelenium with Remote Browsers and Local Sites
 
-Testing external webpages and websites across a range of operating systems and browsers can be achieved using Sauce Labs as we observed in the last section. Often however especially in a developement phase of a project we either do not have or do not want an external version of our webpage/website/webapp. A good example would be our `shinytestapp`. Lets open a new R session and run our testapp. 
+Testing external webpages and websites across a range of operating systems and browsers can be achieved using Sauce Labs as we observed in the last section. Often however especially in a development phase of a project we either do not have or do not want an external version of our webpage/website/webapp. A good example would be our `shinytestapp`. Lets open a new R session and run our testapp. 
 
 ```R
 require(shiny)
@@ -602,7 +602,7 @@ remDr <- remoteDriver$new(
 )
 ```
 
-Everything is as before the exeception is that when we ask to browse to a localhost address Sauce Connect will intervene. Also we connect to Sauce Labs through Sauce Connect on `localhost:4445` by default instead of `ondemand.saucelabs.com:80`.
+Everything is as before the exception is that when we ask to browse to a localhost address Sauce Connect will intervene. Also we connect to Sauce Labs through Sauce Connect on `localhost:4445` by default instead of `ondemand.saucelabs.com:80`.
 
 ```R
 localScript <- function(remDr){

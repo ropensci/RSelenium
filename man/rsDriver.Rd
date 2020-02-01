@@ -4,10 +4,18 @@
 \alias{rsDriver}
 \title{Start a selenium server and browser}
 \usage{
-rsDriver(port = 4567L, browser = c("chrome", "firefox", "phantomjs",
-  "internet explorer"), version = "latest", chromever = "latest",
-  geckover = "latest", iedrver = NULL, phantomver = "2.1.1",
-  verbose = TRUE, check = TRUE, ...)
+rsDriver(
+  port = 4567L,
+  browser = c("chrome", "firefox", "phantomjs", "internet explorer"),
+  version = "latest",
+  chromever = "latest",
+  geckover = "latest",
+  iedrver = NULL,
+  phantomver = "2.1.1",
+  verbose = TRUE,
+  check = TRUE,
+  ...
+)
 }
 \arguments{
 \item{port}{Port to run on}

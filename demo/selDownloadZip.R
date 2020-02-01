@@ -9,17 +9,19 @@ remDr$navigate("https://www.chicagofed.org/applications/bhc_data/bhcdata_index.c
 # click year 2013
 webElem <- remDr$findElement("name", "SelectedYear")
 webElems <- webElem$findChildElements("css selector", "option")
-webElems[[which(sapply(webElems, function(x){x$getElementText()}) == "2012" )]]$clickElement()
+webElems[[which(sapply(webElems, function(x) {
+  x$getElementText()
+}) == "2012")]]$clickElement()
 
 # click required quarter
 
 webElem <- remDr$findElement("name", "SelectedQTR")
 webElems <- webElem$findChildElements("css selector", "option")
-webElems[[which(sapply(webElems, function(x){x$getElementText()}) == "4th Quarter" )]]$clickElement()
+webElems[[which(sapply(webElems, function(x) {
+  x$getElementText()
+}) == "4th Quarter")]]$clickElement()
 
 # click button
 
 webElem <- remDr$findElement("name", "submitbutton")
 webElem$clickElement()
-
-

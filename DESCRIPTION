@@ -1,14 +1,14 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.5
+Version: 1.7.6
 Authors@R: c(
     person("John", "Harrison", , "johndharrison0@gmail.com",
     role = "aut", comment = "original author"),
     person("Ju Yeong", "Kim", , "jkim2345@fredhutch.org",
     role = "cre", comment = "rOpenSci maintainer"))
 Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
-    (see <https://seleniumhq.github.io/docs/wd.html>
+    (see <https://selenium.dev/documentation/en/>
     for more information) using the 'JsonWireProtocol' (see
     <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for more
     information). 'Selenium 2.0 WebDriver' allows driving a web browser
@@ -50,4 +50,4 @@ Collate:
     'util.R'
     'webElement.R'
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

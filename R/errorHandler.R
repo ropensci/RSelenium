@@ -31,7 +31,7 @@
 #'      \item{\code{stackTrace}:}{array   (Optional) If included,
 #'        specifies an array of JSON objects describing the stack trace
 #'        for the exception that was thrown when the command failed. The
-#'        zeroeth element of the array represents the top of the stack.}
+#'        zeroth element of the array represents the top of the stack.}
 #'    }
 #' @field responseheader There are two levels of error handling specified
 #'    by the wire protocol: invalid requests and failed commands.
@@ -91,7 +91,7 @@ errorHandler <-
       hcode = "numeric",
       value = "list"
     ),
-    methods  = list(
+    methods = list(
       initialize = function() {
         # statCodes are status codes stored in sysdata.rda
         statusCodes <<- statCodes
@@ -211,10 +211,10 @@ errorHandler <-
         "Replaces the username and password of url with ****"
         parsedUrl <- httr::parse_url(url)
         if (!is.null(parsedUrl$username)) {
-            parsedUrl$username <- "****"
+          parsedUrl$username <- "****"
         }
         if (!is.null(parsedUrl$password)) {
-            parsedUrl$password <- "****"
+          parsedUrl$password <- "****"
         }
         httr::build_url(parsedUrl)
       }
