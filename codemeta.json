@@ -190,7 +190,7 @@
   ],
   "releaseNotes": "https://github.com/ropensci/RSelenium/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/RSelenium/blob/master/README.md",
-  "fileSize": "101.66KB",
+  "fileSize": "101.659KB",
   "contIntegration": [
     "https://travis-ci.org/ropensci/RSelenium",
     "https://codecov.io/gh/ropensci/RSelenium"
