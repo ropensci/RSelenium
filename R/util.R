@@ -208,8 +208,8 @@ getChromeProfile <- function(dataDir, profileDir) {
 #' @param pjs_cmd The name, full or partial path of a phantomjs
 #'    executable. This is optional only state if the executable is not in
 #'    your path.
-#' @param port An integer giving the port on which phantomjs will listen.
-#'    Defaults to 4444. format [[<IP>:]<PORT>]
+#' @param port An integer giving the port number on which phantomjs will listen.
+#'    Defaults to `4444`.
 #' @param extras An optional character vector: see 'Details'.
 #' @param ... Arguments to pass to \code{\link{system2}}
 #' @export
