@@ -1,7 +1,6 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.6
 Authors@R: c(
     person("John", "Harrison", , "johndharrison0@gmail.com",
     role = "aut", comment = "original author"),
@@ -16,6 +15,7 @@ Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
     the Selenium server it marks a leap forward in terms of web browser
     automation. Selenium automates web browsers (commonly referred to as
     browsers). Using RSelenium you can automate browsers locally or
+Version: 1.7.6.9000
     remotely.
 License: AGPL-3
 URL: http://docs.ropensci.org/RSelenium
@@ -41,6 +41,7 @@ Suggests:
     rmarkdown
 VignetteBuilder: knitr
 LazyData: true
+Roxygen: list(markdown = TRUE)
 Collate:
     'RSelenium.R'
     'errorHandler.R'
