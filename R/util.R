@@ -162,10 +162,10 @@ getFirefoxProfile <- function(profDir, useBase = FALSE) {
 #' The data dir has a number of default locations
 #' \describe{
 #' \item{Windows XP}{
-#' Google Chrome: C:/Documents and Settings/\%USERNAME\%/Local Settings/Application Data/Google/Chrome/User Data
+#' Google Chrome: C:/Documents and Settings/%USERNAME%/Local Settings/Application Data/Google/Chrome/User Data
 #' }
 #' \item{Windows 8 or 7 or Vista}{
-#' Google Chrome: C:/Users/\%USERNAME\%/AppData/Local/Google/Chrome/User Data
+#' Google Chrome: C:/Users/%USERNAME%/AppData/Local/Google/Chrome/User Data
 #' }
 #' \item{Mac OS X}{
 #' Google Chrome: ~/Library/Application Support/Google/Chrome
