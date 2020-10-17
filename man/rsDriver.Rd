@@ -2,7 +2,7 @@
 % Please edit documentation in R/rsDriver.R
 \name{rsDriver}
 \alias{rsDriver}
-\title{Start a selenium server and browser}
+\title{Start a Selenium Server and WebDriver remote-controlling a web browser}
 \usage{
 rsDriver(
   port = 4567L,
@@ -18,42 +18,50 @@ rsDriver(
 )
 }
 \arguments{
-\item{port}{Port to run on}
+\item{port}{Port number to run Selenium on. An integer scalar.}
 
-\item{browser}{Which browser to start}
+\item{browser}{Which web browser to start. One of
+\itemize{
+\item \code{"chrome"}
+\item \code{"firefox"}
+\item \code{"phantomjs"} (deprecated)
+\item \code{"internet explorer"}
+}}
 
-\item{version}{what version of Selenium Server to run. Default = "latest"
-which runs the most recent version. To see other version currently
-sourced run binman::list_versions("seleniumserver")}
+\item{version}{What version of Selenium Server to run. Defaults to \code{"latest"}
+which runs the most recent version. To see other versions currently
+sourced, run \code{binman::list_versions("seleniumserver")}.}
 
-\item{chromever}{what version of Chrome driver to run. Default = "latest"
-which runs the most recent version. To see other version currently
-sourced run binman::list_versions("chromedriver"), A value of NULL
-excludes adding the chrome browser to Selenium Server.}
+\item{chromever}{What version of \href{https://chromedriver.chromium.org/}{ChromeDriver}
+to run. Defaults to \code{"latest"} which runs the most recent version. To see
+other versions currently sourced, run \code{binman::list_versions("chromedriver")}.
+A value of \code{NULL} excludes adding the Google Chrome browser to Selenium Server.}
 
-\item{geckover}{what version of Gecko driver to run. Default = "latest"
-which runs the most recent version. To see other version currently
-sourced run binman::list_versions("geckodriver"), A value of NULL
-excludes adding the firefox browser to Selenium Server.}
+\item{geckover}{What version of \href{https://firefox-source-docs.mozilla.org/testing/geckodriver/}{geckodriver}
+to run. Defaults to \code{"latest"} which runs the most recent version. To see
+other versions currently sourced, run \code{binman::list_versions("geckodriver")}.
+A value of \code{NULL} excludes adding the Firefox browser to Selenium Server.}
 
-\item{iedrver}{what version of IEDriverServer to run. Default = "latest"
-which runs the most recent version. To see other version currently
-sourced run binman::list_versions("iedriverserver"), A value of NULL
-excludes adding the internet explorer browser to Selenium Server.
-NOTE this functionality is Windows OS only.}
+\item{iedrver}{What version of \href{https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver}{InternetExplorerDriver (\code{IEDriverServer.exe})}
+to run. Defaults to \code{"latest"} which runs the most recent version. To see
+other version currently sourced, run \code{binman::list_versions("iedriverserver")}.
+A value of \code{NULL} excludes adding the Internet Explorer browser to
+Selenium Server. \strong{Note} that this functionality is restricted to
+Windows only.}
 
-\item{phantomver}{what version of PhantomJS to run. Default = "2.1.1"
-which runs the most recent stable version. To see other version currently
-sourced run binman::list_versions("phantomjs"), A value of NULL
-excludes adding the PhantomJS headless browser to Selenium Server.}
+\item{phantomver}{What version of \href{https://phantomjs.org/}{PhantomJS} to run.
+Defaults to \code{"2.1.1"} which runs the most recent stable version. To see
+other versions currently sourced, run \code{binman::list_versions("phantomjs")}.
+A value of \code{NULL} excludes adding the PhantomJS headless browser to
+Selenium Server.}
 
-\item{verbose}{If TRUE, include status messages (if any)}
+\item{verbose}{If \code{TRUE}, include status messages (if any).}
 
-\item{check}{If TRUE check the versions of selenium available and the
-versions of associated drivers (chromever, geckover, phantomver,
-iedrver). If new versions are available they will be downloaded.}
+\item{check}{If \code{TRUE}, check the versions of Selenium available and the
+versions of associated drivers (\code{chromever}, \code{geckover}, \code{phantomver},
+\code{iedrver}). If new versions are available, they will be downloaded.}
 
-\item{...}{Additional arguments to pass to \code{\link{remoteDriver}}}
+\item{...}{Additional arguments passed to \code{\link{remoteDriver}}.}
 }
 \value{
 A list containing a server and a client. The server is the object
@@ -61,15 +69,15 @@ returned by \code{\link[wdman]{selenium}} and the client is an object of class
 \code{\link{remoteDriver}}
 }
 \description{
-Start a selenium server and browser
+Start a Selenium Server and WebDriver remote-controlling a web browser
 }
 \details{
 This function is a wrapper around \code{\link[wdman]{selenium}}.
-    It provides a "shim" for the current issue running firefox on
-    Windows. For a more detailed set of functions for running binaries
-    relating to the Selenium/webdriver project see the
-    \code{\link[wdman]{wdman}} package. Both the client and server
-    are closed using a registered finalizer.
+It provides a "shim" for the current issue running Firefox on
+Windows. For a more detailed set of functions for running binaries
+relating to the Selenium/webdriver project, see the
+\code{\link[wdman]{wdman}} package. Both the client and server
+are closed using a registered finalizer.
 }
 \examples{
 \dontrun{

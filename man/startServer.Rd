@@ -23,8 +23,8 @@ wait = FALSE, invisible = TRUE.}
 }
 \value{
 Returns a list containing two functions. The 'getpid' function
-   returns the process id of the started Selenium binary. The 'stop'
-   function stops the started Selenium server using the process id.
+returns the process id of the started Selenium binary. The 'stop'
+function stops the started Selenium server using the process id.
 }
 \description{
 Defunct. Please use \code{\link{rsDriver}}
@@ -32,15 +32,15 @@ Defunct. Please use \code{\link{rsDriver}}
 \details{
 \code{startServer}
 A utility function to start the standalone server. Return two functions
-   see values.
+see values.
 }
 \section{Detail}{
  By default the binary is assumed to be in the
-   RSelenium package /bin directory. The log argument is for convenience.
-   Setting it to FALSE and stipulating
-   args = c("-log /user/etc/somePath/somefile.log") allows a custom
-   location. Using log = TRUE sets the location to a file named
-   sellog.txt in the directory containing the Selenium Server binary.
+RSelenium package /bin directory. The log argument is for convenience.
+Setting it to FALSE and stipulating
+args = c("-log /user/etc/somePath/somefile.log") allows a custom
+location. Using log = TRUE sets the location to a file named
+sellog.txt in the directory containing the Selenium Server binary.
 }
 
 \examples{

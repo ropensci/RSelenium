@@ -11,8 +11,8 @@ phantom(pjs_cmd = "", port = 4444L, extras = "", ...)
 executable. This is optional only state if the executable is not in
 your path.}
 
-\item{port}{An integer giving the port on which phantomjs will listen.
-Defaults to 4444. format [[<IP>:]<PORT>]}
+\item{port}{An integer giving the port number on which phantomjs will listen.
+Defaults to \code{4444}.}
 
 \item{extras}{An optional character vector: see 'Details'.}
 
@@ -27,19 +27,19 @@ A utility function to control a phantomjs binary in webdriver mode.
 }
 \section{Detail}{
  phantom() is used to start a phantomjs binary in
-   webdriver mode. This can be used to drive a phantomjs binary on a
-   machine without selenium server. Argument extras can be used to
-   specify optional extra command line arguments see
-   \url{http://phantomjs.org/api/command-line.html}
+webdriver mode. This can be used to drive a phantomjs binary on a
+machine without selenium server. Argument extras can be used to
+specify optional extra command line arguments see
+\url{http://phantomjs.org/api/command-line.html}
 }
 
 \section{Value}{
  phantom() returns a list with two functions:
 \describe{
 \item{getPID}{returns the process id of the phantomjs binary running in
-   webdriver mode.}
+webdriver mode.}
 \item{stop}{terminates the phantomjs binary running in webdriver mode
-   using \code{\link{pskill}}}
+using \code{\link{pskill}}}
 }
 }
 
