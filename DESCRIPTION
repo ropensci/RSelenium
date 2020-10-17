@@ -1,47 +1,56 @@
-Package: RSelenium
 Type: Package
+Package: RSelenium
 Title: R Bindings for 'Selenium WebDriver'
-Authors@R: c(
-    person("John", "Harrison", , "johndharrison0@gmail.com",
-    role = "aut", comment = "original author"),
-    person("Ju Yeong", "Kim", , "jkim2345@fredhutch.org",
-    role = "cre", comment = "rOpenSci maintainer"))
-Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
-    (see <https://selenium.dev/documentation/en/>
-    for more information) using the 'JsonWireProtocol' (see
-    <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for more
-    information). 'Selenium 2.0 WebDriver' allows driving a web browser
-    natively as a user would either locally or on a remote machine using
-    the Selenium server it marks a leap forward in terms of web browser
-    automation. Selenium automates web browsers (commonly referred to as
-    browsers). Using RSelenium you can automate browsers locally or
 Version: 1.7.6.9000
+Authors@R: 
+    c(person(given = "John",
+             family = "Harrison",
+             role = "aut",
+             email = "johndharrison0@gmail.com",
+             comment = "original author"),
+      person(given = "Ju Yeong",
+             family = "Kim",
+             role = "cre",
+             email = "jkim2345@fredhutch.org",
+             comment = "rOpenSci maintainer"))
+Description: Provides a set of R bindings for the 'Selenium 2.0
+    WebDriver' (see <https://selenium.dev/documentation/en/> for more
+    information) using the 'JsonWireProtocol' (see
+    <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for
+    more information). 'Selenium 2.0 WebDriver' allows driving a web
+    browser natively as a user would either locally or on a remote machine
+    using the Selenium server it marks a leap forward in terms of web
+    browser automation. Selenium automates web browsers (commonly referred
+    to as browsers). Using RSelenium you can automate browsers locally or
     remotely.
 License: AGPL-3
 URL: http://docs.ropensci.org/RSelenium
 BugReports: http://github.com/ropensci/RSelenium/issues
-Additional_repositories: http://www.omegahat.net/R
 Depends:
     R (>= 3.0.0)
 Imports:
-    XML,
-    methods,
+    binman,
     caTools,
+    httr,
+    methods,
+    openssl,
     tools,
     utils,
-    openssl,
-    httr,
-    wdman(>= 0.2.2),
-    binman
+    wdman (>= 0.2.2),
+    XML
 Suggests:
-    testthat,
+    covr,
     knitr,
     Rcompression,
-    covr,
-    rmarkdown
-VignetteBuilder: knitr
+    rmarkdown,
+    testthat
+VignetteBuilder: 
+    knitr
+Additional_repositories: http://www.omegahat.net/R
+Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.0.2
 Collate:
     'RSelenium.R'
     'errorHandler.R'
@@ -50,5 +59,3 @@ Collate:
     'selKeys-data.R'
     'util.R'
     'webElement.R'
-Encoding: UTF-8
-RoxygenNote: 7.0.2
