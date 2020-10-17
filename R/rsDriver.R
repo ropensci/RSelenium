@@ -57,8 +57,7 @@
 #' }
 #' @export
 #' @importFrom wdman selenium
-rsDriver <- function(
-                     port = 4567L,
+rsDriver <- function(port = 4567L,
                      browser = c("chrome", "firefox", "phantomjs", "internet explorer"),
                      version = "latest",
                      chromever = "latest",
