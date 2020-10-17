@@ -1,44 +1,48 @@
 #' Start a Selenium Server and WebDriver remote-controlling a web browser
 #'
-#' @param port Port to run Selenium on.
-#' @param browser Which web browser to start.
+#' @param port Port number to run Selenium on. An integer scalar.
+#' @param browser Which web browser to start. One of
+#'   - `"chrome"`
+#'   - `"firefox"`
+#'   - `"phantomjs"` (deprecated)
+#'   - `"internet explorer"`
 #' @param version What version of Selenium Server to run. Defaults to `"latest"`
-#'     which runs the most recent version. To see other versions currently
-#'     sourced, run `binman::list_versions("seleniumserver")`.
+#'   which runs the most recent version. To see other versions currently
+#'   sourced, run `binman::list_versions("seleniumserver")`.
 #' @param chromever What version of [ChromeDriver](https://chromedriver.chromium.org/)
-#'     to run. Defaults to `"latest"` which runs the most recent version. To see
-#'     other versions currently sourced, run `binman::list_versions("chromedriver")`.
-#'     A value of `NULL` excludes adding the Google Chrome browser to Selenium Server.
+#'   to run. Defaults to `"latest"` which runs the most recent version. To see
+#'   other versions currently sourced, run `binman::list_versions("chromedriver")`.
+#'   A value of `NULL` excludes adding the Google Chrome browser to Selenium Server.
 #' @param geckover What version of [geckodriver](https://firefox-source-docs.mozilla.org/testing/geckodriver/)
-#'     to run. Defaults to `"latest"` which runs the most recent version. To see
-#'     other versions currently sourced, run `binman::list_versions("geckodriver")`.
-#'     A value of `NULL` excludes adding the Firefox browser to Selenium Server.
+#'   to run. Defaults to `"latest"` which runs the most recent version. To see
+#'   other versions currently sourced, run `binman::list_versions("geckodriver")`.
+#'   A value of `NULL` excludes adding the Firefox browser to Selenium Server.
 #' @param phantomver What version of [PhantomJS](https://phantomjs.org/) to run.
-#'     Defaults to `"2.1.1"` which runs the most recent stable version. To see
-#'     other versions currently sourced, run `binman::list_versions("phantomjs")`.
-#'     A value of `NULL` excludes adding the PhantomJS headless browser to
-#'     Selenium Server.
+#'   Defaults to `"2.1.1"` which runs the most recent stable version. To see
+#'   other versions currently sourced, run `binman::list_versions("phantomjs")`.
+#'   A value of `NULL` excludes adding the PhantomJS headless browser to
+#'   Selenium Server.
 #' @param iedrver What version of [InternetExplorerDriver (`IEDriverServer.exe`)](https://github.com/SeleniumHQ/selenium/wiki/InternetExplorerDriver)
-#'     to run. Defaults to `"latest"` which runs the most recent version. To see
-#'     other version currently sourced, run `binman::list_versions("iedriverserver")`.
-#'     A value of `NULL` excludes adding the Internet Explorer browser to
-#'     Selenium Server. **Note** that this functionality is restricted to
-#'     Windows only.
-#' @param verbose If `TRUE`, include status messages (if any)
+#'   to run. Defaults to `"latest"` which runs the most recent version. To see
+#'   other version currently sourced, run `binman::list_versions("iedriverserver")`.
+#'   A value of `NULL` excludes adding the Internet Explorer browser to
+#'   Selenium Server. **Note** that this functionality is restricted to
+#'   Windows only.
+#' @param verbose If `TRUE`, include status messages (if any).
 #' @param check If `TRUE`, check the versions of Selenium available and the
-#'    versions of associated drivers (chromever, geckover, phantomver,
-#'    iedrver). If new versions are available they will be downloaded.
+#'   versions of associated drivers (`chromever`, `geckover`, `phantomver`,
+#'   `iedrver`). If new versions are available, they will be downloaded.
 #' @param ... Additional arguments passed to \code{\link{remoteDriver}}.
 #'
 #' @return A list containing a server and a client. The server is the object
 #' returned by \code{\link[wdman]{selenium}} and the client is an object of class
 #' \code{\link{remoteDriver}}
 #' @details This function is a wrapper around \code{\link[wdman]{selenium}}.
-#'     It provides a "shim" for the current issue running Firefox on
-#'     Windows. For a more detailed set of functions for running binaries
-#'     relating to the Selenium/webdriver project, see the
-#'     \code{\link[wdman]{wdman}} package. Both the client and server
-#'     are closed using a registered finalizer.
+#'   It provides a "shim" for the current issue running Firefox on
+#'   Windows. For a more detailed set of functions for running binaries
+#'   relating to the Selenium/webdriver project, see the
+#'   \code{\link[wdman]{wdman}} package. Both the client and server
+#'   are closed using a registered finalizer.
 #' @examples
 #' \dontrun{
 #' # start a chrome browser
