@@ -34,9 +34,11 @@ Imports:
     httr,
     methods,
     openssl,
+    stringr,
     tools,
     utils,
     wdman (>= 0.2.2),
+    xfun,
     XML
 Suggests:
     covr,

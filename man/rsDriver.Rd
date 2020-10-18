@@ -8,7 +8,7 @@ rsDriver(
   port = 4567L,
   browser = c("chrome", "firefox", "phantomjs", "internet explorer"),
   version = "latest",
-  chromever = "latest",
+  chromever = "latest_compatible",
   geckover = "latest",
   iedrver = NULL,
   phantomver = "2.1.1",
@@ -33,9 +33,12 @@ which runs the most recent version. To see other versions currently
 sourced, run \code{binman::list_versions("seleniumserver")}.}
 
 \item{chromever}{What version of \href{https://chromedriver.chromium.org/}{ChromeDriver}
-to run. Defaults to \code{"latest"} which runs the most recent version. To see
-other versions currently sourced, run \code{binman::list_versions("chromedriver")}.
-A value of \code{NULL} excludes adding the Google Chrome browser to Selenium Server.}
+to run. Defaults to \code{"latest_compatible"} which runs the most recent
+version \emph{compatible} with the (stable) Google Chrome browser version
+detected on the system. To use the very latest ChromeDriver version instead
+(which might be incompatible), use \code{"latest"}. To see other versions
+currently sourced, run \code{binman::list_versions("chromedriver")}. A value of
+\code{NULL} excludes adding the Google Chrome browser to Selenium Server.}
 
 \item{geckover}{What version of \href{https://firefox-source-docs.mozilla.org/testing/geckodriver/}{geckodriver}
 to run. Defaults to \code{"latest"} which runs the most recent version. To see
