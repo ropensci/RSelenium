@@ -12,7 +12,12 @@ Authors@R:
              family = "Kim",
              role = "cre",
              email = "jkim2345@fredhutch.org",
-             comment = "rOpenSci maintainer"))
+             comment = "rOpenSci maintainer"),
+      person(given = "Salim",
+             family = "Brüggemann",
+             role = "ctb",
+             email = "salim-b@pm.me",
+             comment = c(ORCID = "0000-0002-5329-5987")))
 Description: Provides a set of R bindings for the 'Selenium 2.0
     WebDriver' (see <https://selenium.dev/documentation/en/> for more
     information) using the 'JsonWireProtocol' (see
