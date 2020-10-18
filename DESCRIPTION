@@ -1,7 +1,7 @@
 Type: Package
 Package: RSelenium
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.6.9000
+Version: 1.7.7.9000
 Authors@R: 
     c(person(given = "John",
              family = "Harrison",
