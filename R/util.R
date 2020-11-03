@@ -396,10 +396,12 @@ print.rsClientServer <- function(x, ...) {
 #' latestChromeDriver("87")
 #' latestChromeDriver("87.0.4280")
 latestChromeDriver <- function(version) {
-  httr::content(httr::GET(paste0(
-    "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_",
-    version
-  )), encoding = "UTF-8")
+  httr::content(
+    httr::RETRY(verb = "GET",
+                times = 5L,
+                url = paste0("https://chromedriver.storage.googleapis.com/LATEST_RELEASE_",
+                             version)),
+    encoding = "UTF-8")
 }
 
 #' Get installed stable Google Chrome version
