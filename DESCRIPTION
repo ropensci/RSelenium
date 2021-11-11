@@ -1,26 +1,18 @@
 Type: Package
 Package: RSelenium
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.7.9000
-Authors@R: 
-    c(person(given = "John",
-             family = "Harrison",
-             role = "aut",
-             email = "johndharrison0@gmail.com",
-             comment = "original author"),
-      person(given = "Ju Yeong",
-             family = "Kim",
-             role = "cre",
-             email = "jkim2345@fredhutch.org",
-             comment = "rOpenSci maintainer"),
-      person(given = "Salim",
-             family = "Brüggemann",
-             role = "ctb",
-             email = "salim-b@pm.me",
-             comment = c(ORCID = "0000-0002-5329-5987")))
-Description: Provides a set of R bindings for the 'Selenium 2.0
-    WebDriver' (see <https://selenium.dev/documentation/en/> for more
-    information) using the 'JsonWireProtocol' (see
+Version: 1.7.7.9001
+Authors@R: c(
+    person("John", "Harrison", , "johndharrison0@gmail.com", role = "aut",
+           comment = "original author"),
+    person("Ju Yeong", "Kim", , "jkim2345@fredhutch.org", role = "cre",
+           comment = "rOpenSci maintainer"),
+    person("Salim", "Brüggemann", , "salim-b@pm.me", role = "ctb",
+           comment = c(ORCID = "0000-0002-5329-5987"))
+  )
+Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
+    (see <https://selenium.dev/documentation/en/> for more information)
+    using the 'JsonWireProtocol' (see
     <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for
     more information). 'Selenium 2.0 WebDriver' allows driving a web
     browser natively as a user would either locally or on a remote machine
@@ -57,7 +49,7 @@ Additional_repositories: http://www.omegahat.net/R
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Collate:
     'RSelenium.R'
     'errorHandler.R'
