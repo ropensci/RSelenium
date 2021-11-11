@@ -427,14 +427,27 @@ systemChromeVersion <- function() {
     # Google Chrome binary directly to get its version number
     # cf. https://bugs.chromium.org/p/chromium/issues/detail?id=158372
   } else if (xfun::is_windows()) {
+    # first try a possible x64 binary...
     chrome_version <- system2(
       command = "wmic",
-      args = 'datafile where name="C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe" get Version /value',
+      args = 'datafile where name="C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe" get Version /value',
       stdout = TRUE,
       stderr = TRUE
     )
     chrome_version <- stringr::str_extract(string = chrome_version,
                                            pattern = "(?<=Version=)(\\d+\\.){2}\\d+")
+
+    # ... and in case of no success fall back to a possible x86 binary
+    if (is.na(chrome_version)) {
+      chrome_version <- system2(
+        command = "wmic",
+        args = 'datafile where name="C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe" get Version /value',
+        stdout = TRUE,
+        stderr = TRUE
+      )
+      chrome_version <- stringr::str_extract(string = chrome_version,
+                                             pattern = "(?<=Version=)(\\d+\\.){2}\\d+")
+    }
 
   } else {
     warning("Your OS couldn't be determined (Linux, macOS, Windows) or is not supported.")
