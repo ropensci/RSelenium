@@ -406,8 +406,8 @@ latestChromeDriver <- function(version) {
 
 #' Get installed stable Google Chrome version
 #'
-#' This function returns the first three elements of the (usually) four-element-long
-#' version number of the stable Google Chrome binary detected on the system.
+#' Returns the first three elements of the (usually) four-element-long version
+#' number of the stable Google Chrome binary detected on the system.
 #'
 #' @return A character scalar.
 systemChromeVersion <- function() {

@@ -10,6 +10,6 @@ systemChromeVersion()
 A character scalar.
 }
 \description{
-This function returns the first three elements of the (usually) four-element-long
-version number of the stable Google Chrome binary detected on the system.
+Returns the first three elements of the (usually) four-element-long version
+number of the stable Google Chrome binary detected on the system.
 }
