@@ -438,7 +438,7 @@ systemChromeVersion <- function() {
                                            pattern = "(?<=Version=)(\\d+\\.){2}\\d+")
 
     # ... and in case of no success fall back to a possible x86 binary
-    if (is.na(chrome_version)) {
+    if (all(is.na(chrome_version))) {
       chrome_version <- system2(
         command = "wmic",
         args = 'datafile where name="C:\\\\Program Files (x86)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe" get Version /value',
