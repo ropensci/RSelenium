@@ -24,8 +24,6 @@ jobs:
           - /dev/shm:/dev/shm
       http-server:
         image: juyeongkim/test-server
-        ports:
-          - 3000:8080
 
     steps:
       - uses: actions/checkout@v2
