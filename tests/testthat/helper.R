@@ -5,7 +5,7 @@ initFun <- function(silent = TRUE, ...) {
   remDr$setTimeout(milliseconds = 20000)
   # wait 5 secs for elements to load
   remDr$setTimeout(type = "implicit", milliseconds = 5000)
-  htmlSrc <- if (identical(Sys.getenv("TRAVIS"), "true")) {
+  htmlSrc <- if (identical(Sys.getenv("GITHUB_ACTIONS"), "true")) {
     "http-server:8080"
   } else {
     "localhost:3000"
