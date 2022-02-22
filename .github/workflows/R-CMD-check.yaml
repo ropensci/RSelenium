@@ -11,13 +11,21 @@ name: R-CMD-check
 jobs:
   R-CMD-check:
     runs-on: ubuntu-latest
+
+    name: ${{ matrix.browser }} (${{ matrix.version }})
+
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+        version: [2.53.1, latest]
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
 
     services:
       chrome:
-        image: selenium/standalone-chrome:2.53.1
+        image: selenium/standalone-${{ matrix.browser }}:${{ matrix.version }}
         ports:
           - 4444:4444
         volumes:
@@ -37,3 +45,5 @@ jobs:
           extra-packages: rcmdcheck
 
       - uses: r-lib/actions/check-r-package@v1
+        env:
+          BROWSER: ${{ matrix.browser }}
