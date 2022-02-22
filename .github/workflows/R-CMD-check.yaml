@@ -24,7 +24,7 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
 
     services:
-      chrome:
+      selenium:
         image: selenium/standalone-${{ matrix.browser }}:${{ matrix.version }}
         ports:
           - 4444:4444
