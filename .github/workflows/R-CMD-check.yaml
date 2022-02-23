@@ -16,6 +16,7 @@ jobs:
     name: ${{ matrix.browser }} (${{ matrix.version }})
 
     strategy:
+      fail-fast: false
       matrix:
         browser: [chrome, firefox]
         version: [2.53.1, latest]
