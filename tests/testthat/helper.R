@@ -1,7 +1,7 @@
-initFun <- function(silent = TRUE, ...) {
+initFun <- function(silent = FALSE, ...) {
   browserName <- Sys.getenv("SELENIUM_BROWSER", "chrome")
   remoteServerAddr <- Sys.getenv("SELENIUM_HOST", "localhost")
-  port <- Sys.getenv("SELENIUM_PORT", 4444L)
+  port <- as.integer(Sys.getenv("SELENIUM_PORT", 4444L))
   
   remDr <- remoteDriver(remoteServerAddr = remoteServerAddr, port = port, browserName = browserName, ...)
   remDr$open(silent)
