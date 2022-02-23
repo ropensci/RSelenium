@@ -44,6 +44,13 @@ jobs:
         with:
           extra-packages: rcmdcheck
 
+      - name: Check
+        run: |
+          docker network ls
+          docker image ls
+          docker ps
+          ip address
+
       - uses: r-lib/actions/check-r-package@v1
         env:
           BROWSER: ${{ matrix.browser }}
