@@ -23,9 +23,6 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
-      SELENIUM_BROWSER: ${{ matrix.browser }}
-      SELENIUM_HOST: localhost
-      SELENIUM_PORT: ${{ job.services.selenium.ports[4444] }}
 
     services:
       selenium:
@@ -56,3 +53,7 @@ jobs:
           ip address
 
       - uses: r-lib/actions/check-r-package@v1
+        env:
+          SELENIUM_BROWSER: ${{ matrix.browser }}
+          SELENIUM_HOST: localhost
+          SELENIUM_PORT: ${{ job.services.selenium.ports[4444] }}
