@@ -1,6 +1,7 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/master/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
 on:
+  workflow_dispatch:
   push:
     branches: [main, master]
   pull_request:
@@ -22,12 +23,15 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       R_KEEP_PKG_SOURCE: yes
+      SELENIUM_BROWSER: ${{ matrix.browser }}
+      SELENIUM_HOST: localhost
+      SELENIUM_PORT: ${{ job.services.selenium.ports[4444] }}
 
     services:
       selenium:
         image: selenium/standalone-${{ matrix.browser }}:${{ matrix.version }}
         ports:
-          - 4444:4444
+          - 4444
         volumes:
           - /dev/shm:/dev/shm
       http-server:
@@ -52,5 +56,3 @@ jobs:
           ip address
 
       - uses: r-lib/actions/check-r-package@v1
-        env:
-          BROWSER: ${{ matrix.browser }}

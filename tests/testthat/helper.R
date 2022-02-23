@@ -1,6 +1,9 @@
 initFun <- function(silent = TRUE, ...) {
-  browserName <- Sys.getenv("BROWSER", "chrome")
-  remDr <- remoteDriver(browserName = browserName, ...)
+  browserName <- Sys.getenv("SELENIUM_BROWSER", "chrome")
+  remoteServerAddr <- Sys.getenv("SELENIUM_HOST", "localhost")
+  port <- Sys.getenv("SELENIUM_PORT", 4444L)
+  
+  remDr <- remoteDriver(remoteServerAddr = remoteServerAddr, port = port, browserName = browserName, ...)
   remDr$open(silent)
   # set page load timeout to 20 secs
   remDr$setTimeout(milliseconds = 20000)
