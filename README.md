@@ -1,7 +1,7 @@
 RSelenium
 ================
 
-[![Build Status](https://travis-ci.org/ropensci/RSelenium.svg?branch=master)](https://travis-ci.org/ropensci/RSelenium)
+[![R-CMD-check](https://github.com/ropensci/RSelenium/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/RSelenium/actions)
 [![codecov](https://codecov.io/gh/ropensci/RSelenium/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/RSelenium)
 [![](http://www.r-pkg.org/badges/version/RSelenium)](https://CRAN.R-project.org/package=RSelenium)
 ![](http://cranlogs.r-pkg.org/badges/RSelenium?color=yellow)
@@ -22,8 +22,8 @@ install.packages("RSelenium")
 To install the development version from GitHub, run:
 
 ```R
-# install.packages("devtools")
-devtools::install_github("ropensci/RSelenium")
+# install.packages("remotes")
+remotes::install_github("ropensci/RSelenium")
 ```
 
 To get started using `RSelenium` you can look at the introduction vignette located in `/doc/basics.html` once `RSelenium` is installed or run

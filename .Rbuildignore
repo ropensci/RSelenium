@@ -1,7 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 inst/www
-^\.travis\.yml$
 ^web$
 docs
 ^\.github$

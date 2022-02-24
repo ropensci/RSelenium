@@ -1,7 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.6
+Version: 1.7.7
 Authors@R: c(
     person("John", "Harrison", , "johndharrison0@gmail.com",
     role = "aut", comment = "original author"),
@@ -39,6 +39,10 @@ Suggests:
     Rcompression,
     covr,
     rmarkdown
+Remotes:
+    ropensci/binman,
+    ropensci/wdman,
+    omegahat/Rcompression
 VignetteBuilder: knitr
 LazyData: true
 Collate:

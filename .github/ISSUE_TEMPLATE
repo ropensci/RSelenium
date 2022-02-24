@@ -10,7 +10,7 @@ Currently we would advise against using the latest firefox/geckodriver with sele
 is complete. If you wish to use firefox we would advise using an older version via a Docker image. See the RSelenium
 Docker vignette for more detail:
 
-http://rpubs.com/johndharrison/RSelenium-Docker
+https://docs.ropensci.org/RSelenium/articles/docker.html
 
 If your issue is not with geckodriver/firefox please fill out the template
 
