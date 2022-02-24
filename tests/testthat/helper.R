@@ -8,7 +8,7 @@ initFun <- function(silent = TRUE, ...) {
   # wait 5 secs for elements to load
   remDr$setTimeout(type = "implicit", milliseconds = 5000)
 
-  htmlSrc <- Sys.getenv("TEST_SERVER"), "http://localhost:3000")
+  htmlSrc <- Sys.getenv("TEST_SERVER", "http://localhost:3000")
   loadPage <- function(pgStr) {
     paste0(file.path(htmlSrc, paste0(pgStr, ".html")))
   }
