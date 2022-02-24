@@ -1,3 +1,6 @@
+# RSelenium 1.7.7
+* Moved testing to TRAVIS
+
 # RSelenium 1.7.6
 * No functional changes in this version (need to re-submit to CRAN for being archived)
 * Fixed typos in vignettes and documentation
