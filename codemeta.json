@@ -162,11 +162,11 @@
         "name": "Comprehensive R Archive Network (CRAN)",
         "url": "https://cran.r-project.org"
       },
-      "sameAs": "https://github.com/ropensci/wdman"
+      "sameAs": "https://CRAN.R-project.org/package=wdman"
     },
     "SystemRequirements": null
   },
-  "fileSize": "320.781KB",
+  "fileSize": "320.553KB",
   "relatedLink": ["https://docs.ropensci.org/RSelenium/", "https://CRAN.R-project.org/package=RSelenium"],
   "releaseNotes": "https://github.com/ropensci/RSelenium/blob/master/NEWS.md",
   "readme": "https://github.com/ropensci/RSelenium/blob/master/README.md",

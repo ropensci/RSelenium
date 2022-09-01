@@ -33,7 +33,7 @@ vignette("basics", package = "RSelenium")
 
 or the basic vignette can be viewed [here](https://docs.ropensci.org/RSelenium/articles/basics.html).
 
-There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at [Driving OS/Browsers Local and Remote](https://docs.ropensci.org/RSelenium/articles/saucelabs.html). Finally, you can read all about running a headless browser or running a normal browser on a headless server at [Headless Browsing](https://docs.ropensci.org/RSelenium/articles/headless.html).
+There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at [Driving OS/Browsers Local and Remote](https://docs.ropensci.org/RSelenium/articles/saucelabs.html).
 
 ### Summary of Vignettes
 
