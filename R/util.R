@@ -1,101 +1,3 @@
-#' Check for Server binary
-#'
-#' Defunct. Please use \code{\link{rsDriver}}
-#'
-#' \code{checkForServer}
-#' A utility function to check if the Selenium Server stanalone binary is
-#'    present.
-#' @param dir A directory in which the binary is to be placed.
-#' @param update A boolean indicating whether to update the binary if it
-#'    is present.
-#' @param rename A boolean indicating whether to rename to
-#'    "selenium-server-standalone.jar".
-#' @param beta A boolean indicating whether to include beta releases.
-#' @export
-#' @importFrom XML xmlParse xpathSApply xmlValue
-#' @importFrom utils download.file
-#' @section Detail: The downloads for the Selenium project can be found at
-#'    http://selenium-release.storage.googleapis.com/index.html. This
-#'    convenient function downloads the standalone server and places it in
-#'    the RSelenium package directory bin folder by default.
-#' @examples
-#' \dontrun{
-#' checkForServer()
-#' }
-checkForServer <- function(
-                           dir = NULL,
-                           update = FALSE,
-                           rename = TRUE,
-                           beta = FALSE) {
-  .Defunct(
-    new = rsDriver,
-    package = "RSelenium",
-    msg = "checkForServer is now defunct. Users in future can find the function
-    in file.path(find.package(\"RSelenium\"), \"examples/serverUtils\"). The
-    recommended way to run a selenium server is via Docker. Alternatively
-    see the RSelenium::rsDriver function."
-  )
-}
-
-#' Start the standalone server.
-#'
-#' Defunct. Please use \code{\link{rsDriver}}
-#'
-#' \code{startServer}
-#' A utility function to start the standalone server. Return two functions
-#'    see values.
-#' @param dir A directory in which the binary is to be placed.
-#' @param args Additional arguments to be passed to Selenium Server.
-#' @param javaargs arguments passed to JVM as opposed to the Selenium
-#'    Server jar.
-#' @param log Logical value indicating whether to write a log file to the
-#'    directory containing the Selenium Server binary.
-#' @param ... arguments passed \code{\link{system2}}. Unix defaults
-#'    wait = FALSE, stdout = FALSE, stderr = FALSE. Windows defaults
-#'    wait = FALSE, invisible = TRUE.
-#' @export
-#' @importFrom XML readHTMLTable htmlParse
-#' @section Detail: By default the binary is assumed to be in the
-#'    RSelenium package /bin directory. The log argument is for convenience.
-#'    Setting it to FALSE and stipulating
-#'    args = c("-log /user/etc/somePath/somefile.log") allows a custom
-#'    location. Using log = TRUE sets the location to a file named
-#'    sellog.txt in the directory containing the Selenium Server binary.
-#' @return Returns a list containing two functions. The 'getpid' function
-#'    returns the process id of the started Selenium binary. The 'stop'
-#'    function stops the started Selenium server using the process id.
-#' @examples
-#' \dontrun{
-#' selServ <- startServer()
-#' # example of commandline passing
-#' selServ <- startServer(
-#'   args = c("-port 4455"),
-#'   log = FALSE,
-#'   invisible = FALSE
-#' )
-#' remDr <- remoteDriver(browserName = "chrome", port = 4455)
-#' remDr$open()
-#' # get the process id of the selenium binary
-#' selServ$getpid()
-#' # stop the selenium binary
-#' selServ$stop()
-#' }
-startServer <- function(
-                        dir = NULL,
-                        args = NULL,
-                        javaargs = NULL,
-                        log = TRUE,
-                        ...) {
-  .Defunct(
-    new = rsDriver,
-    package = "RSelenium",
-    msg = "startServer is now defunct. Users in future can find the function in
-    file.path(find.package(\"RSelenium\"), \"examples/serverUtils\"). The
-    recommended way to run a selenium server is via Docker. Alternatively
-    see the RSelenium::rsDriver function."
-  )
-}
-
 #' Get Firefox profile.
 #'
 #' \code{getFirefoxProfile}
@@ -114,15 +16,14 @@ startServer <- function(
 #' remDr <- remoteDriver(extraCapabilities = fprof)
 #' remDr$open()
 #' }
-getFirefoxProfile <- function(profDir, useBase = FALSE) {
+getFirefoxProfile <- function(profDir, useBase = TRUE) {
+  if (!missing("useBase")) {
+    warning("`useBase` argument deprecated. Now using base as default.")
+    useBase <- TRUE
+}
   tmpfile <- tempfile(fileext = ".zip")
   reqFiles <- list.files(profDir, recursive = TRUE)
-  if (!useBase) {
-    Rcompression::zip(
-      tmpfile, paste(profDir, reqFiles, sep = "/"),
-      altNames = reqFiles
-    )
-  } else {
+  if (isTRUE(useBase)) {
     currWd <- getwd()
     setwd(profDir)
     on.exit(setwd(currWd))
@@ -198,62 +99,6 @@ getChromeProfile <- function(dataDir, profileDir) {
   )
   cprof
 }
-
-#' Start a phantomjs binary in webdriver mode.
-#'
-#' Defunct. Please use \code{\link{rsDriver}} or \code{\link[wdman]{phantomjs}}
-#'
-#' \code{phantom}
-#' A utility function to control a phantomjs binary in webdriver mode.
-#' @param pjs_cmd The name, full or partial path of a phantomjs
-#'    executable. This is optional only state if the executable is not in
-#'    your path.
-#' @param port An integer giving the port on which phantomjs will listen.
-#'    Defaults to 4444. format [[<IP>:]<PORT>]
-#' @param extras An optional character vector: see 'Details'.
-#' @param ... Arguments to pass to \code{\link{system2}}
-#' @export
-#' @importFrom tools pskill
-#' @importFrom utils read.csv
-#' @section Detail: phantom() is used to start a phantomjs binary in
-#'    webdriver mode. This can be used to drive a phantomjs binary on a
-#'    machine without selenium server. Argument extras can be used to
-#'    specify optional extra command line arguments see
-#'    \url{http://phantomjs.org/api/command-line.html}
-#' @section Value: phantom() returns a list with two functions:
-#' \describe{
-#' \item{getPID}{returns the process id of the phantomjs binary running in
-#'    webdriver mode.}
-#' \item{stop}{terminates the phantomjs binary running in webdriver mode
-#'    using \code{\link{pskill}}}
-#' }
-#' @examples
-#' \dontrun{
-#' pJS <- phantom()
-#' # note we are running here without a selenium server phantomjs is
-#' # listening on port 4444
-#' # in webdriver mode
-#' remDr <- remoteDriver(browserName = "phantomjs")
-#' remDr$open()
-#' remDr$navigate("http://www.google.com/ncr")
-#' remDr$screenshot(display = TRUE)
-#' webElem <- remDr$findElement("name", "q")
-#' webElem$sendKeysToElement(list("HELLO WORLD"))
-#' remDr$screenshot(display = TRUE)
-#' remDr$close()
-#' # note remDr$closeServer() is not called here. We stop the phantomjs
-#' # binary using
-#' pJS$stop()
-#' }
-phantom <- function(pjs_cmd = "", port = 4444L, extras = "", ...) {
-  .Defunct(
-    new = "phantomjs",
-    package = "wdman",
-    msg = "phantom is now defunct. Users can drive PhantomJS via selenium using
-    the RSelenium::rsDriver function or directly using wdman::phantomjs"
-  )
-}
-
 
 matchSelKeys <- function(x) {
   if (any(names(x) == "key")) {
