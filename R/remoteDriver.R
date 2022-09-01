@@ -19,7 +19,8 @@
 #'      version(""), platform(ANY),
 #'      javascript(TRUE). See examples for more information on use.
 #'
-#' @importFrom openssl base64_decode
+#' @importFrom caTools base64decode
+#' @importFrom httr parse_url build_url
 #' @field remoteServerAddr Object of class \code{"character"}, giving the
 #'    ip of the remote server. Defaults to localhost
 #' @field port Object of class \code{"numeric"}, the port of the remote
@@ -55,9 +56,6 @@
 #' @aliases remoteDriver
 #' @examples
 #' \dontrun{
-#' # start the server if one isnt running
-#' startServer()
-#'
 #' # use default server initialisation values
 #' remDr <- remoteDriver$new()
 #'
@@ -380,7 +378,7 @@ remoteDriver <-
         moved to the center of the element. If the element is not visible,
         it will be scrolled into view."
         if (!is.null(webElement)) {
-          if (class(webElement) != "webElement") {
+          if (!is(webElement, "webElement")) {
             print("webElement should be of class webElement")
             return()
           }
@@ -602,9 +600,8 @@ remoteDriver <-
         # change here to test class of args for a webElement
         if (any(lapply(args, class) == "webElement")) {
           # some of the function arguments are webElements
-          wInd <- lapply(args, class) == "webElement"
           args <- lapply(args, function(x) {
-            if (class(x) == "webElement'") {
+            if (is(x, "webElement")) {
               list(ELEMENT = x[["elementId"]])
             } else {
               x
@@ -663,9 +660,8 @@ remoteDriver <-
         # change here to test class of args for a webElement
         if (any(lapply(args, class) == "webElement")) {
           # some of the function arguments are webElements
-          wInd <- lapply(args, class) == "webElement"
           args <- lapply(args, function(x) {
-            if (class(x) == "webElement") {
+            if (is(x, "webElement")) {
               list(ELEMENT = x[["elementId"]])
             } else {
               x
@@ -724,7 +720,7 @@ remoteDriver <-
 
         if (display) {
           tmp <- paste0(tempdir(), "/tmpScreenShot.png")
-          writeBin(base64_decode(.self$value[[1]]), tmp)
+          writeBin(base64decode(.self$value[[1]], "raw"), tmp)
           viewer <- getOption("viewer")
           if (!is.null(viewer) && useViewer) {
             viewer(tmp)
@@ -735,7 +731,7 @@ remoteDriver <-
           if (is.null(file)) {
             .self$value
           } else {
-            writeBin(base64_decode(.self$value[[1]]), file)
+            writeBin(base64decode(.self$value[[1]], "raw"), file)
           }
         }
       },
