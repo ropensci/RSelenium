@@ -1,14 +1,14 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.7
+Version: 1.7.8
 Authors@R: c(
     person("John", "Harrison", , "johndharrison0@gmail.com",
     role = "aut", comment = "original author"),
     person("Ju Yeong", "Kim", , "jkim2345@fredhutch.org",
     role = "cre", comment = "rOpenSci maintainer"))
 Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
-    (see <https://selenium.dev/documentation/en/>
+    (see <https://www.selenium.dev/documentation/>
     for more information) using the 'JsonWireProtocol' (see
     <https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol> for more
     information). 'Selenium 2.0 WebDriver' allows driving a web browser
@@ -18,33 +18,24 @@ Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
     browsers). Using RSelenium you can automate browsers locally or
     remotely.
 License: AGPL-3
-URL: http://docs.ropensci.org/RSelenium
-BugReports: http://github.com/ropensci/RSelenium/issues
-Additional_repositories: http://www.omegahat.net/R
+URL: https://docs.ropensci.org/RSelenium/
+BugReports: https://github.com/ropensci/RSelenium/issues
 Depends:
     R (>= 3.0.0)
 Imports:
-    XML,
     methods,
     caTools,
-    tools,
     utils,
-    openssl,
     httr,
-    wdman(>= 0.2.2),
-    binman
+    wdman(>= 0.2.2)
 Suggests:
+    binman,
+    XML,
     testthat,
     knitr,
-    Rcompression,
     covr,
     rmarkdown
-Remotes:
-    ropensci/binman,
-    ropensci/wdman,
-    omegahat/Rcompression
 VignetteBuilder: knitr
-LazyData: true
 Collate:
     'RSelenium.R'
     'errorHandler.R'
@@ -54,4 +45,4 @@ Collate:
     'util.R'
     'webElement.R'
 Encoding: UTF-8
-RoxygenNote: 7.0.2
+RoxygenNote: 7.2.1

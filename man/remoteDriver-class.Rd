@@ -149,8 +149,8 @@ script result will be returned to the client as WebElement JSON
 objects.}
 
 \item{\code{findElement(
-  using = c("xpath", "css selector", "id", "name", "tag name", "class name",
-    "link text", "partial link text"),
+  using = c("xpath", "css selector", "id", "name", "tag name", "class name", "link text",
+    "partial link text"),
   value
 )}}{Search for an element on the page, starting from the document
 root. The located element will be returned as an object of
@@ -183,8 +183,8 @@ webElement class.The inputs are:
 }}
 
 \item{\code{findElements(
-  using = c("xpath", "css selector", "id", "name", "tag name", "class name",
-    "link text", "partial link text"),
+  using = c("xpath", "css selector", "id", "name", "tag name", "class name", "link text",
+    "partial link text"),
   value
 )}}{Search for multiple elements on the page, starting from the
 document root. The located elements will be returned as an list of
@@ -355,9 +355,6 @@ of its name attribute.}
 
 \examples{
 \dontrun{
-# start the server if one isnt running
-startServer()
-
 # use default server initialisation values
 remDr <- remoteDriver$new()
 

@@ -38,8 +38,8 @@ the same DOM element.}
 \item{\code{describeElement()}}{Describe the identified element.}
 
 \item{\code{findChildElement(
-  using = c("xpath", "css selector", "id", "name", "tag name", "class name",
-    "link text", "partial link text"),
+  using = c("xpath", "css selector", "id", "name", "tag name", "class name", "link text",
+    "partial link text"),
   value
 )}}{Search for an element on the page, starting from the node defined
 by the parent webElement. The located element will be returned as
@@ -55,8 +55,8 @@ The inputs are:
 }}
 
 \item{\code{findChildElements(
-  using = c("xpath", "css selector", "id", "name", "tag name", "class name",
-    "link text", "partial link text"),
+  using = c("xpath", "css selector", "id", "name", "tag name", "class name", "link text",
+    "partial link text"),
   value
 )}}{Search for multiple elements on the page, starting from the node
 defined by the parent webElement. The located elements will be

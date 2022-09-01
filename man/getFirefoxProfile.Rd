@@ -4,7 +4,7 @@
 \alias{getFirefoxProfile}
 \title{Get Firefox profile.}
 \usage{
-getFirefoxProfile(profDir, useBase = FALSE)
+getFirefoxProfile(profDir, useBase = TRUE)
 }
 \arguments{
 \item{profDir}{The directory in which the firefox profile resides}

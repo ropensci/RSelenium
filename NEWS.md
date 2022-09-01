@@ -1,3 +1,9 @@
+# RSelenium 1.7.8
+* Remove images in vignettes (addressing #260)
+* Remove dependency on `Rcompression` (addressing #251 #256)
+* Remove the defunct functions: `phantom`, `checkForServer`, and `startServer`
+* Use `caTools::base64decode` instead of `openssl::base64_decode` to decode the base64 encoded PNG screenshot
+
 # RSelenium 1.7.7
 * Moved testing to GitHub Actions
 

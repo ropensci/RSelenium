@@ -4,10 +4,12 @@
 \name{selKeys}
 \alias{selKeys}
 \title{Selenium key mappings}
-\format{A named list. The names are the descriptions of the keys. The
-   values are the "UTF-8" character representations.}
+\format{
+A named list. The names are the descriptions of the keys. The
+   values are the "UTF-8" character representations.
+}
 \source{
-https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#sessionsessionidelementidvalue
+https://www.selenium.dev/documentation/legacy/json_wire_protocol/#sessionsessionidelementidvalue
 }
 \usage{
 selKeys
