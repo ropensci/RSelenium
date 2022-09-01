@@ -238,7 +238,7 @@ The original headless browser for selenium was `htmlunit`.
 
 ## RSelenium with Remote Browsers and External Sites
 
-Setting up multiple OS/browsers combinations locally is not always the best use of ones time. It is an interesting exercise to implement for example an Android platform locally but the overhead of having multiple systems and browsers quickly overcomes the utility. There are professional service providers who maintain a suite of OS/browsers that can be utilised for testing. Companies such as [https://saucelabs.com/](Sauce Labs) and [http://www.browserstack.com](Browser Stack) offer free automated testing to open source projects. In this vignette we will demonstrate remote testing using Sauce Labs. 
+Setting up multiple OS/browsers combinations locally is not always the best use of ones time. It is an interesting exercise to implement for example an Android platform locally but the overhead of having multiple systems and browsers quickly overcomes the utility. There are professional service providers who maintain a suite of OS/browsers that can be utilised for testing. Companies such as [Sauce Labs](https://saucelabs.com) and [Browser Stack](https://www.browserstack.com) offer free automated testing to open source projects. In this vignette we will demonstrate remote testing using Sauce Labs. 
 
 ### Setting up Sauce Labs
 

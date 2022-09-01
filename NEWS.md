@@ -1,4 +1,4 @@
-# RSelenium 1.7.8
+# RSelenium 1.7.9
 * Remove images in vignettes (addressing #260)
 * Remove dependency on `Rcompression` (addressing #251 #256)
 * Remove the defunct functions: `phantom`, `checkForServer`, and `startServer`

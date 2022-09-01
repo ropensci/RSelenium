@@ -8,3 +8,4 @@ docs
 ^codemeta\.json$
 ^cran-comments\.md$
 .DS_Store
+^CRAN-SUBMISSION$

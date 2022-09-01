@@ -7,7 +7,7 @@
   "codeRepository": "https://github.com/ropensci/RSelenium",
   "issueTracker": "https://github.com/ropensci/RSelenium/issues",
   "license": "https://spdx.org/licenses/AGPL-3.0",
-  "version": "1.7.8",
+  "version": "1.7.9",
   "programmingLanguage": {
     "@type": "ComputerLanguage",
     "name": "R",
