@@ -12,7 +12,7 @@ vignette: >
 
 ## Introduction
 
-The goal of RSelenium is to make it easy to connect to a Selenium Server/Remote Selenium Server from within R. RSelenium provides R bindings for the Selenium Webdriver API. [Selenium](http://docs.seleniumhq.org/) is a project focused on automating web browsers. RSelenium allows you to carry out unit testing and regression testing on your webapps and webpages across a range of browser/OS combinations. This allows us to integrate from within R testing and manipulation of popular projects such as [Shiny Apps](http://www.rstudio.com/shiny/).
+The goal of RSelenium is to make it easy to connect to a Selenium Server/Remote Selenium Server from within R. RSelenium provides R bindings for the Selenium Webdriver API. [Selenium](http://docs.seleniumhq.org/) is a project focused on automating web browsers. RSelenium allows you to carry out unit testing and regression testing on your webapps and webpages across a range of browser/OS combinations. This allows us to integrate from within R testing and manipulation of popular projects such as [Shiny Apps](https://shiny.rstudio.com/).
 
 
 ## Connecting to a Selenium Server
@@ -336,7 +336,7 @@ webElem <- remDr$findElement(using = "css", "[class = 'gsfi lst-d-f']")
 
 ***NOTE:*** no issue with compound class names with CSS
 
-A good example of searching using css-selectors is given [here](http://saucelabs.com/resources/selenium/css-selectors).
+A good example of searching using css-selectors is given [here](https://saucelabs.com/resources/articles/selenium-tips-css-selectors).
 
 ### Search Using XPath
 
@@ -650,9 +650,6 @@ remDr$maxWindowSize()
 remDr$screenshot(display = TRUE)
 ```
 
-<h6 align = center>RProject front page</h6>
-<img src="https://res.cloudinary.com/rselenium/image/upload/v1537203294/RProject.png" title = "RProject front page on linux firefox 26.0" width = '100%'/>
-
 To access the content, we have to switch to a frame using the `switchToFrame` method of the `remoteDriver` class.
 
 ```R
@@ -959,20 +956,6 @@ So using the code above one can observe how to switch between different windows 
 
 
 ## Appendix
-
-### Server Functions
-
-In previous versions of `RSelenium`, there were two functions `checkForServer` and `startServer` which were used to download and start a Selenium binary. These functions are defunct as users had issue with using them cross-platform. They are still in the RSelenium package and can be accessed in the serverUtils directory `file.path(find.package("RSelenium"), "examples/serverUtils")`
-
-```R
-file.path(find.package("RSelenium"), "examples/serverUtils")
-```
-
-```
-## [1] "/home/john/R/x86_64-pc-linux-gnu-library/3.3/RSelenium/examples/serverUtils"
-```
-
-They may work for you depending on your platform and setup, but are not supported.
 
 ### rsDriver
 
