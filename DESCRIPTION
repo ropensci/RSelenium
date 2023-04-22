@@ -3,10 +3,13 @@ Type: Package
 Title: R Bindings for 'Selenium WebDriver'
 Version: 1.7.9
 Authors@R: c(
-    person("John", "Harrison", , "johndharrison0@gmail.com",
-    role = "aut", comment = "original author"),
-    person("Ju Yeong", "Kim", , "jkim2345@fredhutch.org",
-    role = "cre", comment = "rOpenSci maintainer"))
+    person("John", "Harrison", , "johndharrison0@gmail.com", role = "aut",
+           comment = "original author"),
+    person("Ju Yeong", "Kim", , "jkim2345@fredhutch.org", role = "aut",
+           comment = "rOpenSci maintainer"),
+    person("Jonathan", "Völkle", , "jonathan.voelkle@web.de", role = c("aut", "cre")),
+    person("Indranil", "Gayen", , "nil.gayen@gmail.com", role = "ctb")
+  )
 Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
     (see <https://www.selenium.dev/documentation/>
     for more information) using the 'JsonWireProtocol' (see
