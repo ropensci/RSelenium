@@ -1,6 +1,8 @@
+.DS_Store
 .Rproj.user
 .Rhistory
 .RData
+CRAN-SUBMISSION
 data/selKeys.rda
 demo/apps/shinytestapp/global.R
 demo/apps/shinytestapp/reqcontrols.R

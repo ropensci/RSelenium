@@ -1,14 +1,13 @@
-RSelenium
-================
+# RSelenium
 
-[![Build Status](https://travis-ci.org/ropensci/RSelenium.svg?branch=master)](https://travis-ci.org/ropensci/RSelenium)
-[![codecov](https://codecov.io/gh/ropensci/RSelenium/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/RSelenium)
-[![](http://www.r-pkg.org/badges/version/RSelenium)](https://CRAN.R-project.org/package=RSelenium)
-![](http://cranlogs.r-pkg.org/badges/RSelenium?color=yellow)
-![](http://cranlogs.r-pkg.org/badges/grand-total/RSelenium?color=yellowgreen)
+[![R-CMD-check](https://github.com/ropensci/RSelenium/workflows/R-CMD-check/badge.svg)](https://github.com/ropensci/RSelenium/actions)
+[![codecov](https://codecov.io/gh/ropensci/RSelenium/branch/master/graph/badge.svg)](https://app.codecov.io/gh/ropensci/RSelenium)
+[![CRAN status](https://www.r-pkg.org/badges/version/RSelenium)](https://CRAN.R-project.org/package=RSelenium)
+![CRAN monthly](http://cranlogs.r-pkg.org/badges/RSelenium?color=yellow)
+![CRAN total](http://cranlogs.r-pkg.org/badges/grand-total/RSelenium?color=yellowgreen)
 
 
-This is a set of R Bindings for Selenium 2.0 Remote WebDriver, which you can download from http://selenium-release.storage.googleapis.com/index.html. This binding will not work with the 1.0 version of Selenium.
+This is a set of R Bindings for Selenium **2.0** Remote WebDriver, which you can download from http://selenium-release.storage.googleapis.com/index.html. This binding will not work with the 1.0 version of Selenium.
 
 
 ## Install 
@@ -22,8 +21,8 @@ install.packages("RSelenium")
 To install the development version from GitHub, run:
 
 ```R
-# install.packages("devtools")
-devtools::install_github("ropensci/RSelenium")
+# install.packages("remotes")
+remotes::install_github("ropensci/RSelenium")
 ```
 
 To get started using `RSelenium` you can look at the introduction vignette located in `/doc/basics.html` once `RSelenium` is installed or run
@@ -32,24 +31,22 @@ To get started using `RSelenium` you can look at the introduction vignette locat
 vignette("basics", package = "RSelenium")
 ```
 
-or the basic vignette can be viewed [here](http://docs.ropensci.org/RSelenium/articles/basics.html).
+or the basic vignette can be viewed [here](https://docs.ropensci.org/RSelenium/articles/basics.html).
 
-There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at [Driving OS/Browsers Local and Remote](http://docs.ropensci.org/RSelenium/articles/saucelabs.html). Finally, you can read all about running a headless browser or running a normal browser on a headless server at [Headless Browsing](http://docs.ropensci.org/RSelenium/articles/headless.html).
+There is a second vignette dealing with running RSelenium on different browsers/OS locally and remotely which can be viewed at [Driving OS/Browsers Local and Remote](https://docs.ropensci.org/RSelenium/articles/saucelabs.html).
 
 ### Summary of Vignettes
 
-1. [Basics](http://docs.ropensci.org/RSelenium/articles/basics.html)
-1. [Driving OS/Browsers Local and Remote](http://docs.ropensci.org/RSelenium/articles/saucelabs.html)
-1. [Testing Shiny Apps](http://docs.ropensci.org/RSelenium/articles/shinytesting.html)
-1. [Headless Browsing](http://docs.ropensci.org/RSelenium/articles/headless.html)
-1. [Docker](http://docs.ropensci.org/RSelenium/articles/docker.html)
-1. [Internet Explorer](http://docs.ropensci.org/RSelenium/articles/internetexplorer.html)
-1. [Orange County R Users Group Webinar](http://docs.ropensci.org/RSelenium/articles/webinar.html)
-
-
-## Test Shiny Apps
-
-Use `RSelenium` to test your Shiny Apps. Read the introductory tutorial [here](http://docs.ropensci.org/RSelenium/articles/shinytesting.html).
+1. [Basics](https://docs.ropensci.org/RSelenium/articles/basics.html)
+1. [Driving OS/Browsers Local and Remote](https://docs.ropensci.org/RSelenium/articles/saucelabs.html)
+1. ~~Testing Shiny Apps~~
+    * Consider using RStudio's [shinytest](https://rstudio.github.io/shinytest/) package for testing Shiny apps.
+1. ~~Headless Browsing~~
+    * PhantomJS development is [suspended](https://github.com/ariya/phantomjs/issues/15344) until further notice.
+    * Consider using RStudio's [webdriver](https://rstudio.github.io/webdriver/) package.
+1. [Docker](https://docs.ropensci.org/RSelenium/articles/docker.html)
+1. [Internet Explorer](https://docs.ropensci.org/RSelenium/articles/internetexplorer.html)
+    * Internet Explorer 11 has retired as of June 15, 2022.
 
 
 ## Use [Sauce Labs](https://saucelabs.com/) and [BrowserStack](https://www.browserstack.com/)
@@ -105,8 +102,10 @@ remDr <- remoteDriver$new(
 
 ## Related Work
 
+* [chromote](https://rstudio.github.io/chromote/): An R implementation of the Chrome DevTools Protocol. It works with Chrome, Chromium, Opera, Vivaldi, and other browsers based on Chromium.
+* [shinytest](https://rstudio.github.io/shinytest/): For automated testing of Shiny applications, using a headless browser, driven through `webdriver`.
+* [webdriver](https://rstudio.github.io/webdriver/): A client for the 'WebDriver API'. It allows driving a (probably headless) web browser, and can be used to test web applications, including `Shiny` apps. In theory it works with any 'WebDriver' implementation, but it was only tested with 'PhantomJS'.
 * [seleniumPipes](https://github.com/johndharrison/seleniumPipes): A lightweight implementation of the w3c webdriver specification. It has been built utilising `xml2`, `httr` and `magrittr` so provides an alternative for users who are familiar with piping.
-* [webdriver](https://github.com/rstudio/webdriver): A client for the 'WebDriver API'. It allows driving a (probably headless) web browser, and can be used to test web applications, including `Shiny` apps. In theory it works with any 'WebDriver' implementation, but it was only tested with 'PhantomJS'.
 * [rwebdriver](https://github.com/crubba/Rwebdriver): R bindings to the Webdriver API
 * [rdom](https://github.com/cpsievert/rdom): Render and parse the DOM from R via phantomjs.
 
@@ -119,4 +118,4 @@ As a summary, the AGPLv3 license requires, attribution, include copyright and li
 
 ---
 
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)

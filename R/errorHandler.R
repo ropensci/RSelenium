@@ -7,6 +7,7 @@
 #'    the response can be variable.
 #'
 #' @importFrom methods setRefClass new
+#' @importFrom httr parse_url build_url
 #' @field statusCodes A list with status codes and their descriptions.
 #' @field status A status code summarizing the result of the command. A
 #'    non-zero value indicates that the command failed. A value of one is
@@ -209,14 +210,14 @@ errorHandler <-
 
       obscureUrlPassword = function(url) {
         "Replaces the username and password of url with ****"
-        parsedUrl <- httr::parse_url(url)
+        parsedUrl <- parse_url(url)
         if (!is.null(parsedUrl$username)) {
           parsedUrl$username <- "****"
         }
         if (!is.null(parsedUrl$password)) {
           parsedUrl$password <- "****"
         }
-        httr::build_url(parsedUrl)
+        build_url(parsedUrl)
       }
     )
   )

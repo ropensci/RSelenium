@@ -19,8 +19,3 @@ reference:
   - title: "Mappings"
     contents:
       - selKeys
-  - title: "Defunct Functions"
-    contents:
-      - startServer
-      - checkForServer
-      - phantom

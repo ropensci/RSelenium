@@ -10,6 +10,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+**NOTE: Internet Explorer 11 has retired as of June 15, 2022.**
 
 ## Introduction
 

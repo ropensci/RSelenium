@@ -9,7 +9,7 @@
 #' @export selKeys
 #' @format A named list. The names are the descriptions of the keys. The
 #'    values are the "UTF-8" character representations.
-#' @source https://github.com/SeleniumHQ/selenium/wiki/JsonWireProtocol#sessionsessionidelementidvalue
+#' @source https://www.selenium.dev/documentation/legacy/json_wire_protocol/#sessionsessionidelementidvalue
 selKeys <- list(
   null = "\uE000",
   cancel = "\uE001",
