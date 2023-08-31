@@ -7,24 +7,24 @@
 \title{CLASS remoteDriver}
 \description{
 remoteDriver Class uses the JsonWireProtocol to communicate with the
-   Selenium Server. If an error occurs while executing the command then
-   the server sends back an HTTP error code with a JSON encoded response
-   that indicates the precise Response Error Code. The remoteDriver
-   class inherits from the \code{errorHandler} class. If no error
-   occurred, then the subroutine called will return the value sent back
-   from the server (if a return value was sent).
-   So a rule of thumb while invoking methods on the driver is if the
-   method did not return a status greater then zero when called, then
-   you can safely assume the command was successful even if nothing was
-   returned by the method.
+Selenium Server. If an error occurs while executing the command then
+the server sends back an HTTP error code with a JSON encoded response
+that indicates the precise Response Error Code. The remoteDriver
+class inherits from the \code{errorHandler} class. If no error
+occurred, then the subroutine called will return the value sent back
+from the server (if a return value was sent).
+So a rule of thumb while invoking methods on the driver is if the
+method did not return a status greater then zero when called, then
+you can safely assume the command was successful even if nothing was
+returned by the method.
 }
 \details{
 remoteDriver is a generator object. To define a new remoteDriver class
-   method `new` is called. The slots (default value) that are user
-   defined are:
-     remoteServerAddr(localhost), port(4444), browserName(firefox),
-     version(""), platform(ANY),
-     javascript(TRUE). See examples for more information on use.
+method \code{new} is called. The slots (default value) that are user
+defined are:
+remoteServerAddr(localhost), port(4444), browserName(firefox),
+version(""), platform(ANY),
+javascript(TRUE). See examples for more information on use.
 }
 \section{Fields}{
 
