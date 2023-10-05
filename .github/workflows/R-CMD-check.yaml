@@ -13,7 +13,7 @@ jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
 
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }}): ${{ matrix.browser }} (${{ matrix.version }})
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }}) - ${{ matrix.browser }} (${{ matrix.version }})
 
     strategy:
       fail-fast: false
