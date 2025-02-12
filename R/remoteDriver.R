@@ -751,7 +751,7 @@ remoteDriver <-
         queryRD(qpath, "POST", qdata = list(id = Id))
       },
 
-      switchToWindow = function(windowId) {
+      switchToWindow = function(windowId, use_handle = FALSE) {
         "Change focus to another window. The window to change focus to may
         be specified by its server assigned window handle, or by the value
         of its name attribute."
@@ -759,7 +759,7 @@ remoteDriver <-
           "%s/session/%s/window",
           serverURL, sessionInfo[["id"]]
         )
-        if (browserName == "firefox") {
+        if (browserName == "firefox" | browserName == "MicrosoftEdge" | use_handle) {
           qdata <- list(handle = windowId)
         } else {
           qdata <- list(name = windowId)
