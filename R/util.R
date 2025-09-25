@@ -1,4 +1,4 @@
-#' Get Firefox profile.
+#' Get Firefox profile
 #'
 #' \code{getFirefoxProfile}
 #' A utility function to get a firefox profile.
@@ -50,7 +50,7 @@ getFirefoxProfile <- function(profDir, useBase = TRUE) {
   list("firefox_profile" = fireprof)
 }
 
-#' Get Chrome profile.
+#' Get Chrome profile
 #'
 #' \code{getChromeProfile}
 #' A utility function to get a Chrome profile.
@@ -146,7 +146,7 @@ makePrefjs <- function(opts) {
   sprintf("user_pref(\"%s\", %s);", names(opts), optsQuoted)
 }
 
-#' Make Firefox profile.
+#' Make Firefox profile
 #'
 #' \code{makeFirefoxProfile}
 #' A utility function to make a firefox profile.
