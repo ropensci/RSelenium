@@ -2,7 +2,7 @@
 % Please edit documentation in R/util.R
 \name{makeFirefoxProfile}
 \alias{makeFirefoxProfile}
-\title{Make Firefox profile.}
+\title{Make Firefox profile}
 \usage{
 makeFirefoxProfile(opts)
 }
