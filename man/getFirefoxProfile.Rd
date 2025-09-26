@@ -2,7 +2,7 @@
 % Please edit documentation in R/util.R
 \name{getFirefoxProfile}
 \alias{getFirefoxProfile}
-\title{Get Firefox profile.}
+\title{Get Firefox profile}
 \usage{
 getFirefoxProfile(profDir, useBase = TRUE)
 }

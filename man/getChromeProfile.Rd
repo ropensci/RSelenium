@@ -2,7 +2,7 @@
 % Please edit documentation in R/util.R
 \name{getChromeProfile}
 \alias{getChromeProfile}
-\title{Get Chrome profile.}
+\title{Get Chrome profile}
 \usage{
 getChromeProfile(dataDir, profileDir)
 }

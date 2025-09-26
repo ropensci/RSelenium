@@ -37,7 +37,8 @@ Suggests:
     testthat,
     knitr,
     covr,
-    rmarkdown
+    rmarkdown,
+    selectr
 VignetteBuilder: knitr
 Collate:
     'RSelenium.R'
@@ -48,4 +49,4 @@ Collate:
     'util.R'
     'webElement.R'
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.3
