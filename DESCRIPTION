@@ -1,7 +1,7 @@
 Package: RSelenium
 Type: Package
 Title: R Bindings for 'Selenium WebDriver'
-Version: 1.7.9
+Version: 1.7.9.9000
 Authors@R: c(
     person("John", "Harrison", , "johndharrison0@gmail.com", role = "aut",
            comment = "original author"),
@@ -37,7 +37,8 @@ Suggests:
     testthat,
     knitr,
     covr,
-    rmarkdown
+    rmarkdown,
+    selectr
 VignetteBuilder: knitr
 Collate:
     'RSelenium.R'
@@ -48,4 +49,4 @@ Collate:
     'util.R'
     'webElement.R'
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.3
