@@ -487,7 +487,7 @@ focused_tesla       selenium/standalone-firefox-debug:2.53.0   ee0c0bb8b711
 
 Again we note that the container is ran on a virtual machine not on our Windows 10 box so we expose the ip of said virtual machine. Next we download a VNC viewer if we don't have one. 
 
-[TightVNC](http://www.tightvnc.com/download.php) has worked for me so I use it here.
+[TightVNC](https://www.tightvnc.com/download.php) has worked for me so I use it here.
 
 Our Selenium server is running so lets use RSelenium again to browse to `Google`:
 

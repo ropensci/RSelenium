@@ -12,7 +12,7 @@ vignette: >
 
 ## Introduction
 
-The goal of RSelenium is to make it easy to connect to a Selenium Server/Remote Selenium Server from within R. RSelenium provides R bindings for the Selenium Webdriver API. [Selenium](http://docs.seleniumhq.org/) is a project focused on automating web browsers. RSelenium allows you to carry out unit testing and regression testing on your webapps and webpages across a range of browser/OS combinations. This allows us to integrate from within R testing and manipulation of popular projects such as [Shiny Apps](https://shiny.rstudio.com/).
+The goal of RSelenium is to make it easy to connect to a Selenium Server/Remote Selenium Server from within R. RSelenium provides R bindings for the Selenium Webdriver API. [Selenium](https://www.selenium.dev/documentation/webdriver/) is a project focused on automating web browsers. RSelenium allows you to carry out unit testing and regression testing on your webapps and webpages across a range of browser/OS combinations. This allows us to integrate from within R testing and manipulation of popular projects such as [Shiny Apps](https://shiny.posit.co/).
 
 
 ## Connecting to a Selenium Server

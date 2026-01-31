@@ -357,7 +357,7 @@ To access our app we would require the ip address `http://localhost:3000/`. How 
 
 ### Sauce Connect
 
-Thankfully Sauce Labs have a solution for this known as [Sauce Connect](https://docs.saucelabs.com/secure-connections/sauce-connect/). Sauce Connect is a secure tunneling app which allows you to execute tests securely when testing behind firewalls via a secure connection between Sauce Labs client cloud and your environment. This allows you to drive an external Browser and have it interact with a local webpage/website/webapp. 
+Thankfully Sauce Labs have a solution for this known as [Sauce Connect](https://docs.saucelabs.com/secure-connections/sauce-connect-5/). Sauce Connect is a secure tunneling app which allows you to execute tests securely when testing behind firewalls via a secure connection between Sauce Labs client cloud and your environment. This allows you to drive an external Browser and have it interact with a local webpage/website/webapp. 
 
 #### Setting up Sauce Connect
 
