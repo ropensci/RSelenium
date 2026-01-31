@@ -36,8 +36,8 @@ ip of the remote server. Defaults to localhost}
 server on which to connect}
 
 \item{\code{browserName}}{Object of class \code{"character"}. The name of the
-browser being used; should be one of {chrome|firefox|htmlunit|
-internet explorer|iphone}.}
+browser being used; should be one of \code{{chrome|firefox|htmlunit|
+internet explorer|iphone}}.}
 
 \item{\code{path}}{base URL path prefix for commands on the remote server.
 Defaults to "/wd/hub"}
@@ -47,7 +47,7 @@ or the empty string if unknown.}
 
 \item{\code{platform}}{Object of class \code{"character"}. A key specifying
 which platform the browser is running on. This value should be one
-of {WINDOWS|XP|VISTA|MAC|LINUX|UNIX}. When requesting a new session,
+of \code{{WINDOWS|XP|VISTA|MAC|LINUX|UNIX}}. When requesting a new session,
 the client may specify ANY to indicate any available platform may be
 used.}
 
@@ -191,9 +191,9 @@ document root. The located elements will be returned as an list of
 objects of class WebElement. The inputs are:
 \describe{
   \item{\code{using}:}{Locator scheme to use to search the
-  element, available schemes: {"class name", "css selector",
+  element, available schemes: \code{{"class name", "css selector",
   "id", "name", "link text", "partial link text",
-  "tag name", "xpath" }. Defaults to 'xpath'. Partial string
+  "tag name", "xpath" }}. Defaults to 'xpath'. Partial string
   matching is accepted. See the findElement method for details}
   \item{\code{value}:}{The search target. See examples.}
 }}

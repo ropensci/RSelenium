@@ -47,9 +47,9 @@ an object of webElement class.
 The inputs are:
 \describe{
   \item{\code{using}:}{Locator scheme to use to search the
-    element, available schemes: {"class name", "css selector",
+    element, available schemes: \code{{"class name", "css selector",
     "id", "name", "link text", "partial link text",
-    "tag name", "xpath" }. Defaults to 'xpath'. Partial string
+    "tag name", "xpath" }}. Defaults to 'xpath'. Partial string
     matching is accepted.}
   \item{\code{value}:}{The search target. See examples.}
 }}
@@ -64,9 +64,9 @@ returned as an list of objects of class WebElement.
 The inputs are:
 \describe{
   \item{\code{using}:}{Locator scheme to use to search the
-    element, available schemes: {"class name", "css selector",
+    element, available schemes: \code{{"class name", "css selector",
     "id", "name", "link text", "partial link text",
-    "tag name", "xpath" }. Defaults to 'xpath'.
+    "tag name", "xpath" }}. Defaults to 'xpath'.
     Partial string matching is accepted.}
   \item{\code{value}:}{The search target. See examples.}
 }}
