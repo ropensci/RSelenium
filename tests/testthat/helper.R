@@ -14,6 +14,7 @@ initFun <- function(silent = TRUE, ...) {
   }
   
   rdBrowser <- remDr$browserName
+  version <- package_version(remDr$getStatus()$build$version)[[1]]
 
-  list(remDr = remDr, rdBrowser = rdBrowser, loadPage = loadPage)
+  list(remDr = remDr, rdBrowser = rdBrowser, loadPage = loadPage, selenium_ver = version)
 }

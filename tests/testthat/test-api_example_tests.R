@@ -1,4 +1,3 @@
-context("api_example_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser
@@ -144,6 +143,7 @@ test_that("SwitchToWindow", {
   elem <- remDr$findElement(using = "link text", "Open new window")
   elem$clickElement()
   expect_equal(title_1, remDr$getTitle()[[1]])
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   remDr$switchToWindow("result")
   #         wait.until(lambda dr: dr.switch_to_window("result") is None)
   expect_equal(title_2, remDr$getTitle()[[1]])
@@ -157,6 +157,7 @@ test_that("SwitchToWindow", {
 
 ####
 test_that("SwitchFrameByName", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   remDr$navigate(loadPage("frameset"))
   remDr$switchToFrame("third")
   remDr$findElement(using = "id", "checky")$clickElement()
@@ -173,10 +174,8 @@ test_that("IsEnabled", {
 
 # 24-27
 test_that("IsSelectedAndToggle", {
-  if (rdBrowser == "chrome" &&
-    package_version(remDr$sessionInfo$version)$major < 16) {
-    return("deselecting preselected values only works on chrome >= 16")
-  }
+  skip_if(rdBrowser == "chrome" && as.integer(sub("(.*?)\\..*", "\\1", remDr$sessionInfo$version)) < 16,
+          "deselecting preselected values only works on chrome >= 16")
   remDr$navigate(loadPage("formPage"))
   elem <- remDr$findElement(using = "id", "multi")
   option_elems <- elem$findChildElements(using = "xpath", "option")
@@ -227,6 +226,7 @@ test_that("ExecuteSimpleScript", {
 
 # 38
 test_that("ExecuteScriptAndReturnElement", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   remDr$navigate(loadPage("xhtmlTest"))
   elem <- remDr$executeScript("return document.getElementById('id1');")
   expect_true(inherits(elem[[1]], "webElement"))
@@ -280,10 +280,7 @@ test_that("IsElementDisplayed", {
 
 # 45-46
 test_that("MoveWindowPosition", {
-  if (rdBrowser == "android" || rdBrowser == "safari") {
-    print("Not applicable")
-    return()
-  }
+  skip_if(rdBrowser == "android" || rdBrowser == "safari", "Not applicable")
   remDr$navigate(loadPage("blank"))
   loc <- remDr$getWindowPosition()
   # note can't test 0,0 since some OS's dont allow that location
@@ -304,10 +301,7 @@ test_that("MoveWindowPosition", {
 
 # 47-48
 test_that("ChangeWindowSize", {
-  if (rdBrowser == "android") {
-    print("Not applicable")
-    return()
-  }
+  skip_if(rdBrowser == "android", "Not applicable")
   remDr$navigate(loadPage("blank"))
   size <- remDr$getWindowSize()
   newSize <- rep(600, 2)

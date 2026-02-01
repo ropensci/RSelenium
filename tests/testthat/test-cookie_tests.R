@@ -1,4 +1,3 @@
-context("cookie_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser

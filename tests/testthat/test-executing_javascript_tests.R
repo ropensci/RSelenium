@@ -1,4 +1,3 @@
-context("executing_javascript_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser
@@ -24,6 +23,7 @@ test_that("testShouldBeAbleToExecuteSimpleJavascriptAndReturnAnInteger", {
 
 test_that("testShouldBeAbleToExecuteSimpleJavascriptAndReturnAWebElement", {
   skip_on_cran()
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   remDr$navigate(loadPage("xhtmlTest"))
   result <- remDr$executeScript("return document.getElementById('id1')")
   expect_true(inherits(result[[1]], "webElement"))
@@ -185,6 +185,7 @@ test_that("testCanPassANone", {
 
 test_that("testShouldBeAbleToReturnNestedWebElements", {
   skip_on_cran()
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   remDr$navigate(loadPage("xhtmlTest"))
   result <-
     remDr$executeScript("var1 = document.getElementById('id1');

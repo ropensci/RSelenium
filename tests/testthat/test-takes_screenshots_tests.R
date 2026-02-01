@@ -1,4 +1,3 @@
-context("takes_screenshots_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser
@@ -13,9 +12,7 @@ test_that("testShouldWriteScreenshotToFile", {
 })
 
 test_that("test_get_screenshot_as_png", {
-  if (!.Platform$OS.type == "unix") {
-    skip("unix file command used to determine file type")
-  }
+  skip_if(!.Platform$OS.type == "unix", "unix file command used to determine file type")
   tmpF <- tempfile()
   result <- remDr$navigate(loadPage("simpleTest"))
   remDr$screenshot(file = tmpF)

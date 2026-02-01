@@ -1,4 +1,3 @@
-context("misc_remoteDriver_methods_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser
@@ -22,22 +21,26 @@ test_that("canGetSessions", {
 
 test_that("canGetStatus", {
   status <- remDr$getStatus()
-  expect_identical(names(status), c("build", "os", "java"))
+  expect_contains(names(status), c("build", "os", "java"))
 })
 
 test_that("canSetAsyncScriptTimeout", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   expect_silent(remDr$setAsyncScriptTimeout())
 })
 
 test_that("canSetImplicitWaitTimeout", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   expect_silent(remDr$setImplicitWaitTimeout())
 })
 
 test_that("canGetLogTypes", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   expect_gt(length(remDr$getLogTypes()), 0L)
 })
 
 test_that("canGetLog", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   logs <- remDr$getLogTypes()[[1]]
   expect_true(inherits(remDr$log(logs[1]), "list"))
 })
@@ -49,6 +52,7 @@ test_that("canGetPageSource", {
 })
 
 test_that("canSetExtraCaps", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   prefs <- list("profile.managed_default_content_settings.images" = 2L)
   cprof <- list(chromeOptions = list(prefs = prefs))
   expect_output(

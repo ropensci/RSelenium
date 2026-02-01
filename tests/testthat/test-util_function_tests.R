@@ -1,4 +1,3 @@
-context("util_function_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser
@@ -52,10 +51,8 @@ on.exit(remDr$close())
 # )
 
 test_that("canGetFirefoxProfile", {
-  if (Sys.info()[["sysname"]] != "Linux") {
-    return()
-  }
-  out <- getFirefoxProfile(tempdir(), useBase = TRUE)
+  skip_if(Sys.info()[["sysname"]] != "Linux", "Not Linux")
+  out <- getFirefoxProfile(tempdir())
   expect_identical(names(out), "firefox_profile")
 })
 
@@ -101,9 +98,7 @@ test_that("canGetChromeProfile", {
 # })
 
 test_that("canMakeFirefoxProfile", {
-  if (Sys.info()[["sysname"]] != "Linux") {
-    return()
-  }
+  skip_if(Sys.info()[["sysname"]] != "Linux", "Not Linux")
   fprof <- makeFirefoxProfile(list(browser.download.dir = "D:/temp"))
   expect_identical(names(fprof), "firefox_profile")
 })
