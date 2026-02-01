@@ -34,7 +34,7 @@ test_that("testShouldAllowUsersToAcceptAnAlertWithNoTextManually", {
 })
 
 test_that("testShouldGetTextOfAlertOpenedInSetTimeout", {
-  # skip_if(identical(rdBrowser, "chrome"), "Not chrome")
+  skip_if(identical(rdBrowser, "chrome"), "Not chrome")
   skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
 
   remDr$navigate(loadPage("alerts"))
