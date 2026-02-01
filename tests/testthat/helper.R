@@ -14,7 +14,7 @@ initFun <- function(silent = TRUE, ...) {
   }
   
   rdBrowser <- remDr$browserName
-  version <- semver::render_version(semver::parse_version(remDr$getStatus()$build$version))[[1]]
+  version <- package_version(remDr$getStatus()$build$version)[[1]]
 
   list(remDr = remDr, rdBrowser = rdBrowser, loadPage = loadPage, selenium_ver = version)
 }
