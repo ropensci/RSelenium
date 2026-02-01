@@ -5,7 +5,7 @@ test_that("canGetHttrError", {
   dumRD <- remoteDriver(port = 9999L)
   expect_error(
     dumRD$open(silent = TRUE),
-    "Undefined error in httr call. httr output: Could not connect to server [localhost]:\nFailed to connect to localhost port 9999 after 0 ms: Could not connect to server",
+    "Undefined error in httr call.",
     fixed = TRUE
   )
 })

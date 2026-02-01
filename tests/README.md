@@ -18,6 +18,7 @@ Next, we run a Docker image containing the standalone Selenium server and a chro
 
 ```sh
 docker run -d --network rselenium --network-alias selenium -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-chrome:2.53.1
+# docker run -d --network rselenium --network-alias selenium -p 4444:4444 -v /dev/shm:/dev/shm selenium/standalone-firefox:2.53.1
 ```
 
 or a debug version with VNC exposed on port 5901 of the host:
