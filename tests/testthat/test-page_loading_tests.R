@@ -19,12 +19,14 @@ test_that("testShouldBeAbleToGetAFragmentOnTheCurrentPage", {
 })
 
 test_that("testShouldReturnWhenGettingAUrlThatDoesNotResolve", {
+  skip_if(init$selenium_ver$major > 2, "only silent, if selenium version < 3.0")
   expect_silent(
     result <- remDr$navigate("http://www.thisurldoesnotexist.comx/")
   )
 })
 
 test_that("testShouldReturnWhenGettingAUrlThatDoesNotConnect", {
+  skip_if(init$selenium_ver$major > 2, "only silent, if selenium version < 3.0")
   expect_silent(
     result <- remDr$navigate("http://localhost:3001")
   )
@@ -60,6 +62,7 @@ test_that("testShouldBeAbleToNavigateForwardsInTheBrowserHistory", {
 })
 
 test_that("testShouldNotHangifOpenCallIsNeverFollowedByCloseCall", {
+  skip_if(init$selenium_ver$major > 2, "hang if selenium version >= 3.0")
   result <- remDr$navigate(loadPage("document_write_in_onload"))
   result <- remDr$findElement("xpath", "//body")
   expect_true(inherits(result, "webElement"))

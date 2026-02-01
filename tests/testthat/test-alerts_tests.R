@@ -34,7 +34,8 @@ test_that("testShouldAllowUsersToAcceptAnAlertWithNoTextManually", {
 })
 
 test_that("testShouldGetTextOfAlertOpenedInSetTimeout", {
-  if (identical(rdBrowser, "chrome")) skip("Not chrome")
+  # skip_if(identical(rdBrowser, "chrome"), "Not chrome")
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
 
   remDr$navigate(loadPage("alerts"))
   remDr$findElement("id", "slow-alert")$
@@ -81,11 +82,11 @@ test_that("testShouldAllowAUserToSetTheValueOfAPrompt", {
 })
 
 test_that("testSettingTheValueOfAnAlertThrows", {
-  if (identical("chrome", rdBrowser)) skip("Not chrome")
+  # skip_if(identical("chrome", rdBrowser), "Not chrome")
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
 
   remDr$navigate(loadPage("alerts"))
-  remDr$findElement("id", "alert")$
-    clickElement()
+  remDr$findElement("id", "alert")$clickElement()
   expect_error(remDr$sendKeysToAlert(list("cheadder")))
   remDr$dismissAlert()
 })
@@ -108,6 +109,7 @@ test_that("testShouldAllowUsersToAcceptAnAlertInAFrame", {
 })
 
 test_that("testShouldAllowUsersToAcceptAnAlertInANestedFrame", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   remDr$navigate(loadPage("alerts"))
   remDr$switchToFrame(remDr$findElement("name", "iframeWithIframe"))
   remDr$switchToFrame(remDr$findElement("name", "iframeWithAlert"))
@@ -138,6 +140,7 @@ test_that("testPromptShouldHaveNullValueIfDismissed", {
 })
 
 test_that("testHandlesTwoAlertsFromOneInteraction", {
+  skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
   remDr$navigate(loadPage("alerts"))
   remDr$findElement("id", "double-prompt")$
     clickElement()
