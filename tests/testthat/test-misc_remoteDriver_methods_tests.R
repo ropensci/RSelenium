@@ -1,4 +1,3 @@
-context("misc_remoteDriver_methods_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser

@@ -1,4 +1,3 @@
-context("page_loading_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser

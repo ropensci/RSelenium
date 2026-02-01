@@ -1,4 +1,3 @@
-context("takes_screenshots_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser

@@ -1,4 +1,3 @@
-context("api_example_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser

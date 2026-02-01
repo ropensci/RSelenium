@@ -1,4 +1,3 @@
-context("misc_webElement_methods_tests")
 init <- initFun()
 remDr <- init$remDr
 rdBrowser <- init$rdBrowser

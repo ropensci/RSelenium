@@ -1,5 +1,3 @@
-context("test-errorHandler")
-
 test_that("canGetHttrError", {
   # hopefully no sel server running on 9999L
   dumRD <- remoteDriver(port = 9999L)

@@ -34,7 +34,7 @@ Imports:
 Suggests:
     binman,
     XML,
-    testthat,
+    testthat (>= 3.0.0),
     knitr,
     covr,
     rmarkdown,
@@ -50,3 +50,4 @@ Collate:
     'webElement.R'
 Encoding: UTF-8
 RoxygenNote: 7.3.3
+Config/testthat/edition: 3
