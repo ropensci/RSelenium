@@ -7,16 +7,16 @@
 \title{CLASS webElement}
 \description{
 Selenium Webdriver represents all the HTML elements as WebElements.
-   This class provides a mechanism to represent them as objects &
-   perform various actions on the related elements. Typically, the
-   findElement method in \code{\link{remoteDriver}} returns an object
-   of class webElement.
+This class provides a mechanism to represent them as objects &
+perform various actions on the related elements. Typically, the
+findElement method in \code{\link{remoteDriver}} returns an object
+of class webElement.
 }
 \details{
 webElement is a generator object. To define a new webElement class
-   method `new` is called.  When a webElement class is created an
-   elementId should be given. Each webElement inherits from a
-   remoteDriver. webElement is not usually called by the end-user.
+method \code{new} is called.  When a webElement class is created an
+elementId should be given. Each webElement inherits from a
+remoteDriver. webElement is not usually called by the end-user.
 }
 \section{Fields}{
 

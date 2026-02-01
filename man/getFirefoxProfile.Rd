@@ -18,8 +18,8 @@ A utility function to get a firefox profile.
 }
 \section{Detail}{
  A firefox profile directory is zipped and base64
-   encoded. It can then be passed to the selenium server as a required
-   capability with key firefox_profile
+encoded. It can then be passed to the selenium server as a required
+capability with key firefox_profile
 }
 
 \examples{

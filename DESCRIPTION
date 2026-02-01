@@ -1,5 +1,5 @@
-Package: RSelenium
 Type: Package
+Package: RSelenium
 Title: R Bindings for 'Selenium WebDriver'
 Version: 1.7.9.9000
 Authors@R: c(
@@ -8,7 +8,9 @@ Authors@R: c(
     person("Ju Yeong", "Kim", , "jkim2345@fredhutch.org", role = "aut",
            comment = "rOpenSci maintainer"),
     person("Jonathan", "Völkle", , "jonathan.voelkle@web.de", role = c("aut", "cre")),
-    person("Indranil", "Gayen", , "nil.gayen@gmail.com", role = "ctb")
+    person("Indranil", "Gayen", , "nil.gayen@gmail.com", role = "ctb"),
+    person("Salim", "Brüggemann", , "salim-b@pm.me", role = "ctb",
+           comment = c(ORCID = "0000-0002-5329-5987"))
   )
 Description: Provides a set of R bindings for the 'Selenium 2.0 WebDriver'
     (see <https://www.selenium.dev/documentation/>
