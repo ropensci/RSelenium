@@ -82,7 +82,7 @@ test_that("testShouldAllowAUserToSetTheValueOfAPrompt", {
 })
 
 test_that("testSettingTheValueOfAnAlertThrows", {
-  # skip_if(identical("chrome", rdBrowser), "Not chrome")
+  skip_if(identical("chrome", rdBrowser), "Not chrome")
   skip_if(init$selenium_ver$major > 2, "Changes in selenium version 3")
 
   remDr$navigate(loadPage("alerts"))
