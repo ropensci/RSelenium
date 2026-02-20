@@ -613,7 +613,7 @@ NAMES               IMAGE                                      CONTAINER ID
 thirsty_swanson     selenium/standalone-firefox-debug:2.53.0   dd36811562e8
 ```
 
-So we can see that Selenium server is running. Like in Windows we need a VNC viewer. You can use `TightVNC` as with windows and a guide to running it is [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04). We will use `Vinagre` however. A guide to install `Vinagre` is [here](https://www.howtoinstall.co/en/ubuntu/xenial/vinagre). Basically we just need to `apt-get` it:
+So we can see that Selenium server is running. Like in Windows we need a VNC viewer. You can use `TightVNC` as with windows and a guide to running it is [here](https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-16-04). We will use `Vinagre` however. A guide to install `Vinagre` is [here](https://wiki.gnome.org/Apps/Vinagre). Basically we just need to `apt-get` it:
 
 ```sh
 sudo apt-get update

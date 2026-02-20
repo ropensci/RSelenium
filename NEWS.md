@@ -1,4 +1,5 @@
-# RSelenium (development version)
+# RSelenium 1.7.10
+* Address issues in CRAN checks.
 
 # RSelenium 1.7.9
 * Remove images in vignettes (addressing #260)

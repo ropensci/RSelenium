@@ -242,7 +242,7 @@ Setting up multiple OS/browsers combinations locally is not always the best use 
 
 ### Setting up Sauce Labs
 
-We assume in this vignette that you are setting up Sauce Labs for an open source project. Firstly you should register your project [here](https://saucelabs.com/open-sauce). On the [account page](https://app.saucelabs.com/dashboard) you will find the access key for your account that is in a similar format to `49953c74-5c46-4ff9-b584-cf31a4c71809`. Using Sauce Labs is pretty straightforward. You need to tell it what OS/Browser combination you would like. A list of possible setups can be viewed [here](https://saucelabs.com/platform/supported-browsers-devices). As an example lets suppose we wished to run google chrome version 33 on OSX version mavericks. 
+We assume in this vignette that you are setting up Sauce Labs for an open source project. Firstly you should register your project [here](https://saucelabs.com/). On the [account page](https://app.saucelabs.com/dashboard) you will find the access key for your account that is in a similar format to `49953c74-5c46-4ff9-b584-cf31a4c71809`. Using Sauce Labs is pretty straightforward. You need to tell it what OS/Browser combination you would like. A list of possible setups can be viewed [here](https://saucelabs.com/platform/supported-browsers-devices). As an example lets suppose we wished to run google chrome version 33 on OSX version mavericks. 
 
 ```R
 require(RSelenium)
