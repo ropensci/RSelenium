@@ -1,3 +1,5 @@
+# RSelenium (development version)
+
 # RSelenium 1.7.10
 * Address issues in CRAN checks.
 
